@@ -1,2 +1,2 @@
 ## Commiting Requirement
-** git commit -m "<All Upper-case Letters In Message> by <yournamelikethis_ex_levandung>" **
+**git commit -m "<All Upper-case Letters In Message> by <yournamelikethis_ex_levandung>"**
