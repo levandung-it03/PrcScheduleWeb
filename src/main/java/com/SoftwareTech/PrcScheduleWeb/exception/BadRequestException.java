@@ -1,7 +1,6 @@
 package com.SoftwareTech.PrcScheduleWeb.exception;
 
 public class BadRequestException extends RuntimeException{
-
     public BadRequestException(String message) {
         super(message);
     }
