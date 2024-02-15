@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -17,7 +18,7 @@ import java.sql.Date;
     name = "Semester",
     uniqueConstraints = {
         @UniqueConstraint(
-            name = "UK_Semester_semester_range_of_year",
+            name = "UK_Semester_01",
             columnNames = {"semester", "range_of_year"}
         )
     }
@@ -26,7 +27,7 @@ public class Semester {
     @Id
     @Column(name = "semester_id")
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private String semesterId;
+    private Long semesterId;
 
     @Column(name = "semester", nullable = false)
     private byte semester;
@@ -42,7 +43,4 @@ public class Semester {
 
     @Column(name = "starting_date", nullable = false, columnDefinition = "DATE DEFAULT CURRENT_DATE")
     private Date startingDate;
-
-    @OneToMany(mappedBy = "semester_id")
-    private SubjectDetail subjectDetail;
 }

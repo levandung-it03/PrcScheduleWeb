@@ -1,5 +1,6 @@
 package com.SoftwareTech.PrcScheduleWeb.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -19,14 +21,15 @@ public class Student {
     @Column(name = "student_id", length = 20)
     private String studentId;
 
-    @ManyToOne
-    @JoinColumn(name = "grade_id", referencedColumnName = "grade_id")
-    private Grade gradeId;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "grade_id", referencedColumnName = "grade_id", nullable = false)
+    @JsonIgnore
+    private Grade grade;
 
-    @Column(name = "last_name", length = 255, nullable = false)
+    @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @Column(name = "first_name", length = 255, nullable = false)
+    @Column(name = "first_name", nullable = false)
     private String firstName;
 
     @Column(name = "birthday", nullable = false)
@@ -42,12 +45,9 @@ public class Student {
     @Column(name = "phone_number", length = 20, nullable = false, unique = true)
     private String phone;
 
-    @Column(name = "institute_email", length = 255, nullable = false, unique = true)
+    @Column(name = "institute_email", nullable = false, unique = true)
     private String instituteEmail;
 
     @Column(name = "status_enum", nullable = false, columnDefinition = "BIT(1) DEFAULT 1")
     private boolean status;
-
-    @OneToOne(mappedBy = "object_id")
-    private Account account;
 }

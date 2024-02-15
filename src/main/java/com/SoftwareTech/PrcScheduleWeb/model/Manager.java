@@ -19,10 +19,10 @@ public class Manager {
     @Column(name = "manager_id", length = 20)
     private String managerId;
 
-    @Column(name = "last_name", length = 255, nullable = false)
+    @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @Column(name = "first_name", length = 255, nullable = false)
+    @Column(name = "first_name", nullable = false)
     private String firstName;
 
     @Column(name = "birthday", nullable = false)
@@ -38,12 +38,9 @@ public class Manager {
     @Column(name = "phone_number", length = 20, nullable = false, unique = true)
     private String phone;
 
-    @Column(name = "institute_email", length = 255, nullable = false, unique = true)
+    @Column(name = "institute_email", nullable = false, unique = true)
     private String instituteEmail;
 
     @Column(name = "status_enum", nullable = false, columnDefinition = "BIT(1) DEFAULT 1")
     private boolean status;
-
-    @OneToOne(mappedBy = "object_id")
-    private Account account;
 }

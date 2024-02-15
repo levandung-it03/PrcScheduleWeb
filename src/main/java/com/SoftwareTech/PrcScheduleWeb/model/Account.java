@@ -1,5 +1,6 @@
 package com.SoftwareTech.PrcScheduleWeb.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,25 +21,24 @@ public class Account {
     @Column(name = "account_id")
     private Long accountId;
 
-    @Column(name = "object_id", length = 20, nullable = false)
-    private String objectId;
-
-    @Column(name = "password", length = 255, nullable = false)
+    @Column(name = "password", nullable = false)
     private String password;
 
     @Column(name = "creating_time", nullable = false, columnDefinition = "DATETIME DEFAULT (CURRENT_TIMESTAMP())")
     private Timestamp creatingTime;
 
-    @OneToOne
-    @JoinColumn(name = "object_id", referencedColumnName = "teacher_id")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "object_id", referencedColumnName = "teacher_id", nullable = false)
+    @JsonIgnore
     private Teacher teacher;
 
-    @OneToOne
-    @JoinColumn(name = "object_id", referencedColumnName = "student_id")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "object_id", referencedColumnName = "student_id", nullable = false)
+    @JsonIgnore
     private Student student;
 
-    @OneToOne
-    @JoinColumn(name = "object_id", referencedColumnName = "manager_id")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "object_id", referencedColumnName = "manager_id", nullable = false)
+    @JsonIgnore
     private Manager manager;
-
 }
