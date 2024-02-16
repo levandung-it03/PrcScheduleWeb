@@ -25,7 +25,7 @@ import java.time.LocalDateTime;
 )
 public class SubjectRegistration {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "subject_registration_id")
     private Long subjectRegistrationId;
 

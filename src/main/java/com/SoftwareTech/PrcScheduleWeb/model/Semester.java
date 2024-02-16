@@ -26,7 +26,7 @@ import java.util.List;
 public class Semester {
     @Id
     @Column(name = "semester_id")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long semesterId;
 
     @Column(name = "semester", nullable = false)

@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Date;
-import java.util.List;
 
 @Getter
 @Setter
@@ -50,4 +49,9 @@ public class Teacher {
 
     @Column(name = "status_enum", nullable = false, columnDefinition = "BIT(1) DEFAULT 1")
     private boolean status;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "account_id", referencedColumnName = "account_id", nullable = false)
+    @JsonIgnore
+    private Account account;
 }

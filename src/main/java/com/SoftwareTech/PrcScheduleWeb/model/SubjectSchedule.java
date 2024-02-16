@@ -17,7 +17,7 @@ import java.util.HashMap;
 @Table(name = "Subject_Schedule")
 public class SubjectSchedule {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "subject_schedule_id")
     private Long subjectScheduleId;
 

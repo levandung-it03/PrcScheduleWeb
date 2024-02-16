@@ -28,7 +28,7 @@ import java.util.List;
 public class SubjectDetail {
     @Id
     @Column(name = "subject_detail_id")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long subjectDetailId;
 
     @Column(name = "group_from_subject", nullable = false)

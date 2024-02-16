@@ -1,5 +1,6 @@
 package com.SoftwareTech.PrcScheduleWeb.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -43,4 +44,9 @@ public class Manager {
 
     @Column(name = "status_enum", nullable = false, columnDefinition = "BIT(1) DEFAULT 1")
     private boolean status;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "account_id", referencedColumnName = "account_id", nullable = false)
+    @JsonIgnore
+    private Account account;
 }
