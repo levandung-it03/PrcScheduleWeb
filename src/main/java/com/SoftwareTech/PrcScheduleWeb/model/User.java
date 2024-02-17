@@ -1,6 +1,5 @@
 package com.SoftwareTech.PrcScheduleWeb.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,15 +14,21 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @Entity
 @Table(name = "Account")
-public class Account {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "account_id")
-    private Long accountId;
+    @Column(name = "user_id")
+    private Long userId;
+
+    @Column(name = "institute_email", nullable = false, unique = true)
+    private String instituteEmail;
 
     @Column(name = "password", nullable = false)
     private String password;
 
     @Column(name = "creating_time", nullable = false, columnDefinition = "DATETIME DEFAULT (CURRENT_TIMESTAMP())")
     private Timestamp creatingTime;
+
+    @Column(name = "role_enum", nullable = false, columnDefinition = "BIT(1) DEFAULT 1")
+    private Byte role;
 }

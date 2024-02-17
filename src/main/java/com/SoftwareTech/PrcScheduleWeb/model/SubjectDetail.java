@@ -32,7 +32,7 @@ public class SubjectDetail {
     private Long subjectDetailId;
 
     @Column(name = "group_from_subject", nullable = false)
-    private byte groupFromSubject;
+    private Byte groupFromSubject;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "grade_id", referencedColumnName = "grade_id", nullable = false)
@@ -50,11 +50,11 @@ public class SubjectDetail {
     private Semester semester;
 
     @Column(name = "group_from_grade", nullable = false)
-    private byte groupFromGrade;
+    private Byte groupFromGrade;
 
     @Column(name = "max_quantity", nullable = false)
-    private int maxQuantity;
+    private Integer maxQuantity;
 
     @Column(name = "available_quantity", nullable = false)
-    private int availableQuantity;
+    private Integer availableQuantity;
 }

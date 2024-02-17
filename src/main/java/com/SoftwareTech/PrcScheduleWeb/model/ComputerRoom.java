@@ -22,14 +22,14 @@ public class ComputerRoom {
     private String computerRoom;
 
     @Column(name = "max_computer_quantity", nullable = false)
-    private int maxComputerQuantity;
+    private Integer maxComputerQuantity;
 
     @Column(name = "available_computer_quantity", nullable = false)
-    private int availableComputerQuantity;
+    private Integer availableComputerQuantity;
 
     @Column(name = "is_rented", nullable = false)
-    private byte isRented;
+    private Byte isRented;
 
     @Column(name = "status_enum", nullable = false)
-    private byte status;
+    private Byte status;
 }

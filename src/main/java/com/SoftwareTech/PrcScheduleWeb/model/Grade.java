@@ -25,10 +25,10 @@ public class Grade {
     private Major major;
 
     @Column(name = "starting_year", nullable = false)
-    private int startingYear;
+    private Integer startingYear;
 
     @Column(name = "ending_year", nullable = false)
-    private int endingYear;
+    private Integer endingYear;
 
     @Column(name = "status_enum", nullable = false, columnDefinition = "BIT(1) DEFAULT 1")
     private boolean status;

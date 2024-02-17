@@ -27,19 +27,19 @@ public class SubjectSchedule {
     private SubjectDetail subjectDetail;
 
     @Column(name = "day", nullable = false)
-    private byte day;
+    private Byte day;
 
     @Column(name = "starting_week", nullable = false)
-    private byte startingWeek;
+    private Byte startingWeek;
 
     @Column(name = "total_week", nullable = false)
-    private byte totalWeek;
+    private Byte totalWeek;
 
     @Column(name = "starting_period", nullable = false)
-    private byte startingPeriod;
+    private Byte startingPeriod;
 
     @Column(name = "last_period", nullable = false)
-    private byte lastPeriod;
+    private Byte lastPeriod;
 
     @Column(name = "classroom", length = 10, nullable = false)
     private String classroom;
@@ -52,15 +52,15 @@ public class SubjectSchedule {
     @Column(name = "status_enum", nullable = false, columnDefinition = "BIT(1) DEFAULT 1")
     private boolean status;
 
-    public String getDayAsString() {
-        HashMap<Byte, String> dayDictionary = new HashMap<>();
-        dayDictionary.put((byte)2, "Mo.Monday");
-        dayDictionary.put((byte)3, "Tu.Tuesday");
-        dayDictionary.put((byte)4, "We.Wednesday");
-        dayDictionary.put((byte)5, "Th.Thursday");
-        dayDictionary.put((byte)6, "Fr.Friday");
-        dayDictionary.put((byte)7, "Sa.Saturday");
-        dayDictionary.put((byte)8, "Su.Sunday");
+    public String[] getDayAsString() {
+        HashMap<Byte, String[]> dayDictionary = new HashMap<>();
+        dayDictionary.put((byte)2, new String[] {"Mo", "Monday"});
+        dayDictionary.put((byte)3, new String[] {"Tu", "Tuesday"});
+        dayDictionary.put((byte)4, new String[] {"We", "Wednesday"});
+        dayDictionary.put((byte)5, new String[] {"Th", "Thursday"});
+        dayDictionary.put((byte)6, new String[] {"Fr", "Friday"});
+        dayDictionary.put((byte)7, new String[] {"Sa", "Saturday"});
+        dayDictionary.put((byte)8, new String[] {"Su", "Sunday"});
         return dayDictionary.get(this.getDay());
     }
 }

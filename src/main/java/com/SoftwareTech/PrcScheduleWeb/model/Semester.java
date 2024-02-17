@@ -30,16 +30,16 @@ public class Semester {
     private Long semesterId;
 
     @Column(name = "semester", nullable = false)
-    private byte semester;
+    private Byte semester;
 
     @Column(name = "range_of_year", length = 20, nullable = false)
     private String rangeOfYear;
 
     @Column(name = "first_week", nullable = false)
-    private byte fistWeek;
+    private Byte fistWeek;
 
     @Column(name = "total_week", nullable = false)
-    private byte totalWeek;
+    private Byte totalWeek;
 
     @Column(name = "starting_date", nullable = false, columnDefinition = "DATE DEFAULT CURRENT_DATE")
     private Date startingDate;

@@ -15,7 +15,7 @@ public class Subject {
     private String subjectName;
 
     @Column(name = "credits_number", nullable = false)
-    private byte creditsNumber;
+    private Byte creditsNumber;
 
     @Column(name = "status_enum", nullable = false, columnDefinition = "BIT(1) DEFAULT 1")
     private boolean status;

@@ -44,14 +44,11 @@ public class Teacher {
     @Column(name = "phone_number", length = 20, nullable = false, unique = true)
     private String phone;
 
-    @Column(name = "institute_email", nullable = false, unique = true)
-    private String instituteEmail;
-
     @Column(name = "status_enum", nullable = false, columnDefinition = "BIT(1) DEFAULT 1")
     private boolean status;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "account_id", referencedColumnName = "account_id", nullable = false)
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
     @JsonIgnore
-    private Account account;
+    private User user;
 }

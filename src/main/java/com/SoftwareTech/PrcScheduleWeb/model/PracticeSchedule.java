@@ -27,19 +27,19 @@ public class PracticeSchedule {
     private SubjectDetail subjectDetail;
 
     @Column(name = "day", nullable = false)
-    private byte day;
+    private Byte day;
 
     @Column(name = "starting_week", nullable = false)
-    private byte startingWeek;
+    private Byte startingWeek;
 
     @Column(name = "total_week", nullable = false)
-    private byte totalWeek;
+    private Byte totalWeek;
 
     @Column(name = "starting_period", nullable = false)
-    private byte startingPeriod;
+    private Byte startingPeriod;
 
     @Column(name = "last_period", nullable = false)
-    private byte lastPeriod;
+    private Byte lastPeriod;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "computer_room", referencedColumnName = "computer_room", nullable = false)
