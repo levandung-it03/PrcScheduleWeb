@@ -1,5 +1,6 @@
 package com.SoftwareTech.PrcScheduleWeb.model;
 
+import com.SoftwareTech.PrcScheduleWeb.model.enums.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,6 +30,7 @@ public class User {
     @Column(name = "creating_time", nullable = false, columnDefinition = "DATETIME DEFAULT (CURRENT_TIMESTAMP())")
     private Timestamp creatingTime;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "role_enum", nullable = false, columnDefinition = "BIT(1) DEFAULT 1")
-    private Byte role;
+    private Role role;
 }

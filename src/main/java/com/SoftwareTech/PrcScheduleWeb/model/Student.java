@@ -1,5 +1,6 @@
 package com.SoftwareTech.PrcScheduleWeb.model;
 
+import com.SoftwareTech.PrcScheduleWeb.model.enums.Gender;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -35,9 +36,9 @@ public class Student {
     @Column(name = "birthday", nullable = false)
     private Date birthday;
 
-    // Gender=B(Boy), G(Girl).
+    @Enumerated(EnumType.STRING)
     @Column(name = "gender_enum", length = 1, nullable = false)
-    private String gender;
+    private Gender gender;
 
     @Column(name = "identifier", length = 20, nullable = false, unique = true)
     private String identity;
