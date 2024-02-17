@@ -15,11 +15,11 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @Entity
 @Table(name = "Account")
-public class User {
+public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
-    private Long userId;
+    @Column(name = "account_id")
+    private Long accountId;
 
     @Column(name = "institute_email", nullable = false, unique = true)
     private String instituteEmail;
