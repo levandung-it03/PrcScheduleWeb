@@ -1,7 +1,7 @@
 package com.SoftwareTech.PrcScheduleWeb.model.enums;
 
 public enum Role {
-    ADMIN,
-    USER,
+    MANAGER,
+    TEACHER,
     GUEST
 }
