@@ -14,6 +14,7 @@ import java.util.List;
 @Data
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "Account")
 public class Account implements UserDetails {
@@ -32,7 +33,7 @@ public class Account implements UserDetails {
     private Timestamp creatingTime;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "role_enum", nullable = false, columnDefinition = "BIT(1) DEFAULT 1")
+    @Column(name = "role_enum", nullable = false)
     private Role role;
 
     @Override

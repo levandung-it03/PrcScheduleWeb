@@ -9,6 +9,7 @@ import java.util.List;
 @Data
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "computer_room")
 @Check(constraints = "max_computer_quantity >= available_computer_quantity")

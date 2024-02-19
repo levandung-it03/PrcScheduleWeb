@@ -10,6 +10,7 @@ import java.sql.Date;
 @Data
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "Manager")
 public class Manager {

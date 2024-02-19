@@ -9,6 +9,7 @@ import java.util.HashMap;
 @Data
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "Practice_Schedule")
 public class PracticeSchedule {
