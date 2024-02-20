@@ -3,5 +3,5 @@ package com.SoftwareTech.PrcScheduleWeb.auth;
 import lombok.Builder;
 
 @Builder
-public record AuthenticationRequest(String instituteEmail, String password) {
+public record AuthenticatingRequest(String instituteEmail, String password) {
 }

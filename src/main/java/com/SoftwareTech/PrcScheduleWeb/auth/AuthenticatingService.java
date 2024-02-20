@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
-public class AuthenticationService {
+public class AuthenticatingService {
     @Autowired
     private final AccountRepository accountRepository;
     @Autowired
@@ -40,7 +40,7 @@ public class AuthenticationService {
             .build();
     }
 
-    public AuthenticationResponse authenticate(AuthenticationRequest request) {
+    public AuthenticationResponse authenticate(AuthenticatingRequest request) {
         //--Let the Authentication Process for AuthenticationManager.
         UsernamePasswordAuthenticationToken userPassAuth = new UsernamePasswordAuthenticationToken(
             request.instituteEmail(),
