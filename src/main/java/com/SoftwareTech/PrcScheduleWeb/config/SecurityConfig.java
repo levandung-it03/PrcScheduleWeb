@@ -1,5 +1,7 @@
 package com.SoftwareTech.PrcScheduleWeb.config;
 
+import jakarta.servlet.Filter;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -11,11 +13,14 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-public class SecurityConfiguration {
+public class SecurityConfig {
     @Autowired
     private final AuthenticationProvider authenticationProvider;
     @Autowired
@@ -25,22 +30,22 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
+            //--Authorization step.
             .csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests((authorizeHttpRequests) ->
                 authorizeHttpRequests
-                //--ROLE: Unknown, Permit Non-authentication pages like Sign-up, Log-in,...
-                    .requestMatchers("")
-                    .permitAll()
-                    .anyRequest()
-                    .authenticated()
-                //--Has more than 1 ROLE: .requestMatchers("/admin/**")....hasRole("ADMIN").
-                //--Using .hasRole("USER") with multiple ROLES Authentication instead of .authenticated().
-  		 	)
+                    .requestMatchers("/api/v1/auth/**").permitAll()
+                    .requestMatchers("/api/v1/teacher/**").hasAuthority("TEACHER")
+                    .requestMatchers("/api/v1/manager/**").hasAuthority("MANAGER")
+                    .anyRequest().authenticated()
+            )
+            //--Custom Session
             .sessionManagement((sessionManagement) ->
                 sessionManagement
-                //--Doesn't have a Session for public request.
-                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                    //--Doesn't store Session for REST-ful.
+                    .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
             )
+            //--Authentication step.
             .authenticationProvider(authenticationProvider)
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return httpSecurity.build();

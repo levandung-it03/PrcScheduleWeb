@@ -1,2 +1,10 @@
-package com.SoftwareTech.PrcScheduleWeb.auth;public class AuthenticationResponse {
+package com.SoftwareTech.PrcScheduleWeb.auth;
+
+import lombok.*;
+
+@Data
+@AllArgsConstructor
+@Builder
+public class AuthenticationResponse {
+    private String token;
 }
