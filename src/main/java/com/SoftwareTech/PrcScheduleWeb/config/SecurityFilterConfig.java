@@ -1,7 +1,5 @@
 package com.SoftwareTech.PrcScheduleWeb.config;
 
-import jakarta.servlet.Filter;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -13,14 +11,12 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import java.util.List;
-
+import static org.springframework.http.HttpMethod.*;
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-public class SecurityConfig {
+public class SecurityFilterConfig {
     @Autowired
     private final AuthenticationProvider authenticationProvider;
     @Autowired
@@ -30,24 +26,32 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
-            //--Authorization step.
             .csrf(AbstractHttpConfigurer::disable)
-            .authorizeHttpRequests((authorizeHttpRequests) ->
-                authorizeHttpRequests
-                    .requestMatchers("/api/v1/auth/**").permitAll()
-                    .requestMatchers("/api/v1/teacher/**").hasAuthority("TEACHER")
-                    .requestMatchers("/api/v1/manager/**").hasAuthority("MANAGER")
-                    .anyRequest().authenticated()
+        //--Custom OncePerRequestFilter always run before the Authentication.
+            .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+            .authorizeHttpRequests(request ->
+                request
+                    .requestMatchers("/js/**").permitAll()
+                    .requestMatchers("/css/**").permitAll()
+                    .requestMatchers("/img/**").permitAll()
+                    .requestMatchers(GET, "/public/**").permitAll()
+                    .requestMatchers(GET, "/teacher/**").permitAll()
+                    .requestMatchers(GET, "/manager/**").permitAll()
+
+                    .requestMatchers(POST, "/service/v1/auth/**").permitAll()
+                    .requestMatchers(POST, "/service/v1/teacher/**").hasAuthority("TEACHER")
+                    .requestMatchers(POST, "/service/v1/manager/**").hasAuthority("MANAGER")
+
+                    .anyRequest().permitAll()
             )
-            //--Custom Session
+        //--Custom Session to not store Session because of JWT.
             .sessionManagement((sessionManagement) ->
-                sessionManagement
-                    //--Doesn't store Session for REST-ful.
-                    .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+                sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             )
-            //--Authentication step.
-            .authenticationProvider(authenticationProvider)
-            .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+        //--Configure how Spring Security will authenticate Account.
+        //--This AuthProvider be used by AuthenticationManager.
+            .authenticationProvider(authenticationProvider);
         return httpSecurity.build();
     }
+
 }

@@ -1,5 +1,7 @@
-package com.SoftwareTech.PrcScheduleWeb.config;
+package com.SoftwareTech.PrcScheduleWeb.auth;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -7,23 +9,17 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 
-import javax.crypto.KeyGenerator;
 import javax.crypto.spec.SecretKeySpec;
-import java.math.BigInteger;
-import java.security.*;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.RSAKeyGenParameterSpec;
-import java.security.spec.RSAPublicKeySpec;
-import java.security.spec.X509EncodedKeySpec;
-import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
 @Service
+@RequiredArgsConstructor
 public class JwtService {
-    private static final String SECRET_KEY = "EiYz1aqHzqnw9Js7IimBKIKgggJEh0Mqj1jAU7VVxc8=";
+    @Value("${secret.key}")
+    private String SECRET_KEY;
 
     /**JwtServices: Generating Token Methods by Custom Claims**/
     public String generateToken(Map<String, Object> customClaims, UserDetails userDetails) {
@@ -90,14 +86,7 @@ public class JwtService {
         return new SecretKeySpec(keyAsBytes, "HmacSHA256");
     }
     /*private String getRandomSecretKey() {
-        try {
-            return Base64.getEncoder().encodeToString(
-                    KeyGenerator.getInstance("HmacSHA256")
-                        .generateKey()
-                        .getEncoded()
-            );
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException();
-        }
+        try {return Base64.getEncoder().encodeToString(KeyGenerator.getInstance("HmacSHA256").generateKey().getEncoded());
+        } catch (NoSuchAlgorithmException e) {throw new RuntimeException();}
     }*/
 }

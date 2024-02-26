@@ -1,6 +1,6 @@
 package com.SoftwareTech.PrcScheduleWeb.auth;
 
-import com.SoftwareTech.PrcScheduleWeb.config.JwtService;
+import com.SoftwareTech.PrcScheduleWeb.dto.DtoAuthentication;
 import com.SoftwareTech.PrcScheduleWeb.model.Account;
 import com.SoftwareTech.PrcScheduleWeb.model.enums.Role;
 import com.SoftwareTech.PrcScheduleWeb.repository.AccountRepository;
@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
-public class AuthenticatingService {
+public class AuthenticationService {
     @Autowired
     private final AccountRepository accountRepository;
     @Autowired
@@ -26,33 +26,36 @@ public class AuthenticatingService {
     @Autowired
     private final AuthenticationManager authenticationManager;
 
-    public AuthenticationResponse register(RegisterRequest request) {
+    public DtoAuthenticationResponse register(DtoRegisterRequest request) {
         Account account = Account.builder()
-            .instituteEmail(request.getInstituteEmail())
-            .password(passwordEncoder.encode(request.getPassword()))
+            .instituteEmail(request.instituteEmail())
+            .password(passwordEncoder.encode(request.password()))
             .creatingTime(Timestamp.valueOf(LocalDateTime.now()))
             .role(Role.TEACHER)
             .build();
-        accountRepository.save(account);
         var jwtToken = jwtService.generateToken(account);
-        return AuthenticationResponse.builder()
+        accountRepository.save(account);
+        return DtoAuthenticationResponse.builder()
             .token(jwtToken)
+            .role(Role.TEACHER)
             .build();
     }
 
-    public AuthenticationResponse authenticate(AuthenticatingRequest request) {
-        //--Let the Authentication Process for AuthenticationManager.
-        UsernamePasswordAuthenticationToken userPassAuth = new UsernamePasswordAuthenticationToken(
+    public DtoAuthenticationResponse authenticate(DtoAuthentication request) {
+        //--Configure an AuthenticateToken by InputAccount.
+        UsernamePasswordAuthenticationToken authenticateToken = new UsernamePasswordAuthenticationToken(
             request.instituteEmail(),
             request.password()
         );
-        //--Separate code to put Debug.
-        authenticationManager.authenticate(userPassAuth);
+        //--Authenticate InputAccount with AuthenticationManager.
+        //--Use the configured AuthenticationProvider for authentication.
+        authenticationManager.authenticate(authenticateToken);
         Account account = accountRepository.findByInstituteEmail(request.instituteEmail())
             .orElseThrow();
         String jwtToken = jwtService.generateToken(account);
-        return AuthenticationResponse.builder()
+        return DtoAuthenticationResponse.builder()
             .token(jwtToken)
+            .role(account.getRole())
             .build();
     }
 }
