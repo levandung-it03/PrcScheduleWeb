@@ -23,10 +23,10 @@
     ```
   - Access Authorized Request:
     ```Http
-    GET, POST: /teacher/, /manager/
+    GET, POST /teacher/, /manager/
     If: Without Cookies.AccessToken
-    Else If: AccessToken is Expired
-    GET: Redirect:/public/login
+    If: AccessToken is Expired
+    GET Redirect:/public/login
     
     If: AccessToken has wrong Role
     Return: HTTPStatus[403 - Forbidden]
