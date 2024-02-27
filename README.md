@@ -19,7 +19,7 @@
     GET /public/login
     Note: With Cookies.AccessToken
     
-    GET Redirect /role/home
+    GET [Redirect] /role/home
     ```
   - Access Authorized Request:
     ```Http
@@ -27,7 +27,7 @@
     POST /teacher/, /manager/
     If: Without Cookies.AccessToken
     If: AccessToken is Expired
-    GET Redirect /public/login
+    GET [Redirect] /public/login
     
     If: AccessToken has wrong Role
     Return: HTTPStatus[403 - Forbidden]
