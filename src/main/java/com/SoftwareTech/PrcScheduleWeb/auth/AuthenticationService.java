@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.Base64;
 
 @Service
 @RequiredArgsConstructor
@@ -52,9 +53,9 @@ public class AuthenticationService {
         authenticationManager.authenticate(authenticateToken);
         Account account = accountRepository.findByInstituteEmail(request.instituteEmail())
             .orElseThrow();
-        String jwtToken = jwtService.generateToken(account);
+        byte[] jwtTokenAsBytes = jwtService.generateToken(account).getBytes();
         return DtoAuthenticationResponse.builder()
-            .token(jwtToken)
+            .encodedToken(Base64.getEncoder().encodeToString(jwtTokenAsBytes))
             .role(account.getRole())
             .build();
     }

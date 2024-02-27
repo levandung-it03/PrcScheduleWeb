@@ -40,17 +40,16 @@ public class AuthenticationController {
     ) throws IOException {
         try {
             DtoAuthenticationResponse authResult = authService.authenticate(authObject);
-            final String homeUrl = req.getContextPath() + "/" + authResult.role().toString().toLowerCase() + "/home";
             //--Send AccessToken to Cookie storage.
-            String encodedToken = Base64.getEncoder().encodeToString(authResult.token().getBytes());
-            Cookie accessTokenCookie = new Cookie("AccessToken", encodedToken);
+            Cookie accessTokenCookie = new Cookie("AccessToken", authResult.encodedToken());
             accessTokenCookie.setHttpOnly(true);
             accessTokenCookie.setSecure(true);
             accessTokenCookie.setPath("/");
             accessTokenCookie.setMaxAge(30*60 - 1);
 
             res.addCookie(accessTokenCookie);
-            res.sendRedirect(homeUrl);
+            //--Redirecting to Home with request: "classpath:/<role>/home".
+            res.sendRedirect(req.getContextPath() + "/" + authResult.role().toString().toLowerCase() + "/home");
         } catch (UsernameNotFoundException ignored) {
             //--Will be ignored because of security.
             res.sendRedirect(req.getContextPath() + "/public/login?errorMessage=eMv1at01");

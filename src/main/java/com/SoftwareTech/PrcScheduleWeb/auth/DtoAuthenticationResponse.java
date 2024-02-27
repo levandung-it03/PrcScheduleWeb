@@ -4,5 +4,5 @@ import com.SoftwareTech.PrcScheduleWeb.model.enums.Role;
 import lombok.*;
 
 @Builder
-public record DtoAuthenticationResponse(String token, Role role) {
+public record DtoAuthenticationResponse(String encodedToken, Role role) {
 }
