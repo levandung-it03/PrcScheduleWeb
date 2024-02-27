@@ -1,6 +1,7 @@
 package com.SoftwareTech.PrcScheduleWeb.config;
 
 import com.SoftwareTech.PrcScheduleWeb.auth.JwtService;
+import jakarta.servlet.DispatcherType;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
@@ -42,12 +43,20 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         @NonNull FilterChain filterChain
     ) throws ServletException, IOException {
         final String authHeader = request.getHeader("Authorization");
-        final Optional<Cookie> authCookie = request.getCookies() != null
-            ? Arrays.stream(request.getCookies()).filter(cookie ->
-            cookie.getName().equals("AccessToken")
-        ).findAny() : Optional.empty();
+        final Optional<Cookie> authCookie = (request.getCookies() != null)
+            ? Arrays.stream(request.getCookies())
+                .filter(cookie -> cookie.getName().equals("AccessToken"))
+                .findFirst()
+            : Optional.empty();
         final String jwtInputToken;
         final String instituteEmail;
+
+        String url = request.getDispatcherType().toString();
+        String url2 = request.getServletPath();
+        String url3 = request.getContextPath();
+        String url4 = request.getPathInfo();
+        String url5 = request.getRequestURI();
+
 
         //--Check if the request is Bypassed.
         if (isBypassToken(request)) {
@@ -55,27 +64,36 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return;
         }
 
-        //--Check if JWT Token doesn't exist in both Headers & Cookie.
-        if (authCookie.isEmpty() && (authHeader == null || !authHeader.startsWith("Bearer "))) {
+        //--Get JWT Token if there's a Headers.Authorization.
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+            jwtInputToken = authHeader.substring(7);
+        }
+        //--Get JWT Token if there's a Cookies.AccessToken.
+        else if (authCookie.isPresent()) {
+            Cookie encodedTokenInCookie = authCookie.orElseThrow();
+            jwtInputToken = new String(Base64.getDecoder().decode(encodedTokenInCookie.getValue()));
+        }
+        /*--Redirect LoginPage when:
+            1. Not Bypass.
+            2. Doesn't have Headers.Authorization or Cookies.AccessToken.*/
+        else {
+            //--JWT Token doesn't exist in both Headers & Cookie.
+            response.sendRedirect("/public/login");
             filterChain.doFilter(request, response);
             return;
-        }
-
-        //--Get JWT Token.
-        if (authHeader != null)
-            jwtInputToken = authHeader.substring(7);
-        else {
-            String encodedToken = authCookie.orElseThrow(() -> new AuthenticationException("Auth Token is missing!") {
-                //--Anonymous Object with Abstract Class.
-                //--If Cookie has value but not JWT Token (any request must be attached with JWT Token).
-            }).getValue();
-            jwtInputToken = new String(Base64.getDecoder().decode(encodedToken));
         }
 
         instituteEmail = jwtService.getInstituteEmail(jwtInputToken);
         if (instituteEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             //--Get UserDetails information (email, pass, roles,...)
             UserDetails userDetailsFromDB = this.userDetailsService.loadUserByUsername(instituteEmail);
+
+            //--If Token is expired, let user logins.
+            if (jwtService.isExpiredToken(jwtInputToken)) {
+                filterChain.doFilter(request, response);
+                response.sendRedirect("/public/login");
+                return;
+            }
 
             //--If Token is invalid, we don't have to validate UserDetails.
             if (jwtService.isValidToken(jwtInputToken, userDetailsFromDB)) {
@@ -102,8 +120,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         boolean isStaticResourcesRequest = requestURL.startsWith("/js/")
             || requestURL.startsWith("/css/")
-            || requestURL.startsWith("/img/");
-        if (isStaticResourcesRequest)
+            || requestURL.startsWith("/img/")
+            || requestURL.startsWith("/favicon.ico");
+        if (isStaticResourcesRequest || request.getDispatcherType() == DispatcherType.FORWARD)
             return true;
 
         final Map<String, String> bypassTokens = new HashMap<>();

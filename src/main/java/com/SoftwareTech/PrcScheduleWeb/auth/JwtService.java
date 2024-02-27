@@ -27,7 +27,7 @@ public class JwtService {
             .claims(customClaims)
             .subject(userDetails.getUsername())
             .issuedAt(new Date(System.currentTimeMillis()))
-            .expiration(new Date(System.currentTimeMillis()+ 15*60*1000))
+            .expiration(new Date(System.currentTimeMillis()+ 30*60*1000))
             .signWith(this.getSigningKey())
             .compact();
     }
@@ -41,17 +41,15 @@ public class JwtService {
     }
 
     /**JwtServices: Verifying Token if it isn't expired**/
-    public boolean isNotExpiredToken(String token) {
+    public boolean isExpiredToken(String token) {
         Date expirationDate = extractTokenAndGetAllClaims(token).getExpiration();
-        return expirationDate.after(new Date(System.currentTimeMillis()));
+        return !expirationDate.after(new Date(System.currentTimeMillis()));
     }
 
     /**JwtServices: Verifying Token if it's a valid Token (created by Spring App)**/
     public boolean isValidToken(String token, UserDetails userDetails) {
         final String originInstituteEmail = extractTokenAndGetAllClaims(token).getSubject();
-        boolean isUser = userDetails.getUsername().equals(originInstituteEmail);
-        boolean isNotExpired = isNotExpiredToken(token);
-        return isUser && isNotExpired;
+        return userDetails.getUsername().equals(originInstituteEmail);
     }
 
     /**JwtServices: Extract Token to get Claims**/

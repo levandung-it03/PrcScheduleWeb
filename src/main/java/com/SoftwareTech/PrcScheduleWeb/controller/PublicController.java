@@ -21,7 +21,7 @@ public class PublicController {
     public ModelAndView getLoginView(HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView("login");
         String errCode = request.getParameter("errorMessage");
-        String errMess = errCode == null ? "none" : errMessages.get(errCode);
+        String errMess = (errCode == null) ? "none" : errMessages.get(errCode);
 
         modelAndView.addObject("errorMessage", errMess);
         return modelAndView;

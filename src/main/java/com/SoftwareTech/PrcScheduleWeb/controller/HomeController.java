@@ -6,14 +6,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class HomeController {
-    @RequestMapping(value = "/teacher/home")
+    @RequestMapping(value = "/teacher/home", method = RequestMethod.GET)
     public String getTeacherHome() {
         return "teacher-home";
     }
 
     @RequestMapping(value = "/manager/home", method = RequestMethod.GET)
     public String getManagerHome() {
-        return "manager-home";
+            return "manager-home";
     }
 
 }

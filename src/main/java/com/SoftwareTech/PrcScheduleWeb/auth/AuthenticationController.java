@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.io.IOException;
 import java.util.Base64;
+import java.util.UUID;
 
 /**These are the controllers that don't need to Authorize**/
 @RequiredArgsConstructor
@@ -46,6 +47,7 @@ public class AuthenticationController {
             accessTokenCookie.setHttpOnly(true);
             accessTokenCookie.setSecure(true);
             accessTokenCookie.setPath("/");
+            accessTokenCookie.setMaxAge(30*60 - 1);
             res.addCookie(accessTokenCookie);
 
             res.sendRedirect(homeUrl);
