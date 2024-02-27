@@ -1,6 +1,8 @@
 package com.SoftwareTech.PrcScheduleWeb.controller;
 
+import com.SoftwareTech.PrcScheduleWeb.service.PublicPagesService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,23 +10,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.Map;
+import java.io.IOException;
 
 @Controller
 @RequestMapping(path = "/public")
 @RequiredArgsConstructor
 public class PublicController {
     @Autowired
-    private final Map<String, String> errMessages;
+    private final PublicPagesService publicPagesService;
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public ModelAndView getLoginView(HttpServletRequest request) {
-        ModelAndView modelAndView = new ModelAndView("login");
-        String errCode = request.getParameter("errorMessage");
-        String errMess = (errCode == null) ? "none" : errMessages.get(errCode);
-
-        modelAndView.addObject("errorMessage", errMess);
-        return modelAndView;
+    public ModelAndView getLoginView(
+        HttpServletRequest request,
+        HttpServletResponse response
+    ) throws IOException {
+        return publicPagesService.renderLoginPage(request, response);
     }
 
 }

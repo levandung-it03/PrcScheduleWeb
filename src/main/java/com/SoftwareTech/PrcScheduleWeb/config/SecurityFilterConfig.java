@@ -36,8 +36,8 @@ public class SecurityFilterConfig {
                     .requestMatchers("/img/**").permitAll()
                     .requestMatchers("/favicon.ico").permitAll()
                     .requestMatchers(GET, "/public/**").permitAll()
-                    .requestMatchers(GET, "/teacher/**").permitAll()
-                    .requestMatchers(GET, "/manager/**").permitAll()
+                    .requestMatchers(GET, "/teacher/**").hasAuthority("TEACHER")
+                    .requestMatchers(GET, "/manager/**").hasAuthority("MANAGER")
 
                     .requestMatchers(POST, "/service/v1/auth/**").permitAll()
                     .requestMatchers(POST, "/service/v1/teacher/**").hasAuthority("TEACHER")

@@ -36,57 +36,57 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Value("${url.post.auth.prefix.v1}")
     private String authPrefix;
 
+    /**
+     * Customized JWT Structure with ServerSideRendering:
+     * <br> 1. Check Bypass Urls.
+     * <br>
+     * <br> 2. Check Existing Token.
+     * <br> - In Headers: with frame "Bearer [AccessToken]".
+     * <br> - In Cookies: with frame "Cookie(name="AccessToken", value=[Bass64_Encoded_AccessToken])".
+     * <br> ==> Not found: "Redirect:/public/login".
+     * <br> ==> Cookie Expired: "Redirect:/public/login".
+     * <br>
+     * <br> 3. Check Token whether it's valid.
+     * <br> ==> Invalid Token: Clear all Cookies.
+     */
     @Override
     protected void doFilterInternal(
         @NonNull HttpServletRequest request,
         @NonNull HttpServletResponse response,
         @NonNull FilterChain filterChain
     ) throws ServletException, IOException {
-        final String jwtInputToken;
-        final String instituteEmail;
         final String authHeader = request.getHeader("Authorization");
-        final Optional<Cookie> authCookie = (request.getCookies() != null)
-            ? Arrays.stream(request.getCookies())
-                .filter(cookie -> cookie.getName().equals("AccessToken"))
-                .findFirst()
-            : Optional.empty();
+        final String accessTokenInCookies = jwtService.getAccessTokenInCookies(request);
 
-        //--Check if the request is Bypassed.
         if (isBypassToken(request)) {
+            //--Find NextFilter or NextHttpSecurityStep if it's Bypassed.
             filterChain.doFilter(request, response);
             return;
         }
 
-        //--Debug Important Point.
-        // TestClass.detectAllUrlWithRequest(request);
-
+        final String jwtInputToken;
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             //--Get JWT Token if there's a Headers.Authorization.
             jwtInputToken = authHeader.substring(7);
-        } else if (authCookie.isPresent()) {
+        } else if (accessTokenInCookies != null) {
             //--Get JWT Token if there's a Cookies.AccessToken.
-            jwtInputToken = new String(Base64.getDecoder().decode(authCookie.orElseThrow().getValue()));
+            jwtInputToken = accessTokenInCookies;
         } else {
-            /*--Redirect LoginPage when we don't have Headers.Authorization or Cookies.AccessToken:
-                1. Not Bypass.
-                2. JWT Token doesn't exist in both Headers & Cookie.
-            */
+            //--Can't Bypass and the JWT Token doesn't exist in both Headers & Cookie.
             response.sendRedirect("/public/login");
-            filterChain.doFilter(request, response);
             return;
         }
 
-        instituteEmail = jwtService.getInstituteEmail(jwtInputToken);
+        if (jwtService.isExpiredToken(jwtInputToken)) {
+            //--If Token is expired, let user logins again.
+            response.sendRedirect("/public/login");
+            return;
+        }
+
+        final String instituteEmail = jwtService.getInstituteEmail(jwtInputToken);
         if (instituteEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             //--Get UserDetails information (email, pass, roles,...)
-            UserDetails userDetailsFromDB = this.userDetailsService.loadUserByUsername(instituteEmail);
-
-            //--If Token is expired, let user logins (will be ignored, because Cookie has smaller age than Token).
-            if (jwtService.isExpiredToken(jwtInputToken)) {
-                filterChain.doFilter(request, response);
-                response.sendRedirect("/public/login");
-                return;
-            }
+            UserDetails userDetailsFromDB = userDetailsService.loadUserByUsername(instituteEmail);
 
             //--If Token is invalid, we don't have to validate UserDetails.
             if (jwtService.isValidToken(jwtInputToken, userDetailsFromDB)) {
@@ -102,7 +102,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 );
                 //--Tell Spring that Authentication was passed (Token is valid -> this is user) in the whole Context.
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-            }
+            } else if (request.getCookies() != null)
+                Arrays.stream(request.getCookies()).forEach(cookie -> {
+                        cookie.setMaxAge(0);
+                        response.addCookie(cookie);
+                    }
+                );
         }
         filterChain.doFilter(request, response);
     }
@@ -128,4 +133,5 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         return false;
     }
+
 }

@@ -4,6 +4,7 @@ import com.SoftwareTech.PrcScheduleWeb.dto.DtoAuthentication;
 import com.SoftwareTech.PrcScheduleWeb.model.Account;
 import com.SoftwareTech.PrcScheduleWeb.model.enums.Role;
 import com.SoftwareTech.PrcScheduleWeb.repository.AccountRepository;
+import jakarta.servlet.http.Cookie;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -53,10 +54,22 @@ public class AuthenticationService {
         authenticationManager.authenticate(authenticateToken);
         Account account = accountRepository.findByInstituteEmail(request.instituteEmail())
             .orElseThrow();
-        byte[] jwtTokenAsBytes = jwtService.generateToken(account).getBytes();
+        var jwtToken = jwtService.generateToken(account);
         return DtoAuthenticationResponse.builder()
-            .encodedToken(Base64.getEncoder().encodeToString(jwtTokenAsBytes))
+            .token(jwtToken)
             .role(account.getRole())
             .build();
+    }
+
+    public Cookie custmoizeAcessTokenToServeCookie(String jwtToken) {
+        byte[] jwtTokenAsBytes = jwtToken.getBytes();
+        String encodedJwtToken = Base64.getEncoder().encodeToString(jwtTokenAsBytes);
+
+        Cookie accessTokenCookie = new Cookie("AccessToken", encodedJwtToken);
+        accessTokenCookie.setHttpOnly(true);
+        accessTokenCookie.setSecure(true);
+        accessTokenCookie.setPath("/");
+        accessTokenCookie.setMaxAge(30*60 - 1);
+        return accessTokenCookie;
     }
 }

@@ -36,25 +36,30 @@ public class AuthenticationController {
 
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
     @ModelAttribute("authObject")
-    public void authenticate(DtoAuthentication authObject, HttpServletResponse res, HttpServletRequest req
+    public void authenticate(DtoAuthentication authObject, HttpServletResponse response, HttpServletRequest request
     ) throws IOException {
         try {
+            //--Authenticate Username-Password and return JWT Token.
             DtoAuthenticationResponse authResult = authService.authenticate(authObject);
-            //--Send AccessToken to Cookie storage.
-            Cookie accessTokenCookie = new Cookie("AccessToken", authResult.encodedToken());
-            accessTokenCookie.setHttpOnly(true);
-            accessTokenCookie.setSecure(true);
-            accessTokenCookie.setPath("/");
-            accessTokenCookie.setMaxAge(30*60 - 1);
 
-            res.addCookie(accessTokenCookie);
-            //--Redirecting to Home with request: "classpath:/<role>/home".
-            res.sendRedirect(req.getContextPath() + "/" + authResult.role().toString().toLowerCase() + "/home");
+            //--Create Cookie with JWT AccessToken.
+            Cookie accessTokenCookie = authService.custmoizeAcessTokenToServeCookie(authResult.token());
+
+            //--Send AccessToken to Cookie storage.
+            response.addCookie(accessTokenCookie);
+
+            //--Get redirecting URL to Home: "classpath:/role/home".
+            String matchedHomeUrlWithRole = String.format(
+                "%s/%s/home",
+                request.getContextPath(),
+                authResult.role().toString().toLowerCase()
+            );
+            response.sendRedirect(matchedHomeUrlWithRole);
         } catch (UsernameNotFoundException ignored) {
             //--Will be ignored because of security.
-            res.sendRedirect(req.getContextPath() + "/public/login?errorMessage=eMv1at01");
+            response.sendRedirect(request.getContextPath() + "/public/login?errorMessage=eMv1at01");
         } catch (BadCredentialsException ignored) {
-            res.sendRedirect(req.getContextPath() + "/public/login?errorMessage=eMv1at02");
+            response.sendRedirect(request.getContextPath() + "/public/login?errorMessage=eMv1at02");
         }
     }
 }
