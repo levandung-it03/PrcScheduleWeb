@@ -17,8 +17,7 @@
   - Access LoginPage from Authorized Request:
     ```Http
     GET /public/login
-    Note: With Cookies.AccessToken
-    
+    If: With Cookies.AccessToken
     GET [Redirect] /role/home
     ```
   - Access Authorized Request:
