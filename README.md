@@ -26,7 +26,7 @@
     GET, POST /teacher/, /manager/
     If: Without Cookies.AccessToken
     If: AccessToken is Expired
-    GET Redirect:/public/login
+    Redirect GET /public/login
     
     If: AccessToken has wrong Role
     Return: HTTPStatus[403 - Forbidden]
