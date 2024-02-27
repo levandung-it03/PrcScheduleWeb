@@ -1,6 +1,7 @@
 package com.SoftwareTech.PrcScheduleWeb.config;
 
 import com.SoftwareTech.PrcScheduleWeb.auth.JwtService;
+import com.SoftwareTech.PrcScheduleWeb.auth.TestClass;
 import jakarta.servlet.DispatcherType;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -41,21 +42,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         @NonNull HttpServletResponse response,
         @NonNull FilterChain filterChain
     ) throws ServletException, IOException {
+        final String jwtInputToken;
+        final String instituteEmail;
         final String authHeader = request.getHeader("Authorization");
         final Optional<Cookie> authCookie = (request.getCookies() != null)
             ? Arrays.stream(request.getCookies())
                 .filter(cookie -> cookie.getName().equals("AccessToken"))
                 .findFirst()
             : Optional.empty();
-        final String jwtInputToken;
-        final String instituteEmail;
-
-        String url = request.getDispatcherType().toString();
-        String url2 = request.getServletPath();
-        String url3 = request.getContextPath();
-        String url4 = request.getPathInfo();
-        String url5 = request.getRequestURI();
-
 
         //--Check if the request is Bypassed.
         if (isBypassToken(request)) {
@@ -63,20 +57,20 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return;
         }
 
-        //--Get JWT Token if there's a Headers.Authorization.
+        //--Debug Important Point.
+        // TestClass.detectAllUrlWithRequest(request);
+
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
+            //--Get JWT Token if there's a Headers.Authorization.
             jwtInputToken = authHeader.substring(7);
-        }
-        //--Get JWT Token if there's a Cookies.AccessToken.
-        else if (authCookie.isPresent()) {
-            Cookie encodedTokenInCookie = authCookie.orElseThrow();
-            jwtInputToken = new String(Base64.getDecoder().decode(encodedTokenInCookie.getValue()));
-        }
-        /*--Redirect LoginPage when:
-            1. Not Bypass.
-            2. Doesn't have Headers.Authorization or Cookies.AccessToken.*/
-        else {
-            //--JWT Token doesn't exist in both Headers & Cookie.
+        } else if (authCookie.isPresent()) {
+            //--Get JWT Token if there's a Cookies.AccessToken.
+            jwtInputToken = new String(Base64.getDecoder().decode(authCookie.orElseThrow().getValue()));
+        } else {
+            /*--Redirect LoginPage when we don't have Headers.Authorization or Cookies.AccessToken:
+                1. Not Bypass.
+                2. JWT Token doesn't exist in both Headers & Cookie.
+            */
             response.sendRedirect("/public/login");
             filterChain.doFilter(request, response);
             return;
@@ -87,7 +81,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             //--Get UserDetails information (email, pass, roles,...)
             UserDetails userDetailsFromDB = this.userDetailsService.loadUserByUsername(instituteEmail);
 
-            //--If Token is expired, let user logins.
+            //--If Token is expired, let user logins (will be ignored, because Cookie has smaller age than Token).
             if (jwtService.isExpiredToken(jwtInputToken)) {
                 filterChain.doFilter(request, response);
                 response.sendRedirect("/public/login");

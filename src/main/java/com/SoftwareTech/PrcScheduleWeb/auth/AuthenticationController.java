@@ -48,8 +48,8 @@ public class AuthenticationController {
             accessTokenCookie.setSecure(true);
             accessTokenCookie.setPath("/");
             accessTokenCookie.setMaxAge(30*60 - 1);
-            res.addCookie(accessTokenCookie);
 
+            res.addCookie(accessTokenCookie);
             res.sendRedirect(homeUrl);
         } catch (UsernameNotFoundException ignored) {
             //--Will be ignored because of security.
