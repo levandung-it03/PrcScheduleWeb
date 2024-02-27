@@ -15,18 +15,21 @@
   - Validate from Java (Customized Modules with Spring Security) site.
 - After login:
   - Access LoginPage from Authorized Request:
-    > GET: /public/login
-  <br> *Note: With Cookies.AccessToken*
-  <br>
-  <br> GET: Redirect:/role/home
+    ```Http
+    GET: /public/login
+    Note: With Cookies.AccessToken*
+    
+    GET: Redirect:/role/home
+    ```
   - Access Authorized Request:
-    > METHOD: /teacher/, /manager/
-  <br>
-  <br>*If: Without Cookies.AccessToken*
-  <br>*Else If: AccessToken is Expired*
-  <br>GET: Redirect:/public/login
-  <br>
-  <br>*If: AccessToken has wrong Role*
-  <br>HTTPStatus: 403 - *Forbidden*
+    ```Http
+    METHOD: /teacher/, /manager/
+    If: Without Cookies.AccessToken
+    Else If: AccessToken is Expired
+    
+    GET: Redirect:/public/login
+    If: AccessToken has wrong Role
+    Return HTTPStatus[403 - Forbidden]
+    ```
   
     
