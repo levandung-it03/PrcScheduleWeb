@@ -1,5 +1,6 @@
 const $ = document.querySelector.bind(document);
 const $$ = document.querySelectorAll.bind(document);
+const urlParams = new URLSearchParams(window.location.search);
 
 function cutomizeClosingErrMessageEvent() {
     const errMessageCloseBtn = $('div.error-message #error-message-close-btn');
@@ -37,5 +38,18 @@ function customizeSubmitFormAction(validatingBlocks) {
         let isValid = Object.entries(validatingBlocks).every((elem) => elem[1].isValid);
         if (!isValid)   alert("Thông tin đầu vào bị lỗi!");
         return isValid;
+    }
+}
+
+function removePathAttributes() {
+    if (urlParams.has('errorMessage')) {
+        urlParams.delete('errorMessage');
+        const newUrl = `${window.location.pathname}`;
+        history.replaceState(null, '', newUrl);
+    }
+    if (urlParams.has('succeedMessage')) {
+        urlParams.delete('succeedMessage');
+        const newUrl = `${window.location.pathname}`;
+        history.replaceState(null, '', newUrl);
     }
 }

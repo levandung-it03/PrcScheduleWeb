@@ -31,10 +31,6 @@ public class SecurityFilterConfig {
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
             .authorizeHttpRequests(request ->
                 request
-                    .requestMatchers("/js/**").permitAll()
-                    .requestMatchers("/css/**").permitAll()
-                    .requestMatchers("/img/**").permitAll()
-                    .requestMatchers("/favicon.ico").permitAll()
                     .requestMatchers(GET, "/public/**").permitAll()
                     .requestMatchers(GET, "/teacher/**").hasAuthority("TEACHER")
                     .requestMatchers(GET, "/manager/**").hasAuthority("MANAGER")

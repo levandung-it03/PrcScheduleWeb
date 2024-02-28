@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Teacher Account</title>
+    <link rel="stylesheet" href="../resources/static/css/base.css">
+    <link rel="stylesheet" href="../resources/static/css/add-account.css">
+</head>
+<body>
+    <!-- <div class="error-message" style="display:${errorMessage}">
+        <span>${errorMessage}</span>
+        <i id="error-message-close-btn" class="fa fa-times-circle" aria-hidden="true"></i>
+    </div>
+    <div class="succeed-message" style="display:${succeedMessage}">
+        <span>${succeedMessage}</span>
+        <i id="succeed-message-close-btn" class="fa fa-times-circle" aria-hidden="true"></i>
+    </div> -->
+    <form method="POST" action="/service/v1/auth/authenticate" modelAttribute="authObject">
+        <span id="form-title">Đăng nhập</span>
+        <div class="register-input" id="instituteEmail">
+            <label for="instituteEmail">Email Học Viện</label>
+            <input name="instituteEmail" type="text" placeholder="nguoiquanly@ptithcm.edu.vn" required>
+            <div class="register-input_err-message"></div>
+        </div>
+
+        <div class="register-input" id="password">
+            <label for="password">Mật khẩu</label>
+            <input name="password" type="password" required>
+            <div class="register-input_err-message"></div>
+            <div class="register-input_toggle-hidden">
+                <i class="show-pass fa-solid fa-eye"></i>
+                <i class="hide-pass hidden fa-regular fa-eye-slash"></i>
+            </div>
+        </div>
+
+        <div class="register-input" id="retypePassword">
+            <label for="retypePassword">Mật khẩu</label>
+            <input name="retypePassword" type="retypePassword" required>
+            <div class="register-input_err-message"></div>
+            <div class="register-input_toggle-hidden">
+                <i class="show-pass fa-solid fa-eye"></i>
+                <i class="hide-pass hidden fa-regular fa-eye-slash"></i>
+            </div>
+        </div>
+        <input type="submit" value="Đăng nhập">
+    </form>
+    <script type="application/javascript" src="../resources/static/js/base.js"></script>
+    <script type="application/javascript" src="../resources/static/js/add-teacher.js"></script>
+</body>
+</html>

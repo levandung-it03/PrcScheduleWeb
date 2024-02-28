@@ -55,8 +55,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         @NonNull HttpServletResponse response,
         @NonNull FilterChain filterChain
     ) throws ServletException, IOException {
-        final String authHeader = request.getHeader("Authorization");
         final String accessTokenInCookies = jwtService.getAccessTokenInCookies(request);
+
+        TestClass.detectAllUrlWithRequest(request);
 
         if (isBypassToken(request)) {
             //--Find NextFilter or NextHttpSecurityStep if it's Bypassed.
@@ -65,10 +66,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
 
         final String jwtInputToken;
-        if (authHeader != null && authHeader.startsWith("Bearer ")) {
-            //--Get JWT Token if there's a Headers.Authorization.
-            jwtInputToken = authHeader.substring(7);
-        } else if (accessTokenInCookies != null) {
+        if (accessTokenInCookies != null) {
             //--Get JWT Token if there's a Cookies.AccessToken.
             jwtInputToken = accessTokenInCookies;
         } else {

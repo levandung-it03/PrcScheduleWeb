@@ -28,31 +28,31 @@ public class AuthenticationService {
     @Autowired
     private final AuthenticationManager authenticationManager;
 
-    public DtoAuthenticationResponse register(DtoRegisterRequest request) {
-        Account account = Account.builder()
-            .instituteEmail(request.instituteEmail())
-            .password(passwordEncoder.encode(request.password()))
-            .creatingTime(Timestamp.valueOf(LocalDateTime.now()))
-            .role(Role.TEACHER)
-            .build();
-        var jwtToken = jwtService.generateToken(account);
-        accountRepository.save(account);
-        return DtoAuthenticationResponse.builder()
-            .token(jwtToken)
-            .role(Role.TEACHER)
-            .build();
-    }
+//    public DtoAuthenticationResponse register(DtoRegisterRequest request) {
+//        Account account = Account.builder()
+//            .instituteEmail(request.instituteEmail())
+//            .password(passwordEncoder.encode(request.password()))
+//            .creatingTime(Timestamp.valueOf(LocalDateTime.now()))
+//            .role(Role.MANAGER)
+//            .build();
+//        var jwtToken = jwtService.generateToken(account);
+//        accountRepository.save(account);
+//        return DtoAuthenticationResponse.builder()
+//            .token(jwtToken)
+//            .role(Role.MANAGER)
+//            .build();
+//    }
 
-    public DtoAuthenticationResponse authenticate(DtoAuthentication request) {
+    public DtoAuthenticationResponse authenticate(DtoAuthentication authObject) {
         //--Configure an AuthenticateToken by InputAccount.
         UsernamePasswordAuthenticationToken authenticateToken = new UsernamePasswordAuthenticationToken(
-            request.instituteEmail(),
-            request.password()
+            authObject.instituteEmail(),
+            authObject.password()
         );
         //--Authenticate InputAccount with AuthenticationManager.
         //--Use the configured AuthenticationProvider for authentication.
         authenticationManager.authenticate(authenticateToken);
-        Account account = accountRepository.findByInstituteEmail(request.instituteEmail())
+        Account account = accountRepository.findByInstituteEmail(authObject.instituteEmail())
             .orElseThrow();
         var jwtToken = jwtService.generateToken(account);
         return DtoAuthenticationResponse.builder()

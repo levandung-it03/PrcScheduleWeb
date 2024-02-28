@@ -5,12 +5,12 @@ import jakarta.servlet.http.HttpServletRequest;
 public class TestClass {
     public static void detectAllUrlWithRequest(HttpServletRequest request) {
         String url = request.getDispatcherType().toString();
-        url = request.getMethod();
-        url = request.getServletPath();
-        url = request.getContextPath();
-        url = request.getPathInfo();
-        url = request.getRequestURI();
-        url = request.getAuthType();
-        url = request.getPathTranslated();
+        String url1 = request.getMethod();
+        String url2 = request.getServletPath();
+        String url3 = request.getContextPath();
+        String url4 = request.getPathInfo();
+        String url5 = request.getRequestURI();
+        String url6 = request.getAuthType();
+        String url7 = request.getPathTranslated();
     }
 }

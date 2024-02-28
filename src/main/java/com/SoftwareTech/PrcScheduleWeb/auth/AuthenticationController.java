@@ -29,10 +29,10 @@ public class AuthenticationController {
     @Autowired
     private final AuthenticationService authService;
 
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public ResponseEntity<DtoAuthenticationResponse> register(@RequestBody DtoRegisterRequest request) {
-        return ResponseEntity.status(HttpStatus.OK).body(authService.register(request));
-    }
+//    @RequestMapping(value = "/register", method = RequestMethod.POST)
+//    public ResponseEntity<DtoAuthenticationResponse> register(@RequestBody DtoRegisterRequest request) {
+//        return ResponseEntity.status(HttpStatus.OK).body(authService.register(request));
+//    }
 
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
     @ModelAttribute("authObject")

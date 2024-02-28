@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.security.SecureRandom;
 import java.util.HashMap;
@@ -34,7 +35,7 @@ public class ApplicationConfig {
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
         authProvider.setUserDetailsService(userDetailsService());
-        authProvider.setPasswordEncoder(setPasswordEncoder());
+        authProvider.setPasswordEncoder(getPasswordEncoder());
         return authProvider;
     }
 
@@ -51,15 +52,24 @@ public class ApplicationConfig {
     }
 
     @Bean
-    public PasswordEncoder setPasswordEncoder() {
+    public PasswordEncoder getPasswordEncoder() {
         return new BCryptPasswordEncoder(12, new SecureRandom());
     }
 
     @Bean
-    public Map<String, String> errMessages() {
-        Map<String, String> errs = new HashMap<>();
-        errs.put("eMv1at01", "Email not found!");
-        errs.put("eMv1at02", "Password is invalid!");
-        return errs;
+    public StaticUtilMethods staticUtilMethods() {
+        return new StaticUtilMethods(responseMessages());
+    }
+
+    @Bean
+    public Map<String, String> responseMessages() {
+        Map<String, String> messagePairs = new HashMap<>();
+        //--Successfully messages.
+        messagePairs.put("sMv1at01", "Account has been added successfully!");
+
+        //--Error messages.
+        messagePairs.put("eMv1at01", "Email not found!");
+        messagePairs.put("eMv1at02", "Password is invalid!");
+        return messagePairs;
     }
 }

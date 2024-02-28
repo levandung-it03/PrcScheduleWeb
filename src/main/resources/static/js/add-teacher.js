@@ -1,3 +1,5 @@
+let canSubmitForm = false;
+
 (function main() {
     const validatingBlocks = {
         instituteEmail: {
@@ -20,6 +22,17 @@
             errorMessage: "Mật khẩu không đủ dài.",
             isValid: false,
         },
+        retypePassword: {
+            tag: $('input[name=retypePassword]'),
+            confirm: function (value) {
+                if (value != globalThis.password.tag.value) {
+                    this.isValid = false;
+                } else this.isValid = true;
+                return this.isValid;
+            },
+            errorMessage: "Mật khẩu không chính xác.",
+            isValid: false,
+        },
     };
 
     cutomizeClosingErrMessageEvent();
@@ -27,19 +40,18 @@
     customizeInputTagValidateEvents(validatingBlocks);
     customizeToggleDisplayPasswordEvent(validatingBlocks.password.tag);
     customizeSubmitFormAction(validatingBlocks);
-    removePathAttributes();
 })();
 
 function customizeToggleDisplayPasswordEvent(passwordTag) {
-    $$('.login-input_toggle-hidden i').forEach((e) => {
+    $$('.register-input_toggle-hidden i').forEach((e) => {
         e.onclick = (event) => {
             if ([...event.target.classList].some((e) => e == "show-pass")) {
-                $('.login-input_toggle-hidden .show-pass').classList.add("hidden");
-                $('.login-input_toggle-hidden .hide-pass').classList.remove("hidden");
+                $('.register-input_toggle-hidden .show-pass').classList.add("hidden");
+                $('.register-input_toggle-hidden .hide-pass').classList.remove("hidden");
                 passwordTag.type = "text";
             } else {
-                $('.login-input_toggle-hidden .hide-pass').classList.add("hidden");
-                $('.login-input_toggle-hidden .show-pass').classList.remove("hidden");
+                $('.register-input_toggle-hidden .hide-pass').classList.add("hidden");
+                $('.register-input_toggle-hidden .show-pass').classList.remove("hidden");
                 passwordTag.type = "password";
             }
         }
