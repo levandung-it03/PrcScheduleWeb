@@ -14,7 +14,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.security.SecureRandom;
 import java.util.HashMap;
@@ -70,6 +69,7 @@ public class ApplicationConfig {
         //--Error messages.
         messagePairs.put("eMv1at01", "Email not found!");
         messagePairs.put("eMv1at02", "Password is invalid!");
+        messagePairs.put("eMv1at03", "Email is already existing!");
         return messagePairs;
     }
 }

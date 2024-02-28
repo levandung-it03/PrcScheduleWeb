@@ -42,7 +42,7 @@ public class Teacher {
     @Column(name = "phone_number", length = 20, nullable = false, unique = true)
     private String phone;
 
-    @Column(name = "status_enum", nullable = false, columnDefinition = "BIT(1) DEFAULT 1")
+    @Column(name = "status_enum", nullable = false, columnDefinition = "TINYINT DEFAULT 1")
     private boolean status;
 
     @OneToOne(cascade = CascadeType.ALL)

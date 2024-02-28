@@ -5,7 +5,6 @@ import com.SoftwareTech.PrcScheduleWeb.auth.TestClass;
 import jakarta.servlet.DispatcherType;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -100,12 +99,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 );
                 //--Tell Spring that Authentication was passed (Token is valid -> this is user) in the whole Context.
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-            } else if (request.getCookies() != null)
+            }
+            //--Clear all invalid Token inside Cookies.
+            else if (request.getCookies() != null) {
                 Arrays.stream(request.getCookies()).forEach(cookie -> {
                         cookie.setMaxAge(0);
                         response.addCookie(cookie);
                     }
                 );
+                response.sendRedirect("/public/login");
+                return;
+            }
         }
         filterChain.doFilter(request, response);
     }

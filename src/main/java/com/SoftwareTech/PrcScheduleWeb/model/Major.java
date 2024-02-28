@@ -25,6 +25,6 @@ public class Major {
     @JsonIgnore
     private Department department;
 
-    @Column(name = "status_enum", nullable = false, columnDefinition = "BIT(1) DEFAULT 1")
+    @Column(name = "status_enum", nullable = false, columnDefinition = "TINYINT DEFAULT 1")
     private boolean status;
 }

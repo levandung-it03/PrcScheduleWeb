@@ -36,6 +36,9 @@ public class Account implements UserDetails {
     @Column(name = "role_enum", nullable = false)
     private Role role;
 
+    @Column(name = "status_enum", nullable = false, columnDefinition = "TINYINT DEFAULT 1")
+    private boolean status;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));

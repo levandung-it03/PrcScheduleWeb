@@ -1,5 +1,6 @@
 package com.SoftwareTech.PrcScheduleWeb.config;
 
+import com.SoftwareTech.PrcScheduleWeb.dto.DtoRegisterAccount;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;

@@ -3,18 +3,26 @@ const $$ = document.querySelectorAll.bind(document);
 const urlParams = new URLSearchParams(window.location.search);
 
 function cutomizeClosingErrMessageEvent() {
-    const errMessageCloseBtn = $('div.error-message #error-message-close-btn');
+    const errMessageCloseBtn = $('div.error-service-message i#error-service-message_close-btn');
+    const succeedMessageCloseBtn = $('div.succeed-service-message i#succeed-service-message_close-btn');
+
     if (errMessageCloseBtn != null) {
         errMessageCloseBtn.addEventListener("click", (e) => {
-            $('div.error-message').classList.add("hide");
+            $('div.error-service-message').classList.add("hide");
         });
-        setInterval(() => $('div.error-message').classList.add("hide"), 4000);
     }
+    if (succeedMessageCloseBtn != null) {
+        succeedMessageCloseBtn.addEventListener("click", (e) => {
+            $('div.succeed-service-message').classList.add("hide");
+        });
+    }
+    setInterval(() => $('div.error-service-message').classList.add("hide"), 4000);
+    setInterval(() => $('div.succeed-service-message').classList.add("hide"), 4000);
     return;
 }
 
 function createErrBlocksOfInputTags(validatingBlocks) {
-    [...$$('.login-input .login-input_err-message')].forEach((e) => {
+    [...$$('.form-input .form_text-input_err-message')].forEach((e) => {
         e.innerHTML = `
         <span class='err-message-block' id='${e.parentNode.id}'>
             ${validatingBlocks[e.parentNode.id].errorMessage}
@@ -33,10 +41,10 @@ function customizeInputTagValidateEvents(validatingBlocks) {
     });
 }
 
-function customizeSubmitFormAction(validatingBlocks) {  
+function customizeSubmitFormAction(validatingBlocks) {
     $('form').onsubmit = e => {
         let isValid = Object.entries(validatingBlocks).every((elem) => elem[1].isValid);
-        if (!isValid)   alert("Thông tin đầu vào bị lỗi!");
+        if (!isValid) alert("Thông tin đầu vào bị lỗi!");
         return isValid;
     }
 }
@@ -52,4 +60,20 @@ function removePathAttributes() {
         const newUrl = `${window.location.pathname}`;
         history.replaceState(null, '', newUrl);
     }
+}
+
+function customizeToggleDisplayPasswordEvent() {
+    $$('.password_toggle-hidden i').forEach((eye) => {
+        eye.onclick = (e) => {
+            if ([...e.target.classList].some((e) => e == "show-pass")) {
+                e.target.classList.add("hidden");
+                e.target.parentElement.querySelector(".hide-pass").classList.remove("hidden");
+                $(`input[name=${e.target.id}]`).type = "text";
+            } else {
+                e.target.classList.add("hidden");
+                e.target.parentElement.querySelector(".show-pass").classList.remove("hidden");
+                $(`input[name=${e.target.id}]`).type = "password";
+            }
+        }
+    })
 }

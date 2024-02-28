@@ -46,7 +46,7 @@ public class SubjectSchedule {
     @JsonIgnore
     private Teacher teacher;
 
-    @Column(name = "status_enum", nullable = false, columnDefinition = "BIT(1) DEFAULT 1")
+    @Column(name = "status_enum", nullable = false, columnDefinition = "TINYINT DEFAULT 1")
     private boolean status;
 
     public String[] getDayAsString() {

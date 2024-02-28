@@ -28,20 +28,21 @@ public class AuthenticationService {
     @Autowired
     private final AuthenticationManager authenticationManager;
 
-//    public DtoAuthenticationResponse register(DtoRegisterRequest request) {
-//        Account account = Account.builder()
-//            .instituteEmail(request.instituteEmail())
-//            .password(passwordEncoder.encode(request.password()))
-//            .creatingTime(Timestamp.valueOf(LocalDateTime.now()))
-//            .role(Role.MANAGER)
-//            .build();
-//        var jwtToken = jwtService.generateToken(account);
-//        accountRepository.save(account);
-//        return DtoAuthenticationResponse.builder()
-//            .token(jwtToken)
-//            .role(Role.MANAGER)
-//            .build();
-//    }
+    public DtoAuthenticationResponse register(DtoRegisterRequest request) {
+        Account account = Account.builder()
+            .instituteEmail(request.instituteEmail())
+            .password(passwordEncoder.encode(request.password()))
+            .creatingTime(Timestamp.valueOf(LocalDateTime.now()))
+            .role(Role.MANAGER)
+            .status(true)
+            .build();
+        var jwtToken = jwtService.generateToken(account);
+        accountRepository.save(account);
+        return DtoAuthenticationResponse.builder()
+            .token(jwtToken)
+            .role(Role.MANAGER)
+            .build();
+    }
 
     public DtoAuthenticationResponse authenticate(DtoAuthentication authObject) {
         //--Configure an AuthenticateToken by InputAccount.

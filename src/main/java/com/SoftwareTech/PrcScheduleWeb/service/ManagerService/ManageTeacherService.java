@@ -10,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
 import java.sql.Timestamp;
@@ -26,20 +25,30 @@ public class ManageTeacherService {
 
     public void addTeacherAccount(
         DtoRegisterAccount registerObject,
+        HttpServletRequest request,
         HttpServletResponse response
     ) throws IOException {
+        final String url = "/manager/category/teacher/add-teacher-account";
         final String email = registerObject.instituteEmail().trim();
         final String password = registerObject.password().trim();
         final String retypePassword = registerObject.retypePassword().trim();
         final boolean isInvalidPassword = (password.length() < 8) || !password.equals(retypePassword);
-        final boolean isInvalidUsername = Pattern
-            .matches("^[^@\\s]+@(ptithcm\\.edu\\.vn|ptit\\.edu\\.vn|student\\.ptithcm\\.edu\\.vn)$", email);
+        final boolean isInvalidUsername = !Pattern
+            .compile("^[^@\\s]+[.\\w]*@(ptithcm\\.edu\\.vn|ptit\\.edu\\.vn|student\\.ptithcm\\.edu\\.vn)$")
+            .matcher(email).matches();
+        final boolean isExistingEmail = accountRepository.findByInstituteEmail(email).isPresent();
 
         if (isInvalidPassword) {
-            response.sendRedirect("/manager/category/add-teacher-account?errorMessage=eMv1at01");
+            request.setAttribute("registerObject", registerObject);
+            response.sendRedirect(url + "?errorMessage=eMv1at01");
         }
         else if (isInvalidUsername) {
-            response.sendRedirect("/manager/category/add-teacher-account?errorMessage=eMv1at02");
+            request.setAttribute("registerObject", registerObject);
+            response.sendRedirect(url + "?errorMessage=eMv1at02");
+        }
+        else if (isExistingEmail) {
+            request.setAttribute("registerObject", registerObject);
+            response.sendRedirect(url + "?errorMessage=eMv1at03");
         }
         else {
             Account account = Account.builder()
@@ -47,9 +56,10 @@ public class ManageTeacherService {
                 .password(getPasswordEncoder.encode(password))
                 .role(Role.TEACHER)
                 .creatingTime(new Timestamp(System.currentTimeMillis()))
+                .status(true)
                 .build();
             accountRepository.save(account);
-            response.sendRedirect("/manager/category/add-teacher-account?succeedMessage=sMv1at01");
+            response.sendRedirect(url + "?succeedMessage=sMv1at01");
         }
     }
 }

@@ -27,6 +27,6 @@ public class ComputerRoom {
     @Column(name = "is_rented", nullable = false)
     private Byte isRented;
 
-    @Column(name = "status_enum", nullable = false)
-    private Byte status;
+    @Column(name = "status_enum", nullable = false, columnDefinition = "TINYINT DEFAULT 1")
+    private boolean status;
 }

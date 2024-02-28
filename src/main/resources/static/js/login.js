@@ -25,23 +25,7 @@
     cutomizeClosingErrMessageEvent();
     createErrBlocksOfInputTags(validatingBlocks);
     customizeInputTagValidateEvents(validatingBlocks);
-    customizeToggleDisplayPasswordEvent(validatingBlocks.password.tag);
+    customizeToggleDisplayPasswordEvent();
     customizeSubmitFormAction(validatingBlocks);
     removePathAttributes();
 })();
-
-function customizeToggleDisplayPasswordEvent(passwordTag) {
-    $$('.login-input_toggle-hidden i').forEach((e) => {
-        e.onclick = (event) => {
-            if ([...event.target.classList].some((e) => e == "show-pass")) {
-                $('.login-input_toggle-hidden .show-pass').classList.add("hidden");
-                $('.login-input_toggle-hidden .hide-pass').classList.remove("hidden");
-                passwordTag.type = "text";
-            } else {
-                $('.login-input_toggle-hidden .hide-pass').classList.add("hidden");
-                $('.login-input_toggle-hidden .show-pass').classList.remove("hidden");
-                passwordTag.type = "password";
-            }
-        }
-    })
-}

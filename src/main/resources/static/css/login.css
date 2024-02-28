@@ -30,19 +30,19 @@ form #form-title {
     padding: 24px;
 }
 
-form .login-input {
+form .form-input {
     position: relative;
     width: 350px;
     min-height: 90px !important;
     margin: auto;
 }
 
-.login-input label {
+.form-input label {
     display: block;
     padding: 4px;
 }
 
-.login-input input {
+.form-input input {
     width: 350px;
     height: 44px;
     border: 2px #d1d0d0 solid;
@@ -50,21 +50,7 @@ form .login-input {
     padding: 16px;
 }
 
-.login-input .login-input_toggle-hidden {
-    position: absolute;
-    top: 42px;
-    right: 15px;
-}
-
-.login-input .login-input_toggle-hidden:hover {
-    cursor: pointer;
-}
-
-.login-input .login-input_toggle-hidden>.hidden {
-    display: none;
-}
-
-.login-input_err-message {
+.form-input_err-message {
     position: relative;
 }
 
@@ -81,7 +67,7 @@ form input[type=submit] {
     margin-top: 30px;
 }
 
-.login-input #forgot-pass a {
+.form-input #forgot-pass a {
     position: absolute;
     right: 12px;
     top: 4px;
@@ -90,7 +76,4 @@ form #have-no-account {
     display: block;
     text-align: center;
     margin-top: 8px;
-}
-#error-message-close-btn:hover {
-    cursor: pointer;
 }
