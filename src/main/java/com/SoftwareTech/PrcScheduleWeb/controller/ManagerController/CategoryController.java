@@ -1,7 +1,7 @@
 package com.SoftwareTech.PrcScheduleWeb.controller.ManagerController;
 
 import com.SoftwareTech.PrcScheduleWeb.config.StaticUtilMethods;
-import com.SoftwareTech.PrcScheduleWeb.dto.DtoRegisterAccount;
+import com.SoftwareTech.PrcScheduleWeb.dto.AuthDto.DtoRegisterAccount;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ public class CategoryController {
 
     @RequestMapping(value = "/teacher/add-teacher-account", method = GET)
     public ModelAndView getAddTeacherAccountPage(HttpServletRequest request) {
-        ModelAndView modelAndView = staticUtilMethods.customizeModelAndView(request, "add-account");
+        ModelAndView modelAndView = staticUtilMethods.customizeResponsiveModelAndView(request, "add-account");
         DtoRegisterAccount registerObject = (DtoRegisterAccount) request.getAttribute("registerObject");
         if (registerObject != null)
             modelAndView.addObject(registerObject);

@@ -23,13 +23,13 @@
   GET [Redirect] /public/login?errorMessage=<err_code>
   
   Else: All condition is valid.
-  GET [Redirect] /role/home
+  GET [Redirect] [Role] /home
   ```
 - Access LoginPage from Authorized Request:
   ```Http
   GET /public/login
   If: With Cookies.AccessToken
-  GET [Redirect] /role/home
+  GET [Redirect] [Role] /home
   ```
 - Access Authorized Request:
   ```Http

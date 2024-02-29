@@ -7,17 +7,17 @@ function cutomizeClosingErrMessageEvent() {
     const succeedMessageCloseBtn = $('div.succeed-service-message i#succeed-service-message_close-btn');
 
     if (errMessageCloseBtn != null) {
+        setTimeout(() => $('div.error-service-message').classList.add("hide"), 4000);
         errMessageCloseBtn.addEventListener("click", (e) => {
             $('div.error-service-message').classList.add("hide");
         });
     }
     if (succeedMessageCloseBtn != null) {
+        setTimeout(() => $('div.succeed-service-message').classList.add("hide"), 4000);
         succeedMessageCloseBtn.addEventListener("click", (e) => {
             $('div.succeed-service-message').classList.add("hide");
         });
     }
-    setInterval(() => $('div.error-service-message').classList.add("hide"), 4000);
-    setInterval(() => $('div.succeed-service-message').classList.add("hide"), 4000);
     return;
 }
 

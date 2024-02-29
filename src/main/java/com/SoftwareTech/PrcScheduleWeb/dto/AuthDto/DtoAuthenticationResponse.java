@@ -1,4 +1,4 @@
-package com.SoftwareTech.PrcScheduleWeb.auth;
+package com.SoftwareTech.PrcScheduleWeb.dto.AuthDto;
 
 import com.SoftwareTech.PrcScheduleWeb.model.enums.Role;
 import lombok.*;

@@ -19,9 +19,9 @@
 </head>
 
 <body>
-    <div class="error-service-message" ${errorMessage == "none" ? "style='display:none'" : ""}>
+    <div class="error-service-message" ${errorMessage == "none" ? "style='display:none'" : "style='display:flex'"}>
         <span>${errorMessage}</span>
-        <i id="error-message-close-btn" class="fa fa-times-circle" aria-hidden="true"></i>
+        <i id="error-service-message_close-btn" class="fa fa-times-circle" aria-hidden="true"></i>
     </div>
     <form method="POST" action="/service/v1/auth/authenticate" modelAttribute="authObject">
         <span id="form-title">Đăng nhập</span>

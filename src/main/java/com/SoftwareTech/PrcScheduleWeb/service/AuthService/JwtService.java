@@ -1,4 +1,4 @@
-package com.SoftwareTech.PrcScheduleWeb.auth;
+package com.SoftwareTech.PrcScheduleWeb.service.AuthService;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;

@@ -1,8 +1,8 @@
-package com.SoftwareTech.PrcScheduleWeb.auth;
+package com.SoftwareTech.PrcScheduleWeb.config;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-public class TestClass {
+public class TestingUrlsClass {
     public static void detectAllUrlWithRequest(HttpServletRequest request) {
         String url = request.getDispatcherType().toString();
         String url1 = request.getMethod();

@@ -1,7 +1,6 @@
 package com.SoftwareTech.PrcScheduleWeb.config;
 
-import com.SoftwareTech.PrcScheduleWeb.auth.JwtService;
-import com.SoftwareTech.PrcScheduleWeb.auth.TestClass;
+import com.SoftwareTech.PrcScheduleWeb.service.AuthService.JwtService;
 import jakarta.servlet.DispatcherType;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -56,7 +55,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     ) throws ServletException, IOException {
         final String accessTokenInCookies = jwtService.getAccessTokenInCookies(request);
 
-        TestClass.detectAllUrlWithRequest(request);
+        TestingUrlsClass.detectAllUrlWithRequest(request);
 
         if (isBypassToken(request)) {
             //--Find NextFilter or NextHttpSecurityStep if it's Bypassed.

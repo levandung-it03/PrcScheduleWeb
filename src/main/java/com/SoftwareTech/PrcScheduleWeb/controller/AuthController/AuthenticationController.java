@@ -1,6 +1,9 @@
-package com.SoftwareTech.PrcScheduleWeb.auth;
-import com.SoftwareTech.PrcScheduleWeb.dto.DtoAuthentication;
+package com.SoftwareTech.PrcScheduleWeb.controller.AuthController;
+import com.SoftwareTech.PrcScheduleWeb.dto.AuthDto.DtoAuthenticationResponse;
+import com.SoftwareTech.PrcScheduleWeb.dto.AuthDto.DtoAuthentication;
 
+import com.SoftwareTech.PrcScheduleWeb.dto.AuthDto.DtoRegisterAccount;
+import com.SoftwareTech.PrcScheduleWeb.service.AuthService.AuthenticationService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -18,8 +21,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.io.IOException;
-import java.util.Base64;
-import java.util.UUID;
 
 /**These are the controllers that don't need to Authorize**/
 @RequiredArgsConstructor
@@ -30,7 +31,7 @@ public class AuthenticationController {
     private final AuthenticationService authService;
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public ResponseEntity<DtoAuthenticationResponse> register(@RequestBody DtoRegisterRequest request) {
+    public ResponseEntity<DtoAuthenticationResponse> register(@RequestBody DtoRegisterAccount request) {
         return ResponseEntity.status(HttpStatus.OK).body(authService.register(request));
     }
 
@@ -49,12 +50,7 @@ public class AuthenticationController {
             response.addCookie(accessTokenCookie);
 
             //--Get redirecting URL to Home: "classpath:/role/home".
-            String matchedHomeUrlWithRole = String.format(
-                "%s/%s/home",
-                request.getContextPath(),
-                authResult.role().toString().toLowerCase()
-            );
-            response.sendRedirect(matchedHomeUrlWithRole);
+            response.sendRedirect("/home");
         } catch (UsernameNotFoundException ignored) {
             //--Will be ignored because of security.
             response.sendRedirect(request.getContextPath() + "/public/login?errorMessage=eMv1at01");

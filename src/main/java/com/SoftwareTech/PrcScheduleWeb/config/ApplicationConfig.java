@@ -1,5 +1,6 @@
 package com.SoftwareTech.PrcScheduleWeb.config;
 
+import com.SoftwareTech.PrcScheduleWeb.service.AuthService.JwtService;
 import com.SoftwareTech.PrcScheduleWeb.repository.AccountRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,8 @@ import java.util.Map;
 @Configuration
 @RequiredArgsConstructor
 public class ApplicationConfig {
+    @Autowired
+    private final JwtService jwtService;
     @Autowired
     private final AccountRepository accountRepository;
 
@@ -57,7 +60,7 @@ public class ApplicationConfig {
 
     @Bean
     public StaticUtilMethods staticUtilMethods() {
-        return new StaticUtilMethods(responseMessages());
+        return new StaticUtilMethods(responseMessages(), jwtService, userDetailsService());
     }
 
     @Bean

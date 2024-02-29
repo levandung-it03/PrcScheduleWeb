@@ -1,4 +1,4 @@
-package com.SoftwareTech.PrcScheduleWeb.dto;
+package com.SoftwareTech.PrcScheduleWeb.dto.AuthDto;
 
 import lombok.Builder;
 

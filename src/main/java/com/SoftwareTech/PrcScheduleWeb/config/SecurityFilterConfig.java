@@ -32,6 +32,7 @@ public class SecurityFilterConfig {
             .authorizeHttpRequests(request ->
                 request
                     .requestMatchers(GET, "/public/**").permitAll()
+                    .requestMatchers(GET, "/home").hasAnyAuthority("MANAGER", "TEACHER")
                     .requestMatchers(GET, "/teacher/**").hasAuthority("TEACHER")
                     .requestMatchers(GET, "/manager/**").hasAuthority("MANAGER")
 

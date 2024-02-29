@@ -1,31 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Category</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
-        integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="../resources/static/css/base.css">
-    <style>
-        #category {
-            position: absolute;
-            width: var(--category-width);
-            height: 100vh;
-            min-height: 100%;
-            padding: 20px;
-            background-color: var(--white-background-component);
-            color: var(--grey-text);
-            font-size: 1rem;
-            font-weight: 500;
-        }
-        #category_header_logo img {
-            height: 60px;
-        }
-    </style>
-</head>
-<body>
+
     <div id="category">
+        <link rel="stylesheet" href="../resources/static/css/category.css">
         <div id="category_header">
             <div id="category_header_logo">
                 <img src="../resources/static/img/ptit_logo.png" alt="">
@@ -36,110 +11,72 @@
                 <ul class="category-index-container" id="cat_home_box">
                     <li class="index">
                         <a class="index_wrapper" href="">
-                            <div class="index_wrapper_icon">
-                                <i class="fa fa-home" aria-hidden="true"></i>
-                            </div>
-                            <div class="index_wrapper_name">
-                                <p>Trang chủ</p>
-                            </div>
+                            <i class="fa-solid fa-tv"></i>
+                            <p>Trang chủ</p>
                         </a>
                     </li>
                 </ul>
             </div>
             <div id="category_body_practice-schedule">
-                <div class="label">Lịch thực hành</div>
+                <label>LỊCH THỰC HÀNH</label>
                 <ul class="category-index-container" id="cat_practice-schedule_box">
                     <li class="index">
                         <a class="index_wrapper" href="">
-                            <div class="index_wrapper_icon">
-                                
-                            </div>
-                            <div class="index_wrapper_name">
-                                <p>Các yêu cầu</p>
-                            </div>
+                            <i class="fa-regular fa-envelope"></i>
+                            <p>Toàn bộ yêu cầu</p>
                         </a>
                     </li>
                     <li class="index">
                         <a class="index_wrapper" href="">
-                            <div class="index_wrapper_icon">
-                                
-                            </div>
-                            <div class="index_wrapper_name">
-                                <p>Xem toàn bộ</p>
-                            </div>
+                            <i class="fa-regular fa-calendar-minus"></i>
+                            <p>Toàn bộ lịch</p>
                         </a>
                     </li>
                 </ul>
             </div>
             <div id="category_body_computer-room">
-                <div class="label">Phòng máy</div>
-                <ul class="category-index-container" id="cat_computer-room_box">
+                <label>PHÒNG MÁY</label>
+                <ul class="category-index-container" id="cat_practice-schedule_box">
                     <li class="index">
                         <a class="index_wrapper" href="">
-                            <div class="index_wrapper_icon">
-                                
-                            </div>
-                            <div class="index_wrapper_name">
-                                <p>Fake Data</p>
-                            </div>
+                            <i class="fa-regular fa-envelope"></i>
+                            <p>Các yêu cầu</p>
                         </a>
                     </li>
                     <li class="index">
                         <a class="index_wrapper" href="">
-                            <div class="index_wrapper_icon">
-                                
-                            </div>
-                            <div class="index_wrapper_name">
-                                <p>Fake Data</p>
-                            </div>
+                            <i class="fa-regular fa-calendar-minus"></i>
+                            <p>Toàn bộ lịch</p>
                         </a>
                     </li>
                 </ul>
             </div>
             <div id="category_body_teacher">
-                <div class="label">Giảng viên</div>
-                <ul class="category-index-container" id="cat_teacher_box">
+                <label>GIẢNG VIÊN</label>
+                <ul class="category-index-container" id="cat_practice-schedule_box">
                     <li class="index">
                         <a class="index_wrapper" href="">
-                            <div class="index_wrapper_icon">
-                                
-                            </div>
-                            <div class="index_wrapper_name">
-                                <p>Fake Data</p>
-                            </div>
+                            <i class="fa-regular fa-envelope"></i>
+                            <p>Các yêu cầu</p>
                         </a>
                     </li>
                     <li class="index">
                         <a class="index_wrapper" href="">
-                            <div class="index_wrapper_icon">
-                                
-                            </div>
-                            <div class="index_wrapper_name">
-                                <p>Fake Data</p>
-                            </div>
+                            <i class="fa-regular fa-calendar-minus"></i>
+                            <p>Toàn bộ lịch</p>
                         </a>
                     </li>
                 </ul>
             </div>
         </div>
         <div id="category_footer">
-            <ul id="category-footer-container">
+            <ul class="category-index-container">
                 <li class="index">
                     <a class="index_wrapper" href="">
-                        <div class="index_wrapper_icon">
-                            
-                        </div>
-                        <div class="index_wrapper_name">
-                            <p>Support</p>
-                        </div>
+                        <i class="fa-regular fa-life-ring"></i>
+                        <p>Support</p>
                     </a>
                 </li>
             </ul>
         </div>
     </div>
-    
-    <script>
-
-    </script>
-</body>
-</html>
