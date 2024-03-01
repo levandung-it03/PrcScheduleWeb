@@ -9,6 +9,9 @@
 **3. @Transaction with Services**
 
 ## How Our Pages Work:
+*Original Account*
+- Username: manager0@ptithcm.edu.vn
+- Password: 111222333
 *General Forms*
 - Validate under Javascript site.
 - Validate from Java (Customized Modules with Spring Security) site.
