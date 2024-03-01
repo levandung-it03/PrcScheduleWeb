@@ -1,7 +1,7 @@
 package com.SoftwareTech.PrcScheduleWeb.controller.ManagerController;
 
 import com.SoftwareTech.PrcScheduleWeb.dto.AuthDto.DtoRegisterAccount;
-import com.SoftwareTech.PrcScheduleWeb.service.ManagerService.ManageTeacherService;
+import com.SoftwareTech.PrcScheduleWeb.service.ManagerService.AccountService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +18,7 @@ import java.io.IOException;
 @RequestMapping(path = "/service/v1/manager")
 public class ManageTeacherController {
     @Autowired
-    private final ManageTeacherService manageTeacherService;
+    private final AccountService accountService;
 
     @RequestMapping(value = "/add-teacher-account", method = RequestMethod.POST)
     @ModelAttribute("registerObject")
@@ -28,7 +28,7 @@ public class ManageTeacherController {
         HttpServletResponse response
     ) throws IOException {
         //--Redirect whether succeed or not.
-        manageTeacherService.addTeacherAccount(registerObject, request, response);
+        accountService.addTeacherAccount(registerObject, request, response);
     }
 
 }

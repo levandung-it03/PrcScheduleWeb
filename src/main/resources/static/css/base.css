@@ -19,9 +19,11 @@
     --blur-green: rgb(0, 255, 208);
     --red: rgb(234, 16, 16);
     --blur-black: rgba(0, 0, 0, 0.15);
+    --grey-of-header-border: #bfc2c7;
 
     --footer-height: 40px;
     --category-width: 200px;
+    --category-index-height: 38px;
     --form-border-radius: 12px;
     --form-margin: 12px;
 }
@@ -61,16 +63,18 @@ img {
     height: auto;
 }
 body {
-  font-family: 'Muli', sans-serif;
-  color: var(--black);
-  font-weight: 400;
-  line-height: 1.58;
-  letter-spacing: -.003em;
-  font-size: 20px;
-  display: flex;
+    font-family: 'Muli', sans-serif;
+    min-height: 100vh;
+    color: var(--black);
+    font-weight: 400;
+    line-height: 1.58;
+    letter-spacing: -.003em;
+    font-size: 20px;
+    display: flex;
 }
 form input[type=submit] {
     display: block;
+    width: 100%;
     border: 2px var(--black-text) solid;
     background-color: var(--black-text);
     color: white;
@@ -81,6 +85,8 @@ form input[type=submit] {
 form input[type=submit]:hover {
     cursor: pointer;
     border-radius: 22px;
+    background-color: #9fa7ae;
+    color: black;
 }
 .hide {
     display: none!important;
@@ -119,17 +125,18 @@ div#search i {
     color: white;
     background-color: rgba(0, 0, 0, 0.7);
 }
-.center-page {
-    z-index: din;
-    background-color: #f9fafc;
+#center-page {
+    background-color: #eeeff2;
     border-radius: 10px 0 0 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     width: calc(100vw - var(--category-width));
-    height: 100vh;
+    /* width: 100vw; */
+    min-height: 100vh;
+    box-sizing: border-box;
 }
 .error-service-message,
 .succeed-service-message {
-    margin: 20px;
+    margin: 5px;
     padding: 10px 20px;
     box-shadow: var(--black-box-shadow);
     font-size: 16px;

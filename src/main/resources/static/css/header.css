@@ -1,0 +1,51 @@
+
+header {
+    height: 60px;
+    background-color: #ffffff;
+    border-bottom: 1px var(--grey-of-header-border) solid;
+    border-radius: 10px 0 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+#header_center #category-name {
+    font-size: 1.2rem;
+    color: var(--black-text);
+    font-weight: 600;
+}
+#header_center #page-discription {
+    font-size: 0.8rem;
+    color: var(--white-grey-text);
+}
+#header_right {
+    position: absolute;
+    right: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+#header_right #avatar #avatar_user {
+    display: block;
+    padding: 5px;
+    background-color: #e5edef;
+    border-radius: 10px;
+    color: var(--black-text);
+    transition: background-color ease 0.3s;
+}
+#header_right #avatar #avatar_user:hover {
+    background-color: #c2cdd0;
+}
+.header_items {
+    margin: 0 15px;
+}
+header i {
+    padding: 12px;
+    border-radius: 15px;
+    transition: background-color ease 0.3s;
+}
+header i:hover {
+    background-color: #e5edef;
+    padding: 12px;
+    border-radius: 23px;
+    cursor: pointer;
+}

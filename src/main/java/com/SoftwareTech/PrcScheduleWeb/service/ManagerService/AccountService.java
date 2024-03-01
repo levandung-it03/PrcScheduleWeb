@@ -17,7 +17,7 @@ import java.util.regex.Pattern;
 
 @Service
 @RequiredArgsConstructor
-public class ManageTeacherService {
+public class AccountService {
     @Autowired
     private final AccountRepository accountRepository;
     @Autowired
