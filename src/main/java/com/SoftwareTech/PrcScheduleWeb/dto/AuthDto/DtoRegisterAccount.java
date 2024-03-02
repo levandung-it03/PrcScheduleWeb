@@ -1,7 +1,14 @@
 package com.SoftwareTech.PrcScheduleWeb.dto.AuthDto;
 
-import lombok.Builder;
+import lombok.*;
 
 @Builder
-public record DtoRegisterAccount(String instituteEmail, String password, String retypePassword) {
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+public class DtoRegisterAccount {
+    private String instituteEmail;
+    private String password;
+    private String retypePassword;
 }

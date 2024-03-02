@@ -38,15 +38,15 @@
                 <label>PHÒNG MÁY</label>
                 <ul class="category-index-container" id="cat_practice-schedule_box">
                     <li class="index">
-                        <a class="index_wrapper" href="">
+                        <a class="index_wrapper" href="/manager/category/computer-room/add-computer-room">
                             <i class="fa-regular fa-envelope"></i>
-                            <p>Các yêu cầu</p>
+                            <p>Thêm phòng máy mới</p>
                         </a>
                     </li>
                     <li class="index">
                         <a class="index_wrapper" href="">
                             <i class="fa-regular fa-calendar-minus"></i>
-                            <p>Toàn bộ lịch</p>
+                            <p>Toàn bộ phòng</p>
                         </a>
                     </li>
                 </ul>

@@ -32,6 +32,7 @@ function createErrBlocksOfInputTags(validatingBlocks) {
 
 function customizeInputTagValidateEvents(validatingBlocks) {
     Object.entries(validatingBlocks).forEach(elem => {
+        let ignoredResult = elem[1].confirm(elem[1].tag.value);
         elem[1].tag.addEventListener("keyup", e => {
             if (elem[1].confirm(elem[1].tag.value))
                 $('span#' + elem[0]).style.display = "none";
@@ -76,4 +77,22 @@ function customizeToggleDisplayPasswordEvent() {
             }
         }
     })
+}
+
+function cuttingStringValueOfInputTag(tag, len) {
+    if (tag.value.length > len)
+        tag.value = tag.value.slice(0, len);
+}
+
+
+function recoveryAllSelectTagDataInForm() {
+    [...$$('form select')].forEach(selectTag => {
+        const data = selectTag.getAttribute('data');
+        if (data != null) {
+            [...selectTag.querySelectorAll('option')].forEach(optionTag => {
+                if (optionTag.value == data)
+                    optionTag.selected = "true";
+            });
+        }
+    });
 }

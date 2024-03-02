@@ -28,13 +28,13 @@
             <div class="form-input" id="instituteEmail">
                 <label for="instituteEmail">Email giảng viên</label>
                 <input name="instituteEmail" type="text" placeholder="giangvien@ptithcm.edu.vn"
-                value="${registerObject != null ? registerObject.instituteEmail : ''}" required/>
+                value="${registerObject.instituteEmail}" required/>
                 <div class="form_text-input_err-message"></div>
             </div>
 
             <div class="form-input" id="password">
                 <label for="password">Mật khẩu</label>
-                <input name="password" type="password" value="${registerObject != null ? registerObject.password : ''}" required/>
+                <input name="password" type="password" value="${registerObject.password}" required/>
                 <div class="form_text-input_err-message"></div>
                 <div class="password_toggle-hidden">
                     <i id="password" class="show-pass fa-solid fa-eye"></i>
@@ -44,7 +44,7 @@
 
             <div class="form-input" id="retypePassword">
                 <label for="retypePassword">Mật khẩu xác nhận</label>
-                <input name="retypePassword" type="password" value="${registerObject != null ? registerObject.retypePassword : ''}" required/>
+                <input name="retypePassword" type="password" value="${registerObject.retypePassword}" required/>
                 <div class="form_text-input_err-message"></div>
                 <div class="password_toggle-hidden">
                     <i id="retypePassword" class="show-pass fa-solid fa-eye"></i>
@@ -58,3 +58,5 @@
     <script type="application/javascript" src="${pageContext.request.contextPath}/js/add-account.js"></script>
 </body>
 </html>
+ 
+ 

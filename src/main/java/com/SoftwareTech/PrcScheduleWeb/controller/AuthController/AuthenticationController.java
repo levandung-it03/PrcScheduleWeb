@@ -15,17 +15,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
 /**These are the controllers that don't need to Authorize**/
 @RequiredArgsConstructor
 @Controller
-@RequestMapping(path = "/service/v1/auth")
+@RequestMapping(path = "${url.post.auth.prefix.v1}")
 public class AuthenticationController {
     @Autowired
     private final AuthenticationService authService;
@@ -58,4 +55,20 @@ public class AuthenticationController {
             response.sendRedirect(request.getContextPath() + "/public/login?errorMessage=eMv1at02");
         }
     }
+
+/*
+    @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
+    public String authenticate(@RequestBody DtoAuthentication authObject, HttpServletResponse response) {
+        try {
+            DtoAuthenticationResponse authResult = authService.authenticate(authObject);
+            Cookie accessTokenCookie = authService.custmoizeAcessTokenToServeCookie(authResult.token());
+            response.addCookie(accessTokenCookie);
+            return authResult.token();
+        } catch (UsernameNotFoundException ignored) {
+            return "Error Username";
+        } catch (BadCredentialsException ignored) {
+            return "Error Password";
+        }
+    }
+ */
 }

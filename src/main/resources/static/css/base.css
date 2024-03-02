@@ -63,14 +63,14 @@ img {
     height: auto;
 }
 body {
+    display: flex;
+    flex-direction: row;
     font-family: 'Muli', sans-serif;
-    min-height: 100vh;
     color: var(--black);
     font-weight: 400;
     line-height: 1.58;
     letter-spacing: -.003em;
     font-size: 20px;
-    display: flex;
 }
 form input[type=submit] {
     display: block;
@@ -78,7 +78,7 @@ form input[type=submit] {
     border: 2px var(--black-text) solid;
     background-color: var(--black-text);
     color: white;
-    border-radius: 4px;
+    border-radius: 10px;
     transition: background-color ease 0.2s;
     transition: border-radius ease 0.3s;
 }
@@ -91,25 +91,6 @@ form input[type=submit]:hover {
 .hide {
     display: none!important;
 }
-div#search {
-    position: relative;
-    float: right;
-    margin: 16px 16px 0 0;
-}
-div#search input {
-    width: 240px;
-    padding: 10px;
-    border: solid 1px var(--grey-border);
-    border-radius: 8px;
-}
-div#search i {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: 1rem;
-    cursor: pointer;
-}
-
 .table_title th i {
     display: block;
     font-size: 0.8rem;
@@ -126,12 +107,12 @@ div#search i {
     background-color: rgba(0, 0, 0, 0.7);
 }
 #center-page {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
     background-color: #eeeff2;
     border-radius: 10px 0 0 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-    width: calc(100vw - var(--category-width));
-    /* width: 100vw; */
-    min-height: 100vh;
     box-sizing: border-box;
 }
 .error-service-message,
@@ -140,12 +121,13 @@ div#search i {
     padding: 10px 20px;
     box-shadow: var(--black-box-shadow);
     font-size: 16px;
-    position: fixed;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    width: 97vw;
+    position: absolute;
+    width: 98.5%;
+    z-index: 1000;
 }
 .error-service-message {
     background-color: rgba(255, 0, 0, 1);

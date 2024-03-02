@@ -32,8 +32,8 @@ public class AuthenticationService {
 
     public DtoAuthenticationResponse register(DtoRegisterAccount request) {
         Account account = Account.builder()
-            .instituteEmail(request.instituteEmail())
-            .password(passwordEncoder.encode(request.password()))
+            .instituteEmail(request.getInstituteEmail())
+            .password(passwordEncoder.encode(request.getPassword()))
             .creatingTime(Timestamp.valueOf(LocalDateTime.now()))
             .role(Role.MANAGER)
             .status(true)

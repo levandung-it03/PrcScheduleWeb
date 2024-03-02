@@ -1,5 +1,4 @@
 html {
-    background-image: url('../img/form_img.jpeg');
     background-repeat: no-repeat;
     background-size: cover;
     margin: 0;
@@ -7,34 +6,23 @@ html {
 }
 
 form {
-    margin: auto;
-    margin-top: 100px;
-    max-width: 500px;
-    background-color: rgba(255, 255, 255, 0.85);
-    display: block;
-    width: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
     padding: 28px 56px;
-    border: 1px transparent solid;
-    border-radius: 20px;
-    box-shadow: 0 0 100px var(--blur-black);
+    margin: 20px;
+    width: calc(100% - 2 * 20px);
+    background-color: rgba(255, 255, 255, 0.85);
+    border: 1px var(--grey-of-header-border) solid;
+    border-radius: 10px;
     color: var(--grey-text-form);
     font-size: 0.9rem;
     font-weight: 600;
 }
 
-form #form-title {
-    display: block;
-    text-align: center;
-    font-size: 2.4rem;
-    font-weight: 700;
-    padding: 24px;
-}
-
 form .form-input {
     position: relative;
-    width: 350px;
     min-height: 90px !important;
-    margin: auto;
 }
 
 .form-input label {
@@ -42,12 +30,26 @@ form .form-input {
     padding: 4px;
 }
 
+/*--Customize each input tag--*/
+form div#instituteEmail,
+form div#instituteEmail input {
+    width: 100%;
+}
+form div#password,
+form div#retypePassword {
+    width: 48%;
+}
+form div#password input,
+form div#retypePassword input {
+    width: 100%;
+}
+/*------------*/
+
 .form-input input {
-    width: 350px;
     height: 44px;
     border: 2px #d1d0d0 solid;
     border-radius: 10px;
-    padding: 16px;
+    padding: 12px;
 }
 
 .form-input_err-message {
@@ -67,13 +69,6 @@ form input[type=submit] {
     margin-top: 30px;
 }
 
-.form-input #forgot-pass a {
-    position: absolute;
-    right: 12px;
-    top: 4px;
-}
-form #have-no-account {
-    display: block;
-    text-align: center;
-    margin-top: 8px;
+#error-message-close-btn:hover {
+    cursor: pointer;
 }

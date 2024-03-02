@@ -68,11 +68,13 @@ public class ApplicationConfig {
         Map<String, String> messagePairs = new HashMap<>();
         //--Successfully messages.
         messagePairs.put("sMv1at01", "Account has been added successfully!");
+        messagePairs.put("sMv1at02", "Computer Room has been added successfully!");
 
         //--Error messages.
         messagePairs.put("eMv1at01", "Email not found!");
         messagePairs.put("eMv1at02", "Password is invalid!");
         messagePairs.put("eMv1at03", "Email is already existing!");
+        messagePairs.put("eMv1at04", "Computer Room is already existing!");
         return messagePairs;
     }
 }
