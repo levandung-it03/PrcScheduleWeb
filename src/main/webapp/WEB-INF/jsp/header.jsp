@@ -7,8 +7,8 @@
             </div>
         </div>
         <div id="header_center">
-            <p id="category-name"><b>Thêm tài khoản</b></p>
-            <p id="page-discription">Thêm một tài khoản giảng viên đã có của học viện để cấp quyền sử dụng.</p>
+            <p id="category-name"></p>
+            <p id="page-discription"></p>
         </div>
         <div id="header_right">
             <div class="header_items" id="setting">
