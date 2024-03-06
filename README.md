@@ -41,7 +41,7 @@
   POST /teacher/, /manager/
   If: Without Cookies.AccessToken
   If: AccessToken is Expired
-  GET [Redirect] /public/login
+  >>> GET [Redirect] /public/login
     
   If: AccessToken has wrong Role
   Return: HTTPStatus[403 - Forbidden]
@@ -52,18 +52,15 @@
   GET /manager/category/teacher/add-teacher-account
   If: Without Cookies.AccessToken
   If: AccessToken is Expired
-  GET [Redirect] /public/login
+  >>> GET [Redirect] /public/login
   ```
 - Post NewTeacherAccount(DtoRegisterAccount) Action:
   ```Http
   GET /service/v1/manager/add-teacher-account
   If: Without Cookies.AccessToken
   If: AccessToken is Expired
-  GET [Redirect] /public/login
-  ```
-
-  ```Http
-  GET /service/v1/manager/add-teacher-account
+  >>> GET [Redirect] /public/login
+  
   If: Username is invalid
   If: Username is already existing
   If: Password is invalid
@@ -72,4 +69,20 @@
 
   Else: All condition is valid
   GET [Redirect] /service/v1/manager/add-teacher-account?succeedMessage=<succeed_code>
+  ```
+
+*3. Computer Room Pages*
+- Computer Room List Page (on Category):
+    ```Http
+  GET /manager/category/computer-room/computer-room-list
+  If: Without Cookies.AccessToken
+  If: AccessToken is Expired
+  GET [Redirect] /public/login
+  ```
+
+    ```Http
+  GET /manager/category/computer-room/computer-room-list
+  If: Without Cookies.AccessToken
+  If: AccessToken is Expired
+  GET [Redirect] /public/login
   ```
