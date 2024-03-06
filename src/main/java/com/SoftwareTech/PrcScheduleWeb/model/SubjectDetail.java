@@ -21,7 +21,6 @@ import java.util.List;
         )
     }
 )
-@Check(constraints = "available_quantity <= max_quantity")
 public class SubjectDetail {
     @Id
     @Column(name = "subject_detail_id")

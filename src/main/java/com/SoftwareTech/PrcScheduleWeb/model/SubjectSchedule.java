@@ -21,7 +21,7 @@ public class SubjectSchedule {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "subject_detail_id", referencedColumnName = "subject_detail_id", nullable = false)
     @JsonIgnore
-    private SubjectDetail subjectDetail;
+    private SubjectDetail subjectDetailId;
 
     @Column(name = "day", nullable = false)
     private Byte day;
