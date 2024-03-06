@@ -18,10 +18,10 @@ public class PracticeSchedule {
     @Column(name = "practice_schedule_id")
     private Long practiceScheduleId;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "subject_detail_id", referencedColumnName = "subject_detail_id", nullable = false)
     @JsonIgnore
-    private SubjectDetail subjectDetail;
+    private SubjectDetail subjectDetailId;
 
     @Column(name = "day", nullable = false)
     private Byte day;
@@ -38,15 +38,15 @@ public class PracticeSchedule {
     @Column(name = "last_period", nullable = false)
     private Byte lastPeriod;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "computer_room", referencedColumnName = "computer_room", nullable = false)
     @JsonIgnore
-    private ComputerRoom computerRoom;
+    private ComputerRoom computerRoomId;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "teacher_id", referencedColumnName = "teacher_id", nullable = false)
     @JsonIgnore
-    private Teacher teacher;
+    private Teacher teacherId;
 
     @Column(name = "status_enum", nullable = false, columnDefinition = "BIT DEFAULT 1")
     private boolean status;

@@ -17,7 +17,7 @@ public class Grade {
     @Column(name = "grade_id", length = 20, nullable = false)
     private String gradeId;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "department_id", referencedColumnName = "department_id", nullable = false)
     @JsonIgnore
     private Department departmentId;

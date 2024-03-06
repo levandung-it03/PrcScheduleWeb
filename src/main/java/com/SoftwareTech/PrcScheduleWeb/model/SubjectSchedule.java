@@ -18,7 +18,7 @@ public class SubjectSchedule {
     @Column(name = "subject_schedule_id")
     private Long subjectScheduleId;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "subject_detail_id", referencedColumnName = "subject_detail_id", nullable = false)
     @JsonIgnore
     private SubjectDetail subjectDetailId;
@@ -41,10 +41,10 @@ public class SubjectSchedule {
     @Column(name = "classroom", length = 10, nullable = false)
     private String classroom;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "teacher_id", referencedColumnName = "teacher_id", nullable = false)
     @JsonIgnore
-    private Teacher teacher;
+    private Teacher teacherId;
 
     @Column(name = "status_enum", nullable = false, columnDefinition = "BIT DEFAULT 1")
     private boolean status;

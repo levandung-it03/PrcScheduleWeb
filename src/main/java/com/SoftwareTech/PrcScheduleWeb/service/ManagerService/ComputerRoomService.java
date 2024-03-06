@@ -5,11 +5,14 @@ import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoUpdateComputerRo
 import com.SoftwareTech.PrcScheduleWeb.model.ComputerRoom;
 import com.SoftwareTech.PrcScheduleWeb.repository.ComputerRoomRepository;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.Optional;
 
 @Service
@@ -71,6 +74,21 @@ public class ComputerRoomService {
             return "redirect:/manager/category/computer-room/computer-room-list?succeedMessage=sMv1at03";
         } catch (Exception ignored) {
             return "redirect:" + standingUrl + "?computerRoom=" + updatedComputerRoom + "&errorMessage=eMv1at00";
+        }
+    }
+
+    public String deleteComputerRoom(String computerRoom, HttpServletRequest request, HttpServletResponse response) {
+        final String standingUrl = request.getHeader("Referer");
+        final Optional<ComputerRoom> foundComputerRoom = computerRoomRepository.findByComputerRoom(computerRoom);
+
+        if (foundComputerRoom.isEmpty())
+            return "redirect:" + standingUrl + "?errorMessage=eMv1at05";
+
+        try {
+            computerRoomRepository.deleteById(computerRoom);
+            return "redirect:" + standingUrl + "?succeedMessage=sMv1at02";
+        } catch (Exception ignored) {
+            return "redirect:" + standingUrl + "?errorMessage=eMv1at06";
         }
     }
 }

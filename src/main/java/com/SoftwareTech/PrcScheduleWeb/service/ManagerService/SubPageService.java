@@ -22,7 +22,7 @@ public class SubPageService {
     @Autowired
     private final StaticUtilMethods staticUtilMethods;
 
-    public ModelAndView getUpdatingComputerRoomPage(
+    public ModelAndView getUpdateComputerRoomPage(
         HttpServletRequest request,
         HttpServletResponse response
     ) throws IOException {

@@ -18,10 +18,10 @@ public class Teacher {
     @Column(name = "teacher_id", length = 20)
     private String teacherId;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "department_id", referencedColumnName = "department_id", nullable = false)
     @JsonIgnore
-    private Department department;
+    private Department departmentId;
 
     @Column(name = "last_name", nullable = false)
     private String lastName;
@@ -42,7 +42,7 @@ public class Teacher {
     @Column(name = "status_enum", nullable = false, columnDefinition = "BIT DEFAULT 1")
     private boolean status;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "account_id", referencedColumnName = "account_id", nullable = false)
     @JsonIgnore
     private Account accountId;

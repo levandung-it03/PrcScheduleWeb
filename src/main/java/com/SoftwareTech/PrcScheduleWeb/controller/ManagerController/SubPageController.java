@@ -21,10 +21,12 @@ public class SubPageController {
     private final SubPageService subPageService;
 
     @RequestMapping(value = "/computer-room/update-computer-room", method = GET)
-    public ModelAndView getUpdatingComputerRoomPage(
+    public ModelAndView getUpdateComputerRoomPage(
         HttpServletRequest request,
         HttpServletResponse response
     ) throws IOException {
-        return subPageService.getUpdatingComputerRoomPage(request, response);
+        return subPageService.getUpdateComputerRoomPage(request, response);
     }
+
+
 }

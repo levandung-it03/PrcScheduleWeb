@@ -26,13 +26,13 @@ public class SubjectRegistration {
     @Column(name = "subject_registration_id")
     private Long subjectRegistrationId;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "student_id", referencedColumnName = "student_id", nullable = false)
     @JsonIgnore
-    private Student student;
+    private Student studentId;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "subject_detail_id", referencedColumnName = "subject_detail_id", nullable = false)
     @JsonIgnore
-    private SubjectDetail subjectDetail;
+    private SubjectDetail subjectDetailId;
 }

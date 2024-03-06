@@ -4,10 +4,12 @@ import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoAddComputerRoom;
 import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoUpdateComputerRoom;
 import com.SoftwareTech.PrcScheduleWeb.service.ManagerService.ComputerRoomService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -34,5 +36,13 @@ public class ComputerRoomController {
         HttpServletRequest request
     ) {
         return computerRoomService.updateComputerRoom(computerRoomObject, request);
+    }
+
+    @RequestMapping(value = "/computer-room-list-active-btn", method = POST)
+    public String deleteComputerRoom(
+        @ModelAttribute("deleteBtn") String computerRoom,
+        HttpServletRequest request,
+        HttpServletResponse response) {
+        return computerRoomService.deleteComputerRoom(computerRoom, request, response);
     }
 }

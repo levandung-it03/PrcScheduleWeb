@@ -19,10 +19,10 @@ public class Student {
     @Column(name = "student_id", length = 20)
     private String studentId;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "grade_id", referencedColumnName = "grade_id", nullable = false)
     @JsonIgnore
-    private Grade grade;
+    private Grade gradeId;
 
     @Column(name = "last_name", nullable = false)
     private String lastName;

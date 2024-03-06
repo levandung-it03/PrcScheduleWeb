@@ -3,9 +3,6 @@ package com.SoftwareTech.PrcScheduleWeb.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.Check;
-
-import java.util.List;
 
 @Data
 @Builder
@@ -30,17 +27,17 @@ public class SubjectDetail {
     @Column(name = "group_from_subject", nullable = false)
     private Byte groupFromSubject;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "grade_id", referencedColumnName = "grade_id", nullable = false)
     @JsonIgnore
     private Grade gradeId;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "subject_id", referencedColumnName = "subject_id", nullable = false)
     @JsonIgnore
     private Subject subjectId;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "semester_id", referencedColumnName = "semester_id", nullable = false)
     @JsonIgnore
     private Semester semesterId;

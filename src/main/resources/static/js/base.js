@@ -7,13 +7,13 @@ function customizeClosingErrMessageEvent() {
     const succeedMessageCloseBtn = $('div.succeed-service-message i#succeed-service-message_close-btn');
 
     if (errMessageCloseBtn != null) {
-        setTimeout(() => $('div.error-service-message').classList.add("hide"), 4000);
+        setTimeout(() => $('div.error-service-message').classList.add("hide"), 6000);
         errMessageCloseBtn.addEventListener("click", (e) => {
             $('div.error-service-message').classList.add("hide");
         });
     }
     if (succeedMessageCloseBtn != null) {
-        setTimeout(() => $('div.succeed-service-message').classList.add("hide"), 4000);
+        setTimeout(() => $('div.succeed-service-message').classList.add("hide"), 6000);
         succeedMessageCloseBtn.addEventListener("click", (e) => {
             $('div.succeed-service-message').classList.add("hide");
         });
@@ -44,9 +44,11 @@ function customizeValidateEventInputTags(validatingBlocks) {
 
 function customizeSubmitFormAction(validatingBlocks) {
     $('form').onsubmit = e => {
-        let isValid = Object.entries(validatingBlocks).every((elem) => elem[1].isValid);
-        if (!isValid) alert("Thông tin đầu vào bị lỗi!");
-        return isValid;
+        if (confirm("Bạn chắc chắn muốn thực hiện thao tác?") == true) {
+            let isValid = Object.entries(validatingBlocks).every((elem) => elem[1].isValid);
+            if (!isValid) alert("Thông tin đầu vào bị lỗi!");
+            return isValid;
+        } else return false;
     }
 }
 

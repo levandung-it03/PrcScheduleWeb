@@ -68,6 +68,7 @@ public class ApplicationConfig {
         Map<String, String> messagePairs = new HashMap<>();
         //--Successfully messages.
         messagePairs.put("sMv1at01", "Thêm mới thông tin thành công!");
+        messagePairs.put("sMv1at02", "Xoá thành công!");
         messagePairs.put("sMv1at03", "Sửa đổi thành công!");
 
         //--Error messages.
@@ -76,7 +77,8 @@ public class ApplicationConfig {
         messagePairs.put("eMv1at02", "Mật khẩu không đúng!");
         messagePairs.put("eMv1at03", "Email đã tồn tại!");
         messagePairs.put("eMv1at04", "Đã tồn tại mã phòng tại khu vực bạn chọn!");
-        messagePairs.put("eMv1at05", "Phòng thực hành được cập nhật không tồn tại!");
+        messagePairs.put("eMv1at05", "Phòng thực hành không tồn tại!");
+        messagePairs.put("eMv1at06", "Trường dữ liệu không thể xoá, thay vào đó hãy đổi trạng thái để bảo toàn dữ liệu!");
         return messagePairs;
     }
 }

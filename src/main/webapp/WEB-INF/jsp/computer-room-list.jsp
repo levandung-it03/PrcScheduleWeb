@@ -44,7 +44,7 @@
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </div>
             </div>
-            <form action="/service/v1/manager/delete-computer-room" method="POST">
+            <form action="/service/v1/manager/computer-room-list-active-btn" method="POST">
                 <table>
                     <thead>
                         <tr>
@@ -91,7 +91,7 @@
                                     </a>
                                 </td>
                                 <td class="table-row-btn delete">
-                                    <button name="delete-btn" value="${computerRoom.computerRoom}">
+                                    <button name="deleteBtn" value="${computerRoom.computerRoom}">
                                         <i class="fa-regular fa-trash-can"></i>
                                     </button>
                                 </td>
