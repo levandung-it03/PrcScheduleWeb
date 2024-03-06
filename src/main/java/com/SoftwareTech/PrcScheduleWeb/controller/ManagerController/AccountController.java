@@ -26,15 +26,6 @@ public class AccountController {
         RedirectAttributes redirectAttributes,
         HttpServletRequest request
     ) {
-        final String standingUrl = request.getHeader("Referer");
-        final HashMap<String, String> addTeacherResult = accountService.addTeacherAccount(registerObject);
-
-        if (addTeacherResult.get("status").equals("error")) {
-            redirectAttributes.addFlashAttribute("registerObject", registerObject);
-            return "redirect:" + standingUrl + "?errorMessage=" + addTeacherResult.get("code");
-        }
-        else {
-            return "redirect:" + standingUrl + "?succeedMessage=" + addTeacherResult.get("code");
-        }
+        return accountService.addTeacherAccount(registerObject, redirectAttributes, request);
     }
 }

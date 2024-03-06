@@ -32,7 +32,7 @@ public class SubPageService {
         Optional<ComputerRoom> computerRoomObject = computerRoomRepository.findByComputerRoom(computerRoom);
 
         if (computerRoomObject.isEmpty()) {
-            response.sendRedirect("/manager/category/computer-room/computer-room-list");
+            response.sendRedirect("/manager/category/computer-room/computer-room-list?errorMessage=eMv1at05");
             return null;
         }
         else {

@@ -4,10 +4,13 @@ import com.SoftwareTech.PrcScheduleWeb.dto.AuthDto.DtoRegisterAccount;
 import com.SoftwareTech.PrcScheduleWeb.model.Account;
 import com.SoftwareTech.PrcScheduleWeb.model.enums.Role;
 import com.SoftwareTech.PrcScheduleWeb.repository.AccountRepository;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.sql.Timestamp;
 import java.util.HashMap;
@@ -21,28 +24,32 @@ public class AccountService {
     @Autowired
     private final PasswordEncoder getPasswordEncoder;
 
-    public HashMap<String, String> addTeacherAccount(DtoRegisterAccount registerObject) {
-        final HashMap<String, String> result = new HashMap<>();
+    public String addTeacherAccount(
+        DtoRegisterAccount registerObject,
+        RedirectAttributes redirectAttributes,
+        HttpServletRequest request
+    ) {
+        final String standingUrl = request.getHeader("Referer");
         final String email = registerObject.getInstituteEmail().trim();
         final String password = registerObject.getPassword().trim();
         final String retypePassword = registerObject.getRetypePassword().trim();
         final boolean isInvalidPassword = (password.length() < 8) || !password.equals(retypePassword);
-        final boolean isInvalidUsername = !Pattern
+        final boolean isInvalidEmail = !Pattern
             .compile("^[^@\\s]+[.\\w]*@(ptithcm\\.edu\\.vn|ptit\\.edu\\.vn|student\\.ptithcm\\.edu\\.vn)$")
             .matcher(email).matches();
         final boolean isExistingEmail = accountRepository.findByInstituteEmail(email).isPresent();
 
         if (isInvalidPassword) {
-            result.put("status", "error");
-            result.put("code", "eMv1at01");
+            redirectAttributes.addFlashAttribute("registerObject", registerObject);
+            return "redirect:" + standingUrl + "?errorMessage=eMv1at01";
         }
-        else if (isInvalidUsername) {
-            result.put("status", "error");
-            result.put("code", "eMv1at02");
+        else if (isInvalidEmail) {
+            redirectAttributes.addFlashAttribute("registerObject", registerObject);
+            return "redirect:" + standingUrl + "?errorMessage=eMv1at02";
         }
         else if (isExistingEmail) {
-            result.put("status", "error");
-            result.put("code", "eMv1at03");
+            redirectAttributes.addFlashAttribute("registerObject", registerObject);
+            return "redirect:" + standingUrl + "?errorMessage=eMv1at03";
         }
         else {
             try {
@@ -55,9 +62,7 @@ public class AccountService {
                     .build());
             } catch (Exception e) { e.fillInStackTrace(); }
 
-            result.put("status", "succeed");
-            result.put("code", "sMv1at01");
+            return "redirect:" + standingUrl + "?succeedMessage=sMv1at01";
         }
-        return result;
     }
 }

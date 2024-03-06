@@ -42,7 +42,8 @@ public class ComputerRoomController {
     public String deleteComputerRoom(
         @ModelAttribute("deleteBtn") String computerRoom,
         HttpServletRequest request,
-        HttpServletResponse response) {
+        HttpServletResponse response
+    ) {
         return computerRoomService.deleteComputerRoom(computerRoom, request, response);
     }
 }
