@@ -9,7 +9,7 @@
     --white-text: #FFFFFF;
     --white-background-component: #fdfffc;
     --black-text: rgba(0, 0, 0, 0.8);
-    --grey-border: #a5a5a5;
+    --grey-border: #9a9797;
     --smoking-grey: rgba(216, 216, 216, 0.7);
     --x2-dark-blue: #183153;
     --blue: #3456FF;
@@ -19,7 +19,7 @@
     --blur-green: rgb(0, 255, 208);
     --red: rgb(234, 16, 16);
     --blur-black: rgba(0, 0, 0, 0.15);
-    --grey-of-header-border: #bfc2c7;
+    --grey-of-header-border: #a7abb0;
 
     --footer-height: 40px;
     --category-width: 200px;
@@ -72,49 +72,22 @@ body {
     letter-spacing: -.003em;
     font-size: 20px;
 }
-form input[type=submit] {
-    display: block;
-    width: 100%;
-    border: 2px var(--black-text) solid;
-    background-color: var(--black-text);
-    color: white;
-    border-radius: 10px;
-    transition: background-color ease 0.2s;
-    transition: border-radius ease 0.3s;
-}
-form input[type=submit]:hover {
-    cursor: pointer;
-    border-radius: 22px;
-    background-color: #9fa7ae;
-    color: black;
-}
 .hide {
     display: none!important;
 }
-.table_title th i {
-    display: block;
-    font-size: 0.8rem;
-    margin-right: -3px;
-    float: right;
-    line-height: 24px;
-    width: 18px!important;
-    cursor: pointer;
-    background-color: var(--blur-black);
-    border-radius: 8px;
-}
-.table_title th i:hover {
-    color: white;
-    background-color: rgba(0, 0, 0, 0.7);
-}
+
+/*--------Main content page--------*/
 #center-page {
     position: relative;
     width: 100%;
     min-height: 100vh;
-    background-color: #eeeff2;
+    background-color: #f9fafc;
     border-radius: 10px 0 0 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     box-sizing: border-box;
 }
+
+/*--------Error messages--------*/
 .error-service-message,
 .succeed-service-message {
     margin: 5px;
@@ -145,6 +118,7 @@ form input[type=submit]:hover {
     cursor: pointer;
 }
 
+/*--------Form input data--------*/
 .form-input .password_toggle-hidden {
     position: absolute;
     top: 42px;
@@ -157,4 +131,177 @@ form input[type=submit]:hover {
 
 .form-input .password_toggle-hidden>.hidden {
     display: none;
+}
+form input[type=submit] {
+    display: block;
+    width: 100%;
+    border: 2px var(--black-text) solid;
+    background-color: var(--black-text);
+    color: white;
+    border-radius: 10px;
+    transition: background-color ease 0.2s;
+    transition: border-radius ease 0.3s;
+}
+form input[type=submit]:hover {
+    cursor: pointer;
+    border-radius: 22px;
+    background-color: #9fa7ae;
+    color: black;
+}
+
+/*--------Table as list--------*/
+#center-page_list {
+    width: calc(100% - 2*20px);
+    margin: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    border: 1px;
+    border: 1px var(--grey-of-header-border) solid;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+#center-page_list #table-tools {
+    width: 100%;
+    height: 70px;
+}
+#center-page_list #table-tools {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 30px;
+    position: relative;
+}
+#center-page_list #table-tools #table-discription {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+#table-tools #table-search-box select {
+    position: absolute;
+    width: 200px;
+    top: 17px;
+    height: 36px;
+    right: 278px;
+    border: 2px transparent solid;
+    border-radius: 5px 0 0 5px;
+    padding: 8px;
+}
+#table-tools #table-search-box input {
+    width: 450px;
+    height: 40px;
+    border: 2px var(--grey-border) solid;
+    background-color: var(--smoking-grey);
+    border-radius: 7px;
+    padding: 0 55px 0 220px;
+    outline-color: var(--grey-border);
+}
+#table-tools #table-search-box input:focus {
+    background-color: rgb(200, 198, 198);
+}
+#table-tools #table-search-box i {
+    font-size: 1.1rem;
+    position: absolute;
+    top: 21.5px;
+    right: 35px;
+    border-radius: 7px;
+    padding: 6px 18px;
+    transition: background-color ease 0.3s;
+}
+#table-tools #table-search-box i:hover {
+    cursor: pointer;
+    background-color: var(--grey-border);
+}
+#center-page_list table {
+    width: 100%;
+}
+#center-page_list table thead tr {
+    margin: -1.5px;
+}
+table tr {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+table tr th,
+table tr td {
+    text-align: center;
+    border-top: 1px var(--grey-of-header-border) solid;
+    color: var(--black-text);
+}
+table tr th {
+    background-color: var(--smoking-grey);
+    padding-top: 7px;   /*fix-error-of-table*/
+    font-size: 0.88rem;
+    height: 35px;
+}
+table tr td {
+    padding-top: 10px;   /*fix-error-of-table*/
+    font-size: 0.95rem;
+    height: 45px;
+}
+
+table tr td i {
+    color: var(--grey-border);
+    font-weight: 600;
+    margin-right: 3px;
+}
+
+table tr th i {
+    margin-left: 3px;
+    font-size: 0.95rem;
+    padding: 2.5px 4px;
+    color: var(--black-text);
+    font-weight: 600;
+    border-radius: 5px;
+    border: 1px var(--grey-border) solid;
+    transition: background-color ease 0.3s;
+}
+table tr th i:hover {
+    cursor: pointer;
+    background-color: var(--grey-border);
+}
+
+#table-tools #table-discription span#quantity,
+table tr td span.status-is-true,
+table tr td span.status-is-false {
+    padding: 2.5px 8px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+}
+table tr td span.status-is-true {
+    background-color: #ddfde9;
+    color: #047144;
+    font-weight: 500;
+}
+table tr td span.status-is-false {
+    background-color: #fae2d5;
+    color: #ac2f0d;
+    font-weight: 600;
+}
+#table-tools #table-discription span#quantity {
+    background-color: #eae8fb;
+    color: #0d0dac;
+    font-weight: 600;
+}
+table tr td.table-row-btn button{
+    background: none;
+    border: none;
+    outline: none;
+    box-shadow: none;
+}
+table tr td.table-row-btn i {
+    padding: 6px 12px;
+    border: 1px var(--grey-border) solid;
+    color: var(--black-text);
+    border-radius: 4px;
+    transition: background-color ease 0.3s;
+}
+table tr td.delete i:hover {
+    cursor: pointer;
+    background-color: #ac2f0d;
+    color: #ffffff;
+}
+table tr td.update i:hover {
+    cursor: pointer;
+    background-color: #0d5fac;
+    color: #ffffff;
 }

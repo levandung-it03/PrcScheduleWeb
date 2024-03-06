@@ -1,6 +1,7 @@
 package com.SoftwareTech.PrcScheduleWeb.controller.ManagerController;
 
-import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoComputerRoom;
+import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoAddComputerRoom;
+import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoUpdateComputerRoom;
 import com.SoftwareTech.PrcScheduleWeb.service.ManagerService.ComputerRoomService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -8,9 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.util.HashMap;
 
 @Controller
 @RequiredArgsConstructor
@@ -19,21 +19,20 @@ public class ComputerRoomController {
     @Autowired
     private ComputerRoomService computerRoomService;
 
-    @RequestMapping(value = "/add-computer-room")
+    @RequestMapping(value = "/add-computer-room", method = POST)
     public String addComputerRoom(
-        @ModelAttribute("computerRoomObject") DtoComputerRoom computerRoomObject,
+        @ModelAttribute("computerRoomObject") DtoAddComputerRoom computerRoomObject,
         RedirectAttributes redirectAttributes,
         HttpServletRequest request
     ) {
-        final String standingUrl = request.getHeader("Referer");
-        final HashMap<String, String> addComputerRoomResult = computerRoomService.addComputerRoom(computerRoomObject);
+        return computerRoomService.addComputerRoom(computerRoomObject, redirectAttributes, request);
+    }
 
-        if (addComputerRoomResult.get("status").equals("error")) {
-            redirectAttributes.addFlashAttribute("computerRoomObject", computerRoomObject);
-            return "redirect:" + standingUrl + "?errorMessage=" + addComputerRoomResult.get("code");
-        }
-        else {
-            return "redirect:" + standingUrl + "?succeedMessage=" + addComputerRoomResult.get("code");
-        }
+    @RequestMapping(value = "/update-computer-room", method = POST)
+    public String updateComputerRoom(
+        @ModelAttribute("computerRoomObject") DtoUpdateComputerRoom computerRoomObject,
+        HttpServletRequest request
+    ) {
+        return computerRoomService.updateComputerRoom(computerRoomObject, request);
     }
 }

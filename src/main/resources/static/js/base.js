@@ -2,7 +2,7 @@ const $ = document.querySelector.bind(document);
 const $$ = document.querySelectorAll.bind(document);
 const urlParams = new URLSearchParams(window.location.search);
 
-function cutomizeClosingErrMessageEvent() {
+function customizeClosingErrMessageEvent() {
     const errMessageCloseBtn = $('div.error-service-message i#error-service-message_close-btn');
     const succeedMessageCloseBtn = $('div.succeed-service-message i#succeed-service-message_close-btn');
 
@@ -30,7 +30,7 @@ function createErrBlocksOfInputTags(validatingBlocks) {
     })
 }
 
-function customizeInputTagValidateEvents(validatingBlocks) {
+function customizeValidateEventInputTags(validatingBlocks) {
     Object.entries(validatingBlocks).forEach(elem => {
         let ignoredResult = elem[1].confirm(elem[1].tag.value);
         elem[1].tag.addEventListener("keyup", e => {
@@ -51,16 +51,11 @@ function customizeSubmitFormAction(validatingBlocks) {
 }
 
 function removePathAttributes() {
-    if (urlParams.has('errorMessage')) {
-        urlParams.delete('errorMessage');
-        const newUrl = `${window.location.pathname}`;
-        history.replaceState(null, '', newUrl);
-    }
-    if (urlParams.has('succeedMessage')) {
-        urlParams.delete('succeedMessage');
-        const newUrl = `${window.location.pathname}`;
-        history.replaceState(null, '', newUrl);
-    }
+    urlParams.forEach((value, key) => {
+        urlParams.delete(key);
+    });
+    const newUrl = `${window.location.pathname}`;
+    history.replaceState(null, '', newUrl);
 }
 
 function customizeToggleDisplayPasswordEvent() {
@@ -95,4 +90,58 @@ function recoveryAllSelectTagDataInForm() {
             });
         }
     });
+}
+
+function customizeSearchingListEvent(plainTableRows) {
+    const searchingInputTag = $('#table-search-box input#search');
+    const selectedOption = $('#table-search-box select#search');
+    const handleSearchingListEvent = e => {
+        const tableBody = $('table tbody');
+
+        //--Reset table data.
+        if (searchingInputTag.value == "") {
+            tableBody.innerHTML = plainTableRows.reduce((accumulator, elem) => accumulator += elem.innerHTML, "");
+            return;
+        }
+
+        if (selectedOption.value == "") {
+            alert("Bạn hãy chọn trường cần tìm kiếm trước!");
+            return;
+        }
+
+        let searchingResult = plainTableRows.reduce((accumulator, row) => {
+            let currentCellElement = row.querySelectorAll('td')[selectedOption.value];
+            let currentCellValue = currentCellElement.getAttribute("plain-value").trim().toUpperCase();
+            let isBeingFoundValue = currentCellValue.search(searchingInputTag.value.trim().toUpperCase()) != -1;
+
+            return accumulator + (isBeingFoundValue ? row.outerHTML : "");
+        }, "");
+
+        if (searchingResult == "")
+            tableBody.innerHTML = '<tr><td style="width: 100%">Không tìm thấy dữ liệu vừa nhập</td></tr>';
+        else
+            tableBody.innerHTML = searchingResult;
+
+        return null;
+    }
+
+    $('#table-search-box i').addEventListener("click", handleSearchingListEvent);
+    searchingInputTag.addEventListener("keyup", handleSearchingListEvent);
+}
+
+function customizeSortingListEvent() {
+    [...$$('table thead th i')].forEach(btn => {
+        btn.addEventListener("click", e => {
+            const fieldId = e.target.parentElement.id;
+            const cellsOfFieldId = [...$$('table tbody td.' + fieldId)].sort((a, b) => {
+                const firstCell = a.getAttribute('plain-value');
+                const secondCell = b.getAttribute('plain-value');
+                return firstCell.localeCompare(secondCell);
+            });
+            alert("Sắp xếp thành công!");
+            $('table tbody').innerHTML = cellsOfFieldId.reduce((accumulator, cell) => {
+                return accumulator + cell.parentElement.outerHTML;
+            }, "");
+        })
+    })
 }

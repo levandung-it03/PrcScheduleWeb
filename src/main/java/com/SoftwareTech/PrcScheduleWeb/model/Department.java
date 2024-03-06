@@ -17,6 +17,6 @@ public class Department {
     @Column(name = "department_name", nullable = false, unique = true)
     private String departmentName;
 
-    @Column(name = "status_enum", nullable = false, columnDefinition = "TINYINT DEFAULT 1")
+    @Column(name = "status_enum", nullable = false, columnDefinition = "BIT DEFAULT 1")
     private boolean status;
 }

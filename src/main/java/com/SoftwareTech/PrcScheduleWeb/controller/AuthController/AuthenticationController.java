@@ -41,7 +41,7 @@ public class AuthenticationController {
             DtoAuthenticationResponse authResult = authService.authenticate(authObject);
 
             //--Create Cookie with JWT AccessToken.
-            Cookie accessTokenCookie = authService.custmoizeAcessTokenToServeCookie(authResult.token());
+            Cookie accessTokenCookie = authService.custmoizeAcessTokenToServeCookie(authResult.getToken());
 
             //--Send AccessToken to Cookie storage.
             response.addCookie(accessTokenCookie);

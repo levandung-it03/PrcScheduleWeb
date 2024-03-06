@@ -2,22 +2,22 @@ let canSubmitForm = false;
 
 (function main() {
     const validatingBlocks = {
-        roomCode: {
-            tag: $('input[name=roomCode]'),
-            confirm: function (value) {
-                this.isValid = value.length != 0;
-                return this.isValid;
-            },
-            errorMessage: "Bạn chưa nhập giá trị.",
-            isValid: false,
-        },
         maxComputerQuantity: {
             tag: $('input[name=maxComputerQuantity]'),
             confirm: function (value) {
-                this.isValid = value.length != 0;
+                this.isValid = (value.length != 0) && ($('input[name=availableComputerQuantity]').value <= value);
                 return this.isValid;
             },
-            errorMessage: "Bạn chưa nhập giá trị.",
+            errorMessage: "Giá trị không hợp lệ.",
+            isValid: false,
+        },
+        availableComputerQuantity: {
+            tag: $('input[name=availableComputerQuantity]'),
+            confirm: function (value) {
+                this.isValid = (value.length != 0) && ($('input[name=maxComputerQuantity]').value >= value);
+                return this.isValid;
+            },
+            errorMessage: "Giá trị không hợp lệ.",
             isValid: false,
         },
     };

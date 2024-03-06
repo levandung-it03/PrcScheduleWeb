@@ -24,9 +24,6 @@ public class ComputerRoom {
     @Column(name = "available_computer_quantity", nullable = false)
     private Integer availableComputerQuantity;
 
-    @Column(name = "is_rented", nullable = false, columnDefinition = "TINYINT DEFAULT 0")
-    private boolean isRented;
-
-    @Column(name = "status_enum", nullable = false, columnDefinition = "TINYINT DEFAULT 1")
+    @Column(name = "status_enum", nullable = false, columnDefinition = "BIT DEFAULT 1")
     private boolean status;
 }

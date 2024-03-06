@@ -44,7 +44,7 @@
                         </a>
                     </li>
                     <li class="index">
-                        <a class="index_wrapper" href="">
+                        <a class="index_wrapper" href="/manager/category/computer-room/computer-room-list">
                             <i class="fa-regular fa-calendar-minus"></i>
                             <p>Toàn bộ phòng</p>
                         </a>

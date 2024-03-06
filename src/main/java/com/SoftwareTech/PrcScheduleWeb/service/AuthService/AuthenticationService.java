@@ -49,13 +49,13 @@ public class AuthenticationService {
     public DtoAuthenticationResponse authenticate(DtoAuthentication authObject) {
         //--Configure an AuthenticateToken by InputAccount.
         UsernamePasswordAuthenticationToken authenticateToken = new UsernamePasswordAuthenticationToken(
-            authObject.instituteEmail(),
-            authObject.password()
+            authObject.getInstituteEmail(),
+            authObject.getPassword()
         );
         //--Authenticate InputAccount with AuthenticationManager.
         //--Use the configured AuthenticationProvider for authentication.
         authenticationManager.authenticate(authenticateToken);
-        Account account = accountRepository.findByInstituteEmail(authObject.instituteEmail())
+        Account account = accountRepository.findByInstituteEmail(authObject.getInstituteEmail())
             .orElseThrow();
         var jwtToken = jwtService.generateToken(account);
         return DtoAuthenticationResponse.builder()
@@ -72,7 +72,7 @@ public class AuthenticationService {
         accessTokenCookie.setHttpOnly(true);
         accessTokenCookie.setSecure(true);
         accessTokenCookie.setPath("/");
-        accessTokenCookie.setMaxAge(30*60 - 1);
+        accessTokenCookie.setMaxAge(2*60*60 - 1);
         return accessTokenCookie;
     }
 }

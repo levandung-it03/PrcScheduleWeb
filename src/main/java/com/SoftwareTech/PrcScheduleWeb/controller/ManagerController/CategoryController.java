@@ -1,8 +1,5 @@
 package com.SoftwareTech.PrcScheduleWeb.controller.ManagerController;
-
-import com.SoftwareTech.PrcScheduleWeb.config.StaticUtilMethods;
-import com.SoftwareTech.PrcScheduleWeb.dto.AuthDto.DtoRegisterAccount;
-import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoComputerRoom;
+import com.SoftwareTech.PrcScheduleWeb.service.ManagerService.CategoryService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,29 +11,24 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping(path = "${url.get.manager.prefix}")
+@RequestMapping(path = "/manager/category")
 public class CategoryController {
     @Autowired
-    private final StaticUtilMethods staticUtilMethods;
+    private final CategoryService categoryService;
 
     @RequestMapping(value = "/teacher/add-teacher-account", method = GET)
     public ModelAndView getAddTeacherAccountPage(HttpServletRequest request, Model model) {
-        ModelAndView modelAndView = staticUtilMethods.customizeResponsiveModelAndView(request, "add-account");
-        DtoRegisterAccount registerObject = (DtoRegisterAccount) model.asMap().get("registerObject");
-
-        if (registerObject != null)
-            modelAndView.addObject(registerObject);
-        return modelAndView;
+        return categoryService.getAddTeacherAccountPage(request, model);
     }
 
     @RequestMapping(value = "/computer-room/add-computer-room", method = GET)
     public ModelAndView getAddComputerRoomPage(HttpServletRequest request, Model model) {
-        ModelAndView modelAndView = staticUtilMethods.customizeResponsiveModelAndView(request, "add-computer-room");
-        DtoComputerRoom computerRoomObject = (DtoComputerRoom) model.asMap().get("computerRoomObject");
+        return categoryService.getAddComputerRoomPage(request, model);
+    }
 
-        if (computerRoomObject != null)
-            modelAndView.addObject(computerRoomObject);
-        return modelAndView;
+    @RequestMapping(value = "/computer-room/computer-room-list", method = GET)
+    public ModelAndView getComputerRoomListPage(HttpServletRequest request, Model model) {
+        return categoryService.getComputerRoomListPage(request, model);
     }
 
 }

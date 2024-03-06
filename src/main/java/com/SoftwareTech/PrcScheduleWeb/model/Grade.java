@@ -31,6 +31,6 @@ public class Grade {
     @Column(name = "ending_year", nullable = false)
     private Integer endingYear;
 
-    @Column(name = "status_enum", nullable = false, columnDefinition = "TINYINT DEFAULT 1")
+    @Column(name = "status_enum", nullable = false, columnDefinition = "BIT DEFAULT 1")
     private boolean status;
 }
