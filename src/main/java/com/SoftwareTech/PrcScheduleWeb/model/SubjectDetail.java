@@ -34,24 +34,15 @@ public class SubjectDetail {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "grade_id", referencedColumnName = "grade_id", nullable = false)
     @JsonIgnore
-    private Grade grade;
+    private Grade gradeId;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "subject_id", referencedColumnName = "subject_id", nullable = false)
     @JsonIgnore
-    private Subject subject;
+    private Subject subjectId;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "semester_id", referencedColumnName = "semester_id", nullable = false)
     @JsonIgnore
-    private Semester semester;
-
-    @Column(name = "group_from_grade", nullable = false)
-    private Byte groupFromGrade;
-
-    @Column(name = "max_quantity", nullable = false)
-    private Integer maxQuantity;
-
-    @Column(name = "available_quantity", nullable = false)
-    private Integer availableQuantity;
+    private Semester semesterId;
 }

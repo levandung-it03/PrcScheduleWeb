@@ -31,9 +31,6 @@ public class Manager {
     @Column(name = "gender_enum", length = 1, nullable = false)
     private Gender gender;
 
-    @Column(name = "identifier", length = 20, nullable = false, unique = true)
-    private String identity;
-
     @Column(name = "phone_number", length = 20, nullable = false, unique = true)
     private String phone;
 
@@ -43,5 +40,5 @@ public class Manager {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "account_id", referencedColumnName = "account_id", nullable = false)
     @JsonIgnore
-    private Account account;
+    private Account accountId;
 }

@@ -35,7 +35,4 @@ public class SubjectRegistration {
     @JoinColumn(name = "subject_detail_id", referencedColumnName = "subject_detail_id", nullable = false)
     @JsonIgnore
     private SubjectDetail subjectDetail;
-
-    @Column(name = "creating_date", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private LocalDateTime creatingDate;
 }

@@ -37,9 +37,9 @@ public class InitialDataLoader implements CommandLineRunner {
         }
         if (departmentRepository.count() == 0) {
             List<Department> departments = List.of(
-                Department.builder().departmentId("CNTT02").departmentName("Công Nghệ Thông Tin 02").status(true).build(),
-                Department.builder().departmentId("CNTT02").departmentName("Công Nghệ Thông Tin 02").status(true).build(),
-                Department.builder().departmentId("CNTT02").departmentName("Công Nghệ Thông Tin 02").status(true).build()
+                Department.builder().departmentId("CNTT02").status(true).build(),
+                Department.builder().departmentId("CNTT02").status(true).build(),
+                Department.builder().departmentId("CNTT02").status(true).build()
             );
         }
     }
