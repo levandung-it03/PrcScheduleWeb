@@ -2,11 +2,26 @@
 **git commit -m "[All Upper-case Letters In Message] by [yournamelikethis_ex_levandung]"**
 
 ## TODO Notes
-**1. Authorization with JWT**
 
-**2. Authentication with Bcrypt**
+**1. @Transaction with Services**
 
-**3. @Transaction with Services**
+**2. Teacher List**
+
+**3. All about Practice Schedule (Add, Show, Update, Delete)**
+
+**4. Converting docs ActionMethod**
+
+**5. Adding Whitelist Form (Manager, Teacher)**
+
+**6. Adding mock data form**
+  - Student
+  - Department
+  - Grade
+  - Semester
+  - Subject
+  - SubjectDetail
+  - SubjectSchedule
+  - SubjectRegistration
 
 ## How Our Pages Work:
 *Original Account*
