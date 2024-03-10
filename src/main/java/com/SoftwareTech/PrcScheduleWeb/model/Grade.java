@@ -4,8 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.List;
-
 @Data
 @Builder
 @AllArgsConstructor
@@ -20,7 +18,7 @@ public class Grade {
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "department_id", referencedColumnName = "department_id", nullable = false)
     @JsonIgnore
-    private Department departmentId;
+    private Department department;
 
     @Column(name = "status_enum", nullable = false, columnDefinition = "BIT DEFAULT 1")
     private boolean status;

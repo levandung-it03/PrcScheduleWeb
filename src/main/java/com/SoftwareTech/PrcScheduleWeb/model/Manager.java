@@ -40,5 +40,5 @@ public class Manager {
     @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "account_id", referencedColumnName = "account_id", nullable = false)
     @JsonIgnore
-    private Account accountId;
+    private Account account;
 }

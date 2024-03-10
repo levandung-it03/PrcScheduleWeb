@@ -23,6 +23,18 @@ function mappingCategoryNameWithCurrentPage() {
             ["category-name"]: "Cập nhật thông tin phòng máy",
             ["page-discription"]: "Cập nhật thông tin, trạng thái của phòng máy."
         },
+        ["teacher-list="]: {
+            ["category-name"]: "Danh sách Giảng viên",
+            ["page-discription"]: "Danh sách toàn bộ Giảng viên thuộc học viên được cấp tài khoản để sử dụng."
+        },
+        ["update-teacher="]: {
+            ["category-name"]: "Cập nhật thông tin Giảng viên",
+            ["page-discription"]: "Cập nhật toàn bộ thông tin của Giảng viên chỉ định."
+        },
+        ["teacher-account-list="]: {
+            ["category-name"]: "Danh sách tài khoản Giảng viên",
+            ["page-discription"]: "Danh sách toàn bộ thông tin tài khoản của Giảng viên đã tạo."
+        }
     }
 
     document.querySelector('header #header_center p#category-name').innerText = categoryNameObjects[pageName]["category-name"];

@@ -13,7 +13,7 @@ public class HomeService {
     @Autowired
     private final StaticUtilMethods staticUtilMethods;
 
-    public ModelAndView handleGetHomeRequestFromBothRoles(HttpServletRequest request) {
+    public ModelAndView handleGettingHomeRequestFromBothRoles(HttpServletRequest request) {
         String loggedInRole = staticUtilMethods.isAValidAccessTokenInCookies(request);
         if (loggedInRole != null)
             return staticUtilMethods.customizeResponsiveModelAndView(request, loggedInRole + "-home");

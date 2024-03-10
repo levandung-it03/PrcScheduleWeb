@@ -50,19 +50,14 @@ public class ComputerRoomService {
         }
     }
 
-    public String updateComputerRoom(
-        DtoUpdateComputerRoom computerRoomObject,
-        HttpServletRequest request
-    ) {
+    public String updateComputerRoom(DtoUpdateComputerRoom computerRoomObject, HttpServletRequest request) {
         final String standingUrl = request.getHeader("Referer");
         final String updatedComputerRoom = request.getParameter("computerRoom");
-        Optional<ComputerRoom> updatingResult = computerRoomRepository.findByComputerRoom(updatedComputerRoom);
-
-        if (updatingResult.isEmpty()) {
-            return "redirect:/manager/category/computer-room/computer-room-list?errorMessage=eMv1at05";
-        }
 
         try {
+            //--Check if updated ComputerRoom is existing, the query result is ignored.
+            computerRoomRepository.findByComputerRoom(updatedComputerRoom).orElseThrow();
+
             computerRoomRepository.save(ComputerRoom.builder()
                 .computerRoom(updatedComputerRoom)
                 .maxComputerQuantity(computerRoomObject.getMaxComputerQuantity())

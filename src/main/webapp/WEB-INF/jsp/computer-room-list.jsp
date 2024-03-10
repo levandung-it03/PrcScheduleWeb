@@ -30,7 +30,7 @@
             <div id="table-tools">
                 <div id="table-discription">
                     <b>Danh sách</b>
-                    <span id="quantity">10 phòng</span>
+                    <span id="quantity">${computerRoomList.size()} phòng</span>
                 </div>
                 <div id="table-search-box">
                     <select id="search">

@@ -5,5 +5,6 @@ const plainTableRows = [...$$('table tbody tr')];
     customizeClosingErrMessageEvent();
     customizeSearchingListEvent(plainTableRows);
     customizeSortingListEvent();
+    customizeSubmitFormAction({mockTag: {isValid: true}});
     mappingCategoryNameWithCurrentPage();
 })();

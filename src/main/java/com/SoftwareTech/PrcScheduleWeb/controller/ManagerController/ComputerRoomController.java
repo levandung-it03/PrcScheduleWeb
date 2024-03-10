@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -19,7 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping(path = "${url.post.manager.prefix.v1}")
 public class ComputerRoomController {
     @Autowired
-    private ComputerRoomService computerRoomService;
+    private final ComputerRoomService computerRoomService;
 
     @RequestMapping(value = "/add-computer-room", method = POST)
     public String addComputerRoom(

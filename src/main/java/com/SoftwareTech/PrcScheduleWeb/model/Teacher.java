@@ -21,7 +21,7 @@ public class Teacher {
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "department_id", referencedColumnName = "department_id", nullable = false)
     @JsonIgnore
-    private Department departmentId;
+    private Department department;
 
     @Column(name = "last_name", nullable = false)
     private String lastName;
@@ -45,5 +45,5 @@ public class Teacher {
     @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "account_id", referencedColumnName = "account_id", nullable = false)
     @JsonIgnore
-    private Account accountId;
+    private Account account;
 }

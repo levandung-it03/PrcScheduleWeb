@@ -79,6 +79,7 @@ public class ApplicationConfig {
         messagePairs.put("eMv1at04", "Đã tồn tại mã phòng tại khu vực bạn chọn!");
         messagePairs.put("eMv1at05", "Phòng thực hành không tồn tại!");
         messagePairs.put("eMv1at06", "Trường dữ liệu không thể xoá, thay vào đó hãy đổi trạng thái để bảo toàn dữ liệu!");
+        messagePairs.put("eMv1at07", "Mã giảng viên không tồn tại!");
         return messagePairs;
     }
 }

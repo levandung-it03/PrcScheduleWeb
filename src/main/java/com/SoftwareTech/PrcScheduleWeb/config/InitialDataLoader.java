@@ -54,6 +54,13 @@ public class InitialDataLoader implements CommandLineRunner {
                     .instituteEmail("giangvien0@ptithcm.edu.vn")
                     .password("$2a$12$dzSEHUe6lixG0EkEzrcQfuV18XLaZpvDvF9apXe9.9PigXDgGw9p.")
                     .role(Role.TEACHER)
+                    .build(),
+                Account.builder()
+                    .status(true)
+                    .creatingTime(new Timestamp(System.currentTimeMillis()))
+                    .instituteEmail("giangvien1@ptithcm.edu.vn")
+                    .password("$2a$12$dzSEHUe6lixG0EkEzrcQfuV18XLaZpvDvF9apXe9.9PigXDgGw9p.")
+                    .role(Role.TEACHER)
                     .build()
             ));
         }
@@ -85,48 +92,59 @@ public class InitialDataLoader implements CommandLineRunner {
         }
         if (departmentRepository.count() == 0) {
             departmentRepository.saveAll(List.of(
-                Department.builder().departmentId("CNTT02").status(true).build()
+                Department.builder().departmentId("CNTT02").status(true).build(),
+                Department.builder().departmentId("DTVT02").status(true).build()
             ));
             if (teacherRepository.count() == 0) {
                 teacherRepository.saveAll(List.of(
                     Teacher.builder()
                         .teacherId("GV111")
-                        .departmentId(departmentRepository.findById("CNTT02").orElseThrow())
+                        .department(departmentRepository.findById("CNTT02").orElseThrow())
                         .lastName("Dinh Van")
                         .firstName("Han")
                         .birthday(Date.valueOf(LocalDate.of(1991, 3, 25)))
                         .gender(Gender.BOY)
                         .phone("0377869998")
-                        .accountId(accountRepository.findByInstituteEmail("giangvien0@ptithcm.edu.vn").orElseThrow())
+                        .account(accountRepository.findByInstituteEmail("giangvien0@ptithcm.edu.vn").orElseThrow())
+                        .build(),
+                    Teacher.builder()
+                        .teacherId("GV112")
+                        .department(departmentRepository.findById("CNTT02").orElseThrow())
+                        .lastName("Nguyen Thi")
+                        .firstName("Huong")
+                        .birthday(Date.valueOf(LocalDate.of(1991, 3, 25)))
+                        .gender(Gender.GIRL)
+                        .phone("0377869999")
+                        .account(accountRepository.findByInstituteEmail("giangvien1@ptithcm.edu.vn").orElseThrow())
                         .build()
                 ));
             }
             gradeRepository.saveAll(List.of(
                 Grade.builder()
                     .gradeId("D21CQCN01-N")
-                    .departmentId(departmentRepository.findById("CNTT02").orElseThrow())
+                    .department(departmentRepository.findById("CNTT02").orElseThrow())
                     .status(true)
                     .build()
             ));
             subjectDetailRepository.saveAll(List.of(
                 SubjectDetail.builder()
                     .groupFromSubject((byte)1)
-                    .gradeId(gradeRepository.findById("D21CQCN01-N").orElseThrow())
-                    .subjectId(subjectRepository.findById("INT13147").orElseThrow())
-                    .semesterId(semesterRepository
+                    .grade(gradeRepository.findById("D21CQCN01-N").orElseThrow())
+                    .subject(subjectRepository.findById("INT13147").orElseThrow())
+                    .semester(semesterRepository
                         .findBySemesterAndRangeOfYear((byte)3, "2022_2023").orElseThrow())
                     .build()
             ));
             practiceScheduleRepository.saveAll(List.of(
                 PracticeSchedule.builder()
-                    .subjectDetailId(subjectDetailRepository.findById(1L).orElseThrow())
+                    .subjectDetail(subjectDetailRepository.findById(1L).orElseThrow())
                     .day((byte)2)
                     .startingWeek((byte)2)
                     .totalWeek((byte)11)
                     .startingPeriod((byte)1)
                     .lastPeriod((byte)4)
-                    .computerRoomId(computerRoomRepository.findById("2B11").orElseThrow())
-                    .teacherId(teacherRepository.findById("GV111").orElseThrow())
+                    .computerRoom(computerRoomRepository.findById("2B11").orElseThrow())
+                    .teacher(teacherRepository.findById("GV111").orElseThrow())
                     .status(true)
                     .build()
             ));

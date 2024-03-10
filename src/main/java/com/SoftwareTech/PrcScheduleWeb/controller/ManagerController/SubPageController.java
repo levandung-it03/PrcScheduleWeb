@@ -28,5 +28,11 @@ public class SubPageController {
         return subPageService.getUpdateComputerRoomPage(request, response);
     }
 
-
+    @RequestMapping(value = "/teacher/update-teacher", method = GET)
+    public ModelAndView getUpdateTeacherPage(
+        HttpServletRequest request,
+        HttpServletResponse response
+    ) throws IOException {
+        return subPageService.getUpdateTeacherPage(request, response);
+    }
 }

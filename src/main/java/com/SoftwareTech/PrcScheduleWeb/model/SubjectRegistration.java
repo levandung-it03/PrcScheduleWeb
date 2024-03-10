@@ -29,10 +29,10 @@ public class SubjectRegistration {
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "student_id", referencedColumnName = "student_id", nullable = false)
     @JsonIgnore
-    private Student studentId;
+    private Student student;
 
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "subject_detail_id", referencedColumnName = "subject_detail_id", nullable = false)
     @JsonIgnore
-    private SubjectDetail subjectDetailId;
+    private SubjectDetail subjectDetail;
 }

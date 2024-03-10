@@ -21,7 +21,7 @@ public class SubjectSchedule {
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "subject_detail_id", referencedColumnName = "subject_detail_id", nullable = false)
     @JsonIgnore
-    private SubjectDetail subjectDetailId;
+    private SubjectDetail subjectDetail;
 
     @Column(name = "day", nullable = false)
     private Byte day;
@@ -44,7 +44,7 @@ public class SubjectSchedule {
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "teacher_id", referencedColumnName = "teacher_id", nullable = false)
     @JsonIgnore
-    private Teacher teacherId;
+    private Teacher teacher;
 
     @Column(name = "status_enum", nullable = false, columnDefinition = "BIT DEFAULT 1")
     private boolean status;

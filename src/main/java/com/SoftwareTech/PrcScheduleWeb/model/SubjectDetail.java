@@ -30,15 +30,15 @@ public class SubjectDetail {
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "grade_id", referencedColumnName = "grade_id", nullable = false)
     @JsonIgnore
-    private Grade gradeId;
+    private Grade grade;
 
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "subject_id", referencedColumnName = "subject_id", nullable = false)
     @JsonIgnore
-    private Subject subjectId;
+    private Subject subject;
 
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "semester_id", referencedColumnName = "semester_id", nullable = false)
     @JsonIgnore
-    private Semester semesterId;
+    private Semester semester;
 }

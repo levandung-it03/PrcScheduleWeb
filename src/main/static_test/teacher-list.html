@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,10 +9,11 @@
         integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="../resources/static/css/base.css">
-    <link rel="stylesheet" href="../resources/static/css/header.css">
     <link rel="stylesheet" href="../resources/static/css/category.css">
-    <link rel="stylesheet" href="../resources/static/css/add-practice-schedule.css">
+    <link rel="stylesheet" href="../resources/static/css/header.css">
+    <link rel="stylesheet" href="../resources/static/css/teacher-list.css">
 </head>
+
 <body>
     <div id="category">
         <div id="category_header">
@@ -117,18 +119,92 @@
                 </div>
             </div>
         </header>
-        <!-- ***********************Starting-coding-here*********************** -->
-        <form method="POST" action="/service/v1/manager/add-teacher-account" modelAttribute="registerObject">
-            <div class="form-input" id="instituteEmail">
-                <label for="instituteEmail">Email giảng viên</label>
-                <input name="instituteEmail" type="text" placeholder="giangvien@ptithcm.edu.vn" value="${registerObject.instituteEmail}" required/>
-                <div class="form_text-input_err-message"></div>
+        <div id="center-page_list">
+            <div id="table-tools">
+                <div id="table-discription">
+                    <b>Danh sách</b>
+                    <span id="quantity">10 người</span>
+                </div>
+                <div id="table-search-box">
+                    <select id="search">
+                        <option value="" selected disabled hidden>Chọn trường cần tìm</option>
+                        <option value="0">Thông tin cơ bản</option>
+                        <option value="1">Mã giảng viên</option>
+                        <option value="2">Mã khoa</option>
+                        <option value="3">Ngày sinh</option>
+                        <option value="4">Giới tính</option>
+                        <option value="5">Điện thoại</option>
+                        <option value="6">Trạng thái</option>
+                    </select>
+                    <input type="text" id="search">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </div>
             </div>
-            <input type="submit" value="Xác nhận">
-        </form>
+            <form action="/service/v1/manager/delete-computer-room" method="POST">
+                <table>
+                    <thead>
+                        <tr>
+                            <th id="baseProfile">
+                                Thông tin cơ bản
+                                <i class="fa-solid fa-arrow-down-a-z"></i>
+                            </th>
+                            <th id="teacherId">
+                                Mã giảng viên
+                                <i class="fa-solid fa-arrow-down-a-z"></i>
+                            </th>
+                            <th id="departmentId">
+                                Mã khoa
+                                <i class="fa-solid fa-arrow-down-a-z"></i>
+                            </th>
+                            <th id="birthday">
+                                Ngày sinh
+                                <i class="fa-solid fa-arrow-down-a-z"></i>
+                            </th>
+                            <th id="gender">
+                                Giới tính
+                                <i class="fa-solid fa-arrow-down-a-z"></i>
+                            </th>
+                            <th id="phone">
+                                Điện thoại
+                                <i class="fa-solid fa-arrow-down-a-z"></i>
+                            </th>
+                            <th id="update">Cập nhật</th>
+                            <th id="delete">Xoá</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr id="GV111">
+                            <td plain-value="Dinh Van Han giangvien0@ptithcm.edu.vn" class="baseProfile">
+                                <span class="mock-avatar">A</span>
+                                <div class="teacher-info">
+                                    <b class="teacher-name">Dinh Van Han</b>
+                                    <p class="institute-email">giangvien0@ptithcm.edu.vn</p>
+                                </div>
+                            </td>
+                            <td plain-value="GV111" class="teacherId">GV111</td>
+                            <td plain-value="CNTT02" class="departmentId">CNTT02</td>
+                            <td plain-value="1991-03-25" class="birthday">1991-03-25</td>
+                            <td plain-value="Nam" class="gender">Nam</td>
+                            <td plain-value="0377869998" class="phone">0377869998</td>
+                            <td class="table-row-btn update">
+                                <a href="">
+                                    <i class="fa-regular fa-pen-to-square"></i>
+                                </a>
+                            </td>
+                            <td class="table-row-btn delete">
+                                <button name="delete-btn" value="GV111">
+                                    <i class="fa-regular fa-trash-can"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
     </div>
-    <!-- ***********************Ending-coding-here*********************** -->
-    <script type="application/javascript" src="../resources/static/js/base.js"></script>
-    <script src="../resources/static/js/header.js"></script>
+    <script src="../resources/static/js/base.js"></script>
+    <script src="../resources/static/js/teacher-list.js"></script>
+    <!-- <script src="../resources/static/js/header.js"></script> -->
 </body>
+
 </html>
