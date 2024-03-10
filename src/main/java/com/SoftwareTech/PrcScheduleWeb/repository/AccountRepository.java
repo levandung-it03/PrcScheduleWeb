@@ -24,5 +24,5 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
         LEFT JOIN t.account a
         WHERE a.role = 'TEACHER'
     """)
-    List<DtoTeacherAccountList> findAllByExistingTeacherIds(PageRequest pageRequest);
+    List<DtoTeacherAccountList> findAllInSpecifiedPage(PageRequest pageRequest);
 }

@@ -113,6 +113,36 @@
                     </tbody>
                 </table>
             </form>
+            <div id="table-footer">
+                <c:set var="prefixUrl" value="/manager/category/teacher/teacher-list?page=" scope="page"/>
+                <div id="table-footer_main">
+                    <span class="interact-page-btn">
+                        <a href="${prefixUrl}${(currentPage == 1) ? currentPage : (currentPage - 1)}">
+                            <i class="fa-solid fa-angle-left"></i>
+                        </a>
+                    </span>
+                    <div id="pages-content">
+                        <c:if test="${currentPage > 1}">
+                            <span class="index-btn">
+                                <a href="${prefixUrl}${currentPage - 1}">${currentPage - 1}</a>
+                            </span>
+                        </c:if>
+                        <span class="index-btn">
+                            <a href="${prefixUrl}${currentPage}">${currentPage}</a>
+                        </span>
+                        <c:if test="${teacherList.size() != 0}">
+                            <span class="index-btn">
+                                <a href="${prefixUrl}${currentPage + 1}">${currentPage + 1}</a>
+                            </span>
+                        </c:if>
+                    </div>
+                    <span class="interact-page-btn">
+                        <a href="${prefixUrl}${(teacherList.size() == 0) ? currentPage : (currentPage + 1)}">
+                            <i class="fa-solid fa-angle-right"></i>
+                        </a>
+                    </span>
+                </div>
+            </div>
         </div>
     </div>
     <script src="${pageContext.request.contextPath}/js/base.js"></script>

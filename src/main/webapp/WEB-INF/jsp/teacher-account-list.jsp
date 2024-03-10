@@ -30,7 +30,7 @@
             <div id="table-tools">
                 <div id="table-discription">
                     <b>Danh sách</b>
-                    <span id="quantity">${accountList.size()} phòng</span>
+                    <span id="quantity">${accountList.size()} tài khoản</span>
                 </div>
                 <div id="table-search-box">
                     <select id="search">

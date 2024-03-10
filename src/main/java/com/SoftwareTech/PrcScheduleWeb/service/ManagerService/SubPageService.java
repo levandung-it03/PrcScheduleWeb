@@ -37,7 +37,7 @@ public class SubPageService {
     ) throws IOException {
         final String computerRoom = request.getParameter("computerRoom");
         ModelAndView modelAndView = staticUtilMethods
-            .customizeResponsiveModelAndView(request, "update-computer-room");
+            .customResponseModelView(request, "update-computer-room");
         Optional<ComputerRoom> computerRoomObject = computerRoomRepository.findByComputerRoom(computerRoom);
 
         if (computerRoomObject.isEmpty()) {
@@ -56,7 +56,7 @@ public class SubPageService {
     ) throws IOException {
         final String teacherId = request.getParameter("teacherId");
         ModelAndView modelAndView = staticUtilMethods
-            .customizeResponsiveModelAndView(request, "update-teacher");
+            .customResponseModelView(request, "update-teacher");
 
         try {
             Teacher teacher = teacherRepository.findById(teacherId).orElseThrow();
