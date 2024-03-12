@@ -21,7 +21,7 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
         SELECT new com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoTeacherAccountList(
             a.accountId, a.instituteEmail, a.creatingTime, a.role, a.status, t.teacherId
         ) FROM Teacher t
-        LEFT JOIN t.account a
+        RIGHT JOIN t.account a
         WHERE a.role = 'TEACHER'
     """)
     List<DtoTeacherAccountList> findAllInSpecifiedPage(PageRequest pageRequest);

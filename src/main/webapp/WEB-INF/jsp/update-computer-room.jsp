@@ -24,23 +24,23 @@
             <i id="succeed-service-message_close-btn" class="fa fa-times-circle" aria-hidden="true"></i>
         </div>
         <%@ include file="/WEB-INF/jsp/header.jsp" %>
-        <form method="POST" action="/service/v1/manager/update-computer-room?computerRoom=${computerRoomObject.computerRoom}"
-        modelAttribute="computerRoomObject">
-            <div class="form-input" id="computerRoom">
-                <label for="computerRoom">Phòng thực hành</label>
-                <input name="computerRoom" type="text" value="${computerRoomObject.computerRoom}" disabled/>
+        <form method="POST" action="/service/v1/manager/update-computer-room?roomId=${roomObject.roomId}"
+        modelAttribute="roomObject">
+            <div class="form-input" id="roomId">
+                <label for="roomId">Phòng thực hành</label>
+                <input name="roomId" type="text" value="${roomObject.roomId}" disabled/>
             </div>
 
             <div class="form-input" id="maxComputerQuantity">
                 <label for="maxComputerQuantity">Nhập số lượng máy tối đa</label>
                 <input onblur="cuttingStringValueOfInputTag(this, 3)" name="maxComputerQuantity" type="number" min="1" max="999"
-                    value="${computerRoomObject.maxComputerQuantity}" required/>
+                    value="${roomObject.maxComputerQuantity}" required/>
                 <div class="form_text-input_err-message"></div>
             </div>
 
             <div class="form-input" id="status">
                 <label for="status">Trạng thái hiện tại</label>
-                <select data="${computerRoomObject.status}" name="status">
+                <select data="${roomObject.status}" name="status">
                     <option value="true">Còn hoạt động</option>
                     <option value="false">Đã niêm phong</option>
                 <select>
@@ -49,7 +49,7 @@
             <div class="form-input" id="availableComputerQuantity">
                 <label for="availableComputerQuantity">Nhập số lượng máy hiện hành</label>
                 <input onblur="cuttingStringValueOfInputTag(this, 3)" name="availableComputerQuantity" type="number" min="1" max="999"
-                    value="${computerRoomObject.availableComputerQuantity}" required/>
+                    value="${roomObject.availableComputerQuantity}" required/>
                 <div class="form_text-input_err-message"></div>
             </div>
             <input type="submit" value="Xác nhận">

@@ -3,6 +3,7 @@ package com.SoftwareTech.PrcScheduleWeb.config;
 import com.SoftwareTech.PrcScheduleWeb.model.enums.Gender;
 import com.SoftwareTech.PrcScheduleWeb.model.enums.Role;
 import com.SoftwareTech.PrcScheduleWeb.model.*;
+import com.SoftwareTech.PrcScheduleWeb.model.enums.RoomType;
 import com.SoftwareTech.PrcScheduleWeb.repository.*;
 
 import lombok.RequiredArgsConstructor;
@@ -31,11 +32,13 @@ public class InitialDataLoader implements CommandLineRunner {
     @Autowired
     private final TeacherRepository teacherRepository;
     @Autowired
-    private final SubjectDetailRepository subjectDetailRepository;
+    private final SectionClassRepository sectionClassRepository;
     @Autowired
-    private final PracticeScheduleRepository practiceScheduleRepository;
+    private final ComputerRoomDetailRepository computerRoomDetailRepository;
     @Autowired
-    private final ComputerRoomRepository computerRoomRepository;
+    private final ClassroomRepository classroomRepository;
+    @Autowired
+    private final SubjectScheduleRepository subjectScheduleRepository;
 
     @Override
     public void run(String... args) {
@@ -64,13 +67,24 @@ public class InitialDataLoader implements CommandLineRunner {
                     .build()
             ));
         }
-        if (computerRoomRepository.count() == 0) {
-            computerRoomRepository.saveAll(List.of(
-                ComputerRoom.builder()
-                    .computerRoom("2B11")
+        if (classroomRepository.count() == 0) {
+            classroomRepository.saveAll(List.of(
+                Classroom.builder()
+                    .roomId("2B11")
+                    .roomType(RoomType.PRC)
+                    .status(true)
+                    .build(),
+                Classroom.builder()
+                    .roomId("2B12")
+                    .roomType(RoomType.NORM)
+                    .status(true)
+                    .build()
+            ));
+            computerRoomDetailRepository.saveAll(List.of(
+                ComputerRoomDetail.builder()
+                    .classroom(classroomRepository.findById("2B11").orElseThrow())
                     .maxComputerQuantity(30)
                     .availableComputerQuantity(30)
-                    .status(true)
                     .build()
             ));
         }
@@ -126,8 +140,8 @@ public class InitialDataLoader implements CommandLineRunner {
                     .status(true)
                     .build()
             ));
-            subjectDetailRepository.saveAll(List.of(
-                SubjectDetail.builder()
+            sectionClassRepository.saveAll(List.of(
+                SectionClass.builder()
                     .groupFromSubject((byte)1)
                     .grade(gradeRepository.findById("D21CQCN01-N").orElseThrow())
                     .subject(subjectRepository.findById("INT13147").orElseThrow())
@@ -135,15 +149,15 @@ public class InitialDataLoader implements CommandLineRunner {
                         .findBySemesterAndRangeOfYear((byte)3, "2022_2023").orElseThrow())
                     .build()
             ));
-            practiceScheduleRepository.saveAll(List.of(
-                PracticeSchedule.builder()
-                    .subjectDetail(subjectDetailRepository.findById(1L).orElseThrow())
+            subjectScheduleRepository.saveAll(List.of(
+                SubjectSchedule.builder()
+                    .sectionClass(sectionClassRepository.findById(1L).orElseThrow())
                     .day((byte)2)
                     .startingWeek((byte)2)
                     .totalWeek((byte)11)
                     .startingPeriod((byte)1)
                     .lastPeriod((byte)4)
-                    .computerRoom(computerRoomRepository.findById("2B11").orElseThrow())
+                    .classroom(classroomRepository.findById("2B11").orElseThrow())
                     .teacher(teacherRepository.findById("GV111").orElseThrow())
                     .status(true)
                     .build()

@@ -30,7 +30,7 @@
             <div id="table-tools">
                 <div id="table-discription">
                     <b>Danh sách</b>
-                    <span id="quantity">${computerRoomList.size()} phòng</span>
+                    <span id="quantity">${roomIdList.size()} phòng</span>
                 </div>
                 <div id="table-search-box">
                     <select id="search">
@@ -48,7 +48,7 @@
                 <table>
                     <thead>
                         <tr>
-                            <th id="computerRoom">
+                            <th id="roomId">
                                 Phòng thực hành
                                 <i class="fa-solid fa-arrow-down-a-z"></i>
                             </th>
@@ -70,9 +70,9 @@
                     </thead>
                     <tbody>
                         <c:forEach items="${computerRoomList}" var="computerRoom">
-                            <tr id="${computerRoom.computerRoom}">
-                                <td plain-value="${computerRoom.computerRoom}" class="computerRoom">
-                                    ${computerRoom.computerRoom}
+                            <tr id="${computerRoom.roomId}">
+                                <td plain-value="${computerRoom.roomId}" class="roomId">
+                                    ${computerRoom.roomId}
                                 </td>
                                 <td plain-value="${computerRoom.maxComputerQuantity}" class="maxComputerQuantity">
                                     ${computerRoom.maxComputerQuantity}
@@ -86,12 +86,12 @@
                                     </span>
                                 </td>
                                 <td class="table-row-btn update">
-                                    <a href="/manager/sub-page/computer-room/update-computer-room?computerRoom=${computerRoom.computerRoom}">
+                                    <a href="/manager/sub-page/computer-room/update-computer-room?roomId=${computerRoom.roomId}">
                                         <i class="fa-regular fa-pen-to-square"></i>
                                     </a>
                                 </td>
                                 <td class="table-row-btn delete">
-                                    <button name="deleteBtn" value="${computerRoom.computerRoom}">
+                                    <button name="deleteBtn" value="${computerRoom.roomId}">
                                         <i class="fa-regular fa-trash-can"></i>
                                     </button>
                                 </td>

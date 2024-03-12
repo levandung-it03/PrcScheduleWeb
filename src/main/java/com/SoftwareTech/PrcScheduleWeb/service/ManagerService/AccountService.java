@@ -5,6 +5,7 @@ import com.SoftwareTech.PrcScheduleWeb.model.Account;
 import com.SoftwareTech.PrcScheduleWeb.model.enums.Role;
 import com.SoftwareTech.PrcScheduleWeb.repository.AccountRepository;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -62,5 +63,14 @@ public class AccountService {
 
             return "redirect:" + standingUrl + "?succeedMessage=sMv1at01";
         }
+    }
+
+    public String deleteTeacherAccount(
+        String accountId,
+        HttpServletRequest request,
+        HttpServletResponse response
+    ) {
+
+        return null;
     }
 }

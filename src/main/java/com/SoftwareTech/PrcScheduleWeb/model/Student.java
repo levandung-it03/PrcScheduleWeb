@@ -31,7 +31,7 @@ public class Student {
     private String firstName;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "gender_enum", length = 1, nullable = false)
+    @Column(name = "gender_enum", length = 4, nullable = false)
     private Gender gender;
 
     @Column(name = "institute_email", nullable = false, unique = true)

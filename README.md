@@ -117,41 +117,41 @@
   ```
   - Update Computer Room Page:
   ```Http
-  GET /manager/sub-page/computer-room/update-computer-room?computerRoom=<computerRoom>
+  GET /manager/sub-page/computer-room/update-computer-room?roomId=<roomId>
   If: Without Cookies.AccessToken
   If: AccessToken is invalid
   GET [Redirect] /public/login
   
-  If: <computerRoom> not found
+  If: <roomId> not found
   GET [Redirect] [MANAGER] /manager/category/computer-room/computer-room-list?errorMessage=eMv1at05
   ```
   - Update Computer Room Action:
   ```Http
-  POST /service/v1/manager/update-computer-room?computerRoom=<computerRoom>
+  POST /service/v1/manager/update-computer-room?roomId=<roomId>
   If: Without Cookies.AccessToken
   If: AccessToken is invalid
   GET [Redirect] /public/login
   
-  If: <computerRoom> not found
+  If: <roomId> not found
   GET [Redirect] [MANAGER] /manager/category/computer-room/computer-room-list?errorMessage=eMv1at05
   
   If: There's an error in application
-  GET [Redirect] [MANAGER] /manager/sub-page/computer-room/update-computer-room?computerRoom=<computerRoom>&errorMessage=eMv1at00
+  GET [Redirect] [MANAGER] /manager/sub-page/computer-room/update-computer-room?roomId=<roomId>&errorMessage=eMv1at00
   
   Else: All condition is valid
   GET [Redirect] [MANAGER] /manager/category/computer-room/computer-room-list?succeedMessage=sMv1at03
   ```
   - Delete Computer Room Action:
   ```Http
-  POST /service/v1/manager/computer-room-list-active-btn?deleteBtn=<computerRoom>
+  POST /service/v1/manager/computer-room-list-active-btn?deleteBtn=<roomId>
   If: Without Cookies.AccessToken
   If: AccessToken is invalid
   GET [Redirect] /public/login
   
-  If: <computerRoom> not found
+  If: <roomId> not found
   GET [Redirect] [MANAGER] /manager/category/computer-room/computer-room-list?errorMessage=eMv1at05
   
-  If: <computerRoom> has SQLException (database binding = can't delete)
+  If: <roomId> has SQLException (database binding = can't delete)
   GET [Redirect] [MANAGER] /manager/category/computer-room/computer-room-list?errorMessage=eMv1at06
   
   Else: All condition is valid

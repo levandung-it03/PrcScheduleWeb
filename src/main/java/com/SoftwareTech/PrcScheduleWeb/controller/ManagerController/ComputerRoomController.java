@@ -22,27 +22,27 @@ public class ComputerRoomController {
 
     @RequestMapping(value = "/add-computer-room", method = POST)
     public String addComputerRoom(
-        @ModelAttribute("computerRoomObject") DtoAddComputerRoom computerRoomObject,
+        @ModelAttribute("roomObject") DtoAddComputerRoom roomObject,
         RedirectAttributes redirectAttributes,
         HttpServletRequest request
     ) {
-        return computerRoomService.addComputerRoom(computerRoomObject, redirectAttributes, request);
+        return computerRoomService.addComputerRoom(roomObject, redirectAttributes, request);
     }
 
     @RequestMapping(value = "/update-computer-room", method = POST)
     public String updateComputerRoom(
-        @ModelAttribute("computerRoomObject") DtoUpdateComputerRoom computerRoomObject,
+        @ModelAttribute("roomObject") DtoUpdateComputerRoom roomObject,
         HttpServletRequest request
     ) {
-        return computerRoomService.updateComputerRoom(computerRoomObject, request);
+        return computerRoomService.updateComputerRoom(roomObject, request);
     }
 
     @RequestMapping(value = "/computer-room-list-active-btn", method = POST)
     public String deleteComputerRoom(
-        @ModelAttribute("deleteBtn") String computerRoom,
+        @ModelAttribute("deleteBtn") String roomId,
         HttpServletRequest request,
         HttpServletResponse response
     ) {
-        return computerRoomService.deleteComputerRoom(computerRoom, request, response);
+        return computerRoomService.deleteComputerRoom(roomId, request, response);
     }
 }

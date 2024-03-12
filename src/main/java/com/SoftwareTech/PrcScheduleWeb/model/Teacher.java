@@ -33,7 +33,7 @@ public class Teacher {
     private Date birthday;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "gender_enum", length = 1, nullable = false)
+    @Column(name = "gender_enum", length = 4, nullable = false)
     private Gender gender;
 
     @Column(name = "phone_number", length = 20, nullable = false, unique = true)

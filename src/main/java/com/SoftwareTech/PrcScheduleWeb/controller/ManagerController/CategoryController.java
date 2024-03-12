@@ -41,13 +41,8 @@ public class CategoryController {
     }
 
     @RequestMapping(value = "/teacher/teacher-account-list", method = GET)
-    public ModelAndView getDefaultTeacherAccountListPage(HttpServletRequest request) {
-        return categoryService.getDefaultTeacherAccountListPage(request);
+    public ModelAndView getTeacherAccountListPage(HttpServletRequest request) {
+        return categoryService.getTeacherAccountListPage(request);
     }
-
-//    @RequestMapping(value = "/teacher/teacher-list", method = POST)
-//    public ModelAndView getTeacherListPage(@PathVariable("pageBtn") Integer page, HttpServletRequest request) {
-//        return categoryService.getTeacherListPage(request, page);
-//    }
 
 }

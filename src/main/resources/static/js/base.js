@@ -175,7 +175,7 @@ function customizeSortingListEvent() {
             });
             alert("Sắp xếp thành công!");
             $('table tbody').innerHTML = cellsOfFieldId.reduce((accumulator, cell) => {
-                return accumulator + cell.parentElement.outerHTML;
+                return accumulator + cell.parentElement.outerxHTML;
             }, "");
         })
     })

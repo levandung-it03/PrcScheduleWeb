@@ -1,6 +1,6 @@
 /*Seperated_Styles*/
-table tr th#computerRoom,
-table tr td.computerRoom {
+table tr th#roomId,
+table tr td.roomId {
     padding-left: 30px;
     text-align: start;
     width: 30%;

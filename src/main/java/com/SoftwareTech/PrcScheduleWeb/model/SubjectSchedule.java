@@ -19,9 +19,9 @@ public class SubjectSchedule {
     private Long subjectScheduleId;
 
     @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "subject_detail_id", referencedColumnName = "subject_detail_id", nullable = false)
+    @JoinColumn(name = "section_class_id", referencedColumnName = "section_class_id", nullable = false)
     @JsonIgnore
-    private SubjectDetail subjectDetail;
+    private SectionClass sectionClass;
 
     @Column(name = "day", nullable = false)
     private Byte day;
@@ -38,8 +38,9 @@ public class SubjectSchedule {
     @Column(name = "last_period", nullable = false)
     private Byte lastPeriod;
 
-    @Column(name = "classroom", length = 10, nullable = false)
-    private String classroom;
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "room_id", referencedColumnName = "room_id", nullable = false)
+    private Classroom classroom;
 
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "teacher_id", referencedColumnName = "teacher_id", nullable = false)

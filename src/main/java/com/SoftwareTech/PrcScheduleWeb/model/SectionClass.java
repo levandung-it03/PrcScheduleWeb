@@ -10,19 +10,19 @@ import lombok.*;
 @NoArgsConstructor
 @Entity
 @Table(
-    name = "Subject_Detail",
+    name = "Section_Class",
     uniqueConstraints = {
         @UniqueConstraint(
-            name = "UK_Subject_Detail_01",
+            name = "UK_Section_Class_01",
             columnNames = {"group_from_subject", "grade_id", "subject_id"}
         )
     }
 )
-public class SubjectDetail {
+public class SectionClass {
     @Id
-    @Column(name = "subject_detail_id")
+    @Column(name = "section_class_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long subjectDetailId;
+    private Long sectionClassId;
 
     @Column(name = "group_from_subject", nullable = false)
     private Byte groupFromSubject;

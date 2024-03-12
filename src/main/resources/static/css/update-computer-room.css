@@ -30,7 +30,7 @@ form .form-input {
     padding: 4px;
 }
 /*--Customize each input tag--*/
-form div#computerRoom,
+form div#roomId,
 form div#maxComputerQuantity,
 form div#status,
 form div#availableComputerQuantity {
