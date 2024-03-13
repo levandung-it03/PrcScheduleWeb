@@ -3,8 +3,6 @@ package com.SoftwareTech.PrcScheduleWeb.model;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.List;
-
 @Data
 @Builder
 @AllArgsConstructor

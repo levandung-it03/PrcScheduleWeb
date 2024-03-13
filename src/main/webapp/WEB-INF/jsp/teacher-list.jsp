@@ -10,8 +10,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
         integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/base.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/teacher-list.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/base.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/teacher-list.css">
 </head>
 
 <body>
@@ -145,8 +145,8 @@
             </div>
         </div>
     </div>
-    <script src="${pageContext.request.contextPath}/js/base.js"></script>
-    <script src="${pageContext.request.contextPath}/js/teacher-list.js"></script>
+    <script type="application/javascript" src="${pageContext.request.contextPath}/js/base.js"></script>
+    <script type="application/javascript" src="${pageContext.request.contextPath}/js/teacher-list.js"></script>
 </body>
 
 </html>

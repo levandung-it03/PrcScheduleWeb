@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/category.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/category.css">
     <div id="category">
         <div id="category_header">
                 <div id="category_header_logo">

@@ -37,4 +37,5 @@ public class AccountController {
     ) {
         return accountService.deleteTeacherAccount(accountId, request, response);
     }
+
 }

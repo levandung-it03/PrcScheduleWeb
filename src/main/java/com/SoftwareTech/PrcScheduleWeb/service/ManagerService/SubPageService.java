@@ -2,11 +2,9 @@ package com.SoftwareTech.PrcScheduleWeb.service.ManagerService;
 
 import com.SoftwareTech.PrcScheduleWeb.config.StaticUtilMethods;
 import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoComputerRoom;
-import com.SoftwareTech.PrcScheduleWeb.model.Classroom;
 import com.SoftwareTech.PrcScheduleWeb.model.ComputerRoomDetail;
 import com.SoftwareTech.PrcScheduleWeb.model.Department;
 import com.SoftwareTech.PrcScheduleWeb.model.Teacher;
-import com.SoftwareTech.PrcScheduleWeb.repository.ClassroomRepository;
 import com.SoftwareTech.PrcScheduleWeb.repository.ComputerRoomDetailRepository;
 import com.SoftwareTech.PrcScheduleWeb.repository.DepartmentRepository;
 import com.SoftwareTech.PrcScheduleWeb.repository.TeacherRepository;
@@ -19,15 +17,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class SubPageService {
     @Autowired
     private final StaticUtilMethods staticUtilMethods;
-    @Autowired
-    private final ClassroomRepository classroomRepository;
     @Autowired
     private final TeacherRepository teacherRepository;
     @Autowired
