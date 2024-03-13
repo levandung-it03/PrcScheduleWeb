@@ -4,8 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDateTime;
-
 @Data
 @Builder
 @AllArgsConstructor
@@ -16,7 +14,7 @@ import java.time.LocalDateTime;
     uniqueConstraints = {
         @UniqueConstraint(
             name = "UK_Subject_Registration_01",
-            columnNames = {"student_id", "subject_detail_id"}
+            columnNames = {"student_id", "section_class_id"}
         )
     }
 )
@@ -26,16 +24,13 @@ public class SubjectRegistration {
     @Column(name = "subject_registration_id")
     private Long subjectRegistrationId;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "student_id", referencedColumnName = "student_id", nullable = false)
     @JsonIgnore
     private Student student;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "subject_detail_id", referencedColumnName = "subject_detail_id", nullable = false)
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "section_class_id", referencedColumnName = "section_class_id", nullable = false)
     @JsonIgnore
-    private SubjectDetail subjectDetail;
-
-    @Column(name = "creating_date", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private LocalDateTime creatingDate;
+    private SectionClass sectionClass;
 }

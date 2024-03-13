@@ -8,7 +8,8 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class DtoComputerRoom {
-    private String area;
-    private Integer roomCode;
+    private String roomId;
     private Integer maxComputerQuantity;
+    private Integer availableComputerQuantity;
+    private boolean status;
 }

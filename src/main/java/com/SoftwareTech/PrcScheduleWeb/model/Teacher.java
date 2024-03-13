@@ -18,7 +18,7 @@ public class Teacher {
     @Column(name = "teacher_id", length = 20)
     private String teacherId;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "department_id", referencedColumnName = "department_id", nullable = false)
     @JsonIgnore
     private Department department;
@@ -33,19 +33,16 @@ public class Teacher {
     private Date birthday;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "gender_enum", length = 1, nullable = false)
+    @Column(name = "gender_enum", length = 4, nullable = false)
     private Gender gender;
-
-    @Column(name = "identifier", length = 20, nullable = false, unique = true)
-    private String identity;
 
     @Column(name = "phone_number", length = 20, nullable = false, unique = true)
     private String phone;
 
-    @Column(name = "status_enum", nullable = false, columnDefinition = "TINYINT DEFAULT 1")
+    @Column(name = "status_enum", nullable = false, columnDefinition = "BIT DEFAULT 1")
     private boolean status;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "account_id", referencedColumnName = "account_id", nullable = false)
     @JsonIgnore
     private Account account;

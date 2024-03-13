@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Teacher Account</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+        integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="../resources/static/css/base.css">
+    <link rel="stylesheet" href="../resources/static/css/category.css">
+    <link rel="stylesheet" href="../resources/static/css/header.css">
+    <link rel="stylesheet" href="../resources/static/css/computer-room-list.css">
+</head>
+
+<body>
+    <div id="category">
+        <div id="category_header">
+            <div id="category_header_logo">
+                <img src="../resources/static/img/ptit_logo.png" alt="">
+            </div>
+        </div>
+        <div id="category_body">
+            <div id="category_body_home">
+                <ul class="category-index-container" id="cat_home_box">
+                    <li class="index">
+                        <a class="index_wrapper" href="/home">
+                            <i class="fa-solid fa-tv"></i>
+                            <p>Trang chủ</p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div id="category_body_practice-schedule">
+                <label>LỊCH THỰC HÀNH</label>
+                <ul class="category-index-container" id="cat_practice-schedule_box">
+                    <li class="index">
+                        <a class="index_wrapper" href="">
+                            <i class="fa-regular fa-envelope"></i>
+                            <p>Toàn bộ yêu cầu</p>
+                        </a>
+                    </li>
+                    <li class="index">
+                        <a class="index_wrapper" href="">
+                            <i class="fa-regular fa-calendar-minus"></i>
+                            <p>Toàn bộ lịch</p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div id="category_body_computer-room">
+                <label>PHÒNG MÁY</label>
+                <ul class="category-index-container" id="cat_practice-schedule_box">
+                    <li class="index">
+                        <a class="index_wrapper" href="/manager/category/computer-room/add-computer-room">
+                            <i class="fa-regular fa-envelope"></i>
+                            <p>Thêm phòng máy mới</p>
+                        </a>
+                    </li>
+                    <li class="index">
+                        <a class="index_wrapper" href="">
+                            <i class="fa-regular fa-calendar-minus"></i>
+                            <p>Toàn bộ phòng</p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div id="category_body_teacher">
+                <label>GIẢNG VIÊN</label>
+                <ul class="category-index-container" id="cat_practice-schedule_box">
+                    <li class="index">
+                        <a class="index_wrapper" href="/manager/category/teacher/add-teacher-account">
+                            <i class="fa-regular fa-envelope"></i>
+                            <p>Thêm tài khoản</p>
+                        </a>
+                    </li>
+                    <li class="index">
+                        <a class="index_wrapper" href="">
+                            <i class="fa-regular fa-calendar-minus"></i>
+                            <p>Toàn bộ tài khoản</p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div id="category_footer">
+            <ul class="category-index-container">
+                <li class="index">
+                    <a class="index_wrapper" href="">
+                        <i class="fa-regular fa-life-ring"></i>
+                        <p>Support</p>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div id="center-page" id="add-account-page">
+        <div class="error-service-message hide" style="display:flex">
+            <span>Lỗi gì đó không biết!</span>
+            <i id="error-service-message_close-btn" class="fa fa-times-circle" aria-hidden="true"></i>
+        </div>
+        <header>
+            <div id="header_left">
+                <div class="header_items" id="toggle-hide-category">
+                    <i class="fa-solid fa-bars"></i>
+                </div>
+            </div>
+            <div id="header_center">
+                <p id="category-name"></p>
+                <p id="page-discription"></p>
+            </div>
+            <div id="header_right">
+                <div class="header_items" id="setting">
+                    <i class="fa-solid fa-gear"></i>
+                </div>
+                <div class="header_items" id="avatar">
+                    <a id="avatar_user" href="/home">MN</a>
+                </div>
+            </div>
+        </header>
+        <style>
+        </style>
+        <div id="center-page_list">
+            <div id="table-tools">
+                <div id="table-discription">
+                    <b>Danh sách</b>
+                    <span id="quantity">10 phòng</span>
+                </div>
+                <div id="table-search-box">
+                    <select id="search">
+                        <option value="" selected disabled hidden>Chọn trường cần tìm</option>
+                        <option value="0">Mã phòng</option>
+                        <option value="1">Tổng lượng máy</option>
+                        <option value="2">Số máy hiện hành</option>
+                        <option value="3">Trạng thái</option>
+                    </select>
+                    <input type="text" id="search">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </div>
+            </div>
+            <form action="/service/v1/manager/delete-computer-room" method="POST">
+                <table>
+                    <thead>
+                        <tr>
+                            <th id="roomId">
+                                Phòng thực hành
+                                <i class="fa-solid fa-arrow-down-a-z"></i>
+                            </th>
+                            <th id="maxComputerQuantity">
+                                Tổng lượng máy
+                                <i class="fa-solid fa-arrow-down-a-z"></i>
+                            </th>
+                            <th id="availableComputerQuantity">
+                                Số máy hiện hành
+                                <i class="fa-solid fa-arrow-down-a-z"></i>
+                            </th>
+                            <th id="status">
+                                Trạng thái
+                                <i class="fa-solid fa-arrow-down-a-z"></i>
+                            </th>
+                            <th id="update">Cập nhật</th>
+                            <th id="delete">Xoá phòng</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr id="2B11">
+                            <td plain-value="2B11" class="roomId">2B11</td>
+                            <td plain-value="35" class="maxComputerQuantity">35</td>
+                            <td plain-value="34" class="availableComputerQuantity">34</td>
+                            <td plain-value="Còn hoạt động" class="status">
+                                <span class="status-is-true">Còn hoạt động</span>
+                            </td>
+                            <td class="table-row-btn update">
+                                <a href="">
+                                    <i class="fa-regular fa-pen-to-square"></i>
+                                </a>
+                            </td>
+                            <td class="table-row-btn delete">
+                                <button name="delete-btn" value="2B11">
+                                    <i class="fa-regular fa-trash-can"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr id="2B12">
+                            <td plain-value="2B12" class="roomId">2B12</td>
+                            <td plain-value="35" class="maxComputerQuantity">35</td>
+                            <td plain-value="34" class="availableComputerQuantity">34</td>
+                            <td plain-value="Đã niêm phong" class="status">
+                                <span class="status-is-false">Đã niêm phong</span>
+                            </td>
+                            <td class="table-row-btn update">
+                                <a href="">
+                                    <i class="fa-regular fa-pen-to-square"></i>
+                                </a>
+                            </td>
+                            <td class="table-row-btn delete">
+                                <button name="delete-btn" value="2B12">
+                                    <i class="fa-regular fa-trash-can"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr id="2B13">
+                            <td plain-value="2B13" class="roomId">2B13</td>
+                            <td plain-value="35" class="maxComputerQuantity">35</td>
+                            <td plain-value="34" class="availableComputerQuantity">34</td>
+                            <td plain-value="Còn hoạt động" class="status">
+                                <span class="status-is-true">Còn hoạt động</span>
+                            </td>
+                            <td class="table-row-btn update">
+                                <a href="">
+                                    <i class="fa-regular fa-pen-to-square"></i>
+                                </a>
+                            </td>
+                            <td class="table-row-btn delete">
+                                <button name="delete-btn" value="2B13">
+                                    <i class="fa-regular fa-trash-can"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+    </div>
+    <script src="../resources/static/js/base.js"></script>
+    <script src="../resources/static/js/computer-room-list.js"></script>
+    <!-- <script src="../resources/static/js/header.js"></script> -->
+</body>
+
+</html>

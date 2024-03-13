@@ -22,9 +22,9 @@
         },
     };
 
-    cutomizeClosingErrMessageEvent();
+    customizeClosingErrMessageEvent();
     createErrBlocksOfInputTags(validatingBlocks);
-    customizeInputTagValidateEvents(validatingBlocks);
+    customizeValidateEventInputTags(validatingBlocks);
     customizeToggleDisplayPasswordEvent();
     customizeSubmitFormAction(validatingBlocks);
     removePathAttributes();

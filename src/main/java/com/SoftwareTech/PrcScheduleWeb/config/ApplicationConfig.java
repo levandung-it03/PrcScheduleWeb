@@ -67,14 +67,19 @@ public class ApplicationConfig {
     public Map<String, String> responseMessages() {
         Map<String, String> messagePairs = new HashMap<>();
         //--Successfully messages.
-        messagePairs.put("sMv1at01", "Account has been added successfully!");
-        messagePairs.put("sMv1at02", "Computer Room has been added successfully!");
+        messagePairs.put("sMv1at01", "Thêm mới thông tin thành công!");
+        messagePairs.put("sMv1at02", "Xoá thành công!");
+        messagePairs.put("sMv1at03", "Sửa đổi thành công!");
 
         //--Error messages.
-        messagePairs.put("eMv1at01", "Email not found!");
-        messagePairs.put("eMv1at02", "Password is invalid!");
-        messagePairs.put("eMv1at03", "Email is already existing!");
-        messagePairs.put("eMv1at04", "Computer Room is already existing!");
+        messagePairs.put("eMv1at00", "Something wrong with application!");
+        messagePairs.put("eMv1at01", "Email không tồn tại!");
+        messagePairs.put("eMv1at02", "Mật khẩu không đúng!");
+        messagePairs.put("eMv1at03", "Email đã tồn tại!");
+        messagePairs.put("eMv1at04", "Đã tồn tại mã phòng tại khu vực bạn chọn!");
+        messagePairs.put("eMv1at05", "Phòng thực hành không tồn tại!");
+        messagePairs.put("eMv1at06", "Trường dữ liệu không thể xoá, thay vào đó hãy đổi trạng thái để bảo toàn dữ liệu!");
+        messagePairs.put("eMv1at07", "Mã giảng viên không tồn tại!");
         return messagePairs;
     }
 }

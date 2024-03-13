@@ -21,11 +21,12 @@ let canSubmitForm = false;
             isValid: false,
         },
     };
-
-    cutomizeClosingErrMessageEvent();
+    
+    customizeClosingErrMessageEvent();
     createErrBlocksOfInputTags(validatingBlocks);
-    customizeInputTagValidateEvents(validatingBlocks);
+    customizeValidateEventInputTags(validatingBlocks);
     customizeSubmitFormAction(validatingBlocks);
     recoveryAllSelectTagDataInForm();
     removePathAttributes();
+    mappingCategoryNameWithCurrentPage();
 })();

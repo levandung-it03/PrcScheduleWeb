@@ -4,5 +4,12 @@ import com.SoftwareTech.PrcScheduleWeb.model.enums.Role;
 import lombok.*;
 
 @Builder
-public record DtoAuthenticationResponse(String token, Role role) {
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+public class DtoAuthenticationResponse {
+    private String token;
+    private Role role;
+
 }

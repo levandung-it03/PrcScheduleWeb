@@ -2,7 +2,6 @@ package com.SoftwareTech.PrcScheduleWeb.controller;
 
 import com.SoftwareTech.PrcScheduleWeb.service.PublicPagesService;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

@@ -3,9 +3,6 @@ package com.SoftwareTech.PrcScheduleWeb.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.Check;
-
-import java.util.List;
 
 @Data
 @Builder
@@ -13,45 +10,35 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(
-    name = "Subject_Detail",
+    name = "Section_Class",
     uniqueConstraints = {
         @UniqueConstraint(
-            name = "UK_Subject_Detail_01",
+            name = "UK_Section_Class_01",
             columnNames = {"group_from_subject", "grade_id", "subject_id"}
         )
     }
 )
-@Check(constraints = "available_quantity <= max_quantity")
-public class SubjectDetail {
+public class SectionClass {
     @Id
-    @Column(name = "subject_detail_id")
+    @Column(name = "section_class_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long subjectDetailId;
+    private Long sectionClassId;
 
     @Column(name = "group_from_subject", nullable = false)
     private Byte groupFromSubject;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "grade_id", referencedColumnName = "grade_id", nullable = false)
     @JsonIgnore
     private Grade grade;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "subject_id", referencedColumnName = "subject_id", nullable = false)
     @JsonIgnore
     private Subject subject;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "semester_id", referencedColumnName = "semester_id", nullable = false)
     @JsonIgnore
     private Semester semester;
-
-    @Column(name = "group_from_grade", nullable = false)
-    private Byte groupFromGrade;
-
-    @Column(name = "max_quantity", nullable = false)
-    private Integer maxQuantity;
-
-    @Column(name = "available_quantity", nullable = false)
-    private Integer availableQuantity;
 }

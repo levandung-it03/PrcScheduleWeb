@@ -63,5 +63,5 @@
 }
 #category_footer {
     border-top: 1px var(--white-grey-text) solid;
-    margin-top: calc(3 * var(--category-index-height));
+    margin-top: 10px;
 }

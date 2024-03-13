@@ -1,42 +1,48 @@
 package com.SoftwareTech.PrcScheduleWeb.controller.ManagerController;
-
-import com.SoftwareTech.PrcScheduleWeb.config.StaticUtilMethods;
-import com.SoftwareTech.PrcScheduleWeb.dto.AuthDto.DtoRegisterAccount;
-import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoComputerRoom;
+import com.SoftwareTech.PrcScheduleWeb.service.ManagerService.CategoryService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping(path = "${url.get.manager.prefix}")
+@RequestMapping(path = "/manager/category")
 public class CategoryController {
     @Autowired
-    private final StaticUtilMethods staticUtilMethods;
+    private final CategoryService categoryService;
 
-    @RequestMapping(value = "/teacher/add-teacher-account", method = GET)
-    public ModelAndView getAddTeacherAccountPage(HttpServletRequest request, Model model) {
-        ModelAndView modelAndView = staticUtilMethods.customizeResponsiveModelAndView(request, "add-account");
-        DtoRegisterAccount registerObject = (DtoRegisterAccount) model.asMap().get("registerObject");
-
-        if (registerObject != null)
-            modelAndView.addObject(registerObject);
-        return modelAndView;
-    }
-
+    /*******************Computer_Room_Pages_on_Category*******************/
     @RequestMapping(value = "/computer-room/add-computer-room", method = GET)
     public ModelAndView getAddComputerRoomPage(HttpServletRequest request, Model model) {
-        ModelAndView modelAndView = staticUtilMethods.customizeResponsiveModelAndView(request, "add-computer-room");
-        DtoComputerRoom computerRoomObject = (DtoComputerRoom) model.asMap().get("computerRoomObject");
+        return categoryService.getAddComputerRoomPage(request, model);
+    }
 
-        if (computerRoomObject != null)
-            modelAndView.addObject(computerRoomObject);
-        return modelAndView;
+    @RequestMapping(value = "/computer-room/computer-room-list", method = GET)
+    public ModelAndView getComputerRoomListPage(HttpServletRequest request) {
+        return categoryService.getComputerRoomListPage(request);
+    }
+
+    /*******************Teacher_Pages_on_Category*******************/
+    @RequestMapping(value = "/teacher/add-teacher-account", method = GET)
+    public ModelAndView getAddTeacherAccountPage(HttpServletRequest request, Model model) {
+        return categoryService.getAddTeacherAccountPage(request, model);
+    }
+
+    @RequestMapping(value = "/teacher/teacher-list", method = GET)
+    public ModelAndView getDefaultTeacherListPage(HttpServletRequest request) {
+        return categoryService.getTeacherListPage(request);
+    }
+
+    @RequestMapping(value = "/teacher/teacher-account-list", method = GET)
+    public ModelAndView getTeacherAccountListPage(HttpServletRequest request) {
+        return categoryService.getTeacherAccountListPage(request);
     }
 
 }

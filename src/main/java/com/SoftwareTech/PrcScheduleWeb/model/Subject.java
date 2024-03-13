@@ -22,6 +22,6 @@ public class Subject {
     @Column(name = "credits_number", nullable = false)
     private Byte creditsNumber;
 
-    @Column(name = "status_enum", nullable = false, columnDefinition = "TINYINT DEFAULT 1")
+    @Column(name = "status_enum", nullable = false, columnDefinition = "BIT DEFAULT 1")
     private boolean status;
 }

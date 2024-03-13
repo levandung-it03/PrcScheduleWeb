@@ -5,6 +5,7 @@ import com.SoftwareTech.PrcScheduleWeb.model.Account;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.lang.NonNull;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
@@ -23,7 +24,7 @@ public class StaticUtilMethods {
     private final UserDetailsService userDetailsService;
 
     /**Spring MVC: Customize returned ModelAndView to show ErrMessage or SucceedMessages.**/
-    public ModelAndView customizeResponsiveModelAndView(@NonNull HttpServletRequest request, String model) {
+    public ModelAndView customResponseModelView(@NonNull HttpServletRequest request, String model) {
         String errCode = request.getParameter("errorMessage");
         String errMess = (errCode == null) ? "none" : responseMessages.get(errCode);
 
@@ -50,5 +51,23 @@ public class StaticUtilMethods {
             }
         }
         return null;
+    }
+
+    /**Spring MVC: Get the "page" param in HttpServletRequest, customize and return as PageRequest Object.**/
+    public PageRequest getPageRequest(HttpServletRequest request) {
+        //--Minimum the page index of Website interface is 1.
+        int requestPage = 1;
+
+        //--Compare Maximum with 1 if there's a negative(-) page number.
+        try { requestPage = Math.max(Integer.parseInt(request.getParameter("page")), 1); }
+        catch (NumberFormatException ignored) {}
+
+        /*
+          - Minimum the "pageNumber" in "PagingAndSorting" is 0.
+          [?] Why don't I put the 0 at the beginning (line-59,62)?
+          => Reason: Minimum of "request.getParameter("page")" (line-62) is always 1.
+          => So: This will work with a "null" param, and wrong with '1' default minimum page number.
+         */
+        return PageRequest.of(requestPage - 1, 10);
     }
 }

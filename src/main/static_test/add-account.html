@@ -8,40 +8,127 @@
         integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="../resources/static/css/base.css">
-    <link rel="stylesheet" href="../resources/static/css/add-account.css">
+    <link rel="stylesheet" href="../resources/static/css/header.css">
+    <link rel="stylesheet" href="../resources/static/css/category.css">
+    <link rel="stylesheet" href="../resources/static/css/add-practice-schedule.css">
 </head>
 <body>
+    <div id="category">
+        <div id="category_header">
+            <div id="category_header_logo">
+                <img src="../resources/static/img/ptit_logo.png" alt="">
+            </div>
+        </div>
+        <div id="category_body">
+            <div id="category_body_home">
+                <ul class="category-index-container" id="cat_home_box">
+                    <li class="index">
+                        <a class="index_wrapper" href="/home">
+                            <i class="fa-solid fa-tv"></i>
+                            <p>Trang chủ</p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div id="category_body_practice-schedule">
+                <label>LỊCH THỰC HÀNH</label>
+                <ul class="category-index-container" id="cat_practice-schedule_box">
+                    <li class="index">
+                        <a class="index_wrapper" href="">
+                            <i class="fa-regular fa-envelope"></i>
+                            <p>Toàn bộ yêu cầu</p>
+                        </a>
+                    </li>
+                    <li class="index">
+                        <a class="index_wrapper" href="">
+                            <i class="fa-regular fa-calendar-minus"></i>
+                            <p>Toàn bộ lịch</p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div id="category_body_computer-room">
+                <label>PHÒNG MÁY</label>
+                <ul class="category-index-container" id="cat_practice-schedule_box">
+                    <li class="index">
+                        <a class="index_wrapper" href="/manager/category/computer-room/add-computer-room">
+                            <i class="fa-regular fa-envelope"></i>
+                            <p>Thêm phòng máy mới</p>
+                        </a>
+                    </li>
+                    <li class="index">
+                        <a class="index_wrapper" href="/manager/category/computer-room/computer-room-list">
+                            <i class="fa-regular fa-calendar-minus"></i>
+                            <p>Toàn bộ phòng</p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div id="category_body_teacher">
+                <label>GIẢNG VIÊN</label>
+                <ul class="category-index-container" id="cat_practice-schedule_box">
+                    <li class="index">
+                        <a class="index_wrapper" href="/manager/category/teacher/add-teacher-account">
+                            <i class="fa-regular fa-envelope"></i>
+                            <p>Thêm tài khoản</p>
+                        </a>
+                    </li>
+                    <li class="index">
+                        <a class="index_wrapper" href="/manager/category/teacher/teacher-list">
+                            <i class="fa-regular fa-calendar-minus"></i>
+                            <p>Danh sách Giảng viên</p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div id="category_footer">
+            <ul class="category-index-container">
+                <li class="index">
+                    <a class="index_wrapper" href="">
+                        <i class="fa-regular fa-life-ring"></i>
+                        <p>Support</p>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
     <div id="center-page" id="add-account-page">
+        <div class="error-service-message hide" style="display:flex">
+            <span>Lỗi gì đó không biết!</span>
+            <i id="error-service-message_close-btn" class="fa fa-times-circle" aria-hidden="true"></i>
+        </div>
+        <header>
+            <div id="header_left">
+                <div class="header_items" id="toggle-hide-category">
+                    <i class="fa-solid fa-bars"></i>
+                </div>
+            </div>
+            <div id="header_center">
+                <p id="category-name"></p>
+                <p id="page-discription"></p>
+            </div>
+            <div id="header_right">
+                <div class="header_items" id="setting">
+                    <i class="fa-solid fa-gear"></i>
+                </div>
+                <div class="header_items" id="avatar">
+                    <a id="avatar_user" href="/home">MN</a>
+                </div>
+            </div>
+        </header>
+        <!-- ***********************Starting-coding-here*********************** -->
         <form method="POST" action="/service/v1/manager/add-teacher-account" modelAttribute="registerObject">
             <div class="form-input" id="instituteEmail">
                 <label for="instituteEmail">Email giảng viên</label>
                 <input name="instituteEmail" type="text" placeholder="giangvien@ptithcm.edu.vn" value="${registerObject.instituteEmail}" required/>
                 <div class="form_text-input_err-message"></div>
             </div>
-
-            <div class="form-input" id="password">
-                <label for="password">Mật khẩu</label>
-                <input name="password" type="password" value="${registerObject.password}" required/>
-                <div class="form_text-input_err-message"></div>
-                <div class="password_toggle-hidden">
-                    <i id="password" class="show-pass fa-solid fa-eye"></i>
-                    <i id="password" class="hide-pass hidden fa-regular fa-eye-slash"></i>
-                </div>
-            </div>
-
-            <div class="form-input" id="retypePassword">
-                <label for="retypePassword">Mật khẩu xác nhận</label>
-                <input name="retypePassword" type="password" value="${registerObject.retypePassword}" required/>
-                <div class="form_text-input_err-message"></div>
-                <div class="password_toggle-hidden">
-                    <i id="retypePassword" class="show-pass fa-solid fa-eye"></i>
-                    <i id="retypePassword" class="hide-pass hidden fa-regular fa-eye-slash"></i>
-                </div>
-            </div>
             <input type="submit" value="Xác nhận">
         </form>
     </div>
+    <!-- ***********************Ending-coding-here*********************** -->
     <script type="application/javascript" src="../resources/static/js/base.js"></script>
-    <script type="application/javascript" src="../resources/static/js/add-account.js"></script>
+    <script src="../resources/static/js/header.js"></script>
 </body>
 </html>

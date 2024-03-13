@@ -24,10 +24,10 @@
             <i id="succeed-service-message_close-btn" class="fa fa-times-circle" aria-hidden="true"></i>
         </div>
         <%@ include file="/WEB-INF/jsp/header.jsp" %>
-        <form method="POST" action="/service/v1/manager/add-computer-room" modelAttribute="computerRoomObject">
+        <form method="POST" action="/service/v1/manager/add-computer-room" modelAttribute="roomObject">
             <div class="form-input" id="area">
                 <label for="area">Chọn khu vực</label>
-                <select data="${computerRoomObject.area}" name="area">
+                <select data="${roomObject.area}" name="area">
                     <option value="A">Khu A Học Viện</option>
                     <option value="B">Khu B Học Viện</option>
                     <option value="C">Khu C Học Viện</option>
@@ -38,13 +38,13 @@
             <div class="form-input" id="roomCode">
                 <label for="roomCode">Nhập mã phòng</label>
                 <input onblur="cuttingStringValueOfInputTag(this, 2)" name="roomCode" type="number" min="1" max="99"
-                    value="${computerRoomObject.roomCode}" required/>
+                    value="${roomObject.roomCode}" required/>
                 <div class="form_text-input_err-message"></div>
             </div>
             <div class="form-input" id="maxComputerQuantity">
                 <label for="maxComputerQuantity">Nhập số lượng máy tối đa</label>
                 <input onblur="cuttingStringValueOfInputTag(this, 3)" name="maxComputerQuantity" type="number" min="1" max="999"
-                    value="${computerRoomObject.maxComputerQuantity}" required/>
+                    value="${roomObject.maxComputerQuantity}" required/>
                 <div class="form_text-input_err-message"></div>
             </div>
             <input type="submit" value="Xác nhận">

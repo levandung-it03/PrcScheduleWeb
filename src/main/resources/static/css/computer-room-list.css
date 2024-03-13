@@ -1,0 +1,27 @@
+/*Seperated_Styles*/
+table tr th#roomId,
+table tr td.roomId {
+    padding-left: 30px;
+    text-align: start;
+    width: 30%;
+}
+
+table tr th#maxComputerQuantity,
+table tr td.maxComputerQuantity,
+table tr th#availableComputerQuantity,
+table tr td.availableComputerQuantity {
+    text-align: start;
+    width: 17.5%;
+}
+
+table tr th#status,
+table tr td.status {
+    width: 15%;
+}
+
+table tr th#update,
+table tr td.update,
+table tr th#delete,
+table tr td.delete {
+    width: 10%;
+}

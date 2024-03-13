@@ -4,8 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.List;
-
 @Data
 @Builder
 @AllArgsConstructor
@@ -17,20 +15,11 @@ public class Grade {
     @Column(name = "grade_id", length = 20, nullable = false)
     private String gradeId;
 
-    @Column(name = "grade_name", nullable = false, unique = true)
-    private String gradeName;
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "major_id", referencedColumnName = "major_id", nullable = false)
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "department_id", referencedColumnName = "department_id", nullable = false)
     @JsonIgnore
-    private Major major;
+    private Department department;
 
-    @Column(name = "starting_year", nullable = false)
-    private Integer startingYear;
-
-    @Column(name = "ending_year", nullable = false)
-    private Integer endingYear;
-
-    @Column(name = "status_enum", nullable = false, columnDefinition = "TINYINT DEFAULT 1")
+    @Column(name = "status_enum", nullable = false, columnDefinition = "BIT DEFAULT 1")
     private boolean status;
 }
