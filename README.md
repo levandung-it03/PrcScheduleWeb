@@ -157,5 +157,3 @@
   Else: All condition is valid
   GET [Redirect] [MANAGER] /manager/category/computer-room/computer-room-list?succeedMessage=sMv1at02
   ```
-
-//Test-comment
