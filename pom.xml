@@ -83,7 +83,6 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<optional>provided</optional>
 		</dependency>
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
