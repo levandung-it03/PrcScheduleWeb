@@ -64,27 +64,27 @@
 *2. Add Teacher Account Page*
 - Add Teacher Account Page (on Category):
   - Add Teacher Account Page:
-   ```Http
-    GET [MANAGER] /manager/category/teacher/add-teacher-account
-    If: Without Cookies.AccessToken
-    If: AccessToken is invalid
-    GET [Redirect] /public/login
-    ```
+  ```Http
+  GET [MANAGER] /manager/category/teacher/add-teacher-account
+  If: Without Cookies.AccessToken
+  If: AccessToken is invalid
+  GET [Redirect] /public/login
+  ```
   - Add Teacher Account Action - AccountController.addTeacherAccount(__DtoRegisterAccount__):
   ```Http
-    POST [MANAGER] /service/v1/manager/add-teacher-account
-    If: Without Cookies.AccessToken
-    If: AccessToken is invalid
-    GET [Redirect] /public/login
+  POST [MANAGER] /service/v1/manager/add-teacher-account
+  If: Without Cookies.AccessToken
+  If: AccessToken is invalid
+  GET [Redirect] /public/login
   
-    If: Email is invalid (eMv1at01)
-    If: Password is invalid or RetypePassword and Passowrd is not similar (eMv1at02)
-    If: Email is already existing (eMv1at03)
-    GET [Redirect] [MANAGER] /manager/category/teacher/add-teacher-account?errorMessage=<err_code>
+  If: Email is invalid (eMv1at01)
+  If: Password is invalid or RetypePassword and Passowrd is not similar (eMv1at02)
+  If: Email is already existing (eMv1at03)
+  GET [Redirect] [MANAGER] /manager/category/teacher/add-teacher-account?errorMessage=<err_code>
 
-    Else: All condition is valid
-    GET [Redirect] [MANAGER] /manager/category/teacher/add-teacher-account?succeedMessage=sMv1at01
-    ```
+  Else: All condition is valid
+  GET [Redirect] [MANAGER] /manager/category/teacher/add-teacher-account?succeedMessage=sMv1at01
+  ```
 - Teacher Account List Page (on Category):
   - Main List Page:
   ```Http
