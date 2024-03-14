@@ -14,6 +14,7 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 import java.util.NoSuchElementException;
+import java.util.regex.Pattern;
 
 @Service
 @RequiredArgsConstructor
@@ -25,8 +26,20 @@ public class ComputerRoomService {
 
     @Transactional(rollbackOn = {Exception.class})
     public String addComputerRoomAndGetStandingUrlWithMessage(DtoAddComputerRoom roomObject, String standingUrl) {
-        final String inpComputerRoom = String
-            .format("2%s%s", roomObject.getArea().trim().toUpperCase(), roomObject.getRoomCode().toString());
+        final String area = roomObject.getArea().trim().toUpperCase();
+
+        if (!Pattern.compile("^[A-Z]$").matcher(area).matches()
+            || roomObject.getRoomCode() == null
+            || roomObject.getMaxComputerQuantity() == null
+            || roomObject.getRoomCode() <= 0
+            || roomObject.getRoomCode() >= 100
+            || roomObject.getMaxComputerQuantity() <= 0
+            || roomObject.getMaxComputerQuantity() >= 1000
+        ) {
+            throw new IllegalStateException("Invalid input data");
+        }
+
+        final String inpComputerRoom = String.format("2%s%s", area, roomObject.getRoomCode());
 
         //--Query result will be ignored because it belongs to validate.
         if (classroomRepository.findById(inpComputerRoom).isPresent())

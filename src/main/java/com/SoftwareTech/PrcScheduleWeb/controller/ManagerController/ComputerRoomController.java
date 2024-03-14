@@ -32,6 +32,9 @@ public class ComputerRoomController {
 
         try {
             return computerRoomService.addComputerRoomAndGetStandingUrlWithMessage(roomObject, standingUrl);
+        } catch (IllegalStateException ignored) {
+            redirectAttributes.addFlashAttribute("roomObject", roomObject);
+            return "redirect:" + standingUrl + "?errorMessage=eMv1at09";
         } catch (DuplicateKeyException ignored) {
             redirectAttributes.addFlashAttribute("roomObject", roomObject);
             return "redirect:" + standingUrl + "?errorMessage=eMv1at04";

@@ -32,7 +32,7 @@ public class SubPageController {
         } catch (NullPointerException ignored) {
             response.sendRedirect("/manager/category/computer-room/computer-room-list");
         } catch (NoSuchElementException ignored) {
-            response.sendRedirect(standingUrl + "?errorMessage=eMv1at08");
+            response.sendRedirect(standingUrl + "?errorMessage=eMv1at05");
         } catch (Exception ignored) {
             response.sendRedirect(standingUrl + "?errorMessage=eMv1at00");
         }

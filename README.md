@@ -62,97 +62,192 @@
   Return: HTTPStatus[403 - Forbidden]
   ```
 *2. Add Teacher Account Page*
-- Main Add Account Page:
+- Add Teacher Account Page (on Category):
+  - Add Teacher Account Page:
+   ```Http
+    GET [MANAGER] /manager/category/teacher/add-teacher-account
+    If: Without Cookies.AccessToken
+    If: AccessToken is invalid
+    GET [Redirect] /public/login
+    ```
+  - Add Teacher Account Action - AccountController.addTeacherAccount(__DtoRegisterAccount__):
   ```Http
-  GET [MANAGER] /manager/category/teacher/add-teacher-account
+    POST [MANAGER] /service/v1/manager/add-teacher-account
+    If: Without Cookies.AccessToken
+    If: AccessToken is invalid
+    GET [Redirect] /public/login
+  
+    If: Email is invalid (eMv1at01)
+    If: Password is invalid or RetypePassword and Passowrd is not similar (eMv1at02)
+    If: Email is already existing (eMv1at03)
+    GET [Redirect] [MANAGER] /manager/category/teacher/add-teacher-account?errorMessage=<err_code>
+
+    Else: All condition is valid
+    GET [Redirect] [MANAGER] /manager/category/teacher/add-teacher-account?succeedMessage=sMv1at01
+    ```
+- Teacher Account List Page (on Category):
+  - Main List Page:
+  ```Http
+  GET [MANAGER] /manager/category/teacher/teacher-account-list
   If: Without Cookies.AccessToken
   If: AccessToken is invalid
   GET [Redirect] /public/login
   ```
-- Add New Teacher Account(DtoRegisterAccount) Action:
+  - Update Teacher Account Page (sub-page) - SubPageController.getUpdateTeacherAccountPage().addObject():
   ```Http
-  POST [MANAGER] /service/v1/manager/add-teacher-account
+  GET [MANAGER] /manager/sub-page/teacher/update-teacher-account?accountId=<accountId>
   If: Without Cookies.AccessToken
   If: AccessToken is invalid
   GET [Redirect] /public/login
   
-  If: Email is invalid (eMv1at01)
-  If: Password is invalid or RetypePassword and Passowrd is not similar (eMv1at02)
-  If: Email is already existing (eMv1at03)
-  GET [Redirect] [MANAGER] /manager/category/teacher/add-teacher-account?errorMessage=<err_code>
-
+  If: <accountId> is Null (empty)
+  If: <accountId> not found (eMv1at08)
+  If: <accountId> is a Manager (eMv1at00)
+  If: There's an error in Database session (eMv1at00)
+  GET [Redirect] [MANAGER] /manager/sub-page/teacher/update-teacher-account?errorMessage=<error_code>
+  
   Else: All condition is valid
-  GET [Redirect] [MANAGER] /manager/category/teacher/add-teacher-account?succeedMessage=sMv1at01
+  GET [Redirect] [MANAGER] /manager/sub-page/teacher/update-teacher-account?errorMessage=<computerRoom>
   ```
-
+  - Update Teacher Account Action - AccountController.updateTeacherAccount(__DtoUpdateTeacherAccount__):
+  ```Http
+  POST [MANAGER] /service/v1/manager/update-teacher-account?accountId=<accountId>
+  If: Without Cookies.AccessToken
+  If: AccessToken is invalid
+  GET [Redirect] /public/login
+  
+  If: <accountId> is null (eMv1at08)
+  If: <accountId> and <instituteEmail> data pair not found (eMv1at00)
+  If: There's an error in application (eMv1at00)
+  GET [Redirect] [MANAGER] /manager/category/teacher/teacher-account-list?errorMessage=<error_code>
+  
+  Else: All condition is valid
+  GET [Redirect] [MANAGER] /manager/category/teacher/teacher-account-list?succeedMessage=sMv1at03
+  ```
+  - Delete Teacher Account Action - AccountController.deleteTeacherAccount(__deleteBtn__):
+  ```Http
+  POST [MANAGER] /service/v1/manager/teacher-account-list-active-btn?deleteBtn=<accountId>
+  If: Without Cookies.AccessToken
+  If: AccessToken is invalid
+  GET [Redirect] /public/login
+  
+  If: <accountId> not found or not Integer (eMv1at08)
+  If: <accountId> has SQLException (database binding = can't delete) (eMv1at06)
+  GET [Redirect] [MANAGER] /manager/category/teacher/teacher-acocount-list?errorMessage=<error_code>
+  
+  Else: All condition is valid
+  GET [Redirect] [MANAGER] /manager/category/teacher/teacher-acocount-list?succeedMessage=sMv1at02
+  ```
+- Teacher List Page (on Category):
+  - Main List Page:
+  ```Http
+  GET [MANAGER] /manager/category/teacher/teacher-list
+  If: Without Cookies.AccessToken
+  If: AccessToken is invalid
+  GET [Redirect] /public/login
+  ```
+  - Update Teacher Page (sub-page) - SubPageController.getUpdateTeacherPage().addObject(__DtoUpdateTeacher__):
+  ```Http
+  GET [MANAGER] /manager/sub-page/teacher/update-teacher-account?accountId=<accountId>
+  If: Without Cookies.AccessToken
+  If: AccessToken is invalid
+  GET [Redirect] /public/login
+  
+  If: <accountId> is Null (empty)
+  If: <accountId> not found (eMv1at07)
+  If: <accountId> is a Manager (eMv1at00)
+  If: There's an error in Database session (eMv1at00)
+  GET [Redirect] [MANAGER] /manager/sub-page/teacher/update-teacher?errorMessage=<error_code>
+  
+  Else: All condition is valid
+  GET [Redirect] [MANAGER] /manager/sub-page/teacher/update-teacher?errorMessage=<computerRoom>
+  ```
+  - Update Teacher Page Action - TeacherController.updateTeacherInfo(__DtoUpdateTeacher__):
+  ```Http
+  POST [MANAGER] /service/v1/manager/update-teacher
+  If: Without Cookies.AccessToken
+  If: AccessToken is invalid
+  GET [Redirect] /public/login
+  
+  If: data is invalid
+  GET [Regirect] [MANAGER] /manager/sub-page/update-teacher?teacherid=<teacherId>&errorMessage=eMv1at09
+  
+  Notice: <teacherId> is always a MANAGER because of Teacher.findByTeacherIdAndInstituteEmail(...) 
+  If: <teacherId> and <instituteEmail> data pair not found (eMv1at00)
+  If: There's an error in Database session (eMv1at00)
+  GET [Redirect] [MANAGER] /manager/sub-page/teacher/update-teacher?errorMessage=<error_code>
+  
+  Else: All condition is valid
+  GET [Redirect] [MANAGER] /manager/sub-page/teacher/update-teacher?errorMessage=<computerRoom>
+  ```
+  
 *3. Computer Room Pages*
 - Add Computer Room Page (on Category):
-  - Main Add Computer Room Page:
+  - Add Computer Room Page:
   ```Http
   GET [MANAGER] /manager/category/computer-room/add-computer-room
   If: Without Cookies.AccessToken
   If: AccessToken is invalid
   GET [Redirect] /public/login
   ```
-  - Add Computer Room Action:
+  - Add Computer Room Action - ComputerRoomController.addComputerRoom(__DtoAddComputerRoom__):
   ```Http
   POST [MANAGER] /service/v1/manager/add-computer-room
-  If: Data is invalid
-  Return: HTTPStatus[400 - Not Found]
-  
-  POST [MANAGER] /service/v1/manager/add-computer-room
+  If: Data is invalid (eMv1at09)
   If: Computer Room is already exsisting (eMv1at04)
-  GET [Redirect] [MANAGER] /manager/category/computer-room/add-computer-room?errorMessage=<errorMessage>
+  If: There's a wierd error (eMv1at00)
+  GET [Redirect] [MANAGER] /manager/category/computer-room/add-computer-room?errorMessage=<error_code>
   
   Else: All condition is valid
   GET [Redirect] [MANAGER] /manager/category/computer-room/add-computer-room?succeedMessage=sMv1at01
   ```
-- Computer Room List Page (on Category):
+- Computer Room List Page (on Category) - List<DtoComputerRoom>:
   - Main List Page:
   ```Http
-  GET /manager/category/computer-room/computer-room-list
+  GET [MANAGER] /manager/category/computer-room/computer-room-list
   If: Without Cookies.AccessToken
   If: AccessToken is invalid
   GET [Redirect] /public/login
   ```
-  - Update Computer Room Page:
+  - Update Computer Room Page (sub-page) - SubPageController.getUpdateTeacherPage().addObject(__DtoComputerRoom__):
   ```Http
-  GET /manager/sub-page/computer-room/update-computer-room?roomId=<roomId>
+  GET [MANAGER] /manager/sub-page/computer-room/update-computer-room?roomId=<roomId>
   If: Without Cookies.AccessToken
   If: AccessToken is invalid
   GET [Redirect] /public/login
   
-  If: <roomId> not found
-  GET [Redirect] [MANAGER] /manager/category/computer-room/computer-room-list?errorMessage=eMv1at05
+  If: <roomId> is Null (empty)
+  If: <roomId> not found (eMv1at05)
+  If: There's an error in Database session (eMv1at00)
+  GET [Redirect] [MANAGER] /manager/category/computer-room/computer-room-list?errorMessage=<error_code>
+  
+  Else: All condition is valid
+  GET [Redirect] [MANAGER] /manager/sub-page/computer-room/update-computer-room?computerRoom=<computerRoom>
   ```
-  - Update Computer Room Action:
+  - Update Computer Room Action - ComputerRoomController.updateComputerRoom(__DtoUpdateComputerRoom__):
   ```Http
-  POST /service/v1/manager/update-computer-room?roomId=<roomId>
+  POST [MANAGER] /service/v1/manager/update-computer-room?roomId=<roomId>
   If: Without Cookies.AccessToken
   If: AccessToken is invalid
   GET [Redirect] /public/login
   
-  If: <roomId> not found
-  GET [Redirect] [MANAGER] /manager/category/computer-room/computer-room-list?errorMessage=eMv1at05
-  
-  If: There's an error in application
-  GET [Redirect] [MANAGER] /manager/sub-page/computer-room/update-computer-room?roomId=<roomId>&errorMessage=eMv1at00
+  If: <roomId> not found (eMv1at05)
+  If: There's an error in application (eMv1at00)
+  GET [Redirect] [MANAGER] /manager/category/computer-room/computer-room-list?errorMessage=<error_code>
   
   Else: All condition is valid
   GET [Redirect] [MANAGER] /manager/category/computer-room/computer-room-list?succeedMessage=sMv1at03
   ```
-  - Delete Computer Room Action:
+  - Delete Computer Room Action - ComputerRoomController.deleteComputerRoom(__deleteBtn__):
   ```Http
-  POST /service/v1/manager/computer-room-list-active-btn?deleteBtn=<roomId>
+  POST [MANAGER] /service/v1/manager/computer-room-list-active-btn?deleteBtn=<roomId>
   If: Without Cookies.AccessToken
   If: AccessToken is invalid
   GET [Redirect] /public/login
   
-  If: <roomId> not found
-  GET [Redirect] [MANAGER] /manager/category/computer-room/computer-room-list?errorMessage=eMv1at05
-  
-  If: <roomId> has SQLException (database binding = can't delete)
-  GET [Redirect] [MANAGER] /manager/category/computer-room/computer-room-list?errorMessage=eMv1at06
+  If: <roomId> not found or not Integer (eMv1at05)
+  If: <roomId> has SQLException (database binding = can't delete) (eMv1at06)
+  GET [Redirect] [MANAGER] /manager/category/computer-room/computer-room-list?errorMessage=<error_code>
   
   Else: All condition is valid
   GET [Redirect] [MANAGER] /manager/category/computer-room/computer-room-list?succeedMessage=sMv1at02

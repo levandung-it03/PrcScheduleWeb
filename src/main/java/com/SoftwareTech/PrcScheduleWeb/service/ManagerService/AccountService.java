@@ -56,17 +56,6 @@ public class AccountService {
         return "redirect:" + standingUrl + "?succeedMessage=sMv1at01";
     }
 
-    @Transactional(rollbackOn = {Exception.class})
-    public String deleteTeacherAccountAndGetRedirect(String accountIdPathParam, String standingUrl)
-        throws SQLIntegrityConstraintViolationException, NumberFormatException {
-        Long accountId = Long.parseLong(accountIdPathParam);
-
-        teacherRepository.deleteByAccountId(accountId);
-        accountRepository.deleteById(accountId);
-
-        return "redirect:" + standingUrl + "?succeedMessage=sMv1at02";
-    }
-
     public String updateTeacherAccountAndGetRedirect(HttpServletRequest request, DtoUpdateTeacherAccount account) {
         final Long accountId = Long.parseLong(request.getParameter("accountId"));
         final Account updatedAccount = accountRepository
@@ -80,5 +69,15 @@ public class AccountService {
         accountRepository.save(updatedAccount);
 
         return "redirect:/manager/category/teacher/teacher-account-list?succeedMessage=sMv1at03";
+    }
+
+    @Transactional(rollbackOn = {Exception.class})
+    public String deleteTeacherAccountAndGetRedirect(String accountIdPathParam, String standingUrl) {
+        Long accountId = Long.parseLong(accountIdPathParam);
+
+        teacherRepository.deleteByAccountId(accountId);
+        accountRepository.deleteById(accountId);
+
+        return "redirect:" + standingUrl + "?succeedMessage=sMv1at02";
     }
 }

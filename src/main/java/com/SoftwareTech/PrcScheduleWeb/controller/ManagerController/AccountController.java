@@ -53,7 +53,7 @@ public class AccountController {
 
         try {
             return accountService.updateTeacherAccountAndGetRedirect(request, account);
-        } catch (NumberFormatException e) {
+        } catch (NullPointerException | NumberFormatException e) {
             return "redirect:" + redirectedUrl + "?errorMessage=eMv1at08";
         } catch (Exception e) {
             return "redirect:" + redirectedUrl + "?errorMessage=eMv1at00";
@@ -69,7 +69,7 @@ public class AccountController {
 
         try {
             return accountService.deleteTeacherAccountAndGetRedirect(accountId, standingUrl);
-        } catch (NumberFormatException e) {
+        } catch (NullPointerException | NumberFormatException e) {
             return "redirect:" + standingUrl + "?errorMessage=eMv1at08";
         } catch (Exception e) {
             return "redirect:" + standingUrl + "?errorMessage=eMv1at06";
