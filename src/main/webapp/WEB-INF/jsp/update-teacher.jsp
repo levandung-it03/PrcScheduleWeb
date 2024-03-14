@@ -25,10 +25,12 @@
             <i id="succeed-service-message_close-btn" class="fa fa-times-circle" aria-hidden="true"></i>
         </div>
         <%@ include file="/WEB-INF/jsp/header.jsp" %>
-        <form method="POST" action="/service/v1/manager/update-teacher?teacherId=${teacher.teacherId}" modelAttribute="teacher">
+        <form method="POST" action="/service/v1/manager/update-teacher" modelAttribute="teacher">
+            <input name="instituteEmail" type="text" value="${teacher.instituteEmail}" hidden/>
             <div class="form-input" id="teacherId">
                 <label for="teacherId">Mã giảng viên</label>
                 <input name="teacherId" type="text" value="${teacher.teacherId}" readonly disabled/>
+                <input name="teacherId" type="text" value="${teacher.teacherId}" hidden/>
             </div>
             <div class="form-input" id="lastName">
                 <label for="lastName">Họ giảng viên</label>
@@ -48,14 +50,14 @@
             <div class="form-input" id="gender">
                 <label for="gender">Giới tính</label>
                 <select data="${teacher.gender}" name="gender">
-                    <option value="${teacher.gender}" disabled hidden selected>Chọn giới tính</option>
+                    <option value="" disabled hidden selected>Chọn giới tính</option>
                     <option value="BOY">Nam</option>
                     <option value="GIRL">Nữ</option>
                 <select>
             </div>
             <div class="form-input" id="departmentId">
                 <label for="departmentId">Khoa giảng viên thuộc</label>
-                <select data="${teacher.department.departmentId}" name="departmentId">
+                <select data="${teacher.departmentId}" name="departmentId">
                     <option value="" disabled hidden selected>Chọn mã khoa</option>
                     <c:forEach var="department" items="${departmentList}">
                         <option value="${department.departmentId}">${department.departmentId}</option>

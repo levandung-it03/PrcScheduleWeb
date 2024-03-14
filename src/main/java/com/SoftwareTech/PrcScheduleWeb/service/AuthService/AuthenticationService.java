@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -55,8 +56,10 @@ public class AuthenticationService {
         //--Authenticate InputAccount with AuthenticationManager.
         //--Use the configured AuthenticationProvider for authentication.
         authenticationManager.authenticate(authenticateToken);
-        Account account = accountRepository.findByInstituteEmail(authObject.getInstituteEmail())
-            .orElseThrow();
+        Account account = accountRepository
+            .findByInstituteEmail(authObject.getInstituteEmail())
+            .orElseThrow(() -> new UsernameNotFoundException("Institute Email as Username not found"));
+
         var jwtToken = jwtService.generateToken(account);
         return DtoAuthenticationResponse.builder()
             .token(jwtToken)

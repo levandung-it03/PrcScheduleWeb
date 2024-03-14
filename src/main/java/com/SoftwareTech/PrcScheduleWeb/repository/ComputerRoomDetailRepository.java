@@ -11,7 +11,6 @@ import java.util.Optional;
 @Repository
 public interface ComputerRoomDetailRepository extends JpaRepository<ComputerRoomDetail, Long> {
 
-    @Query("""
-        SELECT co FROM ComputerRoomDetail co WHERE co.classroom.roomId = :roomId""")
+    @Query("SELECT co FROM ComputerRoomDetail co WHERE co.classroom.roomId = :roomId")
     Optional<ComputerRoomDetail> findByRoomId(@Param("roomId") String roomId);
 }

@@ -23,6 +23,14 @@ public class TeacherController {
         @ModelAttribute("teacher") DtoUpdateTeacher teacher,
         HttpServletRequest request
     ) {
-        return teacherService.updateTeacher(teacher, request);
+        final String standingUrl = request.getHeader("Referer");
+
+        try {
+            return teacherService.updateTeacherAndGetRedirect(teacher);
+        } catch (IllegalStateException ignored) {
+            return String.format("redirect:%s?teacherId=%s&errorMessage=eMv1at09", standingUrl, teacher.getTeacherId());
+        } catch (Exception ignored) {
+            return "redirect:/manager/category/teacher/teacher-list?errorMessage=eMv1at00";
+        }
     }
 }

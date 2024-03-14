@@ -12,6 +12,7 @@ import java.sql.Date;
 @Builder
 public class DtoUpdateTeacher {
     private String teacherId;
+    private String instituteEmail;
     private String lastName;
     private String firstName;
     private Date birthday;

@@ -1,20 +1,23 @@
 package com.SoftwareTech.PrcScheduleWeb.repository;
 
 import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoTeacherAccountList;
+import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoUpdateTeacherAccount;
 import com.SoftwareTech.PrcScheduleWeb.model.Account;
-import com.SoftwareTech.PrcScheduleWeb.model.enums.Role;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Repository;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface AccountRepository extends JpaRepository<Account, Long> {
     Optional<Account> findByInstituteEmail(String instituteEmail);
-    List<Account> findAllByRole(Role role);
 
     @Query("""
         SELECT new com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoTeacherAccountList(
@@ -24,4 +27,18 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
         WHERE a.role = 'TEACHER'
     """)
     List<DtoTeacherAccountList> findAllInSpecifiedPage(PageRequest pageRequest);
+
+    @Query("""
+        SELECT new com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoUpdateTeacherAccount(
+            a.accountId, a.instituteEmail, a.creatingTime, a.status
+        ) FROM Account a
+        WHERE a.accountId = :accountId
+        """)
+    Optional<DtoUpdateTeacherAccount> findByAccountId(@Param("accountId") Long accountId);
+
+    @Query("SELECT a FROM Account a WHERE a.accountId = :accountId AND a.instituteEmail = :instituteEmail")
+    Optional<Account> findByAccountIdAndInstituteEmail(
+        @Param("accountId") Long accountId,
+        @Param("instituteEmail") String instituteEmail
+    );
 }

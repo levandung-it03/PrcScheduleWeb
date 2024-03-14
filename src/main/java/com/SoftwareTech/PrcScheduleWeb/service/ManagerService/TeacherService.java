@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.NoSuchElementException;
 import java.util.regex.Pattern;
 
 @Service
@@ -20,44 +21,36 @@ public class TeacherService {
     @Autowired
     private final DepartmentRepository departmentRepository;
 
-    public String updateTeacher(DtoUpdateTeacher teacher, HttpServletRequest request) {
-        final String standingUrl = request.getHeader("Referer");
-        final String updatedTeacherId = request.getParameter("teacherId");
+    public String updateTeacherAndGetRedirect(DtoUpdateTeacher teacher) {
+        Teacher oldTeacherInfo = teacherRepository
+            .findByTeacherIdAndInstituteEmail(teacher.getTeacherId(), teacher.getInstituteEmail())
+            .orElseThrow(() -> new NoSuchElementException("Teacher Id not found"));
 
-        try {
-            //--Check if updated TeacherId is existing.
-            Teacher oldTeacherInfo = teacherRepository.findById(updatedTeacherId).orElseThrow();
+        Department chosenDepartment = departmentRepository.findById(teacher.getDepartmentId()).orElseThrow();
 
-            Department choosedDepartment = departmentRepository.findById(teacher.getDepartmentId()).orElseThrow();
+        if (!Pattern.compile("^[A-Za-zÀ-ỹ]{1,50}( [A-Za-zÀ-ỹ]{1,50})*$").matcher(teacher.getLastName()).matches())
+            throw new IllegalStateException("Invalid Last-name format");
 
-            //--Find the invalid last-name.
-            if (!Pattern.compile("^[A-Za-zÀ-ỹ]{1,50}$").matcher(teacher.getLastName()).matches())
-                throw new IllegalStateException();
+        if (!Pattern.compile("^[A-Za-zÀ-ỹ]{1,50}$").matcher(teacher.getFirstName()).matches())
+            throw new IllegalStateException("Invalid First-name format");
 
-            //--Find the invalid first-name.
-            if (!Pattern.compile("^[A-Za-zÀ-ỹ]{1,50}( [A-Za-zÀ-ỹ]{1,50})*$").matcher(teacher.getFirstName()).matches())
-                throw new IllegalStateException();
+        if (!Pattern.compile("^[0-9]{4,12}$").matcher(teacher.getPhone()).matches())
+            throw new IllegalStateException("Invalid Phone-number format");
 
-            //--Find the invalid phone number.
-            if (!Pattern.compile("^[0-9]{4,12}$").matcher(teacher.getPhone()).matches())
-                throw new IllegalStateException();
+        teacherRepository.save(Teacher.builder()
+            .teacherId(teacher.getTeacherId())
+            .department(chosenDepartment)
+            .lastName(teacher.getLastName())
+            .firstName(teacher.getFirstName())
+            .birthday(teacher.getBirthday())
+            .gender(teacher.getGender())
+            .phone(teacher.getPhone())
+            .status(true)
+            .account(oldTeacherInfo.getAccount())
+            .build()
+        );
 
-            teacherRepository.save(Teacher.builder()
-                .teacherId(updatedTeacherId)
-                .department(choosedDepartment)
-                .lastName(teacher.getLastName())
-                .firstName(teacher.getFirstName())
-                .birthday(teacher.getBirthday())
-                .gender(teacher.getGender())
-                .phone(teacher.getPhone())
-                .status(true)
-                .account(oldTeacherInfo.getAccount())
-                .build()
-            );
-
-            return "redirect:/manager/category/teacher/teacher-list?succeedMessage=sMv1at03";
-        } catch (Exception ignored) {
-            return "redirect:" + standingUrl + "?teacherId=" + updatedTeacherId + "&errorMessage=eMv1at00";
-        }
+        return "redirect:/manager/category/teacher/teacher-list?succeedMessage=sMv1at03";
     }
+
 }

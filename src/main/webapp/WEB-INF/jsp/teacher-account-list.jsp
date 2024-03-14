@@ -89,12 +89,12 @@
                                 </td>
                                 
                                 <td class="table-row-btn update">
-                                    <a href="">
+                                    <a href="/manager/sub-page/teacher/update-teacher-account?accountId=${account.accountId}">
                                         <i class="fa-regular fa-pen-to-square"></i>
                                     </a>
                                 </td>
                                 <td class="table-row-btn delete">
-                                    <button name="delete-btn" value="${account.accountId}">
+                                    <button name="deleteBtn" value="${account.accountId}">
                                         <i class="fa-regular fa-trash-can"></i>
                                     </button>
                                 </td>

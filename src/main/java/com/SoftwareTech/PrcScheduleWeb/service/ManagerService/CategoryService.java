@@ -28,6 +28,8 @@ public class CategoryService {
 
     public ModelAndView getAddTeacherAccountPage(HttpServletRequest request, Model model) {
         ModelAndView modelAndView = staticUtilMethods.customResponseModelView(request, "add-account");
+
+        //--Refill data form after an error occurs.
         DtoRegisterAccount registerObject = (DtoRegisterAccount) model.asMap().get("registerObject");
 
         if (registerObject != null)
