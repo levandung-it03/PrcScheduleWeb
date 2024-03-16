@@ -82,6 +82,7 @@ public class ApplicationConfig {
         messagePairs.put("eMv1at07", "Mã giảng viên không tồn tại!");
         messagePairs.put("eMv1at08", "Mã tài khoản không tồn tại!");
         messagePairs.put("eMv1at09", "Thông tin không đúng, hãy kiểm tra lại!");
+        messagePairs.put("eMv1at10", "Mã yêu cầu không tồn tại!");
         return messagePairs;
     }
 }

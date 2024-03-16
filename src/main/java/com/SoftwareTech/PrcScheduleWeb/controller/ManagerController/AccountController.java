@@ -15,6 +15,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
+
 @Controller
 @RequiredArgsConstructor
 @RequestMapping(path = "${url.post.manager.prefix.v1}")
@@ -31,7 +32,8 @@ public class AccountController {
         final String standingUrl = request.getHeader("Referer");
 
         try {
-            return accountService.addTeacherAccountAndGetRedirect(registerObject, request);
+            accountService.addTeacherAccountAndGetRedirect(registerObject, request);
+            return "redirect:" + standingUrl + "?succeedMessage=sMv1at01";
         } catch (IllegalArgumentException ignored) {
             redirectAttributes.addFlashAttribute("registerObject", registerObject);
             return "redirect:" + standingUrl + "?errorMessage=eMv1at09";
@@ -49,14 +51,16 @@ public class AccountController {
         @ModelAttribute("account") DtoUpdateTeacherAccount account,
         HttpServletRequest request
     ) {
+        String page = (request.getParameter("pageNumber") == null) ? "1" : request.getParameter("pageNumber");
         final String redirectedUrl = "/manager/category/teacher/teacher-account-list";
 
         try {
-            return accountService.updateTeacherAccountAndGetRedirect(request, account);
+            accountService.updateTeacherAccountAndGetRedirect(request, account);
+            return "redirect:" + redirectedUrl + "?page=" + page + "&succeedMessage=sMv1at03";
         } catch (NullPointerException | NumberFormatException e) {
-            return "redirect:" + redirectedUrl + "?errorMessage=eMv1at08";
+            return "redirect:" + redirectedUrl + "?page=" + page + "&errorMessage=eMv1at08";
         } catch (Exception e) {
-            return "redirect:" + redirectedUrl + "?errorMessage=eMv1at00";
+            return "redirect:" + redirectedUrl + "?page=" + page + "&errorMessage=eMv1at00";
         }
     }
 
@@ -65,14 +69,16 @@ public class AccountController {
         @ModelAttribute("deleteBtn") String accountId,
         HttpServletRequest request
     ) {
-        final String standingUrl = request.getHeader("Referer");
+        String standingUrl = request.getHeader("Referer");
+        standingUrl += standingUrl.contains("?") ? "&" : "?";
 
         try {
-            return accountService.deleteTeacherAccountAndGetRedirect(accountId, standingUrl);
+            accountService.deleteTeacherAccountAndGetRedirect(accountId);
+            return "redirect:" + standingUrl + "succeedMessage=sMv1at02";
         } catch (NullPointerException | NumberFormatException e) {
-            return "redirect:" + standingUrl + "?errorMessage=eMv1at08";
+            return "redirect:" + standingUrl + "errorMessage=eMv1at08";
         } catch (Exception e) {
-            return "redirect:" + standingUrl + "?errorMessage=eMv1at06";
+            return "redirect:" + standingUrl + "errorMessage=eMv1at06";
         }
     }
 }

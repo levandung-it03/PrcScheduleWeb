@@ -52,7 +52,8 @@
                     value="${roomObject.availableComputerQuantity}" required/>
                 <div class="form_text-input_err-message"></div>
             </div>
-            <input type="submit" value="Xác nhận">
+            <input name="pageNumber" value="${pageNumber}" hidden/>
+            <input type="submit" type="text" value="Xác nhận"/>
         </form>
     </div>
     <script type="application/javascript" src="${pageContext.request.contextPath}/js/base.js"></script>

@@ -6,6 +6,7 @@ import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoAddComputerRoom;
 import com.SoftwareTech.PrcScheduleWeb.repository.AccountRepository;
 import com.SoftwareTech.PrcScheduleWeb.repository.ClassroomRepository;
 import com.SoftwareTech.PrcScheduleWeb.repository.TeacherRepository;
+import com.SoftwareTech.PrcScheduleWeb.repository.TeacherRequestRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,8 @@ public class CategoryService {
     private final TeacherRepository teacherRepository;
     @Autowired
     private final AccountRepository accountRepository;
+    @Autowired
+    private final TeacherRequestRepository teacherRequestRepository;
 
     public ModelAndView getAddTeacherAccountPage(HttpServletRequest request, Model model) {
         ModelAndView modelAndView = staticUtilMethods.customResponseModelView(request, "add-account");
@@ -74,6 +77,16 @@ public class CategoryService {
 
         modelAndView.addObject("currentPage", pageRequest.getPageNumber() + 1);
         modelAndView.addObject("accountList", accountRepository.findAllInSpecifiedPage(pageRequest));
+
+        return modelAndView;
+    }
+
+    public ModelAndView getTeacherRequestListPage(HttpServletRequest request, Model model) {
+        ModelAndView modelAndView = staticUtilMethods.customResponseModelView(request, "teacher-request-list");
+        PageRequest pageRequest = staticUtilMethods.getPageRequest(request);
+
+        modelAndView.addObject("currentPage", pageRequest.getPageNumber() + 1);
+        modelAndView.addObject("teacherRequestList", teacherRequestRepository.findAllInSpecifiedPage(pageRequest));
 
         return modelAndView;
     }

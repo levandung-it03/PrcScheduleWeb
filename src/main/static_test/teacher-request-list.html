@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,7 +13,7 @@
     <link rel="stylesheet" type="text/css" href="../resources/static/css/base.css">
     <link rel="stylesheet" type="text/css" href="../resources/static/css/category.css">
     <link rel="stylesheet" type="text/css" href="../resources/static/css/header.css">
-    <link rel="stylesheet" type="text/css" href="../resources/static/css/teacher-list.css">
+    <link rel="stylesheet" type="text/css" href="../resources/static/css/teacher-request-list.css">
 </head>
 
 <body>
@@ -129,18 +131,15 @@
                     <select id="search">
                         <option value="" selected disabled hidden>Chọn trường cần tìm</option>
                         <option value="0">Thông tin cơ bản</option>
-                        <option value="1">Mã giảng viên</option>
-                        <option value="2">Mã khoa</option>
-                        <option value="3">Ngày sinh</option>
-                        <option value="4">Giới tính</option>
-                        <option value="5">Điện thoại</option>
-                        <option value="6">Trạng thái</option>
+                        <option value="1">Tên môn học</option>
+                        <option value="2">Mã lớp mở môn</option>
+                        <option value="3">Tổ</option>
                     </select>
                     <input type="text" id="search">
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </div>
             </div>
-            <form action="/service/v1/manager/delete-computer-room" method="POST">
+            <form action="/service/v1/manager/delete-teacher-request" method="POST">
                 <table>
                     <thead>
                         <tr>
@@ -148,51 +147,62 @@
                                 Thông tin cơ bản
                                 <i class="fa-solid fa-arrow-down-a-z"></i>
                             </th>
-                            <th id="teacherId">
+                            <th id="teacher-id">
                                 Mã giảng viên
                                 <i class="fa-solid fa-arrow-down-a-z"></i>
                             </th>
-                            <th id="departmentId">
-                                Mã khoa
+                            <th id="subject-name">
+                                Tên môn học
                                 <i class="fa-solid fa-arrow-down-a-z"></i>
                             </th>
-                            <th id="birthday">
-                                Ngày sinh
+                            <th id="grade-id">
+                                Mã lớp mở môn
                                 <i class="fa-solid fa-arrow-down-a-z"></i>
                             </th>
-                            <th id="gender">
-                                Giới tính
+                            <th id="group-from-subject">
+                                Tổ
                                 <i class="fa-solid fa-arrow-down-a-z"></i>
                             </th>
-                            <th id="phone">
-                                Điện thoại
-                                <i class="fa-solid fa-arrow-down-a-z"></i>
-                            </th>
-                            <th id="update">Cập nhật</th>
+                            <th id="view">Chi tiết</th>
+                            <th id="add">Tạo lịch</th>
                             <th id="delete">Xoá</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr id="GV111">
+                            <!-- <td plain-value="${teacher.lastName} ${teacher.firstName} ${teacher.account.instituteEmail}" class="base-profile">
+                                <span class="mock-avatar">${teacher.firstName.charAt(0)}</span>
+                                <div class="teacher-info">
+                                    <b class="teacher-name">${teacher.lastName} ${teacher.firstName}</b>
+                                    <p class="institute-email">${teacher.account.instituteEmail}</p>
+                                </div>
+                            </td>
+                            <td plain-value="${teacher.teacherId}" class="teacher-id">
+                                ${teacher.teacherId}
+                            </td> -->
                             <td plain-value="Dinh Van Han giangvien0@ptithcm.edu.vn" class="base-profile">
-                                <span class="mock-avatar">A</span>
+                                <span class="mock-avatar">H</span>
                                 <div class="teacher-info">
                                     <b class="teacher-name">Dinh Van Han</b>
                                     <p class="institute-email">giangvien0@ptithcm.edu.vn</p>
                                 </div>
                             </td>
-                            <td plain-value="GV111" class="teacherId">GV111</td>
-                            <td plain-value="CNTT02" class="departmentId">CNTT02</td>
-                            <td plain-value="1991-03-25" class="birthday">1991-03-25</td>
-                            <td plain-value="Nam" class="gender">Nam</td>
-                            <td plain-value="0377869998" class="phone">0377869998</td>
-                            <td class="table-row-btn update">
-                                <a href="">
-                                    <i class="fa-regular fa-pen-to-square"></i>
+                            <td plain-value="${teacher.teacherId}" class="teacher-id">GV111</td>
+                            <td plain-value="Python" class="subject-name">Python</td>
+                            <td plain-value="D21CQCN01-N" class="grade-id">D21CQCN01-N</td>
+                            <td plain-value="2" class="group-from-subject">2</td>
+                            <td class="table-row-btn view">
+                                <a href="/manager/sub-page/practice-schedule/teacher-request-detail?request-id={teacherRequest.requestId}">
+                                    <i class="fa-solid fa-eye"></i>
+                                </a>
+                            </td>
+                            <td class="table-row-btn add">
+                                <a href="/manager/sub-page/practice-schedule/add-practice-schedule?request-id={teacherRequest.requestId}">
+                                    <i class="fa-regular fa-calendar-plus"></i>
                                 </a>
                             </td>
                             <td class="table-row-btn delete">
-                                <button name="delete-btn" value="GV111">
+                                <button name="delete-btn" value="{teacherRequest.requestId}">
                                     <i class="fa-regular fa-trash-can"></i>
                                 </button>
                             </td>
@@ -203,7 +213,7 @@
         </div>
     </div>
     <script type="application/javascript" src="../resources/static/js/base.js"></script>
-    <script type="application/javascript" src="../resources/static/js/teacher-list.js"></script>
+    <script type="application/javascript" src="../resources/static/js/teacher-request-list.js"></script>
     <!-- <script type="application/javascript" src="../resources/static/js/header.js"></script> -->
 </body>
 

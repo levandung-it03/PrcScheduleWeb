@@ -14,7 +14,7 @@ public class Subject {
     @Column(name = "subject_id", length = 20, nullable = false)
     private String subjectId;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "subject_name", nullable = false)
     private String subjectName;
 
     @Column(name = "credits_number", nullable = false)

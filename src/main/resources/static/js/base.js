@@ -82,10 +82,10 @@ function customizeSubmitFormAction(validatingBlocks) {
 }
 
 function removePathAttributes() {
-    urlParams.forEach((value, key) => {
-        urlParams.delete(key);
-    });
-    const newUrl = `${window.location.pathname}`;
+    let newUrl = `${window.location.pathname}`;
+    if (urlParams.has("page"))
+        newUrl += `?page=${urlParams.get("page")}`;
+
     history.replaceState(null, '', newUrl);
 }
 
@@ -175,7 +175,7 @@ function customizeSortingListEvent() {
             });
             alert("Sắp xếp thành công!");
             $('table tbody').innerHTML = cellsOfFieldId.reduce((accumulator, cell) => {
-                return accumulator + cell.parentElement.outerxHTML;
+                return accumulator + cell.parentElement.outerHTML;
             }, "");
         })
     })

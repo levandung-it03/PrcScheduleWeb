@@ -21,13 +21,7 @@
                 <label>LỊCH THỰC HÀNH</label>
                 <ul class="category-index-container" id="cat_practice-schedule_box">
                     <li class="index">
-                        <a class="index_wrapper" href="/manager/category/practice-schedule/add-practice-schedule">
-                        <i class="fa-regular fa-calendar-plus"></i>
-                            <p>Thêm lịch thực hành</p>
-                        </a>
-                    </li>
-                    <li class="index">
-                        <a class="index_wrapper" href="">
+                        <a class="index_wrapper" href="/manager/category/practice-schedule/teacher-request-list">
                             <i class="fa-regular fa-envelope"></i>
                             <p>Toàn bộ yêu cầu</p>
                         </a>

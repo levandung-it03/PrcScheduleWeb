@@ -1,5 +1,6 @@
 package com.SoftwareTech.PrcScheduleWeb.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.Check;
@@ -19,6 +20,7 @@ public class ComputerRoomDetail {
 
     @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "room_id", referencedColumnName = "room_id", nullable = false)
+    @JsonIgnore
     private Classroom classroom;
 
     @Column(name = "max_computer_quantity", nullable = false)

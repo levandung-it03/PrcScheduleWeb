@@ -39,6 +39,8 @@ public class InitialDataLoader implements CommandLineRunner {
     private final ClassroomRepository classroomRepository;
     @Autowired
     private final SubjectScheduleRepository subjectScheduleRepository;
+    @Autowired
+    private final TeacherRequestRepository teacherRequestRepository;
 
     @Override
     public void run(String... args) {
@@ -160,6 +162,14 @@ public class InitialDataLoader implements CommandLineRunner {
                     .classroom(classroomRepository.findById("2B11").orElseThrow())
                     .teacher(teacherRepository.findById("GV111").orElseThrow())
                     .status(true)
+                    .build()
+            ));
+            teacherRequestRepository.saveAll(List.of(
+                TeacherRequest.builder()
+                    .teacher(teacherRepository.findById("GV111").orElseThrow())
+                    .sectionClass(sectionClassRepository.findById(1L).orElseThrow())
+                    .requestMessageDetail("Quản lý tạo cho em 4 tuần, 1 buổi 1 tuần, 4 tiết 1 buổi nhé, ưu tiên thứ 2,3,6")
+                    .wasCreated(false)
                     .build()
             ));
         }

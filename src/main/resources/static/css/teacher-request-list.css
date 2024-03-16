@@ -5,9 +5,9 @@ table tr td {
 
 table tr th#base-profile,
 table tr td.base-profile {
-    padding-left: 20px;
+    padding-left: 25px;
     text-align: start;
-    width: 35%;
+    width: 32%;
 }
 table tr td.base-profile {
     display: flex;
@@ -32,22 +32,23 @@ table tr td.base-profile div.teacher-info p.institute-email {
 }
 
 table tr th#teacher-id,
-table tr td.teacher-id {
+table tr td.teacher-id,
+table tr th#subject-name,
+table tr td.subject-name,
+table tr th#grade-id,
+table tr td.grade-id {
     text-align: start;
-    width: 12%;
+    width: 14%;
 }
-table tr th#department-id,
-table tr td.department-id,
-table tr th#birthday,
-table tr td.birthday,
-table tr th#gender,
-table tr td.gender,
-table tr th#phone,
-table tr td.phone {
-    text-align: start;
-    width: 10%;
-}
-table tr th#update,
-table tr td.update {
-    width: 13%;
+
+table tr th#group-from-subject,
+table tr td.group-from-subject,
+table tr th#view,
+table tr td.view,
+table tr th#add,
+table tr td.add,
+table tr th#delete,
+table tr td.delete {
+    text-align: center;
+    width: 6.5%;
 }

@@ -7,6 +7,7 @@ import com.SoftwareTech.PrcScheduleWeb.model.ComputerRoomDetail;
 import com.SoftwareTech.PrcScheduleWeb.model.enums.RoomType;
 import com.SoftwareTech.PrcScheduleWeb.repository.ClassroomRepository;
 import com.SoftwareTech.PrcScheduleWeb.repository.ComputerRoomDetailRepository;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ public class ComputerRoomService {
     private final ComputerRoomDetailRepository computerRoomDetailRepository;
 
     @Transactional(rollbackOn = {Exception.class})
-    public String addComputerRoomAndGetStandingUrlWithMessage(DtoAddComputerRoom roomObject, String standingUrl) {
+    public void addComputerRoomAndGetStandingUrlWithMessage(DtoAddComputerRoom roomObject) {
         final String area = roomObject.getArea().trim().toUpperCase();
 
         if (!Pattern.compile("^[A-Z]$").matcher(area).matches()
@@ -58,10 +59,10 @@ public class ComputerRoomService {
             .maxComputerQuantity(roomObject.getMaxComputerQuantity())
             .availableComputerQuantity(roomObject.getMaxComputerQuantity())
             .build());
-        return "redirect:" + standingUrl + "?succeedMessage=sMv1at01";
     }
 
-    public String updateComputerRoomAndGetRedirect(DtoUpdateComputerRoom roomInp, String roomCode, String redirectedUrl) {
+    public void updateComputerRoomAndGetRedirect(DtoUpdateComputerRoom roomInp, HttpServletRequest request) {
+        final String roomCode = request.getParameter("roomId");
         Classroom practiceRoom = classroomRepository
             .findById(roomCode)
             .orElseThrow(() -> new NoSuchElementException("Computer Room not found"));
@@ -80,19 +81,19 @@ public class ComputerRoomService {
         //--Update data into Database.
         classroomRepository.save(practiceRoom);
         computerRoomDetailRepository.save(computerRoomDetail);
-
-        return "redirect:" + redirectedUrl + "?succeedMessage=sMv1at03";
     }
 
     @Transactional(rollbackOn = {Exception.class})
-    public String deleteComputerRoomAndGetRedirect(String roomId, String standingUrl) {
-        final Classroom foundComputerRoom = classroomRepository.findById(roomId).orElseThrow();
-        final ComputerRoomDetail computerRoomDetail = computerRoomDetailRepository.findByRoomId(roomId).orElseThrow();
+    public void deleteComputerRoomAndGetRedirect(String roomId) {
+        final Classroom foundComputerRoom = classroomRepository
+            .findById(roomId)
+            .orElseThrow();
+        final ComputerRoomDetail computerRoomDetail = computerRoomDetailRepository
+            .findByRoomId(roomId)
+            .orElseThrow();
 
         //--Delete both ComputerRoomDetail and Classroom.
         computerRoomDetailRepository.deleteById(computerRoomDetail.getComputerRoomDetailId());
         classroomRepository.deleteById(foundComputerRoom.getRoomId());
-
-        return "redirect:" + standingUrl + "?succeedMessage=sMv1at02";
     }
 }

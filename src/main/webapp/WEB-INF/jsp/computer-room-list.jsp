@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Teacher Account</title>
+    <title>Computer Room List</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
         integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -48,15 +48,15 @@
                 <table>
                     <thead>
                         <tr>
-                            <th id="roomId">
+                            <th id="room-id">
                                 Phòng thực hành
                                 <i class="fa-solid fa-arrow-down-a-z"></i>
                             </th>
-                            <th id="maxComputerQuantity">
+                            <th id="max-computer-quantity">
                                 Tổng lượng máy
                                 <i class="fa-solid fa-arrow-down-a-z"></i>
                             </th>
-                            <th id="availableComputerQuantity">
+                            <th id="available-computer-quantity">
                                 Số máy hiện hành
                                 <i class="fa-solid fa-arrow-down-a-z"></i>
                             </th>
@@ -71,13 +71,13 @@
                     <tbody>
                         <c:forEach items="${computerRoomList}" var="computerRoom">
                             <tr id="${computerRoom.roomId}">
-                                <td plain-value="${computerRoom.roomId}" class="roomId">
+                                <td plain-value="${computerRoom.roomId}" class="room-id">
                                     ${computerRoom.roomId}
                                 </td>
-                                <td plain-value="${computerRoom.maxComputerQuantity}" class="maxComputerQuantity">
+                                <td plain-value="${computerRoom.maxComputerQuantity}" class="max-computer-quantity">
                                     ${computerRoom.maxComputerQuantity}
                                 </td>
-                                <td plain-value="${computerRoom.availableComputerQuantity}" class="availableComputerQuantity">
+                                <td plain-value="${computerRoom.availableComputerQuantity}" class="available-computer-quantity">
                                     ${computerRoom.availableComputerQuantity}
                                 </td>
                                 <td plain-value="${computerRoom.status ? "Còn hoạt động" : "Đã niêm phong"}" class="status">

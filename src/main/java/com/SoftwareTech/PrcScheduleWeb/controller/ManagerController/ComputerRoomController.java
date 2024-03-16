@@ -31,7 +31,8 @@ public class ComputerRoomController {
         final String standingUrl = request.getHeader("Referer");
 
         try {
-            return computerRoomService.addComputerRoomAndGetStandingUrlWithMessage(roomObject, standingUrl);
+            computerRoomService.addComputerRoomAndGetStandingUrlWithMessage(roomObject);
+            return "redirect:" + standingUrl + "?succeedMessage=sMv1at01";
         } catch (IllegalStateException ignored) {
             redirectAttributes.addFlashAttribute("roomObject", roomObject);
             return "redirect:" + standingUrl + "?errorMessage=eMv1at09";
@@ -49,15 +50,16 @@ public class ComputerRoomController {
         @ModelAttribute("roomObject") DtoUpdateComputerRoom roomObject,
         HttpServletRequest request
     ) {
+        String page = (request.getParameter("pageNumber") == null) ? "1" : request.getParameter("pageNumber");
         final String redirectedUrl = "/manager/category/computer-room/computer-room-list";
-        final String roomCode = request.getParameter("roomId");
 
         try {
-            return computerRoomService.updateComputerRoomAndGetRedirect(roomObject, roomCode, redirectedUrl);
+            computerRoomService.updateComputerRoomAndGetRedirect(roomObject, request);
+            return "redirect:" + redirectedUrl + "?page=" + page + "&succeedMessage=sMv1at03";
         } catch (NoSuchElementException e) {
-            return "redirect:" + redirectedUrl + "?errorMessage=eMv1at05";
+            return "redirect:" + redirectedUrl + "?page=" + page + "&errorMessage=eMv1at05";
         } catch (Exception ignored) {
-            return "redirect:" + redirectedUrl + "?errorMessage=eMv1at00";
+            return "redirect:" + redirectedUrl + "?page=" + page + "&errorMessage=eMv1at00";
         }
     }
 
@@ -66,14 +68,16 @@ public class ComputerRoomController {
         @ModelAttribute("deleteBtn") String roomId,
         HttpServletRequest request
     ) {
-        final String standingUrl = request.getHeader("Referer");
+        String standingUrl = request.getHeader("Referer");
+        standingUrl += standingUrl.contains("?") ? "&" : "?";
 
         try {
-            return computerRoomService.deleteComputerRoomAndGetRedirect(roomId, standingUrl);
+            computerRoomService.deleteComputerRoomAndGetRedirect(roomId);
+            return "redirect:" + standingUrl + "succeedMessage=sMv1at02";
         } catch (NoSuchElementException ignored) {
-            return "redirect:" + standingUrl + "?errorMessage=eMv1at05";
+            return "redirect:" + standingUrl + "errorMessage=eMv1at05";
         } catch (Exception ignored) {
-            return "redirect:" + standingUrl + "?errorMessage=eMv1at06";
+            return "redirect:" + standingUrl + "errorMessage=eMv1at06";
         }
     }
 }

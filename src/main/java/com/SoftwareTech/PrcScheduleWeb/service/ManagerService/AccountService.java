@@ -29,7 +29,7 @@ public class AccountService {
     @Autowired
     private final TeacherRepository teacherRepository;
 
-    public String addTeacherAccountAndGetRedirect(DtoRegisterAccount registerObject, HttpServletRequest request) {
+    public void addTeacherAccountAndGetRedirect(DtoRegisterAccount registerObject, HttpServletRequest request) {
         final String standingUrl = request.getHeader("Referer");
         final String email = registerObject.getInstituteEmail().trim();
         final String password = registerObject.getPassword().trim();
@@ -52,11 +52,9 @@ public class AccountService {
             .creatingTime(new Timestamp(System.currentTimeMillis()))
             .status(true)
             .build());
-
-        return "redirect:" + standingUrl + "?succeedMessage=sMv1at01";
     }
 
-    public String updateTeacherAccountAndGetRedirect(HttpServletRequest request, DtoUpdateTeacherAccount account) {
+    public void updateTeacherAccountAndGetRedirect(HttpServletRequest request, DtoUpdateTeacherAccount account) {
         final Long accountId = Long.parseLong(request.getParameter("accountId"));
         final Account updatedAccount = accountRepository
             .findByAccountIdAndInstituteEmail(accountId, account.getInstituteEmail())
@@ -67,17 +65,13 @@ public class AccountService {
 
         //--Save new data into Database.
         accountRepository.save(updatedAccount);
-
-        return "redirect:/manager/category/teacher/teacher-account-list?succeedMessage=sMv1at03";
     }
 
     @Transactional(rollbackOn = {Exception.class})
-    public String deleteTeacherAccountAndGetRedirect(String accountIdPathParam, String standingUrl) {
+    public void deleteTeacherAccountAndGetRedirect(String accountIdPathParam) {
         Long accountId = Long.parseLong(accountIdPathParam);
 
         teacherRepository.deleteByAccountId(accountId);
         accountRepository.deleteById(accountId);
-
-        return "redirect:" + standingUrl + "?succeedMessage=sMv1at02";
     }
 }

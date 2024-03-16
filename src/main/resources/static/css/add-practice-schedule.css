@@ -31,16 +31,13 @@ form .form-input {
 }
 
 /*--Customize each input tag--*/
-form div#instituteEmail,
-form div#instituteEmail input {
-    width: 100%;
+form div#area,
+form div#roomCode,
+form div#maxComputerQuantity {
+    width: 30%;
 }
-form div#password,
-form div#retypePassword {
-    width: 48%;
-}
-form div#password input,
-form div#retypePassword input {
+form input,
+form select {
     width: 100%;
 }
 /*------------*/

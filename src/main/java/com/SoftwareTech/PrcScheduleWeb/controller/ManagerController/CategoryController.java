@@ -18,6 +18,12 @@ public class CategoryController {
     @Autowired
     private final CategoryService categoryService;
 
+    /*******************Practice_Schedule_Pages_on_Category*******************/
+    @RequestMapping(value = "/practice-schedule/teacher-request-list", method = GET)
+    public ModelAndView getTeacherRequestListPage(HttpServletRequest request, Model model) {
+        return categoryService.getTeacherRequestListPage(request, model);
+    }
+
     /*******************Computer_Room_Pages_on_Category*******************/
     @RequestMapping(value = "/computer-room/add-computer-room", method = GET)
     public ModelAndView getAddComputerRoomPage(HttpServletRequest request, Model model) {

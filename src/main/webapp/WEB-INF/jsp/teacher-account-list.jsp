@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Teacher Account</title>
+    <title>Teacher Account List</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
         integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -48,15 +48,15 @@
                 <table>
                     <thead>
                         <tr>
-                            <th id="instituteEmail">
+                            <th id="institute-email">
                                 Email Học viện
                                 <i class="fa-solid fa-arrow-down-a-z"></i>
                             </th>
-                            <th id="creatingTime">
+                            <th id="creating-time">
                                 Ngày tạo
                                 <i class="fa-solid fa-arrow-down-a-z"></i>
                             </th>
-                            <th id="linkingStatus">
+                            <th id="linking-status">
                                 Trạng thái liên kết
                                 <i class="fa-solid fa-arrow-down-a-z"></i>
                             </th>
@@ -71,13 +71,13 @@
                     <tbody>
                         <c:forEach items="${accountList}" var="account">
                             <tr id="${account.accountId}">
-                                <td plain-value="${account.instituteEmail}" class="instituteEmail">
+                                <td plain-value="${account.instituteEmail}" class="institute-email">
                                     ${account.instituteEmail}
                                 </td>
-                                <td plain-value="${account.creatingTime}" class="creatingTime">
+                                <td plain-value="${account.creatingTime}" class="creating-time">
                                     ${account.creatingTime}
                                 </td>
-                                <td plain-value="${(account.teacherId == null) ? "Chưa liên kết" : "Đã liên kết"}" class="linkingStatus">
+                                <td plain-value="${(account.teacherId == null) ? "Chưa liên kết" : "Đã liên kết"}" class="linking-status">
                                     <span class="status-is-${account.teacherId != null}">
                                         ${(account.teacherId == null) ? "Chưa liên kết" : "Đã liên kết"}
                                     </span>

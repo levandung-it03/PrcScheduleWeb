@@ -25,16 +25,23 @@ public class SubPageController {
         HttpServletRequest request,
         HttpServletResponse response
     ) throws IOException {
+        final String redirectedUrl = "/manager/category/computer-room/computer-room-list";
         final String standingUrl = request.getHeader("Referer");
 
         try {
-            return subPageService.getUpdateComputerRoomPage(request);
+            ModelAndView modelAndView = subPageService.getUpdateComputerRoomPage(request);
+            if (standingUrl.contains("page="))
+                modelAndView.addObject("pageNumber", standingUrl.split("page=")[1]);
+            else if (standingUrl.contains("category"))
+                modelAndView.addObject("pageNumber", 1);
+
+            return modelAndView;
         } catch (NullPointerException ignored) {
-            response.sendRedirect("/manager/category/computer-room/computer-room-list");
+            response.sendRedirect(redirectedUrl);
         } catch (NoSuchElementException ignored) {
-            response.sendRedirect(standingUrl + "?errorMessage=eMv1at05");
+            response.sendRedirect(redirectedUrl + "?errorMessage=eMv1at05");
         } catch (Exception ignored) {
-            response.sendRedirect(standingUrl + "?errorMessage=eMv1at00");
+            response.sendRedirect(redirectedUrl + "?errorMessage=eMv1at00");
         }
         return null;
     }
@@ -44,16 +51,23 @@ public class SubPageController {
         HttpServletRequest request,
         HttpServletResponse response
     ) throws IOException {
+        final String redirectedUrl = "/manager/category/teacher/teacher-list";
         final String standingUrl = request.getHeader("Referer");
 
         try {
-            return subPageService.getUpdateTeacherPage(request);
+            ModelAndView modelAndView = subPageService.getUpdateTeacherPage(request);
+            if (standingUrl.contains("page="))
+                modelAndView.addObject("pageNumber", standingUrl.split("page=")[1]);
+            else if (standingUrl.contains("category"))
+                modelAndView.addObject("pageNumber", 1);
+
+            return modelAndView;
         } catch (NullPointerException ignored) {
-            response.sendRedirect("/manager/category/teacher/teacher-list");
+            response.sendRedirect(redirectedUrl);
         } catch (NoSuchElementException ignored) {
-            response.sendRedirect(standingUrl + "?errorMessage=eMv1at07");
+            response.sendRedirect(redirectedUrl + "?errorMessage=eMv1at07");
         } catch (Exception ignored) {
-            response.sendRedirect(standingUrl + "?errorMessage=eMv1at00");
+            response.sendRedirect(redirectedUrl + "?errorMessage=eMv1at00");
         }
         return null;
     }
@@ -64,12 +78,39 @@ public class SubPageController {
         HttpServletResponse response
     ) throws IOException {
         final String redirectedUrl = "/manager/category/teacher/teacher-account-list";
+        final String standingUrl = request.getHeader("Referer");
+
         try {
-            return subPageService.getUpdateTeacherAccountPage(request);
+            ModelAndView modelAndView = subPageService.getUpdateTeacherAccountPage(request);
+            if (standingUrl.contains("page="))
+                modelAndView.addObject("pageNumber", standingUrl.split("page=")[1]);
+            else if (standingUrl.contains("category"))
+                modelAndView.addObject("pageNumber", 1);
+
+            return modelAndView;
         } catch (NullPointerException ignored) {
             response.sendRedirect("/manager/category/teacher/teacher-account-list");
         } catch (NoSuchElementException ignored) {
             response.sendRedirect(redirectedUrl + "?errorMessage=eMv1at08");
+        } catch (Exception ignored) {
+            response.sendRedirect(redirectedUrl + "?errorMessage=eMv1at00");
+        }
+        return null;
+    }
+
+    @RequestMapping(value = "/practice-schedule/teacher-request-detail", method = GET)
+    public ModelAndView getTeacherRequestDetailPage(
+        HttpServletRequest request,
+        HttpServletResponse response
+    ) throws IOException {
+        final String redirectedUrl = "/manager/category/teacher/teacher-request-list";
+
+        try {
+            return subPageService.getTeacherRequestDetailPage(request);
+        } catch (NullPointerException ignored) {
+            response.sendRedirect(redirectedUrl);
+        } catch (NoSuchElementException ignored) {
+            response.sendRedirect(redirectedUrl + "?errorMessage=eMv1at10");
         } catch (Exception ignored) {
             response.sendRedirect(redirectedUrl + "?errorMessage=eMv1at00");
         }

@@ -21,7 +21,7 @@ public class TeacherService {
     @Autowired
     private final DepartmentRepository departmentRepository;
 
-    public String updateTeacherAndGetRedirect(DtoUpdateTeacher teacher) {
+    public void updateTeacherAndGetRedirect(DtoUpdateTeacher teacher) {
         Teacher oldTeacherInfo = teacherRepository
             .findByTeacherIdAndInstituteEmail(teacher.getTeacherId(), teacher.getInstituteEmail())
             .orElseThrow(() -> new NoSuchElementException("Teacher Id not found"));
@@ -49,8 +49,5 @@ public class TeacherService {
             .account(oldTeacherInfo.getAccount())
             .build()
         );
-
-        return "redirect:/manager/category/teacher/teacher-list?succeedMessage=sMv1at03";
     }
-
 }

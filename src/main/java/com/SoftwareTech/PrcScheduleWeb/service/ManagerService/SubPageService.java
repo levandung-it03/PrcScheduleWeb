@@ -4,15 +4,9 @@ import com.SoftwareTech.PrcScheduleWeb.config.StaticUtilMethods;
 import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoComputerRoom;
 import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoUpdateTeacher;
 import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoUpdateTeacherAccount;
-import com.SoftwareTech.PrcScheduleWeb.model.Account;
-import com.SoftwareTech.PrcScheduleWeb.model.ComputerRoomDetail;
-import com.SoftwareTech.PrcScheduleWeb.model.Department;
-import com.SoftwareTech.PrcScheduleWeb.model.Teacher;
+import com.SoftwareTech.PrcScheduleWeb.model.*;
 import com.SoftwareTech.PrcScheduleWeb.model.enums.Role;
-import com.SoftwareTech.PrcScheduleWeb.repository.AccountRepository;
-import com.SoftwareTech.PrcScheduleWeb.repository.ComputerRoomDetailRepository;
-import com.SoftwareTech.PrcScheduleWeb.repository.DepartmentRepository;
-import com.SoftwareTech.PrcScheduleWeb.repository.TeacherRepository;
+import com.SoftwareTech.PrcScheduleWeb.repository.*;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +30,8 @@ public class SubPageService {
     private final ComputerRoomDetailRepository computerRoomDetailRepository;
     @Autowired
     private final AccountRepository accountRepository;
+    @Autowired
+    private final TeacherRequestRepository teacherRequestRepository;
 
     public ModelAndView getUpdateComputerRoomPage(HttpServletRequest request) {
         final String roomId = request.getParameter("roomId");
@@ -109,6 +105,21 @@ public class SubPageService {
             .creatingTime(account.getCreatingTime())
             .status(account.isStatus())
             .build());
+        return modelAndView;
+    }
+
+    public ModelAndView getTeacherRequestDetailPage(HttpServletRequest request) {
+        final String requestId = request.getParameter("requestId");
+        ModelAndView modelAndView = new ModelAndView("teacher-request-detail");
+
+        if (requestId == null)
+            throw new NullPointerException("Request Id is Null, so redirecting back to Teacher Request List");
+
+        TeacherRequest teacherRequest = teacherRequestRepository
+            .findById(Long.parseLong(requestId))
+            .orElseThrow(() -> new NoSuchElementException("Request Id not found"));
+
+        modelAndView.addObject("teacherRequest", teacherRequest);
         return modelAndView;
     }
 }

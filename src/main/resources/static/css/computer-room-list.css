@@ -1,15 +1,15 @@
 /*Seperated_Styles*/
-table tr th#roomId,
-table tr td.roomId {
+table tr th#room-id,
+table tr td.room-id {
     padding-left: 30px;
     text-align: start;
     width: 30%;
 }
 
-table tr th#maxComputerQuantity,
-table tr td.maxComputerQuantity,
-table tr th#availableComputerQuantity,
-table tr td.availableComputerQuantity {
+table tr th#max-computer-quantity,
+table tr td.max-computer-quantity,
+table tr th#available-computer-quantity,
+table tr td.available-computer-quantity {
     text-align: start;
     width: 17.5%;
 }

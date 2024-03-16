@@ -305,6 +305,16 @@ table tr td.update i:hover {
     background-color: #0d5fac;
     color: #ffffff;
 }
+table tr td.view i:hover {
+    cursor: pointer;
+    background-color: #0d9cac;
+    color: #ffffff;
+}
+table tr td.add i:hover {
+    cursor: pointer;
+    background-color: #0dac67;
+    color: #ffffff;
+}
 
 #table-footer #table-footer_main {
     height: 40px;
