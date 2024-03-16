@@ -17,7 +17,7 @@
     <div id="center-page" id="teacher-request-detail-page">
         <%@ include file="/WEB-INF/jsp/header.jsp" %>
         <div class="detail-block">
-            <div class="detail-block_discription" id="teacher-info">
+            <div class="detail-block_description" id="teacher-info">
                 <i class="fa-regular fa-address-card"></i>
                 <p>THÔNG TIN GIẢNG VIÊN</p>
             </div>
@@ -39,7 +39,7 @@
             </div>
         </div>
         <div class="detail-block">
-            <div class="detail-block_discription" id="request-info">
+            <div class="detail-block_description" id="request-info">
                 <i class="fa-regular fa-envelope"></i>
                 <p>CHI TIẾT YÊU CẦU</p>
             </div>

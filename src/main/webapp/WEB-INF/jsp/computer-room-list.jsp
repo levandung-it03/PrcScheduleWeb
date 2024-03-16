@@ -28,7 +28,7 @@
         <%@ include file="/WEB-INF/jsp/header.jsp" %>
         <div id="center-page_list">
             <div id="table-tools">
-                <div id="table-discription">
+                <div id="table-description">
                     <b>Danh sách</b>
                     <span id="quantity">${roomIdList.size()} phòng</span>
                 </div>

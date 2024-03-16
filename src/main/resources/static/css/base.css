@@ -171,7 +171,7 @@ form input[type=submit]:hover {
     padding: 0 30px;
     position: relative;
 }
-#center-page_list #table-tools #table-discription {
+#center-page_list #table-tools #table-description {
     font-size: 1.2rem;
     font-weight: 600;
 }
@@ -260,7 +260,7 @@ table tr th i:hover {
     background-color: var(--grey-border);
 }
 
-#table-tools #table-discription span#quantity,
+#table-tools #table-description span#quantity,
 table tr td span.status-is-true,
 table tr td span.status-is-false {
     padding: 2.5px 8px;
@@ -277,7 +277,7 @@ table tr td span.status-is-false {
     color: #ac2f0d;
     font-weight: 600;
 }
-#table-tools #table-discription span#quantity {
+#table-tools #table-description span#quantity {
     background-color: #eae8fb;
     color: #0d0dac;
     font-weight: 600;

@@ -1,0 +1,24 @@
+table tr th#institute-email,
+table tr td.institute-email {
+    padding-left: 20px;
+    text-align: start;
+    width: 30%;
+}
+table tr th#creating-time,
+table tr td.creating-time {
+    text-align: start;
+    width: 18%;
+}
+table tr th#linking-status,
+table tr td.linking-status,
+table tr th#status,
+table tr td.status {
+    text-align: start;
+    width: 18%;
+}
+table tr th#update,
+table tr td.update,
+table tr th#delete,
+table tr td.delete {
+    width: 8%;
+}

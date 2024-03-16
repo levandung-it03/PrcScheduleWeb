@@ -13,7 +13,7 @@ header {
     color: var(--black-text);
     font-weight: 600;
 }
-#header_center #page-discription {
+#header_center #page-description {
     font-size: 0.8rem;
     color: var(--white-grey-text);
 }
