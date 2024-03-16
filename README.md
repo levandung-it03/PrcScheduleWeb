@@ -61,6 +61,7 @@
   If: AccessToken has wrong Role
   Return: HTTPStatus[403 - Forbidden]
   ```
+  
 *2. Add Teacher Account Page*
 - Add Teacher Account Page (on Category):
   - Add Teacher Account Page:
@@ -104,10 +105,10 @@
   If: <accountId> not found (eMv1at08)
   If: <accountId> is a Manager (eMv1at00)
   If: There's an error in Database session (eMv1at00)
-  GET [Redirect] [MANAGER] /manager/sub-page/teacher/update-teacher-account?errorMessage=<error_code>
+  GET [Redirect] [MANAGER] /manager/sub-page/teacher/update-teacher-account?page=<page>&errorMessage=<error_code>
   
   Else: All condition is valid
-  GET [Redirect] [MANAGER] /manager/sub-page/teacher/update-teacher-account?errorMessage=<computerRoom>
+  GET [Redirect] [MANAGER] /manager/sub-page/teacher/update-teacher-account?page=<page>&errorMessage=<computerRoom>
   ```
   - Update Teacher Account Action - AccountController.updateTeacherAccount(__DtoUpdateTeacherAccount__):
   ```Http
@@ -119,10 +120,10 @@
   If: <accountId> is null (eMv1at08)
   If: <accountId> and <instituteEmail> data pair not found (eMv1at00)
   If: There's an error in application (eMv1at00)
-  GET [Redirect] [MANAGER] /manager/category/teacher/teacher-account-list?errorMessage=<error_code>
+  GET [Redirect] [MANAGER] /manager/category/teacher/teacher-account-list?page=<page>&errorMessage=<error_code>
   
   Else: All condition is valid
-  GET [Redirect] [MANAGER] /manager/category/teacher/teacher-account-list?succeedMessage=sMv1at03
+  GET [Redirect] [MANAGER] /manager/category/teacher/teacher-account-list?page=<page>&succeedMessage=sMv1at03
   ```
   - Delete Teacher Account Action - AccountController.deleteTeacherAccount(__deleteBtn__):
   ```Http
@@ -133,10 +134,10 @@
   
   If: <accountId> not found or not Integer (eMv1at08)
   If: <accountId> has SQLException (database binding = can't delete) (eMv1at06)
-  GET [Redirect] [MANAGER] /manager/category/teacher/teacher-acocount-list?errorMessage=<error_code>
+  GET [Redirect] [MANAGER] /manager/category/teacher/teacher-acocount-list?page=<page>&errorMessage=<error_code>
   
   Else: All condition is valid
-  GET [Redirect] [MANAGER] /manager/category/teacher/teacher-acocount-list?succeedMessage=sMv1at02
+  GET [Redirect] [MANAGER] /manager/category/teacher/teacher-acocount-list?page=<page>&succeedMessage=sMv1at02
   ```
 - Teacher List Page (on Category):
   - Main List Page:
@@ -157,10 +158,10 @@
   If: <accountId> not found (eMv1at07)
   If: <accountId> is a Manager (eMv1at00)
   If: There's an error in Database session (eMv1at00)
-  GET [Redirect] [MANAGER] /manager/sub-page/teacher/update-teacher?errorMessage=<error_code>
+  GET [Redirect] [MANAGER] /manager/sub-page/teacher/update-teacher?page=<page>&errorMessage=<error_code>
   
   Else: All condition is valid
-  GET [Redirect] [MANAGER] /manager/sub-page/teacher/update-teacher?errorMessage=<computerRoom>
+  GET [Redirect] [MANAGER] /manager/sub-page/teacher/update-teacher?page=<page>&errorMessage=<computerRoom>
   ```
   - Update Teacher Page Action - TeacherController.updateTeacherInfo(__DtoUpdateTeacher__):
   ```Http
@@ -175,10 +176,10 @@
   Notice: <teacherId> is always a MANAGER because of Teacher.findByTeacherIdAndInstituteEmail(...) 
   If: <teacherId> and <instituteEmail> data pair not found (eMv1at00)
   If: There's an error in Database session (eMv1at00)
-  GET [Redirect] [MANAGER] /manager/sub-page/teacher/update-teacher?errorMessage=<error_code>
+  GET [Redirect] [MANAGER] /manager/sub-page/teacher/update-teacher?page=<page>&errorMessage=<error_code>
   
   Else: All condition is valid
-  GET [Redirect] [MANAGER] /manager/sub-page/teacher/update-teacher?errorMessage=<computerRoom>
+  GET [Redirect] [MANAGER] /manager/sub-page/teacher/update-teacher?page=<page>&errorMessage=<computerRoom>
   ```
   
 *3. Computer Room Pages*
@@ -219,10 +220,10 @@
   If: <roomId> is Null (empty)
   If: <roomId> not found (eMv1at05)
   If: There's an error in Database session (eMv1at00)
-  GET [Redirect] [MANAGER] /manager/category/computer-room/computer-room-list?errorMessage=<error_code>
+  GET [Redirect] [MANAGER] /manager/category/computer-room/computer-room-list?page=<page>&errorMessage=<error_code>
   
   Else: All condition is valid
-  GET [Redirect] [MANAGER] /manager/sub-page/computer-room/update-computer-room?computerRoom=<computerRoom>
+  GET [Redirect] [MANAGER] /manager/sub-page/computer-room/update-computer-room?page=<page>&computerRoom=<computerRoom>
   ```
   - Update Computer Room Action - ComputerRoomController.updateComputerRoom(__DtoUpdateComputerRoom__):
   ```Http
@@ -233,10 +234,10 @@
   
   If: <roomId> not found (eMv1at05)
   If: There's an error in application (eMv1at00)
-  GET [Redirect] [MANAGER] /manager/category/computer-room/computer-room-list?errorMessage=<error_code>
+  GET [Redirect] [MANAGER] /manager/category/computer-room/computer-room-list?page=<page>&errorMessage=<error_code>
   
   Else: All condition is valid
-  GET [Redirect] [MANAGER] /manager/category/computer-room/computer-room-list?succeedMessage=sMv1at03
+  GET [Redirect] [MANAGER] /manager/category/computer-room/computer-room-list?page=<page>&succeedMessage=sMv1at03
   ```
   - Delete Computer Room Action - ComputerRoomController.deleteComputerRoom(__deleteBtn__):
   ```Http
@@ -247,8 +248,8 @@
   
   If: <roomId> not found or not Integer (eMv1at05)
   If: <roomId> has SQLException (database binding = can't delete) (eMv1at06)
-  GET [Redirect] [MANAGER] /manager/category/computer-room/computer-room-list?errorMessage=<error_code>
+  GET [Redirect] [MANAGER] /manager/category/computer-room/computer-room-list?page=<page>&errorMessage=<error_code>
   
   Else: All condition is valid
-  GET [Redirect] [MANAGER] /manager/category/computer-room/computer-room-list?succeedMessage=sMv1at02
+  GET [Redirect] [MANAGER] /manager/category/computer-room/computer-room-list?page=<page>&succeedMessage=sMv1at02
   ```
