@@ -32,7 +32,7 @@ public class AccountController {
         final String standingUrl = request.getHeader("Referer");
 
         try {
-            accountService.addTeacherAccountAndGetRedirect(registerObject, request);
+            accountService.addTeacherAccount(registerObject, request);
             return "redirect:" + standingUrl + "?succeedMessage=sMv1at01";
         } catch (IllegalArgumentException ignored) {
             redirectAttributes.addFlashAttribute("registerObject", registerObject);
@@ -55,7 +55,7 @@ public class AccountController {
         final String redirectedUrl = "/manager/category/teacher/teacher-account-list";
 
         try {
-            accountService.updateTeacherAccountAndGetRedirect(request, account);
+            accountService.updateTeacherAccount(request, account);
             return "redirect:" + redirectedUrl + "?page=" + page + "&succeedMessage=sMv1at03";
         } catch (NullPointerException | NumberFormatException e) {
             return "redirect:" + redirectedUrl + "?page=" + page + "&errorMessage=eMv1at08";
@@ -73,7 +73,7 @@ public class AccountController {
         standingUrl += standingUrl.contains("?") ? "&" : "?";
 
         try {
-            accountService.deleteTeacherAccountAndGetRedirect(accountId);
+            accountService.deleteTeacherAccount(accountId);
             return "redirect:" + standingUrl + "succeedMessage=sMv1at02";
         } catch (NullPointerException | NumberFormatException e) {
             return "redirect:" + standingUrl + "errorMessage=eMv1at08";
