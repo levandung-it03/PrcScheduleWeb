@@ -26,7 +26,7 @@ public class ComputerRoomService {
     private final ComputerRoomDetailRepository computerRoomDetailRepository;
 
     @Transactional(rollbackOn = {Exception.class})
-    public void addComputerRoomAndGetStandingUrlWithMessage(DtoAddComputerRoom roomObject) {
+    public void addComputerRoom(DtoAddComputerRoom roomObject) {
         final String area = roomObject.getArea().trim().toUpperCase();
 
         if (!Pattern.compile("^[A-Z]$").matcher(area).matches()
@@ -34,6 +34,8 @@ public class ComputerRoomService {
             || roomObject.getMaxComputerQuantity() == null
             || roomObject.getRoomCode() <= 0
             || roomObject.getRoomCode() >= 100
+            || roomObject.getMaxQuantity() <= 0
+            || roomObject.getMaxQuantity() >= 1000
             || roomObject.getMaxComputerQuantity() <= 0
             || roomObject.getMaxComputerQuantity() >= 1000
         ) {
@@ -50,6 +52,7 @@ public class ComputerRoomService {
         Classroom practiceRoom = Classroom.builder()
             .roomId(inpComputerRoom)
             .roomType(RoomType.PRC)
+            .maxQuantity(roomObject.getMaxQuantity())
             .status(true)
             .build();
 
@@ -61,7 +64,7 @@ public class ComputerRoomService {
             .build());
     }
 
-    public void updateComputerRoomAndGetRedirect(DtoUpdateComputerRoom roomInp, HttpServletRequest request) {
+    public void updateComputerRoom(DtoUpdateComputerRoom roomInp, HttpServletRequest request) {
         final String roomCode = request.getParameter("roomId");
         Classroom practiceRoom = classroomRepository
             .findById(roomCode)
@@ -71,6 +74,7 @@ public class ComputerRoomService {
             .orElseThrow(() -> new NoSuchElementException("Computer Room Detail not found in this Computer Room"));
 
         //--Update data inside Classroom(RoomType.PRC).
+        practiceRoom.setMaxQuantity(roomInp.getMaxQuantity());
         practiceRoom.setStatus(roomInp.isStatus());
 
         //--Update data inside ComputerRoomDetail.
@@ -84,7 +88,7 @@ public class ComputerRoomService {
     }
 
     @Transactional(rollbackOn = {Exception.class})
-    public void deleteComputerRoomAndGetRedirect(String roomId) {
+    public void deleteComputerRoom(String roomId) {
         final Classroom foundComputerRoom = classroomRepository
             .findById(roomId)
             .orElseThrow();

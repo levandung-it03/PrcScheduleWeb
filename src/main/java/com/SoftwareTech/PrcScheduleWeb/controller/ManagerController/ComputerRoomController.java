@@ -31,7 +31,7 @@ public class ComputerRoomController {
         final String standingUrl = request.getHeader("Referer");
 
         try {
-            computerRoomService.addComputerRoomAndGetStandingUrlWithMessage(roomObject);
+            computerRoomService.addComputerRoom(roomObject);
             return "redirect:" + standingUrl + "?succeedMessage=sMv1at01";
         } catch (IllegalStateException ignored) {
             redirectAttributes.addFlashAttribute("roomObject", roomObject);
@@ -54,7 +54,7 @@ public class ComputerRoomController {
         final String redirectedUrl = "/manager/category/computer-room/computer-room-list";
 
         try {
-            computerRoomService.updateComputerRoomAndGetRedirect(roomObject, request);
+            computerRoomService.updateComputerRoom(roomObject, request);
             return "redirect:" + redirectedUrl + "?page=" + page + "&succeedMessage=sMv1at03";
         } catch (NoSuchElementException e) {
             return "redirect:" + redirectedUrl + "?page=" + page + "&errorMessage=eMv1at05";
@@ -72,7 +72,7 @@ public class ComputerRoomController {
         standingUrl += standingUrl.contains("?") ? "&" : "?";
 
         try {
-            computerRoomService.deleteComputerRoomAndGetRedirect(roomId);
+            computerRoomService.deleteComputerRoom(roomId);
             return "redirect:" + standingUrl + "succeedMessage=sMv1at02";
         } catch (NoSuchElementException ignored) {
             return "redirect:" + standingUrl + "errorMessage=eMv1at05";

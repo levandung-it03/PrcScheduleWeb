@@ -27,6 +27,8 @@ public class SubPageService {
     @Autowired
     private final DepartmentRepository departmentRepository;
     @Autowired
+    private final ClassroomRepository classroomRepository;
+    @Autowired
     private final ComputerRoomDetailRepository computerRoomDetailRepository;
     @Autowired
     private final AccountRepository accountRepository;
@@ -40,14 +42,19 @@ public class SubPageService {
         if (roomId == null)
             throw new NullPointerException("Computer Room Code is Null, so redirecting back to Computer Room List");
 
+        Classroom computerRoom = classroomRepository
+            .findById(roomId)
+            .orElseThrow(() -> new NoSuchElementException("Computer Room not found"));
         ComputerRoomDetail computerRoomDetail = computerRoomDetailRepository
             .findByRoomId(roomId)
             .orElseThrow(() -> new NoSuchElementException("Computer Room not found"));
 
         modelAndView.addObject("roomObject", DtoComputerRoom.builder()
             .roomId(roomId)
+            .maxQuantity(computerRoom.getMaxQuantity())
             .maxComputerQuantity(computerRoomDetail.getMaxComputerQuantity())
             .availableComputerQuantity(computerRoomDetail.getAvailableComputerQuantity())
+            .status(computerRoom.isStatus())
             .build()
         );
 
@@ -111,6 +118,21 @@ public class SubPageService {
     public ModelAndView getTeacherRequestDetailPage(HttpServletRequest request) {
         final String requestId = request.getParameter("requestId");
         ModelAndView modelAndView = new ModelAndView("teacher-request-detail");
+
+        if (requestId == null)
+            throw new NullPointerException("Request Id is Null, so redirecting back to Teacher Request List");
+
+        TeacherRequest teacherRequest = teacherRequestRepository
+            .findById(Long.parseLong(requestId))
+            .orElseThrow(() -> new NoSuchElementException("Request Id not found"));
+
+        modelAndView.addObject("teacherRequest", teacherRequest);
+        return modelAndView;
+    }
+
+    public ModelAndView getAddPracticeSchedulePage(HttpServletRequest request) {
+        final String requestId = request.getParameter("requestId");
+        ModelAndView modelAndView = new ModelAndView("add-practice-schedule");
 
         if (requestId == null)
             throw new NullPointerException("Request Id is Null, so redirecting back to Teacher Request List");

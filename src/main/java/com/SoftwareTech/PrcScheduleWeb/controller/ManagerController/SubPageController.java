@@ -116,4 +116,23 @@ public class SubPageController {
         }
         return null;
     }
+
+    @RequestMapping(value = "/practice-schedule/add-practice-schedule", method = GET)
+    public ModelAndView getAddPracticeSchedulePage(
+        HttpServletRequest request,
+        HttpServletResponse response
+    ) throws IOException    {
+        final String redirectedUrl = "/manager/category/practice-schedule/teacher-request-list";
+
+        try {
+            return subPageService.getAddPracticeSchedulePage(request);
+        } catch (NullPointerException ignored) {
+            response.sendRedirect(redirectedUrl);
+        } catch (NoSuchElementException ignored) {
+            response.sendRedirect(redirectedUrl + "?errorMessage=eMv1at10");
+        } catch (Exception ignored) {
+            response.sendRedirect(redirectedUrl + "?errorMessage=eMv1at00");
+        }
+        return null;
+    }
 }

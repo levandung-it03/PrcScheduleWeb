@@ -22,6 +22,9 @@ public class Classroom {
     @Column(name = "room_type_enum", length = 4, nullable = false)
     private RoomType roomType;
 
+    @Column(name = "max_quantity", nullable = false)
+    private Integer maxQuantity;
+
     @Column(name = "status_enum", nullable = false, columnDefinition = "BIT DEFAULT 1")
     private boolean status;
 }
