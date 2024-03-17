@@ -74,11 +74,13 @@ public class InitialDataLoader implements CommandLineRunner {
                 Classroom.builder()
                     .roomId("2B11")
                     .roomType(RoomType.PRC)
+                    .maxQuantity(60)
                     .status(true)
                     .build(),
                 Classroom.builder()
                     .roomId("2B12")
                     .roomType(RoomType.NORM)
+                    .maxQuantity(60)
                     .status(true)
                     .build()
             ));
