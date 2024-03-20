@@ -45,7 +45,7 @@ let canSubmitForm = false;
         },
     };
     
-    customizeClosingErrMessageEvent();
+    customizeClosingNoticeMessageEvent();
     createErrBlocksOfInputTags(validatingBlocks);
     customizeValidateEventInputTags(validatingBlocks);
     customizeSubmitFormAction(validatingBlocks);

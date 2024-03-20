@@ -21,7 +21,7 @@ public class TeacherService {
     @Autowired
     private final DepartmentRepository departmentRepository;
 
-    public void updateTeacherAndGetRedirect(DtoUpdateTeacher teacher) {
+    public void updateTeacher(DtoUpdateTeacher teacher) {
         Teacher oldTeacherInfo = teacherRepository
             .findByTeacherIdAndInstituteEmail(teacher.getTeacherId(), teacher.getInstituteEmail())
             .orElseThrow(() -> new NoSuchElementException("Teacher Id not found"));

@@ -9,6 +9,7 @@ import lombok.*;
 @Builder
 public class DtoComputerRoom {
     private String roomId;
+    private Integer maxQuantity;
     private Integer maxComputerQuantity;
     private Integer availableComputerQuantity;
     private boolean status;

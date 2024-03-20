@@ -126,11 +126,11 @@ public class SubPageController {
 
         try {
             return subPageService.getAddPracticeSchedulePage(request);
-        } catch (NullPointerException ignored) {
+        } catch (NumberFormatException | NullPointerException ignored) {
             response.sendRedirect(redirectedUrl);
         } catch (NoSuchElementException ignored) {
             response.sendRedirect(redirectedUrl + "?errorMessage=eMv1at10");
-        } catch (Exception ignored) {
+        } catch (Exception e) {
             response.sendRedirect(redirectedUrl + "?errorMessage=eMv1at00");
         }
         return null;

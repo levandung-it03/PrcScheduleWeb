@@ -2,6 +2,7 @@ package com.SoftwareTech.PrcScheduleWeb.service.ManagerService;
 
 import com.SoftwareTech.PrcScheduleWeb.config.StaticUtilMethods;
 import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoComputerRoom;
+import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoSubjectSchedule;
 import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoUpdateTeacher;
 import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoUpdateTeacherAccount;
 import com.SoftwareTech.PrcScheduleWeb.model.*;
@@ -14,6 +15,7 @@ import org.springframework.security.access.AuthorizationServiceException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -34,6 +36,8 @@ public class SubPageService {
     private final AccountRepository accountRepository;
     @Autowired
     private final TeacherRequestRepository teacherRequestRepository;
+    @Autowired
+    private final SubjectScheduleRepository subjectScheduleRepository;
 
     public ModelAndView getUpdateComputerRoomPage(HttpServletRequest request) {
         final String roomId = request.getParameter("roomId");
@@ -130,8 +134,8 @@ public class SubPageService {
         return modelAndView;
     }
 
-    public ModelAndView getAddPracticeSchedulePage(HttpServletRequest request) {
-        final String requestId = request.getParameter("requestId");
+    public ModelAndView getAddPracticeSchedulePage(HttpServletRequest request) throws SQLException {
+            final String requestId = request.getParameter("requestId");
         ModelAndView modelAndView = new ModelAndView("add-practice-schedule");
 
         if (requestId == null)
@@ -140,8 +144,15 @@ public class SubPageService {
         TeacherRequest teacherRequest = teacherRequestRepository
             .findById(Long.parseLong(requestId))
             .orElseThrow(() -> new NoSuchElementException("Request Id not found"));
+        List<DtoSubjectSchedule> allSubjectSchedules = subjectScheduleRepository
+            .findAllScheduleByTeacherRequest(
+                teacherRequest.getSectionClass().getSemester().getSemesterId(),
+                teacherRequest.getTeacher().getTeacherId(),
+                teacherRequest.getSectionClass().getGrade().getGradeId()
+            );
 
         modelAndView.addObject("teacherRequest", teacherRequest);
+        modelAndView.addObject("subjectScheduleList", allSubjectSchedules);
         return modelAndView;
     }
 }

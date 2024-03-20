@@ -24,7 +24,7 @@ public class SubjectRegistration {
     @Column(name = "subject_registration_id")
     private Long subjectRegistrationId;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinColumn(name = "student_id", referencedColumnName = "student_id", nullable = false)
     @JsonIgnore
     private Student student;

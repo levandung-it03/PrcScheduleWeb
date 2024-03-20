@@ -19,12 +19,12 @@ public class TeacherRequest {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long requestId;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinColumn(name = "section_class_id", referencedColumnName = "section_class_id", nullable = false)
     @JsonIgnore
     private SectionClass sectionClass;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinColumn(name = "teacher_id", referencedColumnName = "teacher_id", nullable = false)
     @JsonIgnore
     private Teacher teacher;

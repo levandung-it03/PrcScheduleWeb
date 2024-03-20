@@ -32,7 +32,7 @@ public class Semester {
     private String rangeOfYear;
 
     @Column(name = "first_week", nullable = false)
-    private Byte fistWeek;
+    private Byte firstWeek;
 
     @Column(name = "total_week", nullable = false)
     private Byte totalWeek;

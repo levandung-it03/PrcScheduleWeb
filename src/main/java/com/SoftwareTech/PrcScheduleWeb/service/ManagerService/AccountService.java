@@ -29,7 +29,7 @@ public class AccountService {
     @Autowired
     private final TeacherRepository teacherRepository;
 
-    public void addTeacherAccountAndGetRedirect(DtoRegisterAccount registerObject, HttpServletRequest request) {
+    public void addTeacherAccount(DtoRegisterAccount registerObject, HttpServletRequest request) {
         final String standingUrl = request.getHeader("Referer");
         final String email = registerObject.getInstituteEmail().trim();
         final String password = registerObject.getPassword().trim();
@@ -54,7 +54,7 @@ public class AccountService {
             .build());
     }
 
-    public void updateTeacherAccountAndGetRedirect(HttpServletRequest request, DtoUpdateTeacherAccount account) {
+    public void updateTeacherAccount(HttpServletRequest request, DtoUpdateTeacherAccount account) {
         final Long accountId = Long.parseLong(request.getParameter("accountId"));
         final Account updatedAccount = accountRepository
             .findByAccountIdAndInstituteEmail(accountId, account.getInstituteEmail())
@@ -68,7 +68,7 @@ public class AccountService {
     }
 
     @Transactional(rollbackOn = {Exception.class})
-    public void deleteTeacherAccountAndGetRedirect(String accountIdPathParam) {
+    public void deleteTeacherAccount(String accountIdPathParam) {
         Long accountId = Long.parseLong(accountIdPathParam);
 
         teacherRepository.deleteByAccountId(accountId);

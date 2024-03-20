@@ -22,7 +22,7 @@
         },
     };
 
-    customizeClosingErrMessageEvent();
+    customizeClosingNoticeMessageEvent();
     createErrBlocksOfInputTags(validatingBlocks);
     customizeValidateEventInputTags(validatingBlocks);
     customizeToggleDisplayPasswordEvent();

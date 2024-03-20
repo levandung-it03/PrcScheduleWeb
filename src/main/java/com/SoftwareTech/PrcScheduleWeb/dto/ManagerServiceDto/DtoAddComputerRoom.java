@@ -10,5 +10,6 @@ import lombok.*;
 public class DtoAddComputerRoom {
     private String area;
     private Integer roomCode;
+    private Integer maxQuantity;
     private Integer maxComputerQuantity;
 }

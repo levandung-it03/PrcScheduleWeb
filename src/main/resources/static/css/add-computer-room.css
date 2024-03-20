@@ -32,8 +32,9 @@ form .form-input {
 /*--Customize each input tag--*/
 form div#area,
 form div#roomCode,
+form div#maxQuantity,
 form div#maxComputerQuantity {
-    width: 30%;
+    width: 48%;
 }
 form input,
 form select {

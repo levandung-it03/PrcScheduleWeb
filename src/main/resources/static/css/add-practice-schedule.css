@@ -5,7 +5,54 @@ html {
     padding: 0;
 }
 
-form {
+div.detail-block {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 28px 56px;
+    margin: 20px;
+    width: calc(100% - 2 * 20px);
+    background-color: rgba(255, 255, 255, 0.85);
+    border: 1px var(--grey-of-header-border) solid;
+    border-radius: 10px;
+    color: var(--grey-text-form);
+    font-size: 1rem;
+    font-weight: 600;
+}
+div.detail-block div.data-row {
+    width: 100%;
+    padding: 5px 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: start;
+}
+
+div.detail-block div.data-row > label {
+    width: 20%;
+    font-weight: 600;
+}
+
+div.detail-block div.data-row > span.data-seperater {
+    width: 5%;
+    font-weight: 100;
+}
+div.detail-block div.detail-block_description {
+    width: 100%;
+    height: 40px;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--grey-border);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    border-bottom: 1px var(--grey-of-header-border) solid;
+    margin-bottom: 10px;
+}
+div.detail-block div.detail-block_description p {
+    padding-left: 10px;
+}
+
+div#add-schedule-block {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -20,9 +67,9 @@ form {
     font-weight: 600;
 }
 
-form .form-input {
+div#add-schedule-block .form-input {
     position: relative;
-    min-height: 90px !important;
+    height: 90px;
 }
 
 .form-input label {
@@ -31,14 +78,15 @@ form .form-input {
 }
 
 /*--Customize each input tag--*/
-form div#area,
-form div#roomCode,
-form div#maxComputerQuantity {
-    width: 30%;
-}
-form input,
-form select {
+div#table-tools {
     width: 100%;
+}
+div#table-tools div#semester {
+    height: 60px;
+}
+div#table-tools div#semester input {
+    width: 30%;
+    border: 1px black solid;
 }
 /*------------*/
 
@@ -61,12 +109,62 @@ form select {
     font-size: 12px;
 }
 
-form input[type=submit] {
+div#add-schedule-block input[type=submit] {
     padding: 12px 42px;
     margin: auto;
     margin-top: 30px;
 }
 
 #error-message-close-btn:hover {
+    cursor: pointer;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+table thead tr > th,
+table tbody tr > td {
+    height: 35px;
+    padding-top: 0;   /*override-base.css-styles*/
+    font-size: 0.95rem;
+}
+table thead th.table-description-column-item,
+table tbody td.table-description-column-item {
+    width: 70px;
+}
+table thead th,
+table tbody td.table-description-column-item {
+    border: 1px black solid;    /*override-base.css-styles*/
+    background-color: rgba(255, 255, 255, 0.85);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+table tbody td.table-description-column-item {
+    justify-self: start;
+    border-color: black black transparent black;
+}
+table tbody td.table-description-column-item > span {
+    height: 20px;
+    padding-left: 7px;
+}
+table thead th.schedule-item,
+table tbody td.schedule-item {
+    width: calc((100% - 2*70px)/7);
+}
+table tbody td.schedule-item {
+    border: 1px var(--smoking-grey) solid; /*override-base.css-styles*/
+}
+table thead th.schedule-item {
+    border-color: black transparent black black;
+}
+table thead th.change-schedule-btn {
+    background-color: #e4e3e3;
+    transition: background-color ease 0.3s;
+}
+table thead th.change-schedule-btn:hover {
+    background-color: #767676;
+    color: white;
     cursor: pointer;
 }

@@ -3,7 +3,7 @@ const plainTableRows = [...$$('table tbody tr')];
 (function main() {
     removePathAttributes();
     customizeAllAvatarColor();
-    customizeClosingErrMessageEvent();
+    customizeClosingNoticeMessageEvent();
     customizeSearchingListEvent(plainTableRows);
     customizeSortingListEvent();
     customizeSubmitFormAction({mockTag: {isValid: true}});

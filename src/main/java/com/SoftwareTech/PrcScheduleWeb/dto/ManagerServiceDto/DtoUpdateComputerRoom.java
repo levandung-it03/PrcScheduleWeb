@@ -8,6 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DtoUpdateComputerRoom {
+    private Integer maxQuantity;
     private Integer maxComputerQuantity;
     private boolean status;
     private Integer availableComputerQuantity;

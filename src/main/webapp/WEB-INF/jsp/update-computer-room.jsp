@@ -30,14 +30,12 @@
                 <label for="roomId">Phòng thực hành</label>
                 <input name="roomId" type="text" value="${roomObject.roomId}" disabled/>
             </div>
-
-            <div class="form-input" id="maxComputerQuantity">
-                <label for="maxComputerQuantity">Nhập số lượng máy tối đa</label>
-                <input onblur="cuttingStringValueOfInputTag(this, 3)" name="maxComputerQuantity" type="number" min="1" max="999"
-                    value="${roomObject.maxComputerQuantity}" required/>
+            <div class="form-input" id="maxQuantity">
+                <label for="maxQuantity">Nhập số lượng người tối đa</label>
+                <input onblur="cuttingStringValueOfInputTag(this, 3)" name="maxQuantity" type="number" min="1" max="999"
+                    value="${roomObject.maxQuantity}" required/>
                 <div class="form_text-input_err-message"></div>
             </div>
-
             <div class="form-input" id="status">
                 <label for="status">Trạng thái hiện tại</label>
                 <select data="${roomObject.status}" name="status">
@@ -45,7 +43,12 @@
                     <option value="false">Đã niêm phong</option>
                 <select>
             </div>
-
+            <div class="form-input" id="maxComputerQuantity">
+                <label for="maxComputerQuantity">Nhập số lượng máy tối đa</label>
+                <input onblur="cuttingStringValueOfInputTag(this, 3)" name="maxComputerQuantity" type="number" min="1" max="999"
+                    value="${roomObject.maxComputerQuantity}" required/>
+                <div class="form_text-input_err-message"></div>
+            </div>
             <div class="form-input" id="availableComputerQuantity">
                 <label for="availableComputerQuantity">Nhập số lượng máy hiện hành</label>
                 <input onblur="cuttingStringValueOfInputTag(this, 3)" name="availableComputerQuantity" type="number" min="1" max="999"

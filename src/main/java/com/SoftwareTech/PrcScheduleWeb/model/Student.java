@@ -19,7 +19,7 @@ public class Student {
     @Column(name = "student_id", length = 20)
     private String studentId;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinColumn(name = "grade_id", referencedColumnName = "grade_id", nullable = false)
     @JsonIgnore
     private Grade grade;

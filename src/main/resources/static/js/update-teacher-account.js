@@ -1,7 +1,7 @@
 let canSubmitForm = false;
 
 (function main() {
-    customizeClosingErrMessageEvent();
+    customizeClosingNoticeMessageEvent();
     customizeSubmitFormAction({mockTag: {isValid: true}});
     recoveryAllSelectTagDataInForm();
     removePathAttributes();

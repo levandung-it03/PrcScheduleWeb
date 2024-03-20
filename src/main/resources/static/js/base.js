@@ -31,7 +31,7 @@ const colorMap = {
 };
   
 
-function customizeClosingErrMessageEvent() {
+function customizeClosingNoticeMessageEvent() {
     const errMessageCloseBtn = $('div.error-service-message i#error-service-message_close-btn');
     const succeedMessageCloseBtn = $('div.succeed-service-message i#succeed-service-message_close-btn');
 

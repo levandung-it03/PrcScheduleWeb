@@ -239,13 +239,13 @@ table tr td {
     height: 45px;
 }
 
-table tr td i {
+table tr td > i {
     color: var(--grey-border);
     font-weight: 600;
     margin-right: 3px;
 }
 
-table tr th i {
+table tr th > i {
     margin-left: 3px;
     font-size: 0.95rem;
     padding: 2.5px 4px;
@@ -255,7 +255,7 @@ table tr th i {
     border: 1px var(--grey-border) solid;
     transition: background-color ease 0.3s;
 }
-table tr th i:hover {
+table tr th > i:hover {
     cursor: pointer;
     background-color: var(--grey-border);
 }

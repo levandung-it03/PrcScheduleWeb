@@ -27,12 +27,12 @@ public class SectionClass {
     @Column(name = "group_from_subject", nullable = false)
     private Byte groupFromSubject;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinColumn(name = "grade_id", referencedColumnName = "grade_id", nullable = false)
     @JsonIgnore
     private Grade grade;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinColumn(name = "subject_id", referencedColumnName = "subject_id", nullable = false)
     @JsonIgnore
     private Subject subject;

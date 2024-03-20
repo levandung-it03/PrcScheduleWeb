@@ -30,7 +30,10 @@ form .form-input {
     padding: 4px;
 }
 /*--Customize each input tag--*/
-form div#roomId,
+form div#roomId {
+    width: 100%;
+}
+form div#maxQuantity,
 form div#maxComputerQuantity,
 form div#status,
 form div#availableComputerQuantity {

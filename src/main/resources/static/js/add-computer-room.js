@@ -11,6 +11,15 @@ let canSubmitForm = false;
             errorMessage: "Bạn chưa nhập giá trị.",
             isValid: false,
         },
+        maxQuantity: {
+            tag: $('input[name=maxQuantity]'),
+            confirm: function (value) {
+                this.isValid = value.length != 0;
+                return this.isValid;
+            },
+            errorMessage: "Bạn chưa nhập giá trị.",
+            isValid: false,
+        },
         maxComputerQuantity: {
             tag: $('input[name=maxComputerQuantity]'),
             confirm: function (value) {
@@ -22,7 +31,7 @@ let canSubmitForm = false;
         },
     };
     
-    customizeClosingErrMessageEvent();
+    customizeClosingNoticeMessageEvent();
     createErrBlocksOfInputTags(validatingBlocks);
     customizeValidateEventInputTags(validatingBlocks);
     customizeSubmitFormAction(validatingBlocks);

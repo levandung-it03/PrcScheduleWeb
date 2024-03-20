@@ -3,15 +3,17 @@ table tr th#room-id,
 table tr td.room-id {
     padding-left: 30px;
     text-align: start;
-    width: 30%;
+    width: 27%;
 }
 
 table tr th#max-computer-quantity,
 table tr td.max-computer-quantity,
+table tr th#max-quantity,
+table tr td.max-quantity,
 table tr th#available-computer-quantity,
 table tr td.available-computer-quantity {
     text-align: start;
-    width: 17.5%;
+    width: 15%;
 }
 
 table tr th#status,
@@ -23,5 +25,5 @@ table tr th#update,
 table tr td.update,
 table tr th#delete,
 table tr td.delete {
-    width: 10%;
+    width: 6.5%;
 }

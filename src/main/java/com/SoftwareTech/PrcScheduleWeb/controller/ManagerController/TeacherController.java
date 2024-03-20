@@ -27,7 +27,7 @@ public class TeacherController {
         final String redirectedUrl = "/manager/category/teacher/teacher-list";
 
         try {
-            teacherService.updateTeacherAndGetRedirect(teacher);
+            teacherService.updateTeacher(teacher);
             return "redirect:" + redirectedUrl + "?page=" + page + "&succeedMessage=sMv1at03";
         } catch (IllegalStateException ignored) {
             return "redirect:" + redirectedUrl + "?page=" + page + "&errorMessage=eMv1at09";

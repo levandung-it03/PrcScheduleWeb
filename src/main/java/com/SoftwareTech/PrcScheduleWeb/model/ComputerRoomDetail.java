@@ -18,7 +18,7 @@ public class ComputerRoomDetail {
     @Column(name = "computer_room_detail_id")
     private Long computerRoomDetailId;
 
-    @OneToOne(cascade = CascadeType.MERGE)
+    @OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinColumn(name = "room_id", referencedColumnName = "room_id", nullable = false)
     @JsonIgnore
     private Classroom classroom;

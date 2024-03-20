@@ -14,7 +14,7 @@ public interface ClassroomRepository extends JpaRepository<Classroom, String> {
 
     @Query("""
             SELECT new com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoComputerRoom(
-                cl.roomId, co.maxComputerQuantity, co.availableComputerQuantity, cl.status
+                cl.roomId, cl.maxQuantity, co.maxComputerQuantity, co.availableComputerQuantity, cl.status
             ) FROM ComputerRoomDetail co
             INNER JOIN co.classroom cl
         """)

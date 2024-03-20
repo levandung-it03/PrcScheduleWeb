@@ -36,9 +36,10 @@
                     <select id="search">
                         <option value="" selected disabled hidden>Chọn trường cần tìm</option>
                         <option value="0">Mã phòng</option>
-                        <option value="1">Tổng lượng máy</option>
-                        <option value="2">Số máy hiện hành</option>
-                        <option value="3">Trạng thái</option>
+                        <option value="1">Số người tối đa</option>
+                        <option value="2">Tổng lượng máy</option>
+                        <option value="3">Số máy hiện hành</option>
+                        <option value="4">Trạng thái</option>
                     </select>
                     <input type="text" id="search">
                     <i class="fa-solid fa-magnifying-glass"></i>
@@ -50,6 +51,10 @@
                         <tr>
                             <th id="room-id">
                                 Phòng thực hành
+                                <i class="fa-solid fa-arrow-down-a-z"></i>
+                            </th>
+                            <th id="max-quantity">
+                                Số người tối đa
                                 <i class="fa-solid fa-arrow-down-a-z"></i>
                             </th>
                             <th id="max-computer-quantity">
@@ -73,6 +78,9 @@
                             <tr id="${computerRoom.roomId}">
                                 <td plain-value="${computerRoom.roomId}" class="room-id">
                                     ${computerRoom.roomId}
+                                </td>
+                                <td plain-value="${computerRoom.maxQuantity}" class="max-quantity">
+                                    ${computerRoom.maxQuantity}
                                 </td>
                                 <td plain-value="${computerRoom.maxComputerQuantity}" class="max-computer-quantity">
                                     ${computerRoom.maxComputerQuantity}

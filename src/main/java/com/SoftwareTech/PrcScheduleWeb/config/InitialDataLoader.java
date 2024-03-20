@@ -97,7 +97,7 @@ public class InitialDataLoader implements CommandLineRunner {
                 Semester.builder()
                     .semester((byte)3)
                     .rangeOfYear("2022_2023")
-                    .fistWeek((byte)1)
+                    .firstWeek((byte)1)
                     .totalWeek((byte)28)
                     .startingDate(Date.valueOf(LocalDate.of(2022, 1, 8)))
                     .build()
