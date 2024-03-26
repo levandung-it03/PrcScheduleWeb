@@ -271,7 +271,6 @@ public class InitialDataLoader implements CommandLineRunner {
                     .teacher(teacherRepository.findById("GV111").orElseThrow())
                     .sectionClass(sectionClassRepository.findById(1L).orElseThrow())
                     .requestMessageDetail("Quản lý tạo cho em 4 tuần, 1 buổi 1 tuần, 4 tiết 1 buổi nhé, ưu tiên thứ 2,3,6")
-                    .wasCreated(false)
                     .build()
             ));
         }

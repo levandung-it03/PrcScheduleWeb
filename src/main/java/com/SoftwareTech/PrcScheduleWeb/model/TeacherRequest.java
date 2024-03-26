@@ -35,7 +35,4 @@ public class TeacherRequest {
 
     @Column(name = "request_message_detail", length = 100000)
     private String requestMessageDetail;
-
-    @Column(name = "was_created", nullable = false, columnDefinition = "BIT DEFAULT 0")
-    private boolean wasCreated;
 }
