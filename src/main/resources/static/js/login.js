@@ -6,7 +6,7 @@
                 this.isValid = (/^([^@\s]+)@(ptithcm\.edu\.vn|ptit\.edu\.vn|student\.ptithcm\.edu\.vn)$/).test(value);
                 return this.isValid;
             },
-            errorMessage: "Nhập đúng định dạng name.01@gmail.com",
+            errorMessage: "Nhập đúng định dạng name01@ptithcm.edu.vn",
             isValid: false,
         },
         password: {
