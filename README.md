@@ -33,9 +33,9 @@
 - Validate from Java (Customized Modules with Spring Security) site.
 
 *1. Login Page*
-- Access LoginPage from Unauthorized Request (main-logic):
+- Login Action Request:
   ```Http
-  GET /service/v1/auth/authenticate
+  POST /service/v1/auth/authenticate
   If: InstitueEmail not found.
   If: Password is invalid.
   If: Password is not true.
