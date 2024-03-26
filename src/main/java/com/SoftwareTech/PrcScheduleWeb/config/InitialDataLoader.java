@@ -162,6 +162,11 @@ public class InitialDataLoader implements CommandLineRunner {
                     .gradeId("D21CQCN01-N")
                     .department(departmentRepository.findById("CNTT02").orElseThrow())
                     .status(true)
+                    .build(),
+                Grade.builder()
+                    .gradeId("D21CQCN02-N")
+                    .department(departmentRepository.findById("CNTT02").orElseThrow())
+                    .status(true)
                     .build()
             ));
             sectionClassRepository.saveAll(List.of(
@@ -182,6 +187,13 @@ public class InitialDataLoader implements CommandLineRunner {
                 SectionClass.builder()
                     .groupFromSubject((byte) 1)
                     .grade(gradeRepository.findById("D21CQCN01-N").orElseThrow())
+                    .subject(subjectRepository.findById("INT13148").orElseThrow())
+                    .semester(semesterRepository
+                        .findBySemesterAndRangeOfYear((byte) 2, "2023_2024").orElseThrow())
+                    .build(),
+                SectionClass.builder()
+                    .groupFromSubject((byte) 1)
+                    .grade(gradeRepository.findById("D21CQCN02-N").orElseThrow())
                     .subject(subjectRepository.findById("INT13148").orElseThrow())
                     .semester(semesterRepository
                         .findBySemesterAndRangeOfYear((byte) 2, "2023_2024").orElseThrow())
@@ -212,9 +224,9 @@ public class InitialDataLoader implements CommandLineRunner {
                     .build(),
                 SubjectSchedule.builder()
                     .sectionClass(sectionClassRepository.findById(1L).orElseThrow())
-                    .day((byte) 2)
-                    .startingWeek((byte) 7)
-                    .totalWeek((byte) 9)
+                    .day((byte) 3)
+                    .startingWeek((byte) 10)
+                    .totalWeek((byte) 3)
                     .startingPeriod((byte) 1)
                     .lastPeriod((byte) 4)
                     .classroom(classroomRepository.findById("2B11").orElseThrow())
@@ -228,7 +240,7 @@ public class InitialDataLoader implements CommandLineRunner {
                     .totalWeek((byte) 2)
                     .startingPeriod((byte) 1)
                     .lastPeriod((byte) 4)
-                    .classroom(classroomRepository.findById("2B13").orElseThrow())
+                    .classroom(classroomRepository.findById("2B12").orElseThrow())
                     .teacher(teacherRepository.findById("GV111").orElseThrow())
                     .status(true)
                     .build(),
@@ -239,30 +251,41 @@ public class InitialDataLoader implements CommandLineRunner {
                     .totalWeek((byte) 9)
                     .startingPeriod((byte) 1)
                     .lastPeriod((byte) 4)
-                    .classroom(classroomRepository.findById("2B13").orElseThrow())
+                    .classroom(classroomRepository.findById("2B12").orElseThrow())
                     .teacher(teacherRepository.findById("GV111").orElseThrow())
                     .status(true)
                     .build(),
                 SubjectSchedule.builder()
-                    .sectionClass(sectionClassRepository.findById(1L).orElseThrow())
-                    .day((byte) 2)
-                    .startingWeek((byte) 7)
-                    .totalWeek((byte) 9)
+                    .sectionClass(sectionClassRepository.findById(2L).orElseThrow())
+                    .day((byte) 3)
+                    .startingWeek((byte) 10)
+                    .totalWeek((byte) 3)
                     .startingPeriod((byte) 1)
                     .lastPeriod((byte) 4)
-                    .classroom(classroomRepository.findById("2B21").orElseThrow())
+                    .classroom(classroomRepository.findById("2B11").orElseThrow())
                     .teacher(teacherRepository.findById("GV111").orElseThrow())
                     .status(true)
                     .build(),
                 SubjectSchedule.builder()
                     .sectionClass(sectionClassRepository.findById(3L).orElseThrow())
-                    .day((byte) 3)
+                    .day((byte) 5)
                     .startingWeek((byte) 7)
                     .totalWeek((byte) 11)
                     .startingPeriod((byte) 7)
                     .lastPeriod((byte) 10)
                     .classroom(classroomRepository.findById("2B13").orElseThrow())
                     .teacher(teacherRepository.findById("GV111").orElseThrow())
+                    .status(true)
+                    .build(),
+                SubjectSchedule.builder()
+                    .sectionClass(sectionClassRepository.findById(4L).orElseThrow())
+                    .day((byte) 5)
+                    .startingWeek((byte) 13)
+                    .totalWeek((byte) 11)
+                    .startingPeriod((byte) 7)
+                    .lastPeriod((byte) 10)
+                    .classroom(classroomRepository.findById("2B11").orElseThrow())
+                    .teacher(teacherRepository.findById("GV112").orElseThrow())
                     .status(true)
                     .build()
             ));
@@ -276,6 +299,7 @@ public class InitialDataLoader implements CommandLineRunner {
         }
         if (studentRepository.count() == 0) {
             Grade cn1Grade = gradeRepository.findById("D21CQCN01-N").orElseThrow();
+            Grade cn2Grade = gradeRepository.findById("D21CQCN02-N").orElseThrow();
             studentRepository.saveAll(List.of(
                 Student.builder().studentId("N20DCCN001").grade(cn1Grade).lastName("Nguyễn Hồng").firstName("Nguyễn").gender(Gender.BOY).instituteEmail("N20DCCN001@gmail.edu.com").build(),
                 Student.builder().studentId("N20DCCN002").grade(cn1Grade).lastName("Trần Hoàng").firstName("Trần").gender(Gender.GIRL).instituteEmail("N20DCCN002@gmail.edu.com").build(),
@@ -288,18 +312,18 @@ public class InitialDataLoader implements CommandLineRunner {
                 Student.builder().studentId("N20DCCN009").grade(cn1Grade).lastName("Đặng Phùng").firstName("Đặng").gender(Gender.BOY).instituteEmail("N20DCCN009@gmail.edu.com").build(),
                 Student.builder().studentId("N20DCCN010").grade(cn1Grade).lastName("Bùi Hồng").firstName("Bùi").gender(Gender.GIRL).instituteEmail("N20DCCN010@gmail.edu.com").build(),
                 Student.builder().studentId("N20DCCN011").grade(cn1Grade).lastName("Nguyễn Thành").firstName("Đỗ").gender(Gender.BOY).instituteEmail("N20DCCN011@gmail.edu.com").build(),
-                Student.builder().studentId("N20DCCN012").grade(cn1Grade).lastName("Trần Thuyết").firstName("Hồ").gender(Gender.BOY).instituteEmail("N20DCCN012@gmail.edu.com").build(),
-                Student.builder().studentId("N20DCCN013").grade(cn1Grade).lastName("Lê Tiết").firstName("Dương").gender(Gender.GIRL).instituteEmail("N20DCCN013@gmail.edu.com").build(),
-                Student.builder().studentId("N20DCCN014").grade(cn1Grade).lastName("Phạm Đỗ").firstName("Lý").gender(Gender.BOY).instituteEmail("N20DCCN014@gmail.edu.com").build(),
-                Student.builder().studentId("N20DCCN015").grade(cn1Grade).lastName("Hoàng Lâm").firstName("Phùng").gender(Gender.BOY).instituteEmail("N20DCCN015@gmail.edu.com").build(),
-                Student.builder().studentId("N20DCCN016").grade(cn1Grade).lastName("Huỳnh Vĩnh").firstName("Vũ").gender(Gender.GIRL).instituteEmail("N20DCCN016@gmail.edu.com").build(),
-                Student.builder().studentId("N20DCCN017").grade(cn1Grade).lastName("Phan Châu").firstName("Trịnh").gender(Gender.BOY).instituteEmail("N20DCCN017@gmail.edu.com").build(),
-                Student.builder().studentId("N20DCCN018").grade(cn1Grade).lastName("Võ Sơn").firstName("Đinh").gender(Gender.GIRL).instituteEmail("N20DCCN018@gmail.edu.com").build(),
-                Student.builder().studentId("N20DCCN019").grade(cn1Grade).lastName("Đặng Tôn").firstName("Trương").gender(Gender.BOY).instituteEmail("N20DCCN019@gmail.edu.com").build(),
-                Student.builder().studentId("N20DCCN020").grade(cn1Grade).lastName("Bùi Tưởng").firstName("Lương").gender(Gender.BOY).instituteEmail("N20DCCN020@gmail.edu.com").build(),
-                Student.builder().studentId("N20DCCN021").grade(cn1Grade).lastName("Nguyễn Hồng").firstName("Mai").gender(Gender.GIRL).instituteEmail("N20DCCN021@gmail.edu.com").build(),
-                Student.builder().studentId("N20DCCN022").grade(cn1Grade).lastName("Trần Hoàng").firstName("Tô").gender(Gender.BOY).instituteEmail("N20DCCN022@gmail.edu.com").build(),
-                Student.builder().studentId("N20DCCN023").grade(cn1Grade).lastName("Lê Nghiêm").firstName("Dịch").gender(Gender.BOY).instituteEmail("N20DCCN023@gmail.edu.com").build()
+                Student.builder().studentId("N20DCCN012").grade(cn2Grade).lastName("Trần Thuyết").firstName("Hồ").gender(Gender.BOY).instituteEmail("N20DCCN012@gmail.edu.com").build(),
+                Student.builder().studentId("N20DCCN013").grade(cn2Grade).lastName("Lê Tiết").firstName("Dương").gender(Gender.GIRL).instituteEmail("N20DCCN013@gmail.edu.com").build(),
+                Student.builder().studentId("N20DCCN014").grade(cn2Grade).lastName("Phạm Đỗ").firstName("Lý").gender(Gender.BOY).instituteEmail("N20DCCN014@gmail.edu.com").build(),
+                Student.builder().studentId("N20DCCN015").grade(cn2Grade).lastName("Hoàng Lâm").firstName("Phùng").gender(Gender.BOY).instituteEmail("N20DCCN015@gmail.edu.com").build(),
+                Student.builder().studentId("N20DCCN016").grade(cn2Grade).lastName("Huỳnh Vĩnh").firstName("Vũ").gender(Gender.GIRL).instituteEmail("N20DCCN016@gmail.edu.com").build(),
+                Student.builder().studentId("N20DCCN017").grade(cn2Grade).lastName("Phan Châu").firstName("Trịnh").gender(Gender.BOY).instituteEmail("N20DCCN017@gmail.edu.com").build(),
+                Student.builder().studentId("N20DCCN018").grade(cn2Grade).lastName("Võ Sơn").firstName("Đinh").gender(Gender.GIRL).instituteEmail("N20DCCN018@gmail.edu.com").build(),
+                Student.builder().studentId("N20DCCN019").grade(cn2Grade).lastName("Đặng Tôn").firstName("Trương").gender(Gender.BOY).instituteEmail("N20DCCN019@gmail.edu.com").build(),
+                Student.builder().studentId("N20DCCN020").grade(cn2Grade).lastName("Bùi Tưởng").firstName("Lương").gender(Gender.BOY).instituteEmail("N20DCCN020@gmail.edu.com").build(),
+                Student.builder().studentId("N20DCCN021").grade(cn2Grade).lastName("Nguyễn Hồng").firstName("Mai").gender(Gender.GIRL).instituteEmail("N20DCCN021@gmail.edu.com").build(),
+                Student.builder().studentId("N20DCCN022").grade(cn2Grade).lastName("Trần Hoàng").firstName("Tô").gender(Gender.BOY).instituteEmail("N20DCCN022@gmail.edu.com").build(),
+                Student.builder().studentId("N20DCCN023").grade(cn2Grade).lastName("Lê Nghiêm").firstName("Dịch").gender(Gender.BOY).instituteEmail("N20DCCN023@gmail.edu.com").build()
             ));
         }
     }

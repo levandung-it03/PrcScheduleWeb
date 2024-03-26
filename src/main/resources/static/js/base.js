@@ -177,8 +177,15 @@ function customizeSortingListEvent() {
     })
 }
 
-function upperCaseAllFirstLettersInStr(str) {
-    return str.split(" ").map(word => word.slice(0, 1).toUpperCase() + word.slice(1)).join(" ");
+function customizeAutoFormatStrongInputTextEvent() {
+    [...$$('div.strong-text input')].forEach(inputTag => {
+        inputTag.addEventListener("blur", e => {
+            inputTag.value = inputTag.value.trim().split(" ")
+                .filter(word => word != "")
+                .map(word => word.slice(0, 1).toUpperCase() + word.slice(1))
+                .join(" ");
+        });
+    });
 }
 
 function convertStrDateToDateObj(strDate) {

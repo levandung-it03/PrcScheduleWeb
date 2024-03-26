@@ -32,12 +32,12 @@
                 <input name="teacherId" type="text" value="${teacher.teacherId}" readonly disabled/>
                 <input name="teacherId" type="text" value="${teacher.teacherId}" hidden/>
             </div>
-            <div class="form-input" id="lastName">
+            <div class="form-input strong-text" id="lastName">
                 <label for="lastName">Họ giảng viên</label>
                 <input name="lastName" type="text" value="${teacher.lastName}" required/>
                 <div class="form_text-input_err-message"></div>
             </div>
-            <div class="form-input" id="firstName">
+            <div class="form-input strong-text" id="firstName">
                 <label for="firstName">Tên giảng viên</label>
                 <input name="firstName" type="text" value="${teacher.firstName}" required/>
                 <div class="form_text-input_err-message"></div>
