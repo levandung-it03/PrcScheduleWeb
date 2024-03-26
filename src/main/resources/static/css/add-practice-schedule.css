@@ -5,6 +5,10 @@ html {
     padding: 0;
 }
 
+#error-message-close-btn:hover {
+    cursor: pointer;
+}
+
 div.detail-block {
     display: flex;
     flex-wrap: wrap;
@@ -31,11 +35,6 @@ div.detail-block div.data-row > label {
     width: 20%;
     font-weight: 600;
 }
-
-div.detail-block div.data-row > span.data-seperater {
-    width: 5%;
-    font-weight: 100;
-}
 div.detail-block div.detail-block_description {
     width: 100%;
     height: 40px;
@@ -51,7 +50,7 @@ div.detail-block div.detail-block_description {
 div.detail-block div.detail-block_description p {
     padding-left: 10px;
 }
-
+div#adjust-schedule-block,
 div#add-schedule-block {
     display: flex;
     flex-wrap: wrap;
@@ -66,7 +65,7 @@ div#add-schedule-block {
     font-size: 0.9rem;
     font-weight: 600;
 }
-
+div#adjust-schedule-block .form-input,
 div#add-schedule-block .form-input {
     position: relative;
     height: 90px;
@@ -80,13 +79,25 @@ div#add-schedule-block .form-input {
 /*--Customize each input tag--*/
 div#table-tools {
     width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
 }
 div#table-tools div#semester {
-    height: 60px;
-}
-div#table-tools div#semester input {
     width: 30%;
+}
+div#table-tools div#list-of-week {
+    width: 65%;
+}
+div#table-tools div#list-of-week select,
+div#table-tools div#semester input {
+    width: 100%;
     border: 1px black solid;
+} 
+div#table-tools div#semester input,
+div#table-tools div#list-of-week select,
+div#table-tools div#list-of-week select option {
+    font-size: 1rem;
 }
 /*------------*/
 
@@ -98,42 +109,51 @@ div#table-tools div#semester input {
     padding: 12px;
 }
 
-.form-input_err-message {
-    position: relative;
+div#add-schedule-block span#convert-btn {
+    display: block;
+    width: 100%;
+    border: 2px var(--black-text) solid;
+    background-color: var(--black-text);
+    color: white;
+    border-radius: 10px;
+    transition: background-color ease 0.2s;
+    transition: border-radius ease 0.3s;
+    font-weight: 100;
+    padding: 8px 42px;
+    margin: auto;
+    margin-top: 30px;
+    text-align: center;
 }
-
-.err-message-block {
-    position: absolute;
-    display: none;
-    color: red;
-    font-size: 12px;
+div#add-schedule-block span#convert-btn:hover {
+    cursor: pointer;
+    border-radius: 22px;
+    background-color: #9fa7ae;
+    color: black;
 }
-
-div#add-schedule-block input[type=submit] {
+div#adjust-schedule-block input[type=submit] {
     padding: 12px 42px;
     margin: auto;
     margin-top: 30px;
 }
-
-#error-message-close-btn:hover {
-    cursor: pointer;
-}
-table {
+div#adjust-schedule-block table,
+div#add-schedule-block table {
     width: 100%;
     border-collapse: collapse;
 }
-table thead tr > th,
-table tbody tr > td {
+div#adjust-schedule-block table thead tr > th,
+div#adjust-schedule-block table tbody tr > td,
+div#add-schedule-block table thead tr > th,
+div#add-schedule-block table tbody tr > td {
     height: 35px;
     padding-top: 0;   /*override-base.css-styles*/
     font-size: 0.95rem;
 }
-table thead th.table-description-column-item,
-table tbody td.table-description-column-item {
+div#add-schedule-block table thead th.table-description-column-item,
+div#add-schedule-block table tbody td.table-description-column-item {
     width: 70px;
 }
-table thead th,
-table tbody td.table-description-column-item {
+div#add-schedule-block table thead th,
+div#add-schedule-block table tbody td.table-description-column-item {
     border: 1px black solid;    /*override-base.css-styles*/
     background-color: rgba(255, 255, 255, 0.85);
     display: flex;
@@ -141,30 +161,108 @@ table tbody td.table-description-column-item {
     align-items: center;
     justify-content: center;
 }
-table tbody td.table-description-column-item {
+div#add-schedule-block table tbody td.table-description-column-item {
     justify-self: start;
     border-color: black black transparent black;
 }
-table tbody td.table-description-column-item > span {
+div#add-schedule-block table tbody td.table-description-column-item > span {
     height: 20px;
     padding-left: 7px;
 }
-table thead th.schedule-item,
-table tbody td.schedule-item {
+div#add-schedule-block table thead th.schedule-item,
+div#add-schedule-block table tbody td.schedule-item {
     width: calc((100% - 2*70px)/7);
 }
-table tbody td.schedule-item {
+div#add-schedule-block table tbody td.schedule-item {
     border: 1px var(--smoking-grey) solid; /*override-base.css-styles*/
 }
-table thead th.schedule-item {
+div#add-schedule-block table tbody td.schedule-item:hover {
+    cursor: pointer;
+    background-color: var(--smoking-grey);
+}
+div#add-schedule-block table thead th.schedule-item {
     border-color: black transparent black black;
 }
-table thead th.change-schedule-btn {
+div#add-schedule-block table thead th.change-schedule-btn {
     background-color: #e4e3e3;
     transition: background-color ease 0.3s;
 }
-table thead th.change-schedule-btn:hover {
+div#add-schedule-block table thead th.change-schedule-btn:hover {
     background-color: #767676;
     color: white;
     cursor: pointer;
+}
+div#adjust-schedule-block table {
+    border: 1px solid;
+    border-color: transparent var(--grey-of-header-border) var(--grey-of-header-border) var(--grey-of-header-border);
+}
+div#adjust-schedule-block table tbody tr td {
+    height: 40px;
+    padding-top: 5px;
+}
+div#adjust-schedule-block table tbody tr:hover {
+    background-color: #e6e6e6;
+}
+div#adjust-schedule-block table thead tr > th#firstWeek,
+div#adjust-schedule-block table tbody tr > td.firstWeek,
+div#adjust-schedule-block table thead tr > th#totalWeek,
+div#adjust-schedule-block table tbody tr > td.totalWeek,
+div#adjust-schedule-block table thead tr > th#day,
+div#adjust-schedule-block table tbody tr > td.day,
+div#adjust-schedule-block table thead tr > th#startingPeriod,
+div#adjust-schedule-block table tbody tr > td.startingPeriod,
+div#adjust-schedule-block table thead tr > th#lastPeriod,
+div#adjust-schedule-block table tbody tr > td.lastPeriod {
+    text-align: start;
+}
+div#adjust-schedule-block table thead tr > th#delete,
+div#adjust-schedule-block table tbody tr > td.delete,
+div#adjust-schedule-block table thead tr > th#roomId,
+div#adjust-schedule-block table tbody tr > td.roomId {
+    text-align: center;
+}
+
+div#adjust-schedule-block table thead tr > th#firstWeek,
+div#adjust-schedule-block table tbody tr > td.firstWeek {
+    width: 24%;
+    padding-left: 4%;
+}
+div#adjust-schedule-block table thead tr > th#totalWeek,
+div#adjust-schedule-block table tbody tr > td.totalWeek,
+div#adjust-schedule-block table thead tr > th#startingPeriod,
+div#adjust-schedule-block table tbody tr > td.startingPeriod,
+div#adjust-schedule-block table thead tr > th#lastPeriod,
+div#adjust-schedule-block table tbody tr > td.lastPeriod {
+    width: 14%;
+}
+div#adjust-schedule-block table thead tr > th#roomId,
+div#adjust-schedule-block table tbody tr > td.roomId {
+    width: 20%;
+}
+div#adjust-schedule-block table thead tr > th#day,
+div#adjust-schedule-block table tbody tr > td.day,
+div#adjust-schedule-block table thead tr > th#delete,
+div#adjust-schedule-block table tbody tr > td.delete {
+    width: 7%;
+}
+
+div#adjust-schedule-block table tbody tr > td.roomId select {
+    border-color: transparent;
+    padding: 4px 12%;
+    font-size: 0.95rem;
+}
+div#adjust-schedule-block table tbody tr:hover select {
+    cursor: pointer;
+    background-color: #e6e6e6;
+}
+
+.unhover {
+    background-color: rgb(211, 217, 219)!important;
+}
+.unhover:hover {
+    cursor: not-allowed!important;
+}
+.selected,
+.selected:hover {
+    background-color: var(--green)!important;
 }

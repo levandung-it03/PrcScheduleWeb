@@ -1,12 +1,10 @@
 package com.SoftwareTech.PrcScheduleWeb.service.ManagerService;
 
 import com.SoftwareTech.PrcScheduleWeb.config.StaticUtilMethods;
-import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoComputerRoom;
-import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoSubjectSchedule;
-import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoUpdateTeacher;
-import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoUpdateTeacherAccount;
+import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.*;
 import com.SoftwareTech.PrcScheduleWeb.model.*;
 import com.SoftwareTech.PrcScheduleWeb.model.enums.Role;
+import com.SoftwareTech.PrcScheduleWeb.model.enums.RoomType;
 import com.SoftwareTech.PrcScheduleWeb.repository.*;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -38,6 +36,8 @@ public class SubPageService {
     private final TeacherRequestRepository teacherRequestRepository;
     @Autowired
     private final SubjectScheduleRepository subjectScheduleRepository;
+    @Autowired
+    private final SubjectRegistrationRepository subjectRegistrationRepository;
 
     public ModelAndView getUpdateComputerRoomPage(HttpServletRequest request) {
         final String roomId = request.getParameter("roomId");
@@ -135,8 +135,8 @@ public class SubPageService {
     }
 
     public ModelAndView getAddPracticeSchedulePage(HttpServletRequest request) throws SQLException {
-            final String requestId = request.getParameter("requestId");
-        ModelAndView modelAndView = new ModelAndView("add-practice-schedule");
+        final String requestId = request.getParameter("requestId");
+        ModelAndView modelAndView = staticUtilMethods.customResponseModelView(request, "add-practice-schedule");
 
         if (requestId == null)
             throw new NullPointerException("Request Id is Null, so redirecting back to Teacher Request List");
@@ -144,6 +144,7 @@ public class SubPageService {
         TeacherRequest teacherRequest = teacherRequestRepository
             .findById(Long.parseLong(requestId))
             .orElseThrow(() -> new NoSuchElementException("Request Id not found"));
+
         List<DtoSubjectSchedule> allSubjectSchedules = subjectScheduleRepository
             .findAllScheduleByTeacherRequest(
                 teacherRequest.getSectionClass().getSemester().getSemesterId(),
@@ -151,8 +152,23 @@ public class SubPageService {
                 teacherRequest.getSectionClass().getGrade().getGradeId()
             );
 
+        List<DtoPracticeSchedule> allPrcScheduleInSemester = subjectScheduleRepository
+            .findAllPracticeScheduleInCurrentSemester(
+                teacherRequest.getSectionClass().getSemester().getSemesterId()
+            );
+
+        Integer studentQuantityInCurrentSectionClass = subjectRegistrationRepository
+            .countBySectionClassId(teacherRequest.getSectionClass().getSectionClassId());
+        int studentQuantity = (studentQuantityInCurrentSectionClass == null) ? 0 : studentQuantityInCurrentSectionClass;
+
+        List<String> computerRoomList = classroomRepository
+            .findAllComputerRoomIdWithQuantity(studentQuantity);
+
         modelAndView.addObject("teacherRequest", teacherRequest);
         modelAndView.addObject("subjectScheduleList", allSubjectSchedules);
+        modelAndView.addObject("allPrcScheduleInSemester", allPrcScheduleInSemester);
+        modelAndView.addObject("computerRoomList", computerRoomList);
+        modelAndView.addObject("studentQuantity", studentQuantity);
         return modelAndView;
     }
 }

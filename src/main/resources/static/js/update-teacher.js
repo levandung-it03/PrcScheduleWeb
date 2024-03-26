@@ -6,7 +6,7 @@ let canSubmitForm = false;
             tag: $('input[name=lastName]'),
             confirm: function (value) {
                 this.isValid = (/^[A-Za-zÀ-ỹ]{1,50}( [A-Za-zÀ-ỹ]{1,50})*$/).test(value);
-                this.tag.value = upperCaseAllLetters(value);
+                this.tag.value = upperCaseAllFirstLettersInStr(value);
                 return this.isValid;
             },
             errorMessage: "Họ giảng viên không hợp lệ.",
@@ -16,7 +16,7 @@ let canSubmitForm = false;
             tag: $('input[name=firstName]'),
             confirm: function (value) {
                 this.isValid = (/^[A-Za-zÀ-ỹ]{1,50}$/).test(value);
-                this.tag.value = upperCaseAllLetters(value);
+                this.tag.value = upperCaseAllFirstLettersInStr(value);
                 return this.isValid;
             },
             errorMessage: "Tên giảng viên không hợp lệ.",

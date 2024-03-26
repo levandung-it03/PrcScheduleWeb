@@ -7,8 +7,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class DtoSubjectSchedule {
-    private String subjectName;
+public class DtoPracticeSchedule {
     private Byte day;
     private Byte startingWeek;
     private Byte totalWeek;

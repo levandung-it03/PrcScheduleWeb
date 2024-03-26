@@ -1,5 +1,6 @@
 package com.SoftwareTech.PrcScheduleWeb.repository;
 
+import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoPracticeSchedule;
 import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoSubjectSchedule;
 import com.SoftwareTech.PrcScheduleWeb.model.SubjectSchedule;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -37,7 +38,8 @@ public interface SubjectScheduleRepository extends JpaRepository<SubjectSchedule
      */
     @Query("""
         SELECT DISTINCT new com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoSubjectSchedule(
-            s.startingWeek, s.totalWeek, s.startingPeriod, s.lastPeriod, s.classroom.roomId
+            s.sectionClass.subject.subjectName, s.day, s.startingWeek, s.totalWeek, s.startingPeriod, s.lastPeriod,
+            s.classroom.roomId
         ) FROM SubjectSchedule s
         WHERE (s.sectionClass.semester.semesterId = :semesterId AND s.teacher.teacherId = :teacherId)
         OR  (s.sectionClass.semester.semesterId = :semesterId AND s.sectionClass.grade.gradeId = :gradeId)
@@ -47,4 +49,12 @@ public interface SubjectScheduleRepository extends JpaRepository<SubjectSchedule
         @Param("teacherId") String teacherId,
         @Param("gradeId") String gradeId
     ) throws SQLException;
+
+    @Query("""
+        SELECT new com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoPracticeSchedule(
+            s.day, s.startingWeek, s.totalWeek, s.startingPeriod, s.lastPeriod, s.classroom.roomId
+        ) FROM SubjectSchedule s
+        WHERE s.sectionClass.semester.semesterId = :semesterId AND s.classroom.Id = 'PRC'
+        """)
+    List<DtoPracticeSchedule> findAllPracticeScheduleInCurrentSemester(@Param("semesterId") Long semesterId);
 }

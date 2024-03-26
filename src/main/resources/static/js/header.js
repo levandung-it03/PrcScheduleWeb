@@ -46,6 +46,10 @@ function mappingCategoryNameWithCurrentPage() {
         ["teacher-request-detail"]: {
             ["category-name"]: "Chi tiết yêu cầu tạo lịch",
             ["page-description"]: "Bảng chi tiết về yêu cầu và giảng viên gửi yêu cầu."
+        },
+        ["add-practice-schedule"]: {
+            ["category-name"]: "Tạo lịch thực hành từ yêu cầu",
+            ["page-description"]: "Cung cấp các tính năng hỗ trợ tạo lịch thực hành từ yêu cầu giảng viên."
         }
     }
 

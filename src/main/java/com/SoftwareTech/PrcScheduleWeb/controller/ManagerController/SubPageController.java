@@ -131,7 +131,8 @@ public class SubPageController {
         } catch (NoSuchElementException ignored) {
             response.sendRedirect(redirectedUrl + "?errorMessage=eMv1at10");
         } catch (Exception e) {
-            response.sendRedirect(redirectedUrl + "?errorMessage=eMv1at00");
+//            response.sendRedirect(redirectedUrl + "?errorMessage=eMv1at00");
+            System.out.println(e.getMessage());
         }
         return null;
     }

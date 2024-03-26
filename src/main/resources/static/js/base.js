@@ -145,10 +145,6 @@ function customizeSearchingListEvent(plainTableRows) {
             let currentCellValue = currentCellElement.getAttribute("plain-value").trim().toUpperCase();
             let isBeingFoundValue = currentCellValue.search(searchingInputTag.value.trim().toUpperCase()) != -1;
             
-            console.log(currentCellElement);
-            console.log(currentCellValue);
-            console.log(isBeingFoundValue);
-
             return accumulator + (isBeingFoundValue ? row.outerHTML : "");
         }, "");
 
@@ -181,6 +177,11 @@ function customizeSortingListEvent() {
     })
 }
 
-function upperCaseAllLetters(str) {
+function upperCaseAllFirstLettersInStr(str) {
     return str.split(" ").map(word => word.slice(0, 1).toUpperCase() + word.slice(1)).join(" ");
+}
+
+function convertStrDateToDateObj(strDate) {
+    const startDateAsArr = strDate.split("/");
+    return new Date(startDateAsArr[2], startDateAsArr[1] - 1, startDateAsArr[0])
 }
