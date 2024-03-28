@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -15,14 +16,18 @@
 <body>
     <%@ include file="/WEB-INF/jsp/category.jsp" %>
     <div id="center-page" id="add-account-page">
-        <div class="error-service-message" ${errorMessage == "none" ? "style='display:none'" : "style='display:flex'"}>
-            <span>${errorMessage}</span>
-            <i id="error-service-message_close-btn" class="fa fa-times-circle" aria-hidden="true"></i>
-        </div>
-        <div class="succeed-service-message" ${succeedMessage == "none" ? "style='display:none'" : "style='display:flex'"}>
-            <span>${succeedMessage}</span>
-            <i id="succeed-service-message_close-btn" class="fa fa-times-circle" aria-hidden="true"></i>
-        </div>
+        <c:if test="${errorMessage != null}">
+            <div class="error-service-message">
+                <span>${errorMessage}</span>
+                <i id="error-service-message_close-btn" class="fa fa-times-circle" aria-hidden="true"></i>
+            </div>
+        </c:if>
+        <c:if test="${succeedMessage != null}">
+            <div class="succeed-service-message">
+                <span>${succeedMessage}</span>
+                <i id="succeed-service-message_close-btn" class="fa fa-times-circle" aria-hidden="true"></i>
+            </div>
+        </c:if>
         <%@ include file="/WEB-INF/jsp/header.jsp" %>
         <form method="POST" action="/service/v1/manager/add-teacher-account" modelAttribute="registerObject">
             <div class="form-input" id="instituteEmail">

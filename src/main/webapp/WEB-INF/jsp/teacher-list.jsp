@@ -17,14 +17,18 @@
 <body>
     <%@ include file="/WEB-INF/jsp/category.jsp" %>
     <div id="center-page" id="teacher-list-page">
-        <div class="error-service-message" ${errorMessage == "none" ? "style='display:none'" : "style='display:flex'"}>
-            <span>${errorMessage}</span>
-            <i id="error-service-message_close-btn" class="fa fa-times-circle" aria-hidden="true"></i>
-        </div>
-        <div class="succeed-service-message" ${succeedMessage == "none" ? "style='display:none'" : "style='display:flex'"}>
-            <span>${succeedMessage}</span>
-            <i id="succeed-service-message_close-btn" class="fa fa-times-circle" aria-hidden="true"></i>
-        </div>
+        <c:if test="${errorMessage != null}">
+            <div class="error-service-message">
+                <span>${errorMessage}</span>
+                <i id="error-service-message_close-btn" class="fa fa-times-circle" aria-hidden="true"></i>
+            </div>
+        </c:if>
+        <c:if test="${succeedMessage != null}">
+            <div class="succeed-service-message">
+                <span>${succeedMessage}</span>
+                <i id="succeed-service-message_close-btn" class="fa fa-times-circle" aria-hidden="true"></i>
+            </div>
+        </c:if>
         <%@ include file="/WEB-INF/jsp/header.jsp" %>
         <div id="center-page_list">
             <div id="table-tools">

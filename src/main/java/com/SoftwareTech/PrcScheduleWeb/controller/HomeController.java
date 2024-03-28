@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -18,8 +19,8 @@ public class HomeController {
     private final HomeService homeService;
 
     @RequestMapping(value = "/home", method = RequestMethod.GET)
-    public ModelAndView getHome(HttpServletRequest request) {
-        return homeService.handleGettingHomeRequestFromBothRoles(request);
+    public ModelAndView getHome(HttpServletRequest request, Model model) {
+        return homeService.handleGettingHomeRequestFromBothRoles(request, model);
     }
 
 }

@@ -1,13 +1,18 @@
 package com.SoftwareTech.PrcScheduleWeb.controller.ManagerController;
 
-import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoUpdateTeacher;
+import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoAsRequests.DtoUpdateTeacher;
 import com.SoftwareTech.PrcScheduleWeb.service.ManagerService.TeacherService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.NoSuchElementException;
 
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
@@ -20,19 +25,26 @@ public class TeacherController {
 
     @RequestMapping(value = "/update-teacher", method = POST)
     public String updateTeacherInfo(
-        @ModelAttribute("teacher") DtoUpdateTeacher teacher,
-        HttpServletRequest request
+        @Valid @ModelAttribute("teacher") DtoUpdateTeacher teacher,
+        HttpServletRequest request,
+        RedirectAttributes redirectAttributes,
+        BindingResult bindingResult
     ) {
         String page = (request.getParameter("pageNumber") == null) ? "1" : request.getParameter("pageNumber");
-        final String redirectedUrl = "/manager/category/teacher/teacher-list";
+        final String redirectedUrl = "/manager/category/teacher/teacher-list?page=" + page;
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("errorCode", bindingResult.getFieldErrors().getFirst());
+            return "redirect:" + redirectedUrl;
+        }
 
         try {
             teacherService.updateTeacher(teacher);
-            return "redirect:" + redirectedUrl + "?page=" + page + "&succeedMessage=sMv1at03";
-        } catch (IllegalStateException ignored) {
-            return "redirect:" + redirectedUrl + "?page=" + page + "&errorMessage=eMv1at09";
+            redirectAttributes.addFlashAttribute("succeedCode", "succeed_update_01");
+        } catch (IllegalArgumentException | NoSuchElementException ignored) {
+            redirectAttributes.addFlashAttribute("errorCode", "error_entity_01");
         } catch (Exception ignored) {
-            return "redirect:" + redirectedUrl + "?page=" + page + "&errorMessage=eMv1at00";
+            redirectAttributes.addFlashAttribute("errorCode", "error_systemApplication_01");
         }
+        return "redirect:" + redirectedUrl;
     }
 }

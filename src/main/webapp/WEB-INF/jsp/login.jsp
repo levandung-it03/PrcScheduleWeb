@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -19,10 +20,12 @@
 </head>
 
 <body>
-    <div class="error-service-message" ${errorMessage == "none" ? "style='display:none'" : "style='display:flex'"}>
-        <span>${errorMessage}</span>
-        <i id="error-service-message_close-btn" class="fa fa-times-circle" aria-hidden="true"></i>
-    </div>
+    <c:if test="${errorMessage != null}">
+        <div class="error-service-message">
+            <span>${errorMessage}</span>
+            <i id="error-service-message_close-btn" class="fa fa-times-circle" aria-hidden="true"></i>
+        </div>
+    </c:if>
     <form method="POST" action="/service/v1/auth/authenticate" modelAttribute="authObject">
         <span id="form-title">Đăng nhập</span>
         <div class="form-input" id="instituteEmail">
@@ -37,7 +40,7 @@
                 <a href="/public/forgot-password">Quên mật khẩu?</a>
             </span>
             <input name="password" type="password" required/>
-            <div class="form_text-input_err-message"></div> 
+            <div class="form_text-input_err-message"></div>
             <div class="password_toggle-hidden">
                 <i id="password" class="show-pass fa-solid fa-eye"></i>
                 <i id="password" class="hide-pass hidden fa-regular fa-eye-slash"></i>

@@ -1,13 +1,15 @@
 package com.SoftwareTech.PrcScheduleWeb.controller.ManagerController;
 
-import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoAddComputerRoom;
-import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoUpdateComputerRoom;
+import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoAsRequests.DtoAddComputerRoom;
+import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoAsRequests.DtoUpdateComputerRoom;
 import com.SoftwareTech.PrcScheduleWeb.service.ManagerService.ComputerRoomService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -24,60 +26,71 @@ public class ComputerRoomController {
 
     @RequestMapping(value = "/add-computer-room", method = POST)
     public String addComputerRoom(
-        @ModelAttribute("roomObject") DtoAddComputerRoom roomObject,
+        @Valid @ModelAttribute("roomObject") DtoAddComputerRoom roomObject,
+        HttpServletRequest request,
         RedirectAttributes redirectAttributes,
-        HttpServletRequest request
+        BindingResult bindingResult
     ) {
         final String standingUrl = request.getHeader("Referer");
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("errorCode", bindingResult.getFieldErrors().getFirst());
+            return "redirect:" + standingUrl;
+        }
 
         try {
             computerRoomService.addComputerRoom(roomObject);
-            return "redirect:" + standingUrl + "?succeedMessage=sMv1at01";
-        } catch (IllegalStateException ignored) {
-            redirectAttributes.addFlashAttribute("roomObject", roomObject);
-            return "redirect:" + standingUrl + "?errorMessage=eMv1at09";
+            redirectAttributes.addFlashAttribute("succeedCode", "succeed_add_01");
         } catch (DuplicateKeyException ignored) {
             redirectAttributes.addFlashAttribute("roomObject", roomObject);
-            return "redirect:" + standingUrl + "?errorMessage=eMv1at04";
+            redirectAttributes.addFlashAttribute("errorCode", "error_computerRoom_02");
         } catch (Exception ignored) {
             redirectAttributes.addFlashAttribute("roomObject", roomObject);
-            return "redirect:" + standingUrl + "?errorMessage=eMv1at00";
+            redirectAttributes.addFlashAttribute("errorCode", "error_systemApplication_01");
         }
+        return "redirect:" + standingUrl;
     }
 
     @RequestMapping(value = "/update-computer-room", method = POST)
     public String updateComputerRoom(
-        @ModelAttribute("roomObject") DtoUpdateComputerRoom roomObject,
-        HttpServletRequest request
+        @Valid @ModelAttribute("roomObject") DtoUpdateComputerRoom roomObject,
+        HttpServletRequest request,
+        RedirectAttributes redirectAttributes,
+        BindingResult bindingResult
     ) {
         String page = (request.getParameter("pageNumber") == null) ? "1" : request.getParameter("pageNumber");
-        final String redirectedUrl = "/manager/category/computer-room/computer-room-list";
+        final String redirectedUrl = "/manager/category/computer-room/computer-room-list?page=" + page;
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("errorCode", bindingResult.getFieldErrors().getFirst());
+            return "redirect:" + redirectedUrl;
+        }
 
         try {
             computerRoomService.updateComputerRoom(roomObject, request);
-            return "redirect:" + redirectedUrl + "?page=" + page + "&succeedMessage=sMv1at03";
+            redirectAttributes.addFlashAttribute("succeedCode", "succeed_update_01");
+        } catch (IllegalStateException ignored) {
+            redirectAttributes.addFlashAttribute("errorCode", "error_entity_03");
         } catch (NoSuchElementException e) {
-            return "redirect:" + redirectedUrl + "?page=" + page + "&errorMessage=eMv1at05";
+            redirectAttributes.addFlashAttribute("errorCode", "error_entity_01");
         } catch (Exception ignored) {
-            return "redirect:" + redirectedUrl + "?page=" + page + "&errorMessage=eMv1at00";
+            redirectAttributes.addFlashAttribute("errorCode", "error_systemApplication_01");
         }
+        return "redirect:" + redirectedUrl;
     }
 
     @RequestMapping(value = "/computer-room-list-active-btn", method = POST)
     public String deleteComputerRoom(
         @ModelAttribute("deleteBtn") String roomId,
-        HttpServletRequest request
+        HttpServletRequest request,
+        RedirectAttributes redirectAttributes
     ) {
-        String standingUrl = request.getHeader("Referer");
-        standingUrl += standingUrl.contains("?") ? "&" : "?";
-
         try {
             computerRoomService.deleteComputerRoom(roomId);
-            return "redirect:" + standingUrl + "succeedMessage=sMv1at02";
+            redirectAttributes.addFlashAttribute("succeedCode", "succeed_delete_01");
         } catch (NoSuchElementException ignored) {
-            return "redirect:" + standingUrl + "errorMessage=eMv1at05";
+            redirectAttributes.addFlashAttribute("errorCode", "error_entity_01");
         } catch (Exception ignored) {
-            return "redirect:" + standingUrl + "errorMessage=eMv1at06";
+            redirectAttributes.addFlashAttribute("errorCode", "error_entity_02");
         }
+        return "redirect:" + request.getHeader("Referer");
     }
 }

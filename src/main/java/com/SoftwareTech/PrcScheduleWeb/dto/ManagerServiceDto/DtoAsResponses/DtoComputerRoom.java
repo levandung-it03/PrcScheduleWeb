@@ -1,15 +1,16 @@
-package com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto;
+package com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoAsResponses;
 
 import lombok.*;
 
-@Builder
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class DtoUpdateComputerRoom {
+@Builder
+public class DtoComputerRoom {
+    private String roomId;
     private Integer maxQuantity;
     private Integer maxComputerQuantity;
-    private boolean status;
     private Integer availableComputerQuantity;
+    private boolean status;
 }

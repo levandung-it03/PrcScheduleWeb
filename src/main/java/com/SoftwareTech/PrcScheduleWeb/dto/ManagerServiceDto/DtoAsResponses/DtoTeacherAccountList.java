@@ -1,4 +1,4 @@
-package com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto;
+package com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoAsResponses;
 
 import com.SoftwareTech.PrcScheduleWeb.model.enums.Role;
 import lombok.*;

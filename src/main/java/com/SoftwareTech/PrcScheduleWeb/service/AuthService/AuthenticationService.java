@@ -67,7 +67,7 @@ public class AuthenticationService {
             .build();
     }
 
-    public Cookie custmoizeAcessTokenToServeCookie(String jwtToken) {
+    public Cookie customizeAcessTokenToServeCookie(String jwtToken) {
         byte[] jwtTokenAsBytes = jwtToken.getBytes();
         String encodedJwtToken = Base64.getEncoder().encodeToString(jwtTokenAsBytes);
 

@@ -17,7 +17,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.security.SecureRandom;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -68,22 +67,22 @@ public class ApplicationConfig {
     public Map<String, String> responseMessages() {
         Map<String, String> messagePairs = new HashMap<>();
         //--Successfully messages.
-        messagePairs.put("sMv1at01", "Thêm mới thông tin thành công!");
-        messagePairs.put("sMv1at02", "Xoá thành công!");
-        messagePairs.put("sMv1at03", "Sửa đổi thành công!");
+        messagePairs.put("succeed_add_01", "Thêm mới thông tin thành công!");
+        messagePairs.put("succeed_delete_01", "Xoá thành công!");
+        messagePairs.put("succeed_update_01", "Sửa đổi thành công!");
 
         //--Error messages.
-        messagePairs.put("eMv1at00", "Something wrong with application!");
-        messagePairs.put("eMv1at01", "Email không tồn tại!");
-        messagePairs.put("eMv1at02", "Mật khẩu không đúng!");
-        messagePairs.put("eMv1at03", "Email đã tồn tại!");
-        messagePairs.put("eMv1at04", "Đã tồn tại mã phòng tại khu vực bạn chọn!");
-        messagePairs.put("eMv1at05", "Phòng thực hành không tồn tại!");
-        messagePairs.put("eMv1at06", "Trường dữ liệu không thể xoá, thay vào đó hãy đổi trạng thái để bảo toàn dữ liệu!");
-        messagePairs.put("eMv1at07", "Mã giảng viên không tồn tại!");
-        messagePairs.put("eMv1at08", "Mã tài khoản không tồn tại!");
-        messagePairs.put("eMv1at09", "Thông tin không đúng, hãy kiểm tra lại!");
-        messagePairs.put("eMv1at10", "Mã yêu cầu không tồn tại!");
+        messagePairs.put("error_systemApplication_01", "Something wrong with application!");
+
+        messagePairs.put("error_entity_01", "Không tìm thấy ID của đối tượng, vui lòng không sửa đổi phần mềm!");
+        messagePairs.put("error_entity_02", "Trường dữ liệu không thể xoá, thay vào đó hãy đổi trạng thái để bảo toàn dữ liệu!");
+        messagePairs.put("error_entity_03", "Dữ liệu không hợp lệ, hãy kiểm tra lại!");
+
+        messagePairs.put("error_account_01", "Email không đúng!");
+        messagePairs.put("error_account_02", "Email đã tồn tại!");
+        messagePairs.put("error_account_03", "Mật khẩu không đúng!");
+
+        messagePairs.put("error_computerRoom_02", "Đã tồn tại mã phòng tại khu vực bạn chọn!");
         return messagePairs;
     }
 }

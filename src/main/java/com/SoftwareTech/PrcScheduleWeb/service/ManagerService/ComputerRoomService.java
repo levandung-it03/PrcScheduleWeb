@@ -1,7 +1,7 @@
 package com.SoftwareTech.PrcScheduleWeb.service.ManagerService;
 
-import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoAddComputerRoom;
-import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoUpdateComputerRoom;
+import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoAsRequests.DtoAddComputerRoom;
+import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoAsRequests.DtoUpdateComputerRoom;
 import com.SoftwareTech.PrcScheduleWeb.model.Classroom;
 import com.SoftwareTech.PrcScheduleWeb.model.ComputerRoomDetail;
 import com.SoftwareTech.PrcScheduleWeb.model.enums.RoomType;
@@ -15,7 +15,6 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 import java.util.NoSuchElementException;
-import java.util.regex.Pattern;
 
 @Service
 @RequiredArgsConstructor
@@ -28,20 +27,6 @@ public class ComputerRoomService {
     @Transactional(rollbackOn = {Exception.class})
     public void addComputerRoom(DtoAddComputerRoom roomObject) {
         final String area = roomObject.getArea().trim().toUpperCase();
-
-        if (!Pattern.compile("^[A-Z]$").matcher(area).matches()
-            || roomObject.getRoomCode() == null
-            || roomObject.getMaxComputerQuantity() == null
-            || roomObject.getRoomCode() <= 0
-            || roomObject.getRoomCode() >= 100
-            || roomObject.getMaxQuantity() <= 0
-            || roomObject.getMaxQuantity() >= 1000
-            || roomObject.getMaxComputerQuantity() <= 0
-            || roomObject.getMaxComputerQuantity() >= 1000
-        ) {
-            throw new IllegalStateException("Invalid input data");
-        }
-
         final String inpComputerRoom = String.format("2%s%s", area, roomObject.getRoomCode());
 
         //--Query result will be ignored because it belongs to validate.
@@ -64,7 +49,11 @@ public class ComputerRoomService {
             .build());
     }
 
+    @Transactional(rollbackOn = {Exception.class})
     public void updateComputerRoom(DtoUpdateComputerRoom roomInp, HttpServletRequest request) {
+        if (roomInp.getAvailableComputerQuantity() > roomInp.getMaxComputerQuantity())
+            throw new IllegalStateException("Available quantity must be least than maximum quantity.");
+
         final String roomCode = request.getParameter("roomId");
         Classroom practiceRoom = classroomRepository
             .findById(roomCode)
@@ -91,10 +80,10 @@ public class ComputerRoomService {
     public void deleteComputerRoom(String roomId) {
         final Classroom foundComputerRoom = classroomRepository
             .findById(roomId)
-            .orElseThrow();
+            .orElseThrow(() -> new NoSuchElementException("Classroom not found!"));
         final ComputerRoomDetail computerRoomDetail = computerRoomDetailRepository
             .findByRoomId(roomId)
-            .orElseThrow();
+            .orElseThrow(() -> new NoSuchElementException("Computer Room Detail Id of Classroom not found!"));
 
         //--Delete both ComputerRoomDetail and Classroom.
         computerRoomDetailRepository.deleteById(computerRoomDetail.getComputerRoomDetailId());

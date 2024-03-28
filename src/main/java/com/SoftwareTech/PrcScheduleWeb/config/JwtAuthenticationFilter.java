@@ -96,7 +96,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 authenticationToken.setDetails(
                     new WebAuthenticationDetailsSource().buildDetails(request)
                 );
-                //--Tell Spring that Authentication was passed (Token is valid -> this is user) in the whole Context.
+                //--Set the Authenticated User into Security Context of Spring App to use in everywhere.
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             }
             //--Clear all invalid Token inside Cookies.

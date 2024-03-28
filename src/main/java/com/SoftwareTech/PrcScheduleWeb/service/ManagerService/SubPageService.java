@@ -1,16 +1,20 @@
 package com.SoftwareTech.PrcScheduleWeb.service.ManagerService;
 
 import com.SoftwareTech.PrcScheduleWeb.config.StaticUtilMethods;
-import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.*;
+import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoAsRequests.DtoUpdateTeacher;
+import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoAsRequests.DtoUpdateTeacherAccount;
+import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoAsResponses.DtoComputerRoom;
+import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoAsResponses.DtoPracticeSchedule;
+import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoAsResponses.DtoSubjectSchedule;
 import com.SoftwareTech.PrcScheduleWeb.model.*;
 import com.SoftwareTech.PrcScheduleWeb.model.enums.Role;
-import com.SoftwareTech.PrcScheduleWeb.model.enums.RoomType;
 import com.SoftwareTech.PrcScheduleWeb.repository.*;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AuthorizationServiceException;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.sql.SQLException;
@@ -41,8 +45,9 @@ public class SubPageService {
 
     public ModelAndView getUpdateComputerRoomPage(HttpServletRequest request) {
         final String roomId = request.getParameter("roomId");
-        ModelAndView modelAndView = staticUtilMethods.customResponseModelView(request, "update-computer-room");
+        ModelAndView modelAndView = new ModelAndView("update-computer-room");
 
+        //--Serve reload-page action on update-page (update-page doesn't have updated id on the URL bar).
         if (roomId == null)
             throw new NullPointerException("Computer Room Code is Null, so redirecting back to Computer Room List");
 
@@ -67,8 +72,9 @@ public class SubPageService {
 
     public ModelAndView getUpdateTeacherPage(HttpServletRequest request) {
         final String teacherId = request.getParameter("teacherId");
-        ModelAndView modelAndView = staticUtilMethods.customResponseModelView(request, "update-teacher");
+        ModelAndView modelAndView = new ModelAndView("update-teacher");
 
+        //--Serve reload-page action on update-page (update-page doesn't have updated id on the URL bar).
         if (teacherId == null)
             throw new NullPointerException("Teacher Id is Null, so redirecting back to Teacher List");
 
@@ -85,7 +91,7 @@ public class SubPageService {
             .lastName(updatedTeacher.getLastName())
             .firstName(updatedTeacher.getFirstName())
             .birthday(updatedTeacher.getBirthday())
-            .gender(updatedTeacher.getGender())
+            .gender(updatedTeacher.getGender().toString())
             .departmentId(updatedTeacher.getDepartment().getDepartmentId())
             .phone(updatedTeacher.getPhone())
             .build();
@@ -98,8 +104,9 @@ public class SubPageService {
 
     public ModelAndView getUpdateTeacherAccountPage(HttpServletRequest request) {
         final String accountId = request.getParameter("accountId");
-        ModelAndView modelAndView = staticUtilMethods.customResponseModelView(request, "update-teacher-account");
+        ModelAndView modelAndView = new ModelAndView("update-teacher-account");
 
+        //--Serve reload-page action on update-page (update-page doesn't have updated id on the URL bar).
         if (accountId == null)
             throw new NullPointerException("Account Id is Null, so redirecting back to Teacher Account List");
 
@@ -123,9 +130,6 @@ public class SubPageService {
         final String requestId = request.getParameter("requestId");
         ModelAndView modelAndView = new ModelAndView("teacher-request-detail");
 
-        if (requestId == null)
-            throw new NullPointerException("Request Id is Null, so redirecting back to Teacher Request List");
-
         TeacherRequest teacherRequest = teacherRequestRepository
             .findById(Long.parseLong(requestId))
             .orElseThrow(() -> new NoSuchElementException("Request Id not found"));
@@ -134,9 +138,9 @@ public class SubPageService {
         return modelAndView;
     }
 
-    public ModelAndView getAddPracticeSchedulePage(HttpServletRequest request) throws SQLException {
+    public ModelAndView getAddPracticeSchedulePage(HttpServletRequest request, Model model) throws SQLException {
         final String requestId = request.getParameter("requestId");
-        ModelAndView modelAndView = staticUtilMethods.customResponseModelView(request, "add-practice-schedule");
+        ModelAndView modelAndView = staticUtilMethods.customResponseModelView(model.asMap(), "add-practice-schedule");
 
         if (requestId == null)
             throw new NullPointerException("Request Id is Null, so redirecting back to Teacher Request List");

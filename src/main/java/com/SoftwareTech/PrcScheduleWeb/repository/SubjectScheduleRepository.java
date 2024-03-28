@@ -1,7 +1,7 @@
 package com.SoftwareTech.PrcScheduleWeb.repository;
 
-import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoPracticeSchedule;
-import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoSubjectSchedule;
+import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoAsResponses.DtoPracticeSchedule;
+import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoAsResponses.DtoSubjectSchedule;
 import com.SoftwareTech.PrcScheduleWeb.model.SubjectSchedule;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

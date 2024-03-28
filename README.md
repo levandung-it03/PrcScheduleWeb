@@ -78,13 +78,13 @@
   If: AccessToken is invalid
   GET [Redirect] /public/login
   
-  If: Email is invalid (eMv1at01)
-  If: Password is invalid or RetypePassword and Passowrd is not similar (eMv1at02)
-  If: Email is already existing (eMv1at03)
+  If: Email is invalid (error_account_01)
+  If: Password is invalid or RetypePassword and Passowrd is not similar (error_account_03)
+  If: Email is already existing (error_account_02)
   GET [Redirect] [MANAGER] /manager/category/teacher/add-teacher-account?errorMessage=<err_code>
 
   Else: All condition is valid
-  GET [Redirect] [MANAGER] /manager/category/teacher/add-teacher-account?succeedMessage=sMv1at01
+  GET [Redirect] [MANAGER] /manager/category/teacher/add-teacher-account?succeedMessage=succeed_add_01
   ```
 - Teacher Account List Page (on Category):
   - Main List Page:
@@ -102,9 +102,9 @@
   GET [Redirect] /public/login
   
   If: <accountId> is Null (empty)
-  If: <accountId> not found (eMv1at08)
-  If: <accountId> is a Manager (eMv1at00)
-  If: There's an error in Database session (eMv1at00)
+  If: <accountId> not found (error_entity_01)
+  If: <accountId> is a Manager (error_systemApplication_01)
+  If: There's an error in Database session (error_systemApplication_01)
   GET [Redirect] [MANAGER] /manager/sub-page/teacher/update-teacher-account?page=<page>&errorMessage=<error_code>
   
   Else: All condition is valid
@@ -117,13 +117,13 @@
   If: AccessToken is invalid
   GET [Redirect] /public/login
   
-  If: <accountId> is null (eMv1at08)
-  If: <accountId> and <instituteEmail> data pair not found (eMv1at00)
-  If: There's an error in application (eMv1at00)
+  If: <accountId> is null (error_entity_01)
+  If: <accountId> and <instituteEmail> data pair not found (error_systemApplication_01)
+  If: There's an error in application (error_systemApplication_01)
   GET [Redirect] [MANAGER] /manager/category/teacher/teacher-account-list?page=<page>&errorMessage=<error_code>
   
   Else: All condition is valid
-  GET [Redirect] [MANAGER] /manager/category/teacher/teacher-account-list?page=<page>&succeedMessage=sMv1at03
+  GET [Redirect] [MANAGER] /manager/category/teacher/teacher-account-list?page=<page>&succeedMessage=succeed_update_01
   ```
   - Delete Teacher Account Action - AccountController.deleteTeacherAccount(__deleteBtn__):
   ```Http
@@ -132,12 +132,12 @@
   If: AccessToken is invalid
   GET [Redirect] /public/login
   
-  If: <accountId> not found or not Integer (eMv1at08)
-  If: <accountId> has SQLException (database binding = can't delete) (eMv1at06)
+  If: <accountId> not found or not Integer (error_entity_01)
+  If: <accountId> has SQLException (database binding = can't delete) (error_entity_02)
   GET [Redirect] [MANAGER] /manager/category/teacher/teacher-acocount-list?page=<page>&errorMessage=<error_code>
   
   Else: All condition is valid
-  GET [Redirect] [MANAGER] /manager/category/teacher/teacher-acocount-list?page=<page>&succeedMessage=sMv1at02
+  GET [Redirect] [MANAGER] /manager/category/teacher/teacher-acocount-list?page=<page>&succeedMessage=succeed_delete_01
   ```
 - Teacher List Page (on Category):
   - Main List Page:
@@ -155,9 +155,9 @@
   GET [Redirect] /public/login
   
   If: <accountId> is Null (empty)
-  If: <accountId> not found (eMv1at07)
-  If: <accountId> is a Manager (eMv1at00)
-  If: There's an error in Database session (eMv1at00)
+  If: <accountId> not found (error_entity_01)
+  If: <accountId> is a Manager (error_systemApplication_01)
+  If: There's an error in Database session (error_systemApplication_01)
   GET [Redirect] [MANAGER] /manager/sub-page/teacher/update-teacher?page=<page>&errorMessage=<error_code>
   
   Else: All condition is valid
@@ -171,11 +171,11 @@
   GET [Redirect] /public/login
   
   If: data is invalid
-  GET [Regirect] [MANAGER] /manager/sub-page/update-teacher?teacherid=<teacherId>&errorMessage=eMv1at09
+  GET [Regirect] [MANAGER] /manager/sub-page/update-teacher?teacherid=<teacherId>&errorMessage=error_entity_03
   
   Notice: <teacherId> is always a MANAGER because of Teacher.findByTeacherIdAndInstituteEmail(...) 
-  If: <teacherId> and <instituteEmail> data pair not found (eMv1at00)
-  If: There's an error in Database session (eMv1at00)
+  If: <teacherId> and <instituteEmail> data pair not found (error_systemApplication_01)
+  If: There's an error in Database session (error_systemApplication_01)
   GET [Redirect] [MANAGER] /manager/sub-page/teacher/update-teacher?page=<page>&errorMessage=<error_code>
   
   Else: All condition is valid
@@ -194,13 +194,13 @@
   - Add Computer Room Action - ComputerRoomController.addComputerRoom(__DtoAddComputerRoom__):
   ```Http
   POST [MANAGER] /service/v1/manager/add-computer-room
-  If: Data is invalid (eMv1at09)
-  If: Computer Room is already exsisting (eMv1at04)
-  If: There's a wierd error (eMv1at00)
+  If: Data is invalid (error_entity_03)
+  If: Computer Room is already exsisting (error_computerRoom_02)
+  If: There's a wierd error (error_systemApplication_01)
   GET [Redirect] [MANAGER] /manager/category/computer-room/add-computer-room?errorMessage=<error_code>
   
   Else: All condition is valid
-  GET [Redirect] [MANAGER] /manager/category/computer-room/add-computer-room?succeedMessage=sMv1at01
+  GET [Redirect] [MANAGER] /manager/category/computer-room/add-computer-room?succeedMessage=succeed_add_01
   ```
 - Computer Room List Page (on Category) - List<DtoComputerRoom>:
   - Main List Page:
@@ -218,8 +218,8 @@
   GET [Redirect] /public/login
   
   If: <roomId> is Null (empty)
-  If: <roomId> not found (eMv1at05)
-  If: There's an error in Database session (eMv1at00)
+  If: <roomId> not found (error_entity_01)
+  If: There's an error in Database session (error_systemApplication_01)
   GET [Redirect] [MANAGER] /manager/category/computer-room/computer-room-list?page=<page>&errorMessage=<error_code>
   
   Else: All condition is valid
@@ -232,12 +232,12 @@
   If: AccessToken is invalid
   GET [Redirect] /public/login
   
-  If: <roomId> not found (eMv1at05)
-  If: There's an error in application (eMv1at00)
+  If: <roomId> not found (error_entity_01)
+  If: There's an error in application (error_systemApplication_01)
   GET [Redirect] [MANAGER] /manager/category/computer-room/computer-room-list?page=<page>&errorMessage=<error_code>
   
   Else: All condition is valid
-  GET [Redirect] [MANAGER] /manager/category/computer-room/computer-room-list?page=<page>&succeedMessage=sMv1at03
+  GET [Redirect] [MANAGER] /manager/category/computer-room/computer-room-list?page=<page>&succeedMessage=succeed_update_01
   ```
   - Delete Computer Room Action - ComputerRoomController.deleteComputerRoom(__deleteBtn__):
   ```Http
@@ -246,10 +246,10 @@
   If: AccessToken is invalid
   GET [Redirect] /public/login
   
-  If: <roomId> not found or not Integer (eMv1at05)
-  If: <roomId> has SQLException (database binding = can't delete) (eMv1at06)
+  If: <roomId> not found or not Integer (error_entity_01)
+  If: <roomId> has SQLException (database binding = can't delete) (error_entity_02)
   GET [Redirect] [MANAGER] /manager/category/computer-room/computer-room-list?page=<page>&errorMessage=<error_code>
   
   Else: All condition is valid
-  GET [Redirect] [MANAGER] /manager/category/computer-room/computer-room-list?page=<page>&succeedMessage=sMv1at02
+  GET [Redirect] [MANAGER] /manager/category/computer-room/computer-room-list?page=<page>&succeedMessage=succeed_delete_01
   ```

@@ -31,8 +31,8 @@ public class CategoryController {
     }
 
     @RequestMapping(value = "/computer-room/computer-room-list", method = GET)
-    public ModelAndView getComputerRoomListPage(HttpServletRequest request) {
-        return categoryService.getComputerRoomListPage(request);
+    public ModelAndView getComputerRoomListPage(HttpServletRequest request, Model model) {
+        return categoryService.getComputerRoomListPage(request, model);
     }
 
     /*******************Teacher_Pages_on_Category*******************/
@@ -42,13 +42,13 @@ public class CategoryController {
     }
 
     @RequestMapping(value = "/teacher/teacher-list", method = GET)
-    public ModelAndView getDefaultTeacherListPage(HttpServletRequest request) {
-        return categoryService.getTeacherListPage(request);
+    public ModelAndView getDefaultTeacherListPage(HttpServletRequest request, Model model) {
+        return categoryService.getTeacherListPage(request, model);
     }
 
     @RequestMapping(value = "/teacher/teacher-account-list", method = GET)
-    public ModelAndView getTeacherAccountListPage(HttpServletRequest request) {
-        return categoryService.getTeacherAccountListPage(request);
+    public ModelAndView getTeacherAccountListPage(HttpServletRequest request, Model model) {
+        return categoryService.getTeacherAccountListPage(request, model);
     }
 
 }

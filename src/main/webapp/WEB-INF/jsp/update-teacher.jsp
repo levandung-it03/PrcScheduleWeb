@@ -16,14 +16,18 @@
 <body>
     <%@ include file="/WEB-INF/jsp/category.jsp" %>
     <div id="center-page" id="add-computer-room-page">
-        <div class="error-service-message" ${errorMessage == "none" ? "style='display:none'" : "style='display:flex'"}>
-            <span>${errorMessage}</span>
-            <i id="error-service-message_close-btn" class="fa fa-times-circle" aria-hidden="true"></i>
-        </div>
-        <div class="succeed-service-message" ${succeedMessage == "none" ? "style='display:none'" : "style='display:flex'"}>
-            <span>${succeedMessage}</span>
-            <i id="succeed-service-message_close-btn" class="fa fa-times-circle" aria-hidden="true"></i>
-        </div>
+        <c:if test="${errorMessage != null}">
+            <div class="error-service-message">
+                <span>${errorMessage}</span>
+                <i id="error-service-message_close-btn" class="fa fa-times-circle" aria-hidden="true"></i>
+            </div>
+        </c:if>
+        <c:if test="${succeedMessage != null}">
+            <div class="succeed-service-message">
+                <span>${succeedMessage}</span>
+                <i id="succeed-service-message_close-btn" class="fa fa-times-circle" aria-hidden="true"></i>
+            </div>
+        </c:if>
         <%@ include file="/WEB-INF/jsp/header.jsp" %>
         <form method="POST" action="/service/v1/manager/update-teacher" modelAttribute="teacher">
             <input name="instituteEmail" type="text" value="${teacher.instituteEmail}" hidden/>

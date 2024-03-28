@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.lang.NonNull;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
+import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Calendar;
@@ -25,16 +26,16 @@ public class StaticUtilMethods {
     private final UserDetailsService userDetailsService;
 
     /**Spring MVC: Customize returned ModelAndView to show ErrMessage or SucceedMessages.**/
-    public ModelAndView customResponseModelView(@NonNull HttpServletRequest request, String model) {
-        String errCode = request.getParameter("errorMessage");
-        String errMess = (errCode == null) ? "none" : responseMessages.get(errCode);
+    public ModelAndView customResponseModelView(@NonNull Map<String, Object> model, String pageModel) {
+        ModelAndView modelAndView = new ModelAndView(pageModel);
 
-        String succeedCode = request.getParameter("succeedMessage");
-        String succeedMess = (succeedCode == null) ? "none" : responseMessages.get(succeedCode);
+        Object errCode = model.get("errorCode");
+        if (errCode != null)
+            modelAndView.addObject("errorMessage", responseMessages.get(errCode.toString()));
 
-        ModelAndView modelAndView = new ModelAndView(model);
-        modelAndView.addObject("errorMessage", errMess);
-        modelAndView.addObject("succeedMessage", succeedMess);
+        Object succeedCode = model.get("succeedCode");
+        if (succeedCode != null)
+            modelAndView.addObject("succeedMessage", responseMessages.get(succeedCode.toString()));
 
         return modelAndView;
     }

@@ -2,7 +2,7 @@ package com.SoftwareTech.PrcScheduleWeb.service.ManagerService;
 
 import com.SoftwareTech.PrcScheduleWeb.config.StaticUtilMethods;
 import com.SoftwareTech.PrcScheduleWeb.dto.AuthDto.DtoRegisterAccount;
-import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoAddComputerRoom;
+import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoAsRequests.DtoAddComputerRoom;
 import com.SoftwareTech.PrcScheduleWeb.repository.AccountRepository;
 import com.SoftwareTech.PrcScheduleWeb.repository.ClassroomRepository;
 import com.SoftwareTech.PrcScheduleWeb.repository.TeacherRepository;
@@ -30,7 +30,7 @@ public class CategoryService {
     private final TeacherRequestRepository teacherRequestRepository;
 
     public ModelAndView getAddTeacherAccountPage(HttpServletRequest request, Model model) {
-        ModelAndView modelAndView = staticUtilMethods.customResponseModelView(request, "add-account");
+        ModelAndView modelAndView = staticUtilMethods.customResponseModelView(model.asMap(), "add-account");
 
         //--Refill data form after an error occurs.
         DtoRegisterAccount registerObject = (DtoRegisterAccount) model.asMap().get("registerObject");
@@ -41,7 +41,7 @@ public class CategoryService {
     }
 
     public ModelAndView getAddComputerRoomPage(HttpServletRequest request, Model model) {
-        ModelAndView modelAndView = staticUtilMethods.customResponseModelView(request, "add-computer-room");
+        ModelAndView modelAndView = staticUtilMethods.customResponseModelView(model.asMap(), "add-computer-room");
 
         //--Refill data form after an error occurs.
         DtoAddComputerRoom roomObject = (DtoAddComputerRoom) model.asMap().get("roomObject");
@@ -51,8 +51,8 @@ public class CategoryService {
         return modelAndView;
     }
 
-    public ModelAndView getComputerRoomListPage(HttpServletRequest request) {
-        ModelAndView modelAndView = staticUtilMethods.customResponseModelView(request, "computer-room-list");
+    public ModelAndView getComputerRoomListPage(HttpServletRequest request, Model model) {
+        ModelAndView modelAndView = staticUtilMethods.customResponseModelView(model.asMap(), "computer-room-list");
         PageRequest pageRequest = staticUtilMethods.getPageRequest(request);
 
         modelAndView.addObject("currentPage", pageRequest.getPageNumber() + 1);
@@ -61,8 +61,8 @@ public class CategoryService {
         return modelAndView;
     }
 
-    public ModelAndView getTeacherListPage(HttpServletRequest request) {
-        ModelAndView modelAndView = staticUtilMethods.customResponseModelView(request, "teacher-list");
+    public ModelAndView getTeacherListPage(HttpServletRequest request, Model model) {
+        ModelAndView modelAndView = staticUtilMethods.customResponseModelView(model.asMap(), "teacher-list");
         PageRequest pageRequest = staticUtilMethods.getPageRequest(request);
 
         modelAndView.addObject("currentPage", pageRequest.getPageNumber() + 1);
@@ -71,8 +71,8 @@ public class CategoryService {
         return modelAndView;
     }
 
-    public ModelAndView getTeacherAccountListPage(HttpServletRequest request) {
-        ModelAndView modelAndView = staticUtilMethods.customResponseModelView(request, "teacher-account-list");
+    public ModelAndView getTeacherAccountListPage(HttpServletRequest request, Model model) {
+        ModelAndView modelAndView = staticUtilMethods.customResponseModelView(model.asMap(), "teacher-account-list");
         PageRequest pageRequest = staticUtilMethods.getPageRequest(request);
 
         modelAndView.addObject("currentPage", pageRequest.getPageNumber() + 1);
@@ -82,7 +82,7 @@ public class CategoryService {
     }
 
     public ModelAndView getTeacherRequestListPage(HttpServletRequest request, Model model) {
-        ModelAndView modelAndView = staticUtilMethods.customResponseModelView(request, "teacher-request-list");
+        ModelAndView modelAndView = staticUtilMethods.customResponseModelView(model.asMap(), "teacher-request-list");
         PageRequest pageRequest = staticUtilMethods.getPageRequest(request);
 
         modelAndView.addObject("currentPage", pageRequest.getPageNumber() + 1);
