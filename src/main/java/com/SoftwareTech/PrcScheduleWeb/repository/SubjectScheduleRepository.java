@@ -1,7 +1,7 @@
 package com.SoftwareTech.PrcScheduleWeb.repository;
 
-import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoAsResponses.DtoPracticeSchedule;
-import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoAsResponses.DtoSubjectSchedule;
+import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.ResDtoPracticeSchedule;
+import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.ResDtoSubjectSchedule;
 import com.SoftwareTech.PrcScheduleWeb.model.SubjectSchedule;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -37,24 +37,24 @@ public interface SubjectScheduleRepository extends JpaRepository<SubjectSchedule
      * maintainable and avoid auto-creating JOIN query.
      */
     @Query("""
-        SELECT DISTINCT new com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoSubjectSchedule(
+        SELECT DISTINCT new com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.ResDtoSubjectSchedule(
             s.sectionClass.subject.subjectName, s.day, s.startingWeek, s.totalWeek, s.startingPeriod, s.lastPeriod,
             s.classroom.roomId
         ) FROM SubjectSchedule s
         WHERE (s.sectionClass.semester.semesterId = :semesterId AND s.teacher.teacherId = :teacherId)
         OR  (s.sectionClass.semester.semesterId = :semesterId AND s.sectionClass.grade.gradeId = :gradeId)
     """)
-    List<DtoSubjectSchedule> findAllScheduleByTeacherRequest(
+    List<ResDtoSubjectSchedule> findAllScheduleByTeacherRequest(
         @Param("semesterId") Long semesterId,
         @Param("teacherId") String teacherId,
         @Param("gradeId") String gradeId
     ) throws SQLException;
 
     @Query("""
-        SELECT new com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoPracticeSchedule(
+        SELECT new com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.ResDtoPracticeSchedule(
             s.day, s.startingWeek, s.totalWeek, s.startingPeriod, s.lastPeriod, s.classroom.roomId
         ) FROM SubjectSchedule s
         WHERE s.sectionClass.semester.semesterId = :semesterId AND s.classroom.Id = 'PRC'
         """)
-    List<DtoPracticeSchedule> findAllPracticeScheduleInCurrentSemester(@Param("semesterId") Long semesterId);
+    List<ResDtoPracticeSchedule> findAllPracticeScheduleInCurrentSemester(@Param("semesterId") Long semesterId);
 }

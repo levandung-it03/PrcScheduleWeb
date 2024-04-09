@@ -1,7 +1,6 @@
 package com.SoftwareTech.PrcScheduleWeb.repository;
 
-import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoAsResponses.DtoTeacherAccountList;
-import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoAsRequests.DtoUpdateTeacherAccount;
+import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.ResDtoTeacherAccountList;
 import com.SoftwareTech.PrcScheduleWeb.model.Account;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,13 +16,13 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
     Optional<Account> findByInstituteEmail(String instituteEmail);
 
     @Query("""
-        SELECT new com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoTeacherAccountList(
+        SELECT new com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.ResDtoTeacherAccountList(
             a.accountId, a.instituteEmail, a.creatingTime, a.role, a.status, t.teacherId
         ) FROM Teacher t
         RIGHT JOIN t.account a
         WHERE a.role = 'TEACHER'
     """)
-    List<DtoTeacherAccountList> findAllInSpecifiedPage(PageRequest pageRequest);
+    List<ResDtoTeacherAccountList> findAllInSpecifiedPage(PageRequest pageRequest);
 
     @Query("SELECT a FROM Account a WHERE a.accountId = :accountId AND a.instituteEmail = :instituteEmail")
     Optional<Account> findByAccountIdAndInstituteEmail(

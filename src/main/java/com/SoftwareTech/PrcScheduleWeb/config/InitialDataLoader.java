@@ -12,8 +12,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.sql.Date;
-import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Component
@@ -50,21 +50,21 @@ public class InitialDataLoader implements CommandLineRunner {
             accountRepository.saveAll(List.of(
                 Account.builder()
                     .status(true)
-                    .creatingTime(new Timestamp(System.currentTimeMillis()))
+                    .creatingTime(LocalDateTime.now())
                     .instituteEmail("manager0@ptithcm.edu.vn")
                     .password("$2a$12$dzSEHUe6lixG0EkEzrcQfuV18XLaZpvDvF9apXe9.9PigXDgGw9p.")
                     .role(Role.MANAGER)
                     .build(),
                 Account.builder()
                     .status(true)
-                    .creatingTime(new Timestamp(System.currentTimeMillis()))
+                    .creatingTime(LocalDateTime.now())
                     .instituteEmail("giangvien0@ptithcm.edu.vn")
                     .password("$2a$12$dzSEHUe6lixG0EkEzrcQfuV18XLaZpvDvF9apXe9.9PigXDgGw9p.")
                     .role(Role.TEACHER)
                     .build(),
                 Account.builder()
                     .status(true)
-                    .creatingTime(new Timestamp(System.currentTimeMillis()))
+                    .creatingTime(LocalDateTime.now())
                     .instituteEmail("giangvien1@ptithcm.edu.vn")
                     .password("$2a$12$dzSEHUe6lixG0EkEzrcQfuV18XLaZpvDvF9apXe9.9PigXDgGw9p.")
                     .role(Role.TEACHER)

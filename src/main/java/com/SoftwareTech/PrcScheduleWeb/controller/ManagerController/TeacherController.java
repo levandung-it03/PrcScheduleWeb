@@ -1,6 +1,6 @@
 package com.SoftwareTech.PrcScheduleWeb.controller.ManagerController;
 
-import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoAsRequests.DtoUpdateTeacher;
+import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.ReqDtoUpdateTeacher;
 import com.SoftwareTech.PrcScheduleWeb.service.ManagerService.TeacherService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -25,7 +25,7 @@ public class TeacherController {
 
     @RequestMapping(value = "/update-teacher", method = POST)
     public String updateTeacherInfo(
-        @Valid @ModelAttribute("teacher") DtoUpdateTeacher teacher,
+        @Valid @ModelAttribute("teacher") ReqDtoUpdateTeacher teacher,
         HttpServletRequest request,
         RedirectAttributes redirectAttributes,
         BindingResult bindingResult
@@ -43,7 +43,7 @@ public class TeacherController {
         } catch (IllegalArgumentException | NoSuchElementException ignored) {
             redirectAttributes.addFlashAttribute("errorCode", "error_entity_01");
         } catch (Exception ignored) {
-            redirectAttributes.addFlashAttribute("errorCode", "error_systemApplication_01");
+//            redirectAttributes.addFlashAttribute("errorCode", "error_systemApplication_01");
         }
         return "redirect:" + redirectedUrl;
     }

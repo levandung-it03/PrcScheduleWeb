@@ -132,6 +132,7 @@ body {
 .form-input .password_toggle-hidden>.hidden {
     display: none;
 }
+form span#submit,
 form input[type=submit] {
     display: block;
     width: 100%;
@@ -142,6 +143,7 @@ form input[type=submit] {
     transition: background-color ease 0.2s;
     transition: border-radius ease 0.3s;
 }
+form span#submit:hover,
 form input[type=submit]:hover {
     cursor: pointer;
     border-radius: 22px;

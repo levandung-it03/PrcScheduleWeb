@@ -1,18 +1,18 @@
-package com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoAsRequests;
+package com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.*;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class DtoUpdateTeacherAccount {
+public class ReqDtoUpdateTeacherAccount {
     @NotNull(message = "error_entity_01")
     private Long accountId;
 
@@ -22,7 +22,7 @@ public class DtoUpdateTeacherAccount {
     private String instituteEmail;
 
     @NotNull(message = "error_entity_03")
-    private Timestamp creatingTime;
+    private LocalDateTime creatingTime;
 
     @NotNull(message = "error_entity_03")
     private boolean status;

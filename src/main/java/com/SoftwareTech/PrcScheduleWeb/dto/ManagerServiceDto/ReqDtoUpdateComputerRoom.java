@@ -1,4 +1,4 @@
-package com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoAsRequests;
+package com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -10,7 +10,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class DtoUpdateComputerRoom {
+public class ReqDtoUpdateComputerRoom {
     @NotNull(message = "error_entity_03")
     @Min(value = 0, message = "error_entity_03")
     @Max(value = 1000, message = "error_entity_03")

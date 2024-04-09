@@ -56,7 +56,7 @@
                     <i id="retypePassword" class="hide-pass hidden fa-regular fa-eye-slash"></i>
                 </div>
             </div>
-            <input type="submit" value="Xác nhận">
+            <input type="submit" value="Xác nhận"/>
         </form>
     </div>
     <script type="application/javascript" src="${pageContext.request.contextPath}/js/base.js"></script>

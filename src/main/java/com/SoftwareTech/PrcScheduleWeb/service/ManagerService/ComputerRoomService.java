@@ -1,7 +1,7 @@
 package com.SoftwareTech.PrcScheduleWeb.service.ManagerService;
 
-import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoAsRequests.DtoAddComputerRoom;
-import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoAsRequests.DtoUpdateComputerRoom;
+import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.ReqDtoAddComputerRoom;
+import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.ReqDtoUpdateComputerRoom;
 import com.SoftwareTech.PrcScheduleWeb.model.Classroom;
 import com.SoftwareTech.PrcScheduleWeb.model.ComputerRoomDetail;
 import com.SoftwareTech.PrcScheduleWeb.model.enums.RoomType;
@@ -15,6 +15,7 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -25,13 +26,20 @@ public class ComputerRoomService {
     private final ComputerRoomDetailRepository computerRoomDetailRepository;
 
     @Transactional(rollbackOn = {Exception.class})
-    public void addComputerRoom(DtoAddComputerRoom roomObject) {
+    public void addComputerRoom(ReqDtoAddComputerRoom roomObject) {
         final String area = roomObject.getArea().trim().toUpperCase();
         final String inpComputerRoom = String.format("2%s%s", area, roomObject.getRoomCode());
 
         //--Query result will be ignored because it belongs to validate.
-        if (classroomRepository.findById(inpComputerRoom).isPresent())
-            throw new DuplicateKeyException("Computer Room is already existed");
+        Optional<Classroom> classroom = classroomRepository.findById(inpComputerRoom);
+        if (classroom.isPresent()) {
+            if (classroom.get().getRoomType().equals(RoomType.NORM)) {
+                throw new DuplicateKeyException("error_computerRoom_01");
+            }
+            else {
+                throw new DuplicateKeyException("error_computerRoom_02");
+            }
+        }
 
         //--Preparing added data.
         Classroom practiceRoom = Classroom.builder()
@@ -50,7 +58,7 @@ public class ComputerRoomService {
     }
 
     @Transactional(rollbackOn = {Exception.class})
-    public void updateComputerRoom(DtoUpdateComputerRoom roomInp, HttpServletRequest request) {
+    public void updateComputerRoom(ReqDtoUpdateComputerRoom roomInp, HttpServletRequest request) {
         if (roomInp.getAvailableComputerQuantity() > roomInp.getMaxComputerQuantity())
             throw new IllegalStateException("Available quantity must be least than maximum quantity.");
 

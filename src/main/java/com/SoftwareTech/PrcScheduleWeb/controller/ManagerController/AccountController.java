@@ -1,7 +1,7 @@
 package com.SoftwareTech.PrcScheduleWeb.controller.ManagerController;
 
 import com.SoftwareTech.PrcScheduleWeb.dto.AuthDto.DtoRegisterAccount;
-import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoAsRequests.DtoUpdateTeacherAccount;
+import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.ReqDtoUpdateTeacherAccount;
 import com.SoftwareTech.PrcScheduleWeb.service.ManagerService.AccountService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -57,7 +57,7 @@ public class AccountController {
 
     @RequestMapping(value = "/update-teacher-account", method = POST)
     public String updateTeacherAccount(
-        @Valid @ModelAttribute("account") DtoUpdateTeacherAccount account,
+        @Valid @ModelAttribute("account") ReqDtoUpdateTeacherAccount account,
         HttpServletRequest request,
         RedirectAttributes redirectAttributes,
         BindingResult bindingResult

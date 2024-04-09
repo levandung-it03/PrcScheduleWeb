@@ -1,4 +1,3 @@
-let canSubmitForm = false;
 
 (function main() {
     const validatingBlocks = {
@@ -14,9 +13,8 @@ let canSubmitForm = false;
         password: {
             tag: $('input[name=password]'),
             confirm: function (value) {
-                if (value.length < 8) {
-                    this.isValid = false;
-                } else this.isValid = true;
+                this.isValid = value.length >= 8;
+                validatingBlocks.retypePassword.confirm(validatingBlocks.retypePassword.tag.value);
                 return this.isValid;
             },
             errorMessage: "Mật khẩu không đủ dài.",
@@ -25,9 +23,7 @@ let canSubmitForm = false;
         retypePassword: {
             tag: $('input[name=retypePassword]'),
             confirm: function (value) {
-                if (value != $('input[name=password]').value) {
-                    this.isValid = false;
-                } else this.isValid = true;
+                this.isValid = value == validatingBlocks.password.tag.value;
                 return this.isValid;
             },
             errorMessage: "Mật khẩu không chính xác.",

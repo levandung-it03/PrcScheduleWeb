@@ -38,7 +38,7 @@
                     <option value="C">Khu C Học Viện</option>
                     <option value="D">Khu D Học Viện</option>
                     <option value="E">Khu E Học Viện</option>
-                <select>
+                </select>
             </div>
             <div class="form-input" id="roomCode">
                 <label for="roomCode">Nhập mã phòng</label>

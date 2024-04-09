@@ -1,19 +1,19 @@
-package com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoAsResponses;
+package com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto;
 
 import com.SoftwareTech.PrcScheduleWeb.model.enums.Role;
 import lombok.*;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class DtoTeacherAccountList {
+public class ResDtoTeacherAccountList {
     private Long accountId;
     private String instituteEmail;
-    private Timestamp creatingTime;
+    private LocalDateTime creatingTime;
     private Role role;
     private boolean status;
     private String teacherId;

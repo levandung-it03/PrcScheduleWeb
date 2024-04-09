@@ -1,4 +1,4 @@
-package com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoAsResponses;
+package com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto;
 
 import lombok.*;
 
@@ -7,7 +7,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class DtoComputerRoomWithQuantity {
+public class ResDtoComputerRoomWithQuantity {
     private String roomId;
     private Integer maxQuantity;
 }

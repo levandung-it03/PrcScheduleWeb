@@ -50,15 +50,13 @@ public class SubjectSchedule {
     @Column(name = "status_enum", nullable = false, columnDefinition = "BIT DEFAULT 1")
     private boolean status;
 
-    public String[] getDayAsString() {
-        HashMap<Byte, String[]> dayDictionary = new HashMap<>();
-        dayDictionary.put((byte)2, new String[] {"Mo", "Monday"});
-        dayDictionary.put((byte)3, new String[] {"Tu", "Tuesday"});
-        dayDictionary.put((byte)4, new String[] {"We", "Wednesday"});
-        dayDictionary.put((byte)5, new String[] {"Th", "Thursday"});
-        dayDictionary.put((byte)6, new String[] {"Fr", "Friday"});
-        dayDictionary.put((byte)7, new String[] {"Sa", "Saturday"});
-        dayDictionary.put((byte)8, new String[] {"Su", "Sunday"});
-        return dayDictionary.get(this.getDay());
+    public boolean canBeCombined(SubjectSchedule laterSchedule) {
+        return (this.getDay().equals(laterSchedule.getDay())
+            &&  this.getStartingPeriod().equals(laterSchedule.getStartingPeriod())
+            &&  this.getLastPeriod().equals(laterSchedule.getLastPeriod())
+            &&  this.getClassroom().getRoomId().equals(laterSchedule.getClassroom().getRoomId())
+            &&  this.getTeacher().getTeacherId().equals(laterSchedule.getTeacher().getTeacherId())
+            &&  this.getStartingWeek() + this.getTotalWeek() == laterSchedule.getStartingWeek()
+        );
     }
 }

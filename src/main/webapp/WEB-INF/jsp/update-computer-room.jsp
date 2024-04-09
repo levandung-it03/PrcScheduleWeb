@@ -46,7 +46,7 @@
                 <select data="${roomObject.status}" name="status">
                     <option value="true">Còn hoạt động</option>
                     <option value="false">Đã niêm phong</option>
-                <select>
+                </select>
             </div>
             <div class="form-input" id="maxComputerQuantity">
                 <label for="maxComputerQuantity">Nhập số lượng máy tối đa</label>

@@ -1,11 +1,11 @@
 package com.SoftwareTech.PrcScheduleWeb.service.ManagerService;
 
 import com.SoftwareTech.PrcScheduleWeb.config.StaticUtilMethods;
-import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoAsRequests.DtoUpdateTeacher;
-import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoAsRequests.DtoUpdateTeacherAccount;
-import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoAsResponses.DtoComputerRoom;
-import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoAsResponses.DtoPracticeSchedule;
-import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoAsResponses.DtoSubjectSchedule;
+import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.ReqDtoUpdateTeacher;
+import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.ReqDtoUpdateTeacherAccount;
+import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.ResDtoComputerRoom;
+import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.ResDtoPracticeSchedule;
+import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.ResDtoSubjectSchedule;
 import com.SoftwareTech.PrcScheduleWeb.model.*;
 import com.SoftwareTech.PrcScheduleWeb.model.enums.Role;
 import com.SoftwareTech.PrcScheduleWeb.repository.*;
@@ -42,6 +42,8 @@ public class SubPageService {
     private final SubjectScheduleRepository subjectScheduleRepository;
     @Autowired
     private final SubjectRegistrationRepository subjectRegistrationRepository;
+    @Autowired
+    private final PracticeScheduleInteractHistoryRepository scheduleHistoryRepository;
 
     public ModelAndView getUpdateComputerRoomPage(HttpServletRequest request) {
         final String roomId = request.getParameter("roomId");
@@ -58,7 +60,7 @@ public class SubPageService {
             .findByRoomId(roomId)
             .orElseThrow(() -> new NoSuchElementException("Computer Room not found"));
 
-        modelAndView.addObject("roomObject", DtoComputerRoom.builder()
+        modelAndView.addObject("roomObject", ResDtoComputerRoom.builder()
             .roomId(roomId)
             .maxQuantity(computerRoom.getMaxQuantity())
             .maxComputerQuantity(computerRoomDetail.getMaxComputerQuantity())
@@ -85,7 +87,7 @@ public class SubPageService {
         if (updatedTeacher.getAccount().getRole().equals(Role.MANAGER))
             throw new AuthorizationServiceException("Can not update MANAGER info");
 
-        DtoUpdateTeacher teacher = DtoUpdateTeacher.builder()
+        ReqDtoUpdateTeacher teacher = ReqDtoUpdateTeacher.builder()
             .instituteEmail(updatedTeacher.getAccount().getInstituteEmail())
             .teacherId(updatedTeacher.getTeacherId())
             .lastName(updatedTeacher.getLastName())
@@ -117,7 +119,7 @@ public class SubPageService {
         if (account.getRole().equals(Role.MANAGER))
             throw new AuthorizationServiceException("Can not change data of MANAGER account");
 
-        modelAndView.addObject("account", DtoUpdateTeacherAccount.builder()
+        modelAndView.addObject("account", ReqDtoUpdateTeacherAccount.builder()
             .accountId(account.getAccountId())
             .instituteEmail(account.getInstituteEmail())
             .creatingTime(account.getCreatingTime())
@@ -134,7 +136,10 @@ public class SubPageService {
             .findById(Long.parseLong(requestId))
             .orElseThrow(() -> new NoSuchElementException("Request Id not found"));
 
+        List<SubjectSchedule> schedules = scheduleHistoryRepository.findAllSubjectScheduleByTeacherRequestId(requestId);
+
         modelAndView.addObject("teacherRequest", teacherRequest);
+        modelAndView.addObject("practiceSchedules", schedules);
         return modelAndView;
     }
 
@@ -149,14 +154,14 @@ public class SubPageService {
             .findById(Long.parseLong(requestId))
             .orElseThrow(() -> new NoSuchElementException("Request Id not found"));
 
-        List<DtoSubjectSchedule> allSubjectSchedules = subjectScheduleRepository
+        List<ResDtoSubjectSchedule> allSubjectSchedules = subjectScheduleRepository
             .findAllScheduleByTeacherRequest(
                 teacherRequest.getSectionClass().getSemester().getSemesterId(),
                 teacherRequest.getTeacher().getTeacherId(),
                 teacherRequest.getSectionClass().getGrade().getGradeId()
             );
 
-        List<DtoPracticeSchedule> allPrcScheduleInSemester = subjectScheduleRepository
+        List<ResDtoPracticeSchedule> allPrcScheduleInSemester = subjectScheduleRepository
             .findAllPracticeScheduleInCurrentSemester(
                 teacherRequest.getSectionClass().getSemester().getSemesterId()
             );

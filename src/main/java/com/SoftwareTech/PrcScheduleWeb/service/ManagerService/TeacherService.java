@@ -1,6 +1,6 @@
 package com.SoftwareTech.PrcScheduleWeb.service.ManagerService;
 
-import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoAsRequests.DtoUpdateTeacher;
+import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.ReqDtoUpdateTeacher;
 import com.SoftwareTech.PrcScheduleWeb.model.Department;
 import com.SoftwareTech.PrcScheduleWeb.model.Teacher;
 import com.SoftwareTech.PrcScheduleWeb.model.enums.Gender;
@@ -20,7 +20,7 @@ public class TeacherService {
     @Autowired
     private final DepartmentRepository departmentRepository;
 
-    public void updateTeacher(DtoUpdateTeacher teacher) {
+    public void updateTeacher(ReqDtoUpdateTeacher teacher) {
         Teacher oldTeacherInfo = teacherRepository
             .findByTeacherIdAndInstituteEmail(teacher.getTeacherId(), teacher.getInstituteEmail())
             .orElseThrow(() -> new NoSuchElementException("Teacher Id not found"));

@@ -1,6 +1,6 @@
 package com.SoftwareTech.PrcScheduleWeb.repository;
 
-import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoAsResponses.DtoComputerRoom;
+import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.ResDtoComputerRoom;
 import com.SoftwareTech.PrcScheduleWeb.model.Classroom;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,12 +14,12 @@ import java.util.List;
 public interface ClassroomRepository extends JpaRepository<Classroom, String> {
 
     @Query("""
-            SELECT new com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoComputerRoom(
+            SELECT new com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.ResDtoComputerRoom(
                 cl.roomId, cl.maxQuantity, co.maxComputerQuantity, co.availableComputerQuantity, cl.status
             ) FROM ComputerRoomDetail co
             INNER JOIN co.classroom cl
         """)
-    List<DtoComputerRoom> findAllInSpecifiedPage(PageRequest pageRequest);
+    List<ResDtoComputerRoom> findAllInSpecifiedPage(PageRequest pageRequest);
 
     @Query("""
         SELECT cl.roomId FROM Classroom cl

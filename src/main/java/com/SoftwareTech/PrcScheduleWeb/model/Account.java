@@ -7,7 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
@@ -30,7 +30,7 @@ public class Account implements UserDetails {
     private String password;
 
     @Column(name = "creating_time", nullable = false, columnDefinition = "DATETIME DEFAULT (CURRENT_TIMESTAMP())")
-    private Timestamp creatingTime;
+    private LocalDateTime creatingTime;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "role_enum", nullable = false)

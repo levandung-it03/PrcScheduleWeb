@@ -57,7 +57,7 @@
                     <option value="" disabled hidden selected>Chọn giới tính</option>
                     <option value="BOY">Nam</option>
                     <option value="GIRL">Nữ</option>
-                <select>
+                </select>
             </div>
             <div class="form-input" id="departmentId">
                 <label for="departmentId">Khoa giảng viên thuộc</label>
@@ -66,7 +66,7 @@
                     <c:forEach var="department" items="${departmentList}">
                         <option value="${department.departmentId}">${department.departmentId}</option>
                     </c:forEach>
-                <select>
+                </select>
             </div>
             <div class="form-input" id="phone">
                 <label for="phone">Số điện thoại</label>
@@ -74,7 +74,7 @@
                 <div class="form_text-input_err-message"></div>
             </div>
             <input name="pageNumber" value="${pageNumber}" hidden/>
-            <input type="submit" value="Xác nhận">
+            <input type="submit" value="Xác nhận"/>
         </form>
     </div>
     <script type="application/javascript" src="${pageContext.request.contextPath}/js/base.js"></script>

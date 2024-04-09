@@ -1,4 +1,4 @@
-package com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoAsRequests;
+package com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -13,7 +13,7 @@ import java.sql.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class DtoUpdateTeacher {
+public class ReqDtoUpdateTeacher {
     @NotEmpty(message = "error_entity_01")
     private String teacherId;
 

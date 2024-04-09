@@ -1,4 +1,4 @@
-package com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoAsRequests;
+package com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto;
 
 import jakarta.validation.constraints.*;
 import lombok.*;
@@ -8,7 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class DtoAddComputerRoom {
+public class ReqDtoAddComputerRoom {
     @NotEmpty(message = "error_entity_03")
     @Pattern(regexp = "^[A-Z]$", message = "error_entity_03")
     private String area;

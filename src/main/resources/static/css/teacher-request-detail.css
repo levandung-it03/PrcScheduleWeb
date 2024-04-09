@@ -51,3 +51,61 @@ div.detail-block div.detail-block_description {
 div.detail-block div.detail-block_description p {
     padding-left: 10px;
 }
+
+div#practice-schedule form {
+    width: 100%;
+}
+div#practice-schedule form table {
+    width: 100%;
+    border-bottom: 1px var(--grey-of-header-border) solid;
+}
+div#practice-schedule table tbody tr td {
+    height: 40px;
+    padding-top: 5px;
+}
+div#practice-schedule table thead tr > th#startingWeek,
+div#practice-schedule table tbody tr > td.startingWeek {
+    padding-left: 20px;
+}
+div#practice-schedule table thead tr > th#startingWeek,
+div#practice-schedule table tbody tr > td.startingWeek,
+div#practice-schedule table thead tr > th#totalWeek,
+div#practice-schedule table tbody tr > td.totalWeek,
+div#practice-schedule table thead tr > th#day,
+div#practice-schedule table tbody tr > td.day,
+div#practice-schedule table thead tr > th#startingPeriod,
+div#practice-schedule table tbody tr > td.startingPeriod,
+div#practice-schedule table thead tr > th#lastPeriod,
+div#practice-schedule table tbody tr > td.lastPeriod {
+    text-align: start;
+}
+div#practice-schedule table thead tr > th#delete,
+div#practice-schedule table tbody tr > td.delete,
+div#practice-schedule table thead tr > th#roomId,
+div#practice-schedule table tbody tr > td.roomId {
+    text-align: center;
+}
+
+div#practice-schedule table thead tr > th#startingWeek,
+div#practice-schedule table tbody tr > td.startingWeek {
+    width: 24%;
+    padding-left: 4%;
+}
+div#practice-schedule table thead tr > th#totalWeek,
+div#practice-schedule table tbody tr > td.totalWeek,
+div#practice-schedule table thead tr > th#startingPeriod,
+div#practice-schedule table tbody tr > td.startingPeriod,
+div#practice-schedule table thead tr > th#lastPeriod,
+div#practice-schedule table tbody tr > td.lastPeriod {
+    width: 14%;
+}
+div#practice-schedule table thead tr > th#roomId,
+div#practice-schedule table tbody tr > td.roomId {
+    width: 20%;
+}
+div#practice-schedule table thead tr > th#day,
+div#practice-schedule table tbody tr > td.day,
+div#practice-schedule table thead tr > th#delete,
+div#practice-schedule table tbody tr > td.delete {
+    width: 7%;
+}

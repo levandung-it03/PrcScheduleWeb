@@ -41,9 +41,10 @@
                     <select id="search">
                         <option value="" selected disabled hidden>Chọn trường cần tìm</option>
                         <option value="0">Thông tin cơ bản</option>
-                        <option value="1">Tên môn học</option>
-                        <option value="2">Mã lớp mở môn</option>
-                        <option value="3">Tổ</option>
+                        <option value="1">Mã giảng viên</option>
+                        <option value="2">Tên môn học</option>
+                        <option value="3">Mã lớp mở môn</option>
+                        <option value="4">Tổ</option>
                     </select>
                     <input type="text" id="search">
                     <i class="fa-solid fa-magnifying-glass"></i>
@@ -75,7 +76,7 @@
                             </th>
                             <th id="view">Chi tiết</th>
                             <th id="add">Tạo lịch</th>
-                            <th id="delete">Xoá</th>
+                            <th id="delete">Huỷ</th>
                         </tr>
                     </thead>
                     <tbody>

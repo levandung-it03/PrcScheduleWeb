@@ -1,7 +1,7 @@
 package com.SoftwareTech.PrcScheduleWeb.controller.ManagerController;
 
-import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoAsRequests.DtoAddComputerRoom;
-import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoAsRequests.DtoUpdateComputerRoom;
+import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.ReqDtoAddComputerRoom;
+import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.ReqDtoUpdateComputerRoom;
 import com.SoftwareTech.PrcScheduleWeb.service.ManagerService.ComputerRoomService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -26,7 +26,7 @@ public class ComputerRoomController {
 
     @RequestMapping(value = "/add-computer-room", method = POST)
     public String addComputerRoom(
-        @Valid @ModelAttribute("roomObject") DtoAddComputerRoom roomObject,
+        @Valid @ModelAttribute("roomObject") ReqDtoAddComputerRoom roomObject,
         HttpServletRequest request,
         RedirectAttributes redirectAttributes,
         BindingResult bindingResult
@@ -40,9 +40,9 @@ public class ComputerRoomController {
         try {
             computerRoomService.addComputerRoom(roomObject);
             redirectAttributes.addFlashAttribute("succeedCode", "succeed_add_01");
-        } catch (DuplicateKeyException ignored) {
+        } catch (DuplicateKeyException e) {
             redirectAttributes.addFlashAttribute("roomObject", roomObject);
-            redirectAttributes.addFlashAttribute("errorCode", "error_computerRoom_02");
+            redirectAttributes.addFlashAttribute("errorCode", e.getMessage());
         } catch (Exception ignored) {
             redirectAttributes.addFlashAttribute("roomObject", roomObject);
             redirectAttributes.addFlashAttribute("errorCode", "error_systemApplication_01");
@@ -52,7 +52,7 @@ public class ComputerRoomController {
 
     @RequestMapping(value = "/update-computer-room", method = POST)
     public String updateComputerRoom(
-        @Valid @ModelAttribute("roomObject") DtoUpdateComputerRoom roomObject,
+        @Valid @ModelAttribute("roomObject") ReqDtoUpdateComputerRoom roomObject,
         HttpServletRequest request,
         RedirectAttributes redirectAttributes,
         BindingResult bindingResult

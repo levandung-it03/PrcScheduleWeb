@@ -12,9 +12,7 @@
         password: {
             tag: $('input[name=password]'),
             confirm: function (value) {
-                if (value.length < 8) {
-                    this.isValid = false;
-                } else this.isValid = true;
+                this.isValid = value.length >= 8;
                 return this.isValid;
             },
             errorMessage: "Mật khẩu không đủ dài.",

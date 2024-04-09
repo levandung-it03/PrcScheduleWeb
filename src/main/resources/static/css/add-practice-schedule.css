@@ -130,10 +130,12 @@ div#add-schedule-block span#convert-btn:hover {
     background-color: #9fa7ae;
     color: black;
 }
-div#adjust-schedule-block input[type=submit] {
-    padding: 12px 42px;
+div#adjust-schedule-block span#submit {
+    padding: 8px 42px;
     margin: auto;
     margin-top: 30px;
+    font-weight: 100;
+    text-align: center;
 }
 div#adjust-schedule-block table,
 div#add-schedule-block table {
@@ -187,6 +189,10 @@ div#add-schedule-block table thead th.change-schedule-btn {
     background-color: #e4e3e3;
     transition: background-color ease 0.3s;
 }
+div#add-schedule-block table thead th.change-schedule-btn span {
+    width: 100%;
+    padding: 5px 0;
+}
 div#add-schedule-block table thead th.change-schedule-btn:hover {
     background-color: #767676;
     color: white;
@@ -196,23 +202,23 @@ div#adjust-schedule-block table {
     border: 1px solid;
     border-color: transparent var(--grey-of-header-border) var(--grey-of-header-border) var(--grey-of-header-border);
 }
+div#adjust-schedule-block form {
+    width: 100%;
+}
 div#adjust-schedule-block table tbody tr td {
     height: 40px;
     padding-top: 5px;
 }
-div#adjust-schedule-block table tbody tr:hover {
-    background-color: #e6e6e6;
+div#adjust-schedule-block table thead tr > th#week,
+div#adjust-schedule-block table tbody tr > td.week {
+    padding-left: 20px;
 }
-div#adjust-schedule-block table thead tr > th#firstWeek,
-div#adjust-schedule-block table tbody tr > td.firstWeek,
-div#adjust-schedule-block table thead tr > th#totalWeek,
-div#adjust-schedule-block table tbody tr > td.totalWeek,
+div#adjust-schedule-block table thead tr > th#week,
+div#adjust-schedule-block table tbody tr > td.week,
 div#adjust-schedule-block table thead tr > th#day,
 div#adjust-schedule-block table tbody tr > td.day,
-div#adjust-schedule-block table thead tr > th#startingPeriod,
-div#adjust-schedule-block table tbody tr > td.startingPeriod,
-div#adjust-schedule-block table thead tr > th#lastPeriod,
-div#adjust-schedule-block table tbody tr > td.lastPeriod {
+div#adjust-schedule-block table thead tr > th#period,
+div#adjust-schedule-block table tbody tr > td.period {
     text-align: start;
 }
 div#adjust-schedule-block table thead tr > th#delete,
@@ -221,29 +227,19 @@ div#adjust-schedule-block table thead tr > th#roomId,
 div#adjust-schedule-block table tbody tr > td.roomId {
     text-align: center;
 }
-
-div#adjust-schedule-block table thead tr > th#firstWeek,
-div#adjust-schedule-block table tbody tr > td.firstWeek {
-    width: 24%;
-    padding-left: 4%;
-}
-div#adjust-schedule-block table thead tr > th#totalWeek,
-div#adjust-schedule-block table tbody tr > td.totalWeek,
-div#adjust-schedule-block table thead tr > th#startingPeriod,
-div#adjust-schedule-block table tbody tr > td.startingPeriod,
-div#adjust-schedule-block table thead tr > th#lastPeriod,
-div#adjust-schedule-block table tbody tr > td.lastPeriod {
-    width: 14%;
-}
+div#adjust-schedule-block table thead tr > th#week,
+div#adjust-schedule-block table tbody tr > td.week,
+div#adjust-schedule-block table thead tr > th#period,
+div#adjust-schedule-block table tbody tr > td.period,
 div#adjust-schedule-block table thead tr > th#roomId,
-div#adjust-schedule-block table tbody tr > td.roomId {
-    width: 20%;
-}
+div#adjust-schedule-block table tbody tr > td.roomId,
 div#adjust-schedule-block table thead tr > th#day,
-div#adjust-schedule-block table tbody tr > td.day,
+div#adjust-schedule-block table tbody tr > td.day {
+    width: 22%;
+}
 div#adjust-schedule-block table thead tr > th#delete,
 div#adjust-schedule-block table tbody tr > td.delete {
-    width: 7%;
+    width: 12%;
 }
 
 div#adjust-schedule-block table tbody tr > td.roomId select {
@@ -253,7 +249,6 @@ div#adjust-schedule-block table tbody tr > td.roomId select {
 }
 div#adjust-schedule-block table tbody tr:hover select {
     cursor: pointer;
-    background-color: #e6e6e6;
 }
 
 .unhover {

@@ -1,4 +1,4 @@
-package com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoAsResponses;
+package com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto;
 
 import lombok.*;
 
@@ -7,7 +7,8 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class DtoPracticeSchedule {
+public class ResDtoSubjectSchedule {
+    private String subjectName;
     private Byte day;
     private Byte startingWeek;
     private Byte totalWeek;

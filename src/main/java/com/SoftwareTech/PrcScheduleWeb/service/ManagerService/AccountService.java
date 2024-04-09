@@ -1,7 +1,7 @@
 package com.SoftwareTech.PrcScheduleWeb.service.ManagerService;
 
 import com.SoftwareTech.PrcScheduleWeb.dto.AuthDto.DtoRegisterAccount;
-import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoAsRequests.DtoUpdateTeacherAccount;
+import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.ReqDtoUpdateTeacherAccount;
 import com.SoftwareTech.PrcScheduleWeb.model.Account;
 import com.SoftwareTech.PrcScheduleWeb.model.enums.Role;
 import com.SoftwareTech.PrcScheduleWeb.repository.AccountRepository;
@@ -14,7 +14,7 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.NoSuchElementException;
 
 @Service
@@ -41,12 +41,12 @@ public class AccountService {
             .instituteEmail(email)
             .password(getPasswordEncoder.encode(password))
             .role(Role.TEACHER)
-            .creatingTime(new Timestamp(System.currentTimeMillis()))
+            .creatingTime(LocalDateTime.now())
             .status(true)
             .build());
     }
 
-    public void updateTeacherAccount(HttpServletRequest request, DtoUpdateTeacherAccount account) {
+    public void updateTeacherAccount(HttpServletRequest request, ReqDtoUpdateTeacherAccount account) {
         final Long accountId = Long.parseLong(request.getParameter("accountId"));
         final Account updatedAccount = accountRepository
             .findByAccountIdAndInstituteEmail(accountId, account.getInstituteEmail())

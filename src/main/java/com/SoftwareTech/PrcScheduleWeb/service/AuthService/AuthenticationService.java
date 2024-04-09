@@ -15,7 +15,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Base64;
 
@@ -35,7 +34,7 @@ public class AuthenticationService {
         Account account = Account.builder()
             .instituteEmail(request.getInstituteEmail())
             .password(passwordEncoder.encode(request.getPassword()))
-            .creatingTime(Timestamp.valueOf(LocalDateTime.now()))
+            .creatingTime(LocalDateTime.now())
             .role(Role.MANAGER)
             .status(true)
             .build();

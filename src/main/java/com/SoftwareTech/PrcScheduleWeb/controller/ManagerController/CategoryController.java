@@ -26,8 +26,8 @@ public class CategoryController {
 
     /*******************Computer_Room_Pages_on_Category*******************/
     @RequestMapping(value = "/computer-room/add-computer-room", method = GET)
-    public ModelAndView getAddComputerRoomPage(HttpServletRequest request, Model model) {
-        return categoryService.getAddComputerRoomPage(request, model);
+    public ModelAndView getAddComputerRoomPage(Model model) {
+        return categoryService.getAddComputerRoomPage(model);
     }
 
     @RequestMapping(value = "/computer-room/computer-room-list", method = GET)
@@ -37,8 +37,8 @@ public class CategoryController {
 
     /*******************Teacher_Pages_on_Category*******************/
     @RequestMapping(value = "/teacher/add-teacher-account", method = GET)
-    public ModelAndView getAddTeacherAccountPage(HttpServletRequest request, Model model) {
-        return categoryService.getAddTeacherAccountPage(request, model);
+    public ModelAndView getAddTeacherAccountPage(Model model) {
+        return categoryService.getAddTeacherAccountPage(model);
     }
 
     @RequestMapping(value = "/teacher/teacher-list", method = GET)

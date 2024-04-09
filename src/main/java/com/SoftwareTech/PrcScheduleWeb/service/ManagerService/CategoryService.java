@@ -2,7 +2,7 @@ package com.SoftwareTech.PrcScheduleWeb.service.ManagerService;
 
 import com.SoftwareTech.PrcScheduleWeb.config.StaticUtilMethods;
 import com.SoftwareTech.PrcScheduleWeb.dto.AuthDto.DtoRegisterAccount;
-import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.DtoAsRequests.DtoAddComputerRoom;
+import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.ReqDtoAddComputerRoom;
 import com.SoftwareTech.PrcScheduleWeb.repository.AccountRepository;
 import com.SoftwareTech.PrcScheduleWeb.repository.ClassroomRepository;
 import com.SoftwareTech.PrcScheduleWeb.repository.TeacherRepository;
@@ -29,7 +29,7 @@ public class CategoryService {
     @Autowired
     private final TeacherRequestRepository teacherRequestRepository;
 
-    public ModelAndView getAddTeacherAccountPage(HttpServletRequest request, Model model) {
+    public ModelAndView getAddTeacherAccountPage(Model model) {
         ModelAndView modelAndView = staticUtilMethods.customResponseModelView(model.asMap(), "add-account");
 
         //--Refill data form after an error occurs.
@@ -40,11 +40,11 @@ public class CategoryService {
         return modelAndView;
     }
 
-    public ModelAndView getAddComputerRoomPage(HttpServletRequest request, Model model) {
+    public ModelAndView getAddComputerRoomPage(Model model) {
         ModelAndView modelAndView = staticUtilMethods.customResponseModelView(model.asMap(), "add-computer-room");
 
         //--Refill data form after an error occurs.
-        DtoAddComputerRoom roomObject = (DtoAddComputerRoom) model.asMap().get("roomObject");
+        ReqDtoAddComputerRoom roomObject = (ReqDtoAddComputerRoom) model.asMap().get("roomObject");
 
         if (roomObject != null)
             modelAndView.addObject(roomObject);

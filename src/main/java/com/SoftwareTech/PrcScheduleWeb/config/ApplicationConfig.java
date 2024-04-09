@@ -3,6 +3,8 @@ package com.SoftwareTech.PrcScheduleWeb.config;
 import com.SoftwareTech.PrcScheduleWeb.service.AuthService.JwtService;
 import com.SoftwareTech.PrcScheduleWeb.repository.AccountRepository;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -82,7 +84,14 @@ public class ApplicationConfig {
         messagePairs.put("error_account_02", "Email đã tồn tại!");
         messagePairs.put("error_account_03", "Mật khẩu không đúng!");
 
-        messagePairs.put("error_computerRoom_02", "Đã tồn tại mã phòng tại khu vực bạn chọn!");
+
+        messagePairs.put("error_computerRoom_01", "Đã tồn tại 'phòng học' tại khu vực bạn chọn!");
+        messagePairs.put("error_computerRoom_02", "Đã tồn tại 'phòng thực hành' tại khu vực bạn chọn!");
         return messagePairs;
+    }
+
+    @Bean
+    public Logger logger() {
+        return LoggerFactory.getLogger(Logger.class);
     }
 }

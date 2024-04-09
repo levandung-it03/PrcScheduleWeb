@@ -131,7 +131,7 @@ function customizeSearchingListEvent(plainTableRows) {
 
         //--Reset table data.
         if (searchingInputTag.value == "") {
-            tableBody.innerHTML = plainTableRows.reduce((accumulator, elem) => accumulator += elem.innerHTML, "");
+            tableBody.innerHTML = plainTableRows.reduce((accumulator, elem) => accumulator + elem.innerHTML, "");
             return;
         }
 
@@ -160,17 +160,29 @@ function customizeSearchingListEvent(plainTableRows) {
     searchingInputTag.addEventListener("keyup", handleSearchingListEvent);
 }
 
+
 function customizeSortingListEvent() {
     [...$$('table thead th i')].forEach(btn => {
         btn.addEventListener("click", e => {
             const fieldId = e.target.parentElement.id;
-            const cellsOfFieldId = [...$$('table tbody td.' + fieldId)].sort((a, b) => {
+            const cellOfFields = [...$$('table tbody td.' + fieldId)];
+            const firstCellOfSearchingColumn = cellOfFields[0].getAttribute('plain-value');
+            let searchingDataFieldType = null;
+
+            if (Number.parseInt(firstCellOfSearchingColumn) !== null)   searchingDataFieldType = "Number";
+            else if (new Date(firstCellOfSearchingColumn) !== null)     searchingDataFieldType = "Date";
+            else    searchingDataFieldType = "String";
+
+            cellOfFields.sort((a, b) => {
                 const firstCell = a.getAttribute('plain-value');
                 const secondCell = b.getAttribute('plain-value');
-                return firstCell.localeCompare(secondCell);
+
+                if (searchingDataFieldType === "Number") return Number.parseInt(firstCell) - Number.parseInt(secondCell);
+                else if (searchingDataFieldType === "Date")   return new Date(firstCell) < new Date(secondCell);
+                else    return firstCell.localeCompare(secondCell);
             });
             alert("Sắp xếp thành công!");
-            $('table tbody').innerHTML = cellsOfFieldId.reduce((accumulator, cell) => {
+            $('table tbody').innerHTML = cellOfFields.reduce((accumulator, cell) => {
                 return accumulator + cell.parentElement.outerHTML;
             }, "");
         })
@@ -182,7 +194,7 @@ function customizeAutoFormatStrongInputTextEvent() {
         inputTag.addEventListener("blur", e => {
             inputTag.value = inputTag.value.trim().split(" ")
                 .filter(word => word != "")
-                .map(word => word.slice(0, 1).toUpperCase() + word.slice(1))
+                .map(word => word.slice(0, 1).toUpperCase() + word.slice(1).toLowerCase())
                 .join(" ");
         });
     });
@@ -191,4 +203,24 @@ function customizeAutoFormatStrongInputTextEvent() {
 function convertStrDateToDateObj(strDate) {
     const startDateAsArr = strDate.split("/");
     return new Date(startDateAsArr[2], startDateAsArr[1] - 1, startDateAsArr[0])
+}
+
+function customizeAllAvatarColor() {
+    [...$$('table tbody tr td.base-profile span.mock-avatar')].forEach(avatarTag => {
+        const avatarColor = colorMap[avatarTag.innerText.trim().toUpperCase()];
+
+        // Convert background color to RGB
+        let r = parseInt(avatarColor.slice(1, 3), 16);
+        let g = parseInt(avatarColor.slice(3, 5), 16);
+        let b = parseInt(avatarColor.slice(5, 7), 16);
+
+        // Calculate luminance
+        let luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+
+        // Get the right letter's color
+        const letterColor = (luminance > 0.5) ? "#000000" : "#FFFFFF";
+
+        avatarTag.style.backgroundColor = avatarColor;
+        avatarTag.style.color = letterColor;
+    })
 }

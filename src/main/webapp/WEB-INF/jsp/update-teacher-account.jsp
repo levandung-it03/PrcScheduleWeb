@@ -46,10 +46,10 @@
                 <select data="${account.status}" name="status">
                     <option value="true">Còn hoạt động</option>
                     <option value="false">Ngắt hoạt động</option>
-                <select>
+                </select>
             </div>
             <input name="pageNumber" value="${pageNumber}" hidden/>
-            <input type="submit" value="Xác nhận">
+            <input type="submit" value="Xác nhận"/>
         </form>
     </div>
     <script type="application/javascript" src="${pageContext.request.contextPath}/js/base.js"></script>

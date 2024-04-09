@@ -1,4 +1,3 @@
-let canSubmitForm = false;
 
 (function main() {
     const validatingBlocks = {
