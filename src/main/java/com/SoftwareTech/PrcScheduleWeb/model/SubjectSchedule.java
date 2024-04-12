@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 
 @Data
@@ -23,23 +24,24 @@ public class SubjectSchedule {
     @JsonIgnore
     private SectionClass sectionClass;
 
-    @Column(name = "day", nullable = false)
+    @Column(name = "day")
     private Byte day;
 
-    @Column(name = "starting_week", nullable = false)
+    @Column(name = "starting_week")
     private Byte startingWeek;
 
-    @Column(name = "total_week", nullable = false)
+    @Column(name = "total_week")
     private Byte totalWeek;
 
-    @Column(name = "starting_period", nullable = false)
+    @Column(name = "starting_period")
     private Byte startingPeriod;
 
-    @Column(name = "last_period", nullable = false)
+    @Column(name = "last_period")
     private Byte lastPeriod;
 
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
-    @JoinColumn(name = "room_id", referencedColumnName = "room_id", nullable = false)
+    @JoinColumn(name = "room_id", referencedColumnName = "room_id")
+    @JsonIgnore
     private Classroom classroom;
 
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
@@ -47,8 +49,10 @@ public class SubjectSchedule {
     @JsonIgnore
     private Teacher teacher;
 
-    @Column(name = "status_enum", nullable = false, columnDefinition = "BIT DEFAULT 1")
-    private boolean status;
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @JoinColumn(name = "teacher_request_id", referencedColumnName = "request_id")
+    @JsonIgnore
+    private TeacherRequest teacherRequest;
 
     public boolean canBeCombined(SubjectSchedule laterSchedule) {
         return (this.getDay().equals(laterSchedule.getDay())

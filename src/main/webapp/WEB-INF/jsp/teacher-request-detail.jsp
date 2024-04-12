@@ -24,19 +24,19 @@
             </div>
             <div class="data-row" id="teacher-id">
                 <label for="teacher-id">Mã giảng viên</label>
-                <p>${teacherRequest.teacher.teacherId}</p>
+                <p>${customTeacherRequest.teacher.teacherId}</p>
             </div>
             <div class="data-row" id="full-name">
                 <label for="full-name">Họ và tên</label>
-                <p>${teacherRequest.teacher.lastName} ${teacherRequest.teacher.firstName}</p>
+                <p>${customTeacherRequest.teacher.lastName} ${customTeacherRequest.teacher.firstName}</p>
             </div>
             <div class="data-row" id="institute-email">
                 <label for="institute-email">Email</label>
-                <p>${teacherRequest.teacher.account.instituteEmail}</p>
+                <p>${customTeacherRequest.teacher.account.instituteEmail}</p>
             </div>
             <div class="data-row" id="phone">
                 <label for="phone">Số điện thoại</label>
-                <p>${teacherRequest.teacher.phone}</p>
+                <p>${customTeacherRequest.teacher.phone}</p>
             </div>
         </div>
         <div class="detail-block">
@@ -46,19 +46,19 @@
             </div>
             <div class="data-row" id="subject-name">
                 <label for="subject-name">Tên môn học</label>
-                <p>${teacherRequest.sectionClass.subject.subjectName}</p>
+                <p>${customTeacherRequest.sectionClass.subject.subjectName}</p>
             </div>
             <div class="data-row" id="grade-id">
                 <label for="grade-id">Lớp mở môn</label>
-                <p>${teacherRequest.sectionClass.grade.gradeId}</p>
+                <p>${customTeacherRequest.sectionClass.grade.gradeId}</p>
             </div>
             <div class="data-row" id="group-from-subject">
                 <label for="group-from-subject">Tổ mà giảng viên dạy</label>
-                <p>${teacherRequest.sectionClass.groupFromSubject}</p>
+                <p>${customTeacherRequest.sectionClass.groupFromSubject}</p>
             </div>
             <div class="data-row" id="request-message-detail">
                 <label for="request-message-detail">Mô tả yêu cầu</label>
-                <p>${teacherRequest.requestMessageDetail}</p>
+                <p>${customTeacherRequest.requestMessageDetail}</p>
             </div>
         </div>
         <div class="detail-block" id="practice-schedule">
@@ -76,13 +76,17 @@
                             <th id="startingPeriod">Tiết bắt đầu</th>
                             <th id="lastPeriod">Tiết kết thúc</th>
                             <th id="roomId">Phòng thực hành</th>
+                            <th id="update">Cập nhật</th>
                             <th id="delete">Xoá</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <c:choose>
-                            <c:when test="${not empty practiceSchedules}">
-                                <c:forEach items="${practiceSchedules}" var="practiceSchedule">
+                        <c:forEach items="${practiceSchedules}" var="practiceSchedule">
+                            <c:choose>
+                                <c:when test="${practiceSchedule.day == null}">
+                                    <tr><td style="width:100%">Chưa có lịch thực hành nào được thêm từ yêu cầu này.</td></tr>
+                                </c:when>
+                                <c:otherwise>
                                     <tr>
                                         <td class="startingWeek">${practiceSchedule.startingWeek}</td>
                                         <td class="totalWeek">${practiceSchedule.totalWeek}</td>
@@ -90,18 +94,20 @@
                                         <td class="startingPeriod">${practiceSchedule.startingPeriod}</td>
                                         <td class="lastPeriod">${practiceSchedule.lastPeriod}</td>
                                         <td class="roomId">${practiceSchedule.classroom.roomId}</td>
+                                        <td class="update table-row-btn">
+                                            <a href="/manager/sub-page/practice-schedule/update-practice-schedule?practiceScheduleId=${practiceSchedule.subjectScheduleId}">
+                                                <i class="fa-regular fa-pen-to-square"></i>
+                                            </a>
+                                        </td>
                                         <td class="delete table-row-btn">
-                                            <button id="${teacherRequest.requestId}_${practiceSchedule.subjectScheduleId}">
+                                            <button id="${practiceSchedule.subjectScheduleId}">
                                                 <i class="fa-regular fa-trash-can"></i>
                                             </button>
                                         </td>
                                     </tr>
-                                </c:forEach>
-                            </c:when>
-                            <c:otherwise>
-                                <tr><td style="width:100%">Chưa có lịch thực hành nào được thêm từ yêu cầu này.</td></tr>
-                            </c:otherwise>
-                        </c:choose>
+                                </c:otherwise>
+                            </c:choose>
+                        </c:forEach>
                     </tbody>
                 </table>
             </form>

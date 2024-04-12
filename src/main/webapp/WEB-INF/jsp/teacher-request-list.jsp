@@ -42,9 +42,10 @@
                         <option value="" selected disabled hidden>Chọn trường cần tìm</option>
                         <option value="0">Thông tin cơ bản</option>
                         <option value="1">Mã giảng viên</option>
-                        <option value="2">Tên môn học</option>
+                        <option value="2">Tên môn</option>
                         <option value="3">Mã lớp mở môn</option>
                         <option value="4">Tổ</option>
+                        <option value="5">Trạng thái của yêu cầu</option>
                     </select>
                     <input type="text" id="search">
                     <i class="fa-solid fa-magnifying-glass"></i>
@@ -58,12 +59,12 @@
                                 Thông tin cơ bản
                                 <i class="fa-solid fa-arrow-down-a-z"></i>
                             </th>
-                            <th id="teacher-id">
-                                Mã giảng viên
+                            <th id="request-interaction-status">
+                                Trạng thái
                                 <i class="fa-solid fa-arrow-down-a-z"></i>
                             </th>
                             <th id="subject-name">
-                                Tên môn học
+                                Tên môn
                                 <i class="fa-solid fa-arrow-down-a-z"></i>
                             </th>
                             <th id="grade-id">
@@ -80,39 +81,62 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach items="${teacherRequestList}" var="teacherReqObj">
-                            <tr id="${teacherReqObj.requestId}">
-                                <td plain-value="${teacherReqObj.teacher.lastName} ${teacherReqObj.teacher.firstName} ${teacherReqObj.teacher.account.instituteEmail}" class="base-profile">
-                                    <span class="mock-avatar">${teacherReqObj.teacher.firstName.charAt(0)}</span>
+                        <c:forEach items="${teacherRequestList}" var="customTeacherRequest">
+                            <tr id="${customTeacherRequest.requestId}">
+                                <td plain-value="${customTeacherRequest.teacher.lastName}
+                                        ${customTeacherRequest.teacher.firstName}
+                                        ${customTeacherRequest.teacher.account.instituteEmail}
+                                        ${customTeacherRequest.teacher.teacherId}"
+                                    class="base-profile">
+                                    <span class="mock-avatar">${customTeacherRequest.teacher.firstName.charAt(0)}</span>
                                     <div class="teacher-info">
-                                        <b class="teacher-name">${teacherReqObj.teacher.lastName} ${teacherReqObj.teacher.firstName}</b>
-                                        <p class="institute-email">${teacherReqObj.teacher.account.instituteEmail}</p>
+                                        <b class="teacher-name">[${customTeacherRequest.teacher.teacherId}] ${customTeacherRequest.teacher.lastName} ${customTeacherRequest.teacher.firstName}</b>
+                                        <p class="institute-email">${customTeacherRequest.teacher.account.instituteEmail}</p>
                                     </div>
                                 </td>
-                                <td plain-value="${teacherReqObj.teacher.teacherId}" class="teacher-id">
-                                    ${teacherReqObj.teacher.teacherId}
+                                <c:choose>
+                                    <c:when test="${customTeacherRequest.interactionStatus == 'PENDING'}">
+                                        <td plain-value="Chờ giải quyết Cho giai quyet" class="request-interaction-status">
+                                            <span class="status-is-pending">Chờ giải quyết</span>
+                                        </td>
+                                    </c:when>
+                                    <c:when test="${customTeacherRequest.interactionStatus == 'CANCEL'}">
+                                        <td plain-value="Đã huỷ Da huy" class="request-interaction-status">
+                                            <span class="status-is-cancel">Đã huỷ</span>
+                                        </td>
+                                    </c:when>
+                                    <c:when test="${customTeacherRequest.interactionStatus == 'CREATED'}">
+                                        <td plain-value="Đã tạo lịch Da tao lich" class="request-interaction-status">
+                                            <span class="status-is-true">Đã tạo lịch</span>
+                                        </td>
+                                    </c:when>
+                                    <c:when test="${customTeacherRequest.interactionStatus == 'DENIED'}">
+                                        <td plain-value="Đã từ chối Da tu choi" class="request-interaction-status">
+                                            <span class="status-is-false">Đã từ chối</span>
+                                        </td>
+                                    </c:when>
+                                </c:choose>
+                                <td plain-value="${customTeacherRequest.sectionClass.subject.subjectName}" class="subject-name">
+                                    ${customTeacherRequest.sectionClass.subject.subjectName}
                                 </td>
-                                <td plain-value="${teacherReqObj.sectionClass.subject.subjectName}" class="subject-name">
-                                    ${teacherReqObj.sectionClass.subject.subjectName}
+                                <td plain-value="${customTeacherRequest.sectionClass.grade.gradeId}" class="grade-id">
+                                    ${customTeacherRequest.sectionClass.grade.gradeId}
                                 </td>
-                                <td plain-value="${teacherReqObj.sectionClass.grade.gradeId}" class="grade-id">
-                                    ${teacherReqObj.sectionClass.grade.gradeId}
-                                </td>
-                                <td plain-value="${teacherReqObj.sectionClass.groupFromSubject}" class="group-from-subject">
-                                    ${teacherReqObj.sectionClass.groupFromSubject}
+                                <td plain-value="${customTeacherRequest.sectionClass.groupFromSubject}" class="group-from-subject">
+                                    ${customTeacherRequest.sectionClass.groupFromSubject}
                                 </td>
                                 <td class="table-row-btn view">
-                                    <a href="/manager/sub-page/practice-schedule/teacher-request-detail?requestId=${teacherReqObj.requestId}">
+                                    <a href="/manager/sub-page/practice-schedule/teacher-request-detail?requestId=${customTeacherRequest.requestId}">
                                         <i class="fa-solid fa-eye"></i>
                                     </a>
                                 </td>
                                 <td class="table-row-btn add">
-                                    <a href="/manager/sub-page/practice-schedule/add-practice-schedule?requestId=${teacherReqObj.requestId}">
+                                    <a href="/manager/sub-page/practice-schedule/add-practice-schedule?requestId=${customTeacherRequest.requestId}">
                                         <i class="fa-regular fa-calendar-plus"></i>
                                     </a>
                                 </td>
                                 <td class="table-row-btn delete">
-                                    <button name="delete-btn" value="${teacherReqObj.requestId}">
+                                    <button name="delete-btn" value="${customTeacherRequest.requestId}">
                                         <i class="fa-regular fa-trash-can"></i>
                                     </button>
                                 </td>

@@ -50,6 +50,10 @@ function mappingCategoryNameWithCurrentPage() {
         ["add-practice-schedule"]: {
             ["category-name"]: "Tạo lịch thực hành từ yêu cầu",
             ["page-description"]: "Cung cấp các tính năng hỗ trợ tạo lịch thực hành từ yêu cầu giảng viên."
+        },
+        ["update-practice-schedule"]: {
+            ["category-name"]: "Cập nhật lịch thực hành đã tạo",
+            ["page-description"]: "Cung cấp các tính năng hỗ trợ cập nhật lịch thực hành đã tạo từ yêu cầu."
         }
     }
 

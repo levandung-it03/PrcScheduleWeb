@@ -1,5 +1,6 @@
 package com.SoftwareTech.PrcScheduleWeb.config;
 
+import com.SoftwareTech.PrcScheduleWeb.model.enums.EntityInteractionStatus;
 import com.SoftwareTech.PrcScheduleWeb.model.enums.Gender;
 import com.SoftwareTech.PrcScheduleWeb.model.enums.Role;
 import com.SoftwareTech.PrcScheduleWeb.model.*;
@@ -130,8 +131,8 @@ public class InitialDataLoader implements CommandLineRunner {
         }
         if (departmentRepository.count() == 0) {
             departmentRepository.saveAll(List.of(
-                Department.builder().departmentId("CNTT02").status(true).build(),
-                Department.builder().departmentId("DTVT02").status(true).build()
+                Department.builder().departmentId("CNTT02").departmentName("Công nghệ thông tin 02").build(),
+                Department.builder().departmentId("DTVT02").departmentName("Điện tử 02").build()
             ));
             if (teacherRepository.count() == 0) {
                 teacherRepository.saveAll(List.of(
@@ -161,12 +162,10 @@ public class InitialDataLoader implements CommandLineRunner {
                 Grade.builder()
                     .gradeId("D21CQCN01-N")
                     .department(departmentRepository.findById("CNTT02").orElseThrow())
-                    .status(true)
                     .build(),
                 Grade.builder()
                     .gradeId("D21CQCN02-N")
                     .department(departmentRepository.findById("CNTT02").orElseThrow())
-                    .status(true)
                     .build()
             ));
             sectionClassRepository.saveAll(List.of(
@@ -209,7 +208,7 @@ public class InitialDataLoader implements CommandLineRunner {
                     .lastPeriod((byte) 4)
                     .classroom(classroomRepository.findById("2B12").orElseThrow())
                     .teacher(teacherRepository.findById("GV111").orElseThrow())
-                    .status(true)
+                    .teacherRequest(null)
                     .build(),
                 SubjectSchedule.builder()
                     .sectionClass(sectionClassRepository.findById(1L).orElseThrow())
@@ -220,7 +219,7 @@ public class InitialDataLoader implements CommandLineRunner {
                     .lastPeriod((byte) 4)
                     .classroom(classroomRepository.findById("2B12").orElseThrow())
                     .teacher(teacherRepository.findById("GV111").orElseThrow())
-                    .status(true)
+                    .teacherRequest(null)
                     .build(),
                 SubjectSchedule.builder()
                     .sectionClass(sectionClassRepository.findById(1L).orElseThrow())
@@ -231,18 +230,7 @@ public class InitialDataLoader implements CommandLineRunner {
                     .lastPeriod((byte) 4)
                     .classroom(classroomRepository.findById("2B11").orElseThrow())
                     .teacher(teacherRepository.findById("GV111").orElseThrow())
-                    .status(true)
-                    .build(),
-                SubjectSchedule.builder()
-                    .sectionClass(sectionClassRepository.findById(2L).orElseThrow())
-                    .day((byte) 2)
-                    .startingWeek((byte) 2)
-                    .totalWeek((byte) 2)
-                    .startingPeriod((byte) 1)
-                    .lastPeriod((byte) 4)
-                    .classroom(classroomRepository.findById("2B12").orElseThrow())
-                    .teacher(teacherRepository.findById("GV111").orElseThrow())
-                    .status(true)
+                    .teacherRequest(null)
                     .build(),
                 SubjectSchedule.builder()
                     .sectionClass(sectionClassRepository.findById(2L).orElseThrow())
@@ -252,19 +240,8 @@ public class InitialDataLoader implements CommandLineRunner {
                     .startingPeriod((byte) 1)
                     .lastPeriod((byte) 4)
                     .classroom(classroomRepository.findById("2B12").orElseThrow())
-                    .teacher(teacherRepository.findById("GV111").orElseThrow())
-                    .status(true)
-                    .build(),
-                SubjectSchedule.builder()
-                    .sectionClass(sectionClassRepository.findById(2L).orElseThrow())
-                    .day((byte) 3)
-                    .startingWeek((byte) 10)
-                    .totalWeek((byte) 3)
-                    .startingPeriod((byte) 1)
-                    .lastPeriod((byte) 4)
-                    .classroom(classroomRepository.findById("2B11").orElseThrow())
-                    .teacher(teacherRepository.findById("GV111").orElseThrow())
-                    .status(true)
+                    .teacher(teacherRepository.findById("GV112").orElseThrow())
+                    .teacherRequest(null)
                     .build(),
                 SubjectSchedule.builder()
                     .sectionClass(sectionClassRepository.findById(3L).orElseThrow())
@@ -275,7 +252,7 @@ public class InitialDataLoader implements CommandLineRunner {
                     .lastPeriod((byte) 10)
                     .classroom(classroomRepository.findById("2B13").orElseThrow())
                     .teacher(teacherRepository.findById("GV111").orElseThrow())
-                    .status(true)
+                    .teacherRequest(null)
                     .build(),
                 SubjectSchedule.builder()
                     .sectionClass(sectionClassRepository.findById(4L).orElseThrow())
@@ -286,16 +263,29 @@ public class InitialDataLoader implements CommandLineRunner {
                     .lastPeriod((byte) 10)
                     .classroom(classroomRepository.findById("2B11").orElseThrow())
                     .teacher(teacherRepository.findById("GV112").orElseThrow())
-                    .status(true)
+                    .teacherRequest(null)
                     .build()
             ));
             teacherRequestRepository.saveAll(List.of(
                 TeacherRequest.builder()
-                    .teacher(teacherRepository.findById("GV111").orElseThrow())
-                    .sectionClass(sectionClassRepository.findById(1L).orElseThrow())
                     .requestMessageDetail("Quản lý tạo cho em 4 tuần, 1 buổi 1 tuần, 4 tiết 1 buổi nhé, ưu tiên thứ 2,3,6")
+                    .interactRequestReason(null)
+                    .interactionStatus(EntityInteractionStatus.PENDING)
+                    .updatingTime(LocalDateTime.now())
                     .build()
             ));
+            subjectScheduleRepository.save(SubjectSchedule.builder()
+                    .sectionClass(sectionClassRepository.findById(1L).orElseThrow())
+                    .day(null)
+                    .startingWeek(null)
+                    .totalWeek(null)
+                    .startingPeriod(null)
+                    .lastPeriod(null)
+                    .classroom(null)
+                    .teacher(teacherRepository.findById("GV111").orElseThrow())
+                    .teacherRequest(teacherRequestRepository.findById(1L).orElseThrow())
+                    .build()
+            );
         }
         if (studentRepository.count() == 0) {
             Grade cn1Grade = gradeRepository.findById("D21CQCN01-N").orElseThrow();

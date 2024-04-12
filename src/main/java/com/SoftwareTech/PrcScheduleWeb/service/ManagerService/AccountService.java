@@ -61,10 +61,11 @@ public class AccountService {
 
     @Transactional(rollbackOn = {Exception.class})
     public void deleteTeacherAccount(String accountIdPathParam) {
+        //--May throw NumberFormatException
         Long accountId = Long.parseLong(accountIdPathParam);
-        /*--Ignore_result--*/accountRepository
-            .findById(accountId)
-            .orElseThrow(() -> new NoSuchElementException("Account Id not found!"));
+
+        if (!accountRepository.existsById(accountId))
+            throw new NoSuchElementException("Account Id not found!");
 
         teacherRepository.deleteByAccountId(accountId);
         accountRepository.deleteById(accountId);

@@ -32,32 +32,32 @@
         </c:if>
         <%@ include file="/WEB-INF/jsp/header.jsp" %>
         <div class="detail-block">
-            <input name="teacherId" type="text" value="${teacherRequest.teacher.teacherId}" hidden/>
-            <input name="sectionClassId" type="text" value="${teacherRequest.sectionClass.sectionClassId}" hidden/>
+            <input name="teacherId" type="text" value="${customTeacherRequest.teacher.teacherId}" hidden/>
+            <input name="sectionClassId" type="text" value="${customTeacherRequest.sectionClass.sectionClassId}" hidden/>
             <div class="detail-block_description" id="request-info">
                 <i class="fa-regular fa-envelope"></i>
                 <p>CHI TIẾT YÊU CẦU</p>
             </div>
             <div class="data-row" id="teacher-id">
                 <label for="teacher-id">Giảng viên</label>
-                <p>${teacherRequest.teacher.teacherId}
-                    - ${teacherRequest.teacher.lastName} ${teacherRequest.teacher.firstName}</p>
+                <p>${customTeacherRequest.teacher.teacherId}
+                    - ${customTeacherRequest.teacher.lastName} ${customTeacherRequest.teacher.firstName}</p>
             </div>
             <div class="data-row" id="subject-name">
                 <label for="subject-name">Tên môn học</label>
-                <p>${teacherRequest.sectionClass.subject.subjectName}</p>
+                <p>${customTeacherRequest.sectionClass.subject.subjectName}</p>
             </div>
             <div class="data-row" id="grade-id">
                 <label for="grade-id">Lớp mở môn</label>
-                <p>${teacherRequest.sectionClass.grade.gradeId}</p>
+                <p>${customTeacherRequest.sectionClass.grade.gradeId}</p>
             </div>
             <div class="data-row" id="group-from-subject">
                 <label for="group-from-subject">Tổ mà giảng viên dạy</label>
-                <p>${teacherRequest.sectionClass.groupFromSubject}</p>
+                <p>${customTeacherRequest.sectionClass.groupFromSubject}</p>
             </div>
             <div class="data-row" id="request-message-detail">
                 <label for="request-message-detail">Mô tả yêu cầu</label>
-                <p>${teacherRequest.requestMessageDetail}</p>
+                <p>${customTeacherRequest.requestMessageDetail}</p>
             </div>
         </div>
         <div id="add-schedule-block">
@@ -65,15 +65,15 @@
                 <div class="form-input" id="semester">
                     <label for="semester">Học kỳ hiện tại</label>
                     <input type="text" disabled
-                        value="Học kỳ ${teacherRequest.sectionClass.semester.semester} - Năm học: ${teacherRequest.sectionClass.semester.rangeOfYear} "/>
+                        value="Học kỳ ${customTeacherRequest.sectionClass.semester.semester} - Năm học: ${customTeacherRequest.sectionClass.semester.rangeOfYear} "/>
                 </div>
                 <div class="form-input" id="list-of-week">
                     <label for="list-of-week">Chọn tuần muốn xem</label>
                     <select name="list-of-week" id="list-of-week">
                         <%-- Get the milisecond-time of java.sql.Date: startingDate from MySQL --%>
-                        <c:set var="startingTime" value="${teacherRequest.sectionClass.semester.startingDate.time}"/>
+                        <c:set var="startingTime" value="${customTeacherRequest.sectionClass.semester.startingDate.time}"/>
 
-                        <c:forEach begin="0" end="${teacherRequest.sectionClass.semester.totalWeek - 1}" var="weekUnit">
+                        <c:forEach begin="0" end="${customTeacherRequest.sectionClass.semester.totalWeek - 1}" var="weekUnit">
                             <c:set var="udpatedStartingTime"
                                 value="${startingTime + (weekUnit * 7 * 24 * 60 * 60 * 1000)}"/>
                             <c:set var="endingTime" value="${udpatedStartingTime + (6 * 24 * 60 * 60 * 1000)}"/>
@@ -85,7 +85,7 @@
                             %>
                             <fmt:formatDate var="startingDateResult" value="${startingDateObj}" pattern="dd/MM/yyyy"/>
                             <fmt:formatDate var="endingDateResult" value="${endingDateObj}" pattern="dd/MM/yyyy"/>
-                            <c:set var="week" value="${teacherRequest.sectionClass.semester.firstWeek + weekUnit}"/>
+                            <c:set var="week" value="${customTeacherRequest.sectionClass.semester.firstWeek + weekUnit}"/>
                             <option week="${week}" startingDate="${startingDateResult}">
                                 Tuần ${week} - Ngày ${startingDateResult} đến ${endingDateResult}
                             </option>
@@ -110,7 +110,7 @@
                         <span id="right">Sau<i style="padding-left: 5px;" class="fa-solid fa-arrow-right"></i></span>
                     </th>
                     <script>
-                        //--Prevent selected text with double click.
+                        //--Prevent selected of button-text with double click.
                         document.querySelectorAll('th span').forEach(tag => {
                             tag.addEventListener('mousedown', function (e) {
                                 e.preventDefault();
@@ -173,19 +173,32 @@
                     </tr>
                 </tbody>
             </table>
-            <form method="POST" action="/service/v1/manager/add-practice-schedule" modelAttribute="practiceScheduleObj">
-                <input name="teacherId" type="text" value="${teacherRequest.teacher.teacherId}" hidden>
-                <input name="requestId" type="number" value="${teacherRequest.requestId}" hidden>
-                <input name="sectionClassId" type="number" value="${teacherRequest.sectionClass.sectionClassId}" hidden>
+            <c:choose>
+                <c:when test="${updatedPracticeSchedule == null}">
+                    <form method="POST" modelAttribute="practiceScheduleObj" action="/service/v1/manager/add-practice-schedule">
+                </c:when>
+                <c:otherwise>
+                    <form method="POST" modelAttribute="practiceScheduleObj" action="/service/v1/manager/update-practice-schedule">
+                </c:otherwise>
+            </c:choose>
+                <input name="teacherId" type="text" value="${customTeacherRequest.teacher.teacherId}" hidden>
+                <input name="requestId" type="number" value="${customTeacherRequest.requestId}" hidden>
+                <input name="sectionClassId" type="number" value="${customTeacherRequest.sectionClass.sectionClassId}" hidden>
+                <c:if test="${updatedPracticeSchedule != null}">
+                    <input name="updatedPracticeScheduleId" type="number" value="${updatedPracticeSchedule.subjectScheduleId}" hidden>
+                </c:if>
                 <input name="practiceScheduleListAsString" type="text" value="" hidden>
                 <span id="submit">Xác nhận</span>
             </form>
         </div>
     </div>
     <div style="display:none;" id="hidden-blocks">
-        <div id="subject-schedule-of-grade">
+        <div id="all-unavailable-subject-schedule">
             <c:forEach items="${subjectScheduleList}" var="subjectSchedule" varStatus="iterator">
                 <div class="subject-schedule-hidden-block" id="${iterator.index}">
+                    <c:if test="${updatedPracticeSchedule != null}">
+                        <span class="data-field" name="subjectScheduleId" type="text">${subjectSchedule.subjectScheduleId}</span>
+                    </c:if>
                     <span class="data-field" name="subjectName" type="text">${subjectSchedule.subjectName}</span>
                     <span class="data-field" name="day" type="number">${subjectSchedule.day}</span>
                     <span class="data-field" name="startingWeek" type="number">${subjectSchedule.startingWeek}</span>
@@ -196,9 +209,12 @@
                 </div>
             </c:forEach>
         </div>
-        <div id="all-subject-schedule-in-this-semester">
+        <div id="all-practice-schedule-in-this-semester">
             <c:forEach items="${allPrcScheduleInSemester}" var="practiceSchedule" varStatus="iterator">
                 <div class="subject-schedule-hidden-block" id="${iterator.index}">
+                    <c:if test="${updatedPracticeSchedule != null}">
+                        <span class="data-field" name="subjectScheduleId" type="text">${practiceSchedule.subjectScheduleId}</span>
+                    </c:if>
                     <span class="data-field" name="day" type="number">${practiceSchedule.day}</span>
                     <span class="data-field" name="startingWeek" type="number">${practiceSchedule.startingWeek}</span>
                     <span class="data-field" name="totalWeek" type="number">${practiceSchedule.totalWeek}</span>
@@ -213,9 +229,18 @@
                 <span class="item-in-list" name="roomId" type="text">${roomId}</span>
             </c:forEach>
         </div>
-        <div id="student-quantity">
-            <span class="data-field" name="studentQuantity">${studentQuantity}</span>
-        </div>
+        <c:if test="${updatedPracticeSchedule != null}">
+            <div id="updated-subject-schedule-block">
+                <span class="data-field" name="subjectScheduleId" type="text">${updatedPracticeSchedule.subjectScheduleId}</span>
+                <span class="data-field" name="subjectName" type="text">${updatedPracticeSchedule.sectionClass.subject.subjectName}</span>
+                <span class="data-field" name="day" type="number">${updatedPracticeSchedule.day}</span>
+                <span class="data-field" name="startingWeek" type="number">${updatedPracticeSchedule.startingWeek}</span>
+                <span class="data-field" name="totalWeek" type="number">${updatedPracticeSchedule.totalWeek}</span>
+                <span class="data-field" name="startingPeriod" type="number">${updatedPracticeSchedule.startingPeriod}</span>
+                <span class="data-field" name="lastPeriod" type="number">${updatedPracticeSchedule.lastPeriod}</span>
+                <span class="data-field" name="roomId" type="text">${updatedPracticeSchedule.classroom.roomId}</span>
+            </div>
+        </c:if>
     </div>
     <script type="application/javascript" src="${pageContext.request.contextPath}/js/base.js"></script>
     <script type="application/javascript" src="${pageContext.request.contextPath}/js/add-practice-schedule.js"></script>

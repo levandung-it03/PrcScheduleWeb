@@ -1,5 +1,6 @@
 package com.SoftwareTech.PrcScheduleWeb.model;
 
+import com.SoftwareTech.PrcScheduleWeb.model.enums.EntityInteractionStatus;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -7,9 +8,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Data
 @Builder
@@ -23,16 +22,16 @@ public class TeacherRequest {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long requestId;
 
-    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
-    @JoinColumn(name = "section_class_id", referencedColumnName = "section_class_id", nullable = false)
-    @JsonIgnore
-    private SectionClass sectionClass;
-
-    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
-    @JoinColumn(name = "teacher_id", referencedColumnName = "teacher_id", nullable = false)
-    @JsonIgnore
-    private Teacher teacher;
-
-    @Column(name = "request_message_detail", length = 100000)
+    @Column(name = "request_message_detail", length = 100000, updatable = false)
     private String requestMessageDetail;
+
+    @Column(name = "interacting_request_reason", length = 100000)
+    private String interactRequestReason;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "interaction_status_enum", length = 7, nullable = false)
+    private EntityInteractionStatus interactionStatus;
+
+    @Column(name = "updating_time", nullable = false, columnDefinition = "DATETIME DEFAULT (CURRENT_TIMESTAMP())")
+    private LocalDateTime updatingTime;
 }

@@ -86,15 +86,15 @@ public class ComputerRoomService {
 
     @Transactional(rollbackOn = {Exception.class})
     public void deleteComputerRoom(String roomId) {
-        final Classroom foundComputerRoom = classroomRepository
-            .findById(roomId)
-            .orElseThrow(() -> new NoSuchElementException("Classroom not found!"));
+        if (!classroomRepository.existsById(roomId))
+            throw new NoSuchElementException("Classroom not found!");
+
         final ComputerRoomDetail computerRoomDetail = computerRoomDetailRepository
             .findByRoomId(roomId)
             .orElseThrow(() -> new NoSuchElementException("Computer Room Detail Id of Classroom not found!"));
 
         //--Delete both ComputerRoomDetail and Classroom.
         computerRoomDetailRepository.deleteById(computerRoomDetail.getComputerRoomDetailId());
-        classroomRepository.deleteById(foundComputerRoom.getRoomId());
+        classroomRepository.deleteById(roomId);
     }
 }

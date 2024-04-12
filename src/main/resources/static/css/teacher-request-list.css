@@ -7,7 +7,7 @@ table tr th#base-profile,
 table tr td.base-profile {
     padding-left: 25px;
     text-align: start;
-    width: 32%;
+    width: 28%;
 }
 table tr td.base-profile {
     display: flex;
@@ -31,12 +31,12 @@ table tr td.base-profile div.teacher-info p.institute-email {
     font-size: 0.85rem;
 }
 
-table tr th#teacher-id,
-table tr td.teacher-id,
 table tr th#subject-name,
 table tr td.subject-name,
 table tr th#grade-id,
-table tr td.grade-id {
+table tr td.grade-id,
+table tr th#request-interaction-status,
+table tr td.request-interaction-status {
     text-align: start;
     width: 14%;
 }
@@ -50,5 +50,5 @@ table tr td.add,
 table tr th#delete,
 table tr td.delete {
     text-align: center;
-    width: 6.5%;
+    width: 7.5%;
 }

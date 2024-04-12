@@ -264,7 +264,9 @@ table tr th > i:hover {
 
 #table-tools #table-description span#quantity,
 table tr td span.status-is-true,
-table tr td span.status-is-false {
+table tr td span.status-is-false,
+table tr td span.status-is-pending,
+table tr td span.status-is-cancel {
     padding: 2.5px 8px;
     border-radius: 12px;
     font-size: 0.8rem;
@@ -278,6 +280,16 @@ table tr td span.status-is-false {
     background-color: #fae2d5;
     color: #ac2f0d;
     font-weight: 600;
+}
+table tr td span.status-is-pending {
+    background-color: #dde0fd;
+    color: #0b0bac;
+    font-weight: 500;
+}
+table tr td span.status-is-cancel {
+    background-color: #c8c8c8;
+    color: #000000;
+    font-weight: 500;
 }
 #table-tools #table-description span#quantity {
     background-color: #eae8fb;

@@ -1,12 +1,9 @@
 package com.SoftwareTech.PrcScheduleWeb.service.ManagerService;
 
 import com.SoftwareTech.PrcScheduleWeb.config.StaticUtilMethods;
-import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.ReqDtoUpdateTeacher;
-import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.ReqDtoUpdateTeacherAccount;
-import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.ResDtoComputerRoom;
-import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.ResDtoPracticeSchedule;
-import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.ResDtoSubjectSchedule;
+import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.*;
 import com.SoftwareTech.PrcScheduleWeb.model.*;
+import com.SoftwareTech.PrcScheduleWeb.model.enums.EntityInteractionStatus;
 import com.SoftwareTech.PrcScheduleWeb.model.enums.Role;
 import com.SoftwareTech.PrcScheduleWeb.repository.*;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,8 +15,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -37,13 +36,11 @@ public class SubPageService {
     @Autowired
     private final AccountRepository accountRepository;
     @Autowired
-    private final TeacherRequestRepository teacherRequestRepository;
-    @Autowired
     private final SubjectScheduleRepository subjectScheduleRepository;
     @Autowired
     private final SubjectRegistrationRepository subjectRegistrationRepository;
     @Autowired
-    private final PracticeScheduleInteractHistoryRepository scheduleHistoryRepository;
+    private final TeacherRequestRepository teacherRequestRepository;
 
     public ModelAndView getUpdateComputerRoomPage(HttpServletRequest request) {
         final String roomId = request.getParameter("roomId");
@@ -129,55 +126,101 @@ public class SubPageService {
     }
 
     public ModelAndView getTeacherRequestDetailPage(HttpServletRequest request) {
-        final String requestId = request.getParameter("requestId");
+        //--May throw NumberFormatException
+        final Long requestId = Long.parseLong(request.getParameter("requestId"));
         ModelAndView modelAndView = new ModelAndView("teacher-request-detail");
 
-        TeacherRequest teacherRequest = teacherRequestRepository
-            .findById(Long.parseLong(requestId))
+        ResDtoTeacherRequest customTeacherRequest = subjectScheduleRepository
+            .findTeacherRequestByRequestId(requestId)
             .orElseThrow(() -> new NoSuchElementException("Request Id not found"));
 
-        List<SubjectSchedule> schedules = scheduleHistoryRepository.findAllSubjectScheduleByTeacherRequestId(requestId);
+        List<SubjectSchedule> schedules = subjectScheduleRepository.findAllByTeacherRequestRequestId(requestId);
 
-        modelAndView.addObject("teacherRequest", teacherRequest);
+        modelAndView.addObject("customTeacherRequest", customTeacherRequest);
         modelAndView.addObject("practiceSchedules", schedules);
         return modelAndView;
     }
 
     public ModelAndView getAddPracticeSchedulePage(HttpServletRequest request, Model model) throws SQLException {
-        final String requestId = request.getParameter("requestId");
+        final Long requestId = Long.parseLong(request.getParameter("requestId"));
+
+        Optional<TeacherRequest> teacherRequest = teacherRequestRepository.findById(requestId);
+        if (teacherRequest.isPresent()) {
+            if (teacherRequest.orElseThrow().getInteractionStatus().equals(EntityInteractionStatus.CREATED))
+                throw new SQLIntegrityConstraintViolationException("error_teacherRequest_01");
+
+            if (teacherRequest.orElseThrow().getInteractionStatus().equals(EntityInteractionStatus.DENIED))
+                throw new SQLIntegrityConstraintViolationException("error_teacherRequest_02");
+
+            if (teacherRequest.orElseThrow().getInteractionStatus().equals(EntityInteractionStatus.CANCEL))
+                throw new SQLIntegrityConstraintViolationException("error_teacherRequest_03");
+        }
+
         ModelAndView modelAndView = staticUtilMethods.customResponseModelView(model.asMap(), "add-practice-schedule");
-
-        if (requestId == null)
-            throw new NullPointerException("Request Id is Null, so redirecting back to Teacher Request List");
-
-        TeacherRequest teacherRequest = teacherRequestRepository
-            .findById(Long.parseLong(requestId))
+        ResDtoTeacherRequest customTeacherRequest = subjectScheduleRepository
+            .findTeacherRequestByRequestId(requestId)
             .orElseThrow(() -> new NoSuchElementException("Request Id not found"));
 
         List<ResDtoSubjectSchedule> allSubjectSchedules = subjectScheduleRepository
             .findAllScheduleByTeacherRequest(
-                teacherRequest.getSectionClass().getSemester().getSemesterId(),
-                teacherRequest.getTeacher().getTeacherId(),
-                teacherRequest.getSectionClass().getGrade().getGradeId()
+                customTeacherRequest.getSectionClass().getSemester().getSemesterId(),
+                customTeacherRequest.getTeacher().getTeacherId(),
+                customTeacherRequest.getSectionClass().getGrade().getGradeId()
+            );
+        //--Search all practiceSchedule and remove the available computer-rooms which are in this schedule.
+            List<ResDtoPracticeSchedule> allPrcScheduleInSemester = subjectScheduleRepository
+            .findAllPracticeScheduleInCurrentSemester(
+                customTeacherRequest.getSectionClass().getSemester().getSemesterId()
+            );
+        //--To filter the computer-rooms which have the available quantity.
+        Integer studentQuantityInCurrentSectionClass = subjectRegistrationRepository
+            .countBySectionClassId(customTeacherRequest.getSectionClass().getSectionClassId());
+        int studentQuantity = (studentQuantityInCurrentSectionClass == null) ? 0 : studentQuantityInCurrentSectionClass;
+
+        List<String> computerRoomList = classroomRepository.findAllComputerRoomIdWithQuantity(studentQuantity);
+
+        modelAndView.addObject("customTeacherRequest", customTeacherRequest);
+        modelAndView.addObject("subjectScheduleList", allSubjectSchedules);
+        modelAndView.addObject("allPrcScheduleInSemester", allPrcScheduleInSemester);
+        modelAndView.addObject("computerRoomList", computerRoomList);
+        return modelAndView;
+    }
+
+    public ModelAndView getUpdatePracticeSchedulePage(HttpServletRequest request, Model model) throws SQLException {
+        final Long practiceScheduleId = Long.parseLong(request.getParameter("practiceScheduleId"));
+        ModelAndView modelAndView = staticUtilMethods.customResponseModelView(model.asMap(), "add-practice-schedule");
+
+        SubjectSchedule practiceSchedule = subjectScheduleRepository
+            .findAllFieldsById(practiceScheduleId)
+            .orElseThrow(() -> new NoSuchElementException("Subject Schedule Id not found"));
+
+        ResDtoTeacherRequest customTeacherRequest = subjectScheduleRepository
+            .findTeacherRequestByRequestId(practiceSchedule.getTeacherRequest().getRequestId())
+            .orElseThrow(() -> new NoSuchElementException("Request Id not found"));
+
+        List<ResDtoSubjectSchedule> allSubjectSchedules = subjectScheduleRepository
+            .findAllScheduleByTeacherRequest(
+                practiceSchedule.getSectionClass().getSemester().getSemesterId(),
+                practiceSchedule.getTeacher().getTeacherId(),
+                practiceSchedule.getSectionClass().getGrade().getGradeId()
             );
 
         List<ResDtoPracticeSchedule> allPrcScheduleInSemester = subjectScheduleRepository
             .findAllPracticeScheduleInCurrentSemester(
-                teacherRequest.getSectionClass().getSemester().getSemesterId()
+                practiceSchedule.getSectionClass().getSemester().getSemesterId()
             );
-
+        //--To filter the computer-rooms which have the available quantity.
         Integer studentQuantityInCurrentSectionClass = subjectRegistrationRepository
-            .countBySectionClassId(teacherRequest.getSectionClass().getSectionClassId());
+            .countBySectionClassId(practiceSchedule.getSectionClass().getSectionClassId());
         int studentQuantity = (studentQuantityInCurrentSectionClass == null) ? 0 : studentQuantityInCurrentSectionClass;
 
-        List<String> computerRoomList = classroomRepository
-            .findAllComputerRoomIdWithQuantity(studentQuantity);
+        List<String> computerRoomList = classroomRepository.findAllComputerRoomIdWithQuantity(studentQuantity);
 
-        modelAndView.addObject("teacherRequest", teacherRequest);
+        modelAndView.addObject("customTeacherRequest", customTeacherRequest);
         modelAndView.addObject("subjectScheduleList", allSubjectSchedules);
         modelAndView.addObject("allPrcScheduleInSemester", allPrcScheduleInSemester);
         modelAndView.addObject("computerRoomList", computerRoomList);
-        modelAndView.addObject("studentQuantity", studentQuantity);
+        modelAndView.addObject("updatedPracticeSchedule", practiceSchedule);
         return modelAndView;
     }
 }

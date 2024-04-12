@@ -4,12 +4,12 @@ import com.SoftwareTech.PrcScheduleWeb.dto.AuthDto.DtoRegisterAccount;
 import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.ReqDtoUpdateTeacherAccount;
 import com.SoftwareTech.PrcScheduleWeb.service.ManagerService.AccountService;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
+import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -24,18 +24,20 @@ import java.util.NoSuchElementException;
 public class AccountController {
     @Autowired
     private final AccountService accountService;
+    @Autowired
+    private final Validator hibernateValidator;
 
     @RequestMapping(value = "/add-teacher-account", method = POST)
     public String addTeacherAccount(
-        @Valid @ModelAttribute("registerObject") DtoRegisterAccount registerObject,
+        @ModelAttribute("registerObject") DtoRegisterAccount registerObject,
         RedirectAttributes redirectAttributes,
-        HttpServletRequest request,
-        BindingResult bindingResult
+        HttpServletRequest request
     ) {
         final String standingUrl = request.getHeader("Referer");
-        if (bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("registerObject", registerObject);
-            redirectAttributes.addFlashAttribute("errorCode", bindingResult.getFieldErrors().getFirst());
+        Errors validationErr = hibernateValidator.validateObject(registerObject);
+        if (validationErr.hasErrors()) {
+            redirectAttributes.addFlashAttribute("errorCode", validationErr.getFieldErrors().getFirst()
+                .getDefaultMessage());
             return "redirect:" + standingUrl;
         }
 
@@ -57,16 +59,17 @@ public class AccountController {
 
     @RequestMapping(value = "/update-teacher-account", method = POST)
     public String updateTeacherAccount(
-        @Valid @ModelAttribute("account") ReqDtoUpdateTeacherAccount account,
+        @ModelAttribute("account") ReqDtoUpdateTeacherAccount account,
         HttpServletRequest request,
-        RedirectAttributes redirectAttributes,
-        BindingResult bindingResult
+        RedirectAttributes redirectAttributes
     ) {
         String page = (request.getParameter("pageNumber") == null) ? "1" : request.getParameter("pageNumber");
-        final String redirectedUrl = "/manager/category/teacher/teacher-account-list";
-        if (bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("errorCode", bindingResult.getFieldErrors().getFirst());
-            return "redirect:" + redirectedUrl + "?page=" + page;
+        final String redirectedUrl = "/manager/category/teacher/teacher-account-list?page=" + page;
+        Errors validationErr = hibernateValidator.validateObject(account);
+        if (validationErr.hasErrors()) {
+            redirectAttributes.addFlashAttribute("errorCode", validationErr.getFieldErrors().getFirst()
+                .getDefaultMessage());
+            return "redirect:" + redirectedUrl;
         }
 
         try {
@@ -77,12 +80,12 @@ public class AccountController {
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("errorCode", "error_systemApplication_01");
         }
-        return "redirect:" + redirectedUrl + "?page=" + page;
+        return "redirect:" + redirectedUrl;
     }
 
     @RequestMapping(value = "/teacher-account-list-active-btn", method = POST)
     public String deleteTeacherAccount(
-        @Valid @ModelAttribute("deleteBtn") String accountId,
+        @ModelAttribute("deleteBtn") String accountId,
         HttpServletRequest request,
         RedirectAttributes redirectAttributes
     ) {

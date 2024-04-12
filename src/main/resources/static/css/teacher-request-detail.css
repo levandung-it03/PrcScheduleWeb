@@ -101,10 +101,12 @@ div#practice-schedule table tbody tr > td.lastPeriod {
 }
 div#practice-schedule table thead tr > th#roomId,
 div#practice-schedule table tbody tr > td.roomId {
-    width: 20%;
+    width: 13%;
 }
 div#practice-schedule table thead tr > th#day,
 div#practice-schedule table tbody tr > td.day,
+div#practice-schedule table thead tr > th#update,
+div#practice-schedule table tbody tr > td.update,
 div#practice-schedule table thead tr > th#delete,
 div#practice-schedule table tbody tr > td.delete {
     width: 7%;

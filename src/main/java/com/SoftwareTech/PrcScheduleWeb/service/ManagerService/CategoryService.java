@@ -86,7 +86,8 @@ public class CategoryService {
         PageRequest pageRequest = staticUtilMethods.getPageRequest(request);
 
         modelAndView.addObject("currentPage", pageRequest.getPageNumber() + 1);
-        modelAndView.addObject("teacherRequestList", teacherRequestRepository.findAllInSpecifiedPage(pageRequest));
+        modelAndView.addObject("teacherRequestList", teacherRequestRepository
+            .findAllTeacherRequestInSubjectScheduleWithSpecifiedPage(pageRequest));
 
         return modelAndView;
     }

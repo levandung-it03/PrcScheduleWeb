@@ -2,6 +2,8 @@ package com.SoftwareTech.PrcScheduleWeb.config;
 
 import com.SoftwareTech.PrcScheduleWeb.service.AuthService.JwtService;
 import com.SoftwareTech.PrcScheduleWeb.repository.AccountRepository;
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -66,6 +68,11 @@ public class ApplicationConfig {
     }
 
     @Bean
+    public Validator hibernateValidator() {
+        return Validation.buildDefaultValidatorFactory().getValidator();
+    }
+
+    @Bean
     public Map<String, String> responseMessages() {
         Map<String, String> messagePairs = new HashMap<>();
         //--Successfully messages.
@@ -84,9 +91,14 @@ public class ApplicationConfig {
         messagePairs.put("error_account_02", "Email đã tồn tại!");
         messagePairs.put("error_account_03", "Mật khẩu không đúng!");
 
-
         messagePairs.put("error_computerRoom_01", "Đã tồn tại 'phòng học' tại khu vực bạn chọn!");
         messagePairs.put("error_computerRoom_02", "Đã tồn tại 'phòng thực hành' tại khu vực bạn chọn!");
+
+        messagePairs.put("error_teacherRequest_01", "Yêu cầu đã được thêm lịch nên không thể tạo!");
+        messagePairs.put("error_teacherRequest_02", "Yêu cầu đã bị từ chối nên không thể tạo lịch!");
+        messagePairs.put("error_teacherRequest_03", "Yêu cầu đã bị huỷ nên không thể tạo lịch!");
+
+        messagePairs.put("error_schedule_01", "Lịch không hợp lệ hoặc đang để trống!");
         return messagePairs;
     }
 

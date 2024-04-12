@@ -1,14 +1,15 @@
 package com.SoftwareTech.PrcScheduleWeb.controller.ManagerController;
 
 import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.ReqDtoPracticeSchedule;
+import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.ReqDtoUpdatePracticeSchedule;
 import com.SoftwareTech.PrcScheduleWeb.service.ManagerService.SubjectScheduleService;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
+import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -24,23 +25,56 @@ public class SubjectScheduleController {
     private final SubjectScheduleService subjectScheduleService;
     @Autowired
     private final Logger logger;
+    @Autowired
+    private final Validator hibernateValidator;
 
     @RequestMapping(value = "/add-practice-schedule", method = POST)
+    @ModelAttribute("practiceScheduleObj")
     public String addPracticeSchedule(
-        @Valid @ModelAttribute("practiceScheduleObj") ReqDtoPracticeSchedule practiceScheduleObj,
+        @ModelAttribute("practiceScheduleObj") ReqDtoPracticeSchedule practiceScheduleObj,
         HttpServletRequest request,
-        RedirectAttributes redirectAttributes,
-        BindingResult bindingResult
+        RedirectAttributes redirectAttributes
     ) {
         final String standingUrl = request.getHeader("Referer") + "?requestId=" + practiceScheduleObj.getRequestId();
-        if (bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("errorCode", bindingResult.getFieldErrors().getFirst());
+        Errors validationErr = hibernateValidator.validateObject(practiceScheduleObj);
+        if (validationErr.hasErrors()) {
+            redirectAttributes.addFlashAttribute("errorCode", validationErr.getFieldErrors().getFirst()
+                .getDefaultMessage());
             return "redirect:" + standingUrl;
         }
 
         try {
             subjectScheduleService.addPracticeSchedule(practiceScheduleObj);
             redirectAttributes.addFlashAttribute("succeedCode", "succeed_add_01");
+            return "redirect:/manager/category/practice-schedule/teacher-request-list";
+        } catch (NoSuchElementException e) {
+            redirectAttributes.addFlashAttribute("errorCode", "error_entity_01");
+            logger.info(e.toString());
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorCode", "error_systemApplication_01");
+            logger.info(e.toString());
+        }
+        return "redirect:" + standingUrl;
+    }
+
+    @RequestMapping(value = "/update-practice-schedule", method = POST)
+    public String updatePracticeSchedule(
+        @ModelAttribute("practiceScheduleObj") ReqDtoUpdatePracticeSchedule practiceScheduleObj,
+        HttpServletRequest request,
+        RedirectAttributes redirectAttributes
+    ) {
+        final String standingUrl = request.getHeader("Referer")
+            + "?practiceScheduleId=" + practiceScheduleObj.getUpdatedPracticeScheduleId();
+        Errors validationErr = hibernateValidator.validateObject(practiceScheduleObj);
+        if (validationErr.hasErrors()) {
+            redirectAttributes.addFlashAttribute("errorCode", validationErr.getFieldErrors().getFirst()
+                .getDefaultMessage());
+            return "redirect:" + standingUrl;
+        }
+
+        try {
+            subjectScheduleService.updatePracticeSchedule(practiceScheduleObj);
+            redirectAttributes.addFlashAttribute("succeedCode", "succeed_update_01");
             return "redirect:/manager/category/practice-schedule/teacher-request-list";
         } catch (NoSuchElementException e) {
             redirectAttributes.addFlashAttribute("errorCode", "error_entity_01");

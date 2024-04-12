@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.NoSuchElementException;
 
 @Controller
@@ -149,7 +150,33 @@ public class SubPageController {
 
         try {
             return subPageService.getAddPracticeSchedulePage(request, model);
-        } catch (NullPointerException ignored) {
+        } catch (NumberFormatException | NullPointerException ignored) {
+            response.sendRedirect(redirectedUrl);
+        } catch (NoSuchElementException ignored) {
+            redirectAttributes.addFlashAttribute("errorCode", "error_entity_01");
+            response.sendRedirect(redirectedUrl);
+        } catch (SQLIntegrityConstraintViolationException e) {
+            redirectAttributes.addFlashAttribute("errorCode", e.getMessage());
+            response.sendRedirect(redirectedUrl);
+        } catch (Exception ignored) {
+            redirectAttributes.addFlashAttribute("errorCode", "error_systemApplication_01");
+            response.sendRedirect(redirectedUrl);
+        }
+        return null;
+    }
+
+    @RequestMapping(value = "/practice-schedule/update-practice-schedule", method = GET)
+    public ModelAndView getUpdatePracticeSchedulePage(
+        HttpServletRequest request,
+        HttpServletResponse response,
+        RedirectAttributes redirectAttributes,
+        Model model
+    ) throws IOException {
+        final String redirectedUrl = "/manager/category/practice-schedule/teacher-request-list";
+
+        try {
+            return subPageService.getUpdatePracticeSchedulePage(request, model);
+        } catch (NumberFormatException | NullPointerException ignored) {
             response.sendRedirect(redirectedUrl);
         } catch (NoSuchElementException ignored) {
             redirectAttributes.addFlashAttribute("errorCode", "error_entity_01");

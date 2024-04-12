@@ -19,7 +19,4 @@ public class Grade {
     @JoinColumn(name = "department_id", referencedColumnName = "department_id", nullable = false)
     @JsonIgnore
     private Department department;
-
-    @Column(name = "status_enum", nullable = false, columnDefinition = "BIT DEFAULT 1")
-    private boolean status;
 }

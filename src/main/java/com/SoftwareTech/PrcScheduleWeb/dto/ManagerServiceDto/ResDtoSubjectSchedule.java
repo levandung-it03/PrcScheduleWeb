@@ -8,6 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class ResDtoSubjectSchedule {
+    private Long subjectScheduleId;
     private String subjectName;
     private Byte day;
     private Byte startingWeek;

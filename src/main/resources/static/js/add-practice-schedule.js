@@ -1,15 +1,12 @@
-const subjectScheduleOfGradeList = [];
+const allUnavailableScheduleInThisSemester = [];
 const allPracticeScheduleInSemester = [];
-const allComputerRoom = [];
+const computerRoomList = {};
 const selectedCellList = {};
-const availableRooms = {};
 let selectedWeekOptionTag = null;
+let updatedPracticeSchedule = {};
 
 (function main() {
     customizeClosingNoticeMessageEvent();
-    // createErrBlocksOfInputTags(validatingBlocks);
-    // customizeValidateEventInputTags(validatingBlocks);
-    // recoveryAllSelectTagDataInForm();
     removePathAttributes();
     mappingCategoryNameWithCurrentPage();
     /*---------------Own-methods------------------*/
@@ -19,21 +16,23 @@ let selectedWeekOptionTag = null;
     customizeSelectedTableCellsEvent();
     customizeConvertingScheduleAction();
     customizeSubmitFormAction();
+    /*---------Update-subject-schedule------------*/
+    mappingUpdatedSubjectSchedule();
     /*--------------------------------------------*/
 
     function popAllHiddenDataFields() {
-        [...$$("div#hidden-blocks div#subject-schedule-of-grade div.subject-schedule-hidden-block")].forEach((block, index) => {
-            subjectScheduleOfGradeList[index] = {};
+        [...$$("div#hidden-blocks div#all-unavailable-subject-schedule div.subject-schedule-hidden-block")].forEach((block, index) => {
+            allUnavailableScheduleInThisSemester[index] = {};
             block.querySelectorAll("span.data-field").forEach(tagField => {
                 if (tagField.getAttribute("type") == "text") {
-                    subjectScheduleOfGradeList[index][tagField.getAttribute("name")] = tagField.innerText;
+                    allUnavailableScheduleInThisSemester[index][tagField.getAttribute("name")] = tagField.innerText;
                 } else if (tagField.getAttribute("type") == "number") {
-                    subjectScheduleOfGradeList[index][tagField.getAttribute("name")] = Number.parseInt(tagField.innerText);
+                    allUnavailableScheduleInThisSemester[index][tagField.getAttribute("name")] = Number.parseInt(tagField.innerText);
                 }
             });
         });
 
-        [...$$("div#hidden-blocks div#all-subject-schedule-in-this-semester div.subject-schedule-hidden-block")].forEach((block, index) => {
+        [...$$("div#hidden-blocks div#all-practice-schedule-in-this-semester div.subject-schedule-hidden-block")].forEach((block, index) => {
             allPracticeScheduleInSemester[index] = {};
             block.querySelectorAll("span.data-field").forEach(tagField => {
                 if (tagField.getAttribute("type") == "text") {
@@ -45,9 +44,16 @@ let selectedWeekOptionTag = null;
         });
 
         [...$$("div#hidden-blocks div#all-computer-room span.item-in-list")].forEach(tag => {
-            allComputerRoom.push(tag.innerText);
+            computerRoomList[tag.innerText] = true;
         });
-        studentQuantity = $("div#hidden-blocks div#student-quantity span.data-field").innerText;
+
+        [...$$('div#hidden-blocks div#updated-subject-schedule-block span.data-field')].forEach(tagField => {
+            if (tagField.getAttribute("type") == "text") {
+                updatedPracticeSchedule[tagField.getAttribute("name")] = tagField.innerText;
+            } else if (tagField.getAttribute("type") == "number") {
+                updatedPracticeSchedule[tagField.getAttribute("name")] = Number.parseInt(tagField.innerText);
+            }
+        });
 
         $("div#hidden-blocks").outerHTML = "";
     }
@@ -98,7 +104,7 @@ let selectedWeekOptionTag = null;
         });
 
         //--Color each cell that already has subject-schedule.
-        subjectScheduleOfGradeList.forEach((schedule, index) => {
+        allUnavailableScheduleInThisSemester.forEach((schedule, index) => {
             const selectedWeek = Number.parseInt(selectedWeekOptionTag.getAttribute("week"));
 
             //--This subject is having a schedule in this seleted_week.
@@ -114,8 +120,8 @@ let selectedWeekOptionTag = null;
             }
         });
 
-        //--Fill the MarkingArray with rent computer-room quantity
-        let markingArr = Array.from({ length: 17 }, () => Array(8).fill(0));
+        //--Fill the MarkingArray 'rentRoomsQuantity' with rent computer-room quantity
+        let rentRoomsQuantity = Array.from({ length: 17 }, () => Array(8).fill(0));
         allPracticeScheduleInSemester.forEach(schedule => {
             //--Step to next schedule if this subject-schedule is not in this selected-week.
             if ((selectedWeekOptionTag.getAttribute("week") < schedule.startingWeek)
@@ -123,24 +129,24 @@ let selectedWeekOptionTag = null;
                 return;
 
             for (var period = schedule.startingPeriod; period <= schedule.lastPeriod; period++)
-                markingArr[period][schedule.day]++;
+                rentRoomsQuantity[period][schedule.day]++;
 
         });
-
-        //--Color each cell that has no quantity.
+        //--Then, we color all cells which dosen't have enough quantity to select.
         for (var periodRow = 1; periodRow <= 16; periodRow++) {
             for (var dayColumn = 2; dayColumn <= 8; dayColumn++) {
+                //--If this cell is already colored, passing it.
                 if ($(`tr[id="${periodRow}"] td[day="${dayColumn}"]`).classList.contains("unhover"))
                     continue;
 
-                if (markingArr[periodRow][dayColumn] >= allComputerRoom.length) {
+                if (rentRoomsQuantity[periodRow][dayColumn] >= computerRoomList.length) {
                     $(`tr[id="${periodRow}"] td[day="${dayColumn}"] span`).innerText = "Hết phòng";
                     $(`tr[id="${periodRow}"] td[day="${dayColumn}"]`).classList.add("unhover");
                 }
             }
         }
 
-        //--Color each cell that was selected before.
+        //--Color all cells that was selected before.
         const weekAsKey = selectedWeekOptionTag.getAttribute("week");
         for (var dayAsKey in selectedCellList[weekAsKey]) {
             for (var periodAskey in selectedCellList[weekAsKey][dayAsKey]) {
@@ -201,54 +207,64 @@ let selectedWeekOptionTag = null;
 
     function customizeConvertingScheduleAction() {
         $('span#convert-btn').addEventListener("click", e => {
-            //--Initialize availableRooms as Map(room:boolean) with all computer-rooms.
-            for (var weekAsKey in selectedCellList) {
-                for (var dayAsKey in selectedCellList[weekAsKey]) {
-                    for (var periodAskey in selectedCellList[weekAsKey][dayAsKey]) {
-                        allComputerRoom.forEach(room => {
-                            selectedCellList[weekAsKey][dayAsKey][periodAskey][room] = true;
-                        });
-                    }
-                }
-            }
-
-            //--Search all practiceSchedule and remove the available rooms which are in this schedule.
-            allPracticeScheduleInSemester.forEach(schedule => {
-                for (var week = schedule.startingWeek; week < schedule.startingWeek + schedule.totalWeek; week++) {
-                    for (var period = schedule.startingPeriod; period <= schedule.lastPeriod; period++) {
-                        selectedCellList[week][schedule.day][period][schedule.room] = false;
-                    }
-                }
-            });
-
             createAdjustingScheduleTable();
             customizeDeleteAdjustingSchedule();
         });
     }
 
     function createAdjustingScheduleTable() {
-        const adjustScheduleTable = $('div#adjust-schedule-block table#ajdust-subject-schedule tbody');
+        //--Initialize selectedCellList[weekAsKey][dayAsKey][periodAskey] = {<room>: true, ...};
+        for (var weekAsKey in selectedCellList)
+            for (var dayAsKey in selectedCellList[weekAsKey])
+                for (var periodAskey in selectedCellList[weekAsKey][dayAsKey])
+                    Object.assign(selectedCellList[weekAsKey][dayAsKey][periodAskey], computerRoomList);
 
+        /**-Loop through all practice-schedule in this current semester, and change computer-room status.
+         *--Object syntax:
+         *  selectedCellList[weekAsKey][dayAsKey][periodAskey] = {
+         *      <rent_room>: false,
+         *      <room>: true,
+         *      ...
+         *  };
+        */
+        allPracticeScheduleInSemester.forEach(schedule => {
+            for (var week = schedule.startingWeek; week < schedule.startingWeek + schedule.totalWeek; week++) {
+                for (var period = schedule.startingPeriod; period <= schedule.lastPeriod; period++) {
+                    try {
+                        selectedCellList[week][schedule.day][period][schedule.room] = false;
+                    } catch(err) { continue; }
+                }
+            }
+        });
+
+        //--Get adjust-table as DOM element to create its t-body with selected-schedule-rows-data.
+        const adjustScheduleTable = $('div#adjust-schedule-block table#ajdust-subject-schedule tbody');
         adjustScheduleTable.innerHTML = "";
+
+        //--Loop through selected-cell-list to map it into t-body as select-schedule-rows-data.
         for (var weekAsKey in selectedCellList) {
             for (var dayAsKey in selectedCellList[weekAsKey]) {
+                //--To seperate the background-color of even-week and odd-week.
                 const backgroundColor = (weekAsKey % 2 == 0) ? "#e4e3e3" : "white";
 
                 for (var periodAskey in selectedCellList[weekAsKey][dayAsKey]) {
-                    const availableRoomsOptionTags = `
-                    <select style="background-color: ${backgroundColor}" class="available-room-options" name="roomId">
-                        ${allComputerRoom.reduce((accumulator, room) =>
-                            accumulator + (selectedCellList[weekAsKey][dayAsKey][periodAskey][room]
-                                ? `<option value="${room}">${room}</option>`
-                                : ""
-                            ), "")
-                        }</select>`;
+                    let availableRoomsOptionTags = "";
+                    //--Map the available-computer-rooms as option-tags into select-tag of each select-schedule-rows-data.
+                    for (var roomKey in computerRoomList)
+                        //--If computer-room is available, or its value is "true" in 'selectedCellList'.
+                        if (selectedCellList[weekAsKey][dayAsKey][periodAskey][roomKey])
+                            availableRoomsOptionTags += `<option value="${roomKey}">${roomKey}</option>`;
 
+                    //--Create select-schedule-rows-data.
                     adjustScheduleTable.innerHTML += `<tr style="background-color: ${backgroundColor}">
                         <td class="week">${weekAsKey}</td>
                         <td class="day">${dayAsKey}</td>
                         <td class="period">${periodAskey}</td>
-                        <td class="roomId">${availableRoomsOptionTags}</td>
+                        <td class="roomId">
+                            <select style="background-color: ${backgroundColor}" class="available-room-options" name="roomId">
+                                ${availableRoomsOptionTags}
+                            </select>
+                        </td>
                         <td class="delete table-row-btn">
                             <span id="${weekAsKey + "_" + dayAsKey + "_" + periodAskey}">
                                 <i class="fa-regular fa-trash-can"></i>
@@ -292,14 +308,62 @@ let selectedWeekOptionTag = null;
                 }_period:${row.querySelector('td.period').innerText.trim()
                 }_roomId:${row.querySelector('td.roomId select option:checked').innerText.trim()}`
             );
-            $('div#adjust-schedule-block form input[name=practiceScheduleListAsString]').outerHTML = `
-                <input name="practiceScheduleListAsString" type="text" value="${practiceScheduleList.join(", ")}" hidden/>
-            `;
-            // $('div#adjust-schedule-block form input[name=practiceScheduleListAsString]').value = practiceScheduleList.join(", ");
-            
+            $('div#adjust-schedule-block form input[name=practiceScheduleListAsString]').value = practiceScheduleList.join(", ");
+
             if (confirm("Bạn chắc chắn muốn thực hiện thao tác?") == true) {
                 $('div#adjust-schedule-block form').submit();
             }
         });
+    }
+
+    function mappingUpdatedSubjectSchedule() {
+        if (Object.keys(updatedPracticeSchedule).length != 0) {
+            (function removeUpdatedScheduleFromScheduleList() {
+                for (var index = 0; index < allUnavailableScheduleInThisSemester.length; index++) {
+                    console.log(allUnavailableScheduleInThisSemester[index].subjectScheduleId);
+                    if (updatedPracticeSchedule.subjectScheduleId === allUnavailableScheduleInThisSemester[index].subjectScheduleId) {
+                        delete allUnavailableScheduleInThisSemester[index];
+                        break;
+                    }
+                }
+            })();
+
+            //--Remove it out of practice-schedule-list to make the computer-room of this updated-practice-schedule free,
+            //--and not be counted by 'rentRoomsQuantity' when 'renderTimetable()'.
+            (function removeUpdatedScheduleFromPracticeScheduleList() {
+                for (var index = 0; index < allPracticeScheduleInSemester.length; index++) {
+                    if (updatedPracticeSchedule.subjectScheduleId === allPracticeScheduleInSemester[index].subjectScheduleId) {
+                        delete allPracticeScheduleInSemester[index];
+                        break;
+                    }
+                }
+            })();
+
+            (function addUpdatedScheduleIntoSelectedCellListOfTimeTable() {
+                //--Map the updated-practice-schedule into 'selectedCellList' elements.
+                const lastWeek = updatedPracticeSchedule.startingWeek + updatedPracticeSchedule.totalWeek - 1;
+                for (var week = updatedPracticeSchedule.startingWeek; week <= lastWeek; week++) {
+                    for (var period = updatedPracticeSchedule.startingPeriod; period <= updatedPracticeSchedule.lastPeriod; period++) {
+                        if (selectedCellList[week] == null) {
+                            selectedCellList[week] = {};
+                        }
+                        if (selectedCellList[week][updatedPracticeSchedule.day] == null) {
+                            selectedCellList[week][updatedPracticeSchedule.day] = {};
+                        }
+                        //--This empty object is used to store available computer-room list.
+                        selectedCellList[week][updatedPracticeSchedule.day][period] = {};
+                    }
+                }
+                /**-Render time-table with the updated-components:
+                 *      'allUnavailableScheduleInThisSemester' from 'removeUpdatedScheduleFromScheduleList()'
+                 *      'allPracticeScheduleInSemester' from 'removeUpdatedScheduleFromPracticeScheduleList()'
+                 *      'computerRoomList'
+                 *      'selectedCellList' above.
+                */
+                renderTimeTable();
+                //--Use the created 'selectedCellList' to generate t-body data of adjust-schedule-table.
+                createAdjustingScheduleTable();
+            })();
+        }
     }
 })();

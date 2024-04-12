@@ -9,7 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class ReqDtoAddComputerRoom {
-    @NotEmpty(message = "error_entity_03")
+    @NotBlank(message = "error_entity_03")
     @Pattern(regexp = "^[A-Z]$", message = "error_entity_03")
     private String area;
 

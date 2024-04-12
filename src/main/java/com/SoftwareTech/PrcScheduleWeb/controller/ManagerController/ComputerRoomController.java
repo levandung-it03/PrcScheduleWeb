@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
+import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -23,17 +25,20 @@ import java.util.NoSuchElementException;
 public class ComputerRoomController {
     @Autowired
     private final ComputerRoomService computerRoomService;
+    @Autowired
+    private final Validator hibernateValidator;
 
     @RequestMapping(value = "/add-computer-room", method = POST)
     public String addComputerRoom(
-        @Valid @ModelAttribute("roomObject") ReqDtoAddComputerRoom roomObject,
+        @ModelAttribute("roomObject") ReqDtoAddComputerRoom roomObject,
         HttpServletRequest request,
-        RedirectAttributes redirectAttributes,
-        BindingResult bindingResult
+        RedirectAttributes redirectAttributes
     ) {
         final String standingUrl = request.getHeader("Referer");
-        if (bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("errorCode", bindingResult.getFieldErrors().getFirst());
+        Errors validationErr = hibernateValidator.validateObject(roomObject);
+        if (validationErr.hasErrors()) {
+            redirectAttributes.addFlashAttribute("errorCode", validationErr.getFieldErrors().getFirst()
+                .getDefaultMessage());
             return "redirect:" + standingUrl;
         }
 
@@ -52,15 +57,16 @@ public class ComputerRoomController {
 
     @RequestMapping(value = "/update-computer-room", method = POST)
     public String updateComputerRoom(
-        @Valid @ModelAttribute("roomObject") ReqDtoUpdateComputerRoom roomObject,
+        @ModelAttribute("roomObject") ReqDtoUpdateComputerRoom roomObject,
         HttpServletRequest request,
-        RedirectAttributes redirectAttributes,
-        BindingResult bindingResult
+        RedirectAttributes redirectAttributes
     ) {
         String page = (request.getParameter("pageNumber") == null) ? "1" : request.getParameter("pageNumber");
         final String redirectedUrl = "/manager/category/computer-room/computer-room-list?page=" + page;
-        if (bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("errorCode", bindingResult.getFieldErrors().getFirst());
+        Errors validationErr = hibernateValidator.validateObject(roomObject);
+        if (validationErr.hasErrors()) {
+            redirectAttributes.addFlashAttribute("errorCode", validationErr.getFieldErrors().getFirst()
+                .getDefaultMessage());
             return "redirect:" + redirectedUrl;
         }
 
