@@ -44,6 +44,8 @@ public class InitialDataLoader implements CommandLineRunner {
     private final TeacherRequestRepository teacherRequestRepository;
     @Autowired
     private final StudentRepository studentRepository;
+    @Autowired
+    private final SubjectRegistrationRepository subjectRegistrationRepository;
 
     @Override
     public void run(String... args) {
@@ -314,6 +316,9 @@ public class InitialDataLoader implements CommandLineRunner {
                 Student.builder().studentId("N20DCCN021").grade(cn2Grade).lastName("Nguyễn Hồng").firstName("Mai").gender(Gender.GIRL).instituteEmail("N20DCCN021@gmail.edu.com").build(),
                 Student.builder().studentId("N20DCCN022").grade(cn2Grade).lastName("Trần Hoàng").firstName("Tô").gender(Gender.BOY).instituteEmail("N20DCCN022@gmail.edu.com").build(),
                 Student.builder().studentId("N20DCCN023").grade(cn2Grade).lastName("Lê Nghiêm").firstName("Dịch").gender(Gender.BOY).instituteEmail("N20DCCN023@gmail.edu.com").build()
+            ));
+            subjectScheduleRepository.saveAll(List.of(
+
             ));
         }
     }
