@@ -98,4 +98,6 @@ public interface SubjectScheduleRepository extends JpaRepository<SubjectSchedule
                 OR s.lastPeriod IS NULL OR s.classroom IS NULL)
         """)
     void deleteScheduleByPendingRequestId(Long requestId);
+
+    int countByTeacherRequestRequestId(Long requestId);
 }

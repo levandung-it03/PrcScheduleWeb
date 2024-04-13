@@ -27,7 +27,7 @@ public class PublicPagesService {
             response.sendRedirect("redirect:/home");
             return null;
         } else {
-            return staticUtilMethods.customResponseModelView(model.asMap(), "login");
+            return staticUtilMethods.customResponseModelView(request, model.asMap(), "login");
         }
     }
 }

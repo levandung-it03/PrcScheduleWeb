@@ -26,16 +26,26 @@ public class StaticUtilMethods {
     private final UserDetailsService userDetailsService;
 
     /**Spring MVC: Customize returned ModelAndView to show ErrMessage or SucceedMessages.**/
-    public ModelAndView customResponseModelView(@NonNull Map<String, Object> model, String pageModel) {
+    public ModelAndView customResponseModelView(
+        @NonNull HttpServletRequest request,
+        @NonNull Map<String, Object> model,
+        String pageModel
+    ) {
         ModelAndView modelAndView = new ModelAndView(pageModel);
 
-        Object errCode = model.get("errorCode");
-        if (errCode != null)
+        Object errCode = model.getOrDefault("errorCode", null);
+        if (errCode == null)    errCode = request.getSession().getAttribute("errorCode");
+        if (errCode != null) {
             modelAndView.addObject("errorMessage", responseMessages.get(errCode.toString()));
+            request.getSession().invalidate();
+        }
 
-        Object succeedCode = model.get("succeedCode");
-        if (succeedCode != null)
+        Object succeedCode = model.getOrDefault("succeedCode", null);
+        if (succeedCode == null)    succeedCode = request.getSession().getAttribute("succeedCode");
+        if (succeedCode != null) {
             modelAndView.addObject("succeedMessage", responseMessages.get(succeedCode.toString()));
+            request.getSession().invalidate();
+        }
 
         return modelAndView;
     }

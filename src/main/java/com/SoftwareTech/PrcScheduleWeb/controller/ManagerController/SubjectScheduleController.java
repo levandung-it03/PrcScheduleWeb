@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
@@ -31,7 +32,6 @@ public class SubjectScheduleController {
     private final Validator hibernateValidator;
 
     @RequestMapping(value = "/add-practice-schedule", method = POST)
-    @ModelAttribute("practiceScheduleObj")
     public String addPracticeSchedule(
         @ModelAttribute("practiceScheduleObj") ReqDtoPracticeSchedule practiceScheduleObj,
         HttpServletRequest request,
@@ -64,8 +64,8 @@ public class SubjectScheduleController {
         HttpServletRequest request,
         RedirectAttributes redirectAttributes
     ) {
-        final String standingUrl = request.getHeader("Referer")
-            + "?practiceScheduleId=" + practiceScheduleObj.getUpdatedPracticeScheduleId();
+        final String standingUrl = request.getHeader("Referer") + "?practiceScheduleId="+ practiceScheduleObj
+            .getUpdatedPracticeScheduleId();
         Set<ConstraintViolation<ReqDtoUpdatePracticeSchedule>> violations = hibernateValidator.validate(practiceScheduleObj);
         if (!violations.isEmpty()) {
             redirectAttributes.addFlashAttribute("errorCode", violations.iterator().next().getMessage());
@@ -75,7 +75,8 @@ public class SubjectScheduleController {
         try {
             subjectScheduleService.updatePracticeSchedule(practiceScheduleObj);
             redirectAttributes.addFlashAttribute("succeedCode", "succeed_update_01");
-            return "redirect:/manager/category/practice-schedule/teacher-request-list";
+            return "redirect:/manager/sub-page/practice-schedule/teacher-request-detail?requestId="
+                + practiceScheduleObj.getRequestId();
         } catch (NoSuchElementException e) {
             redirectAttributes.addFlashAttribute("errorCode", "error_entity_01");
             logger.info(e.toString());
@@ -84,5 +85,27 @@ public class SubjectScheduleController {
             logger.info(e.toString());
         }
         return "redirect:" + standingUrl;
+    }
+
+    @RequestMapping(value = "/delete-practice-schedule", method = POST)
+    public String deletePracticeSchedule(
+        @ModelAttribute("deleteBtn") String practiceScheduleId,
+        HttpServletRequest request,
+        RedirectAttributes redirectAttributes
+    ) {
+        try {
+            subjectScheduleService.deletePracticeSchedule(practiceScheduleId);
+            redirectAttributes.addFlashAttribute("succeedCode", "succeed_delete_01");
+        } catch (NumberFormatException | NoSuchElementException e) {
+            logger.info(e.toString());
+            redirectAttributes.addFlashAttribute("errorCode", "error_entity_01");
+        } catch (SQLIntegrityConstraintViolationException e) {
+            logger.info(e.toString());
+            redirectAttributes.addFlashAttribute("errorCode", "error_schedule_02");
+        } catch (Exception e) {
+            logger.info(e.toString());
+            redirectAttributes.addFlashAttribute("errorCode", "error_systemApplication_01");
+        }
+        return "redirect:" + request.getHeader("Referer");
     }
 }

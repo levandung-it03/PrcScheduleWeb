@@ -51,99 +51,101 @@
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </div>
             </div>
-            <form action="/service/v1/manager/delete-teacher-request" method="POST">
-                <table>
-                    <thead>
-                        <tr>
-                            <th id="base-profile">
-                                Thông tin cơ bản
-                                <i class="fa-solid fa-arrow-down-a-z"></i>
-                            </th>
-                            <th id="request-interaction-status">
-                                Trạng thái
-                                <i class="fa-solid fa-arrow-down-a-z"></i>
-                            </th>
-                            <th id="subject-name">
-                                Tên môn
-                                <i class="fa-solid fa-arrow-down-a-z"></i>
-                            </th>
-                            <th id="grade-id">
-                                Mã lớp mở môn
-                                <i class="fa-solid fa-arrow-down-a-z"></i>
-                            </th>
-                            <th id="group-from-subject">
-                                Tổ
-                                <i class="fa-solid fa-arrow-down-a-z"></i>
-                            </th>
-                            <th id="view">Chi tiết</th>
-                            <th id="add">Tạo lịch</th>
-                            <th id="delete">Huỷ</th>
+            <table>
+                <thead>
+                    <tr>
+                        <th id="base-profile">
+                            Thông tin cơ bản
+                            <i class="fa-solid fa-arrow-down-a-z"></i>
+                        </th>
+                        <th id="request-interaction-status">
+                            Trạng thái
+                            <i class="fa-solid fa-arrow-down-a-z"></i>
+                        </th>
+                        <th id="subject-name">
+                            Tên môn
+                            <i class="fa-solid fa-arrow-down-a-z"></i>
+                        </th>
+                        <th id="grade-id">
+                            Mã lớp mở môn
+                            <i class="fa-solid fa-arrow-down-a-z"></i>
+                        </th>
+                        <th id="group-from-subject">
+                            Tổ
+                            <i class="fa-solid fa-arrow-down-a-z"></i>
+                        </th>
+                        <th id="view">Chi tiết</th>
+                        <th id="add">Tạo lịch</th>
+                        <th id="delete">Từ chối</th>
                         </tr>
-                    </thead>
-                    <tbody>
-                        <c:forEach items="${teacherRequestList}" var="customTeacherRequest">
-                            <tr id="${customTeacherRequest.requestId}">
-                                <td plain-value="${customTeacherRequest.teacher.lastName}
-                                        ${customTeacherRequest.teacher.firstName}
-                                        ${customTeacherRequest.teacher.account.instituteEmail}
-                                        ${customTeacherRequest.teacher.teacherId}"
-                                    class="base-profile">
-                                    <span class="mock-avatar">${customTeacherRequest.teacher.firstName.charAt(0)}</span>
-                                    <div class="teacher-info">
-                                        <b class="teacher-name">[${customTeacherRequest.teacher.teacherId}] ${customTeacherRequest.teacher.lastName} ${customTeacherRequest.teacher.firstName}</b>
-                                        <p class="institute-email">${customTeacherRequest.teacher.account.instituteEmail}</p>
-                                    </div>
-                                </td>
-                                <c:choose>
-                                    <c:when test="${customTeacherRequest.interactionStatus == 'PENDING'}">
-                                        <td plain-value="Chờ giải quyết Cho giai quyet" class="request-interaction-status">
-                                            <span class="status-is-pending">Chờ giải quyết</span>
-                                        </td>
-                                    </c:when>
-                                    <c:when test="${customTeacherRequest.interactionStatus == 'CANCEL'}">
-                                        <td plain-value="Đã huỷ Da huy" class="request-interaction-status">
-                                            <span class="status-is-cancel">Đã huỷ</span>
-                                        </td>
-                                    </c:when>
-                                    <c:when test="${customTeacherRequest.interactionStatus == 'CREATED'}">
-                                        <td plain-value="Đã tạo lịch Da tao lich" class="request-interaction-status">
-                                            <span class="status-is-true">Đã tạo lịch</span>
-                                        </td>
-                                    </c:when>
-                                    <c:when test="${customTeacherRequest.interactionStatus == 'DENIED'}">
-                                        <td plain-value="Đã từ chối Da tu choi" class="request-interaction-status">
-                                            <span class="status-is-false">Đã từ chối</span>
-                                        </td>
-                                    </c:when>
-                                </c:choose>
-                                <td plain-value="${customTeacherRequest.sectionClass.subject.subjectName}" class="subject-name">
-                                    ${customTeacherRequest.sectionClass.subject.subjectName}
-                                </td>
-                                <td plain-value="${customTeacherRequest.sectionClass.grade.gradeId}" class="grade-id">
-                                    ${customTeacherRequest.sectionClass.grade.gradeId}
-                                </td>
-                                <td plain-value="${customTeacherRequest.sectionClass.groupFromSubject}" class="group-from-subject">
-                                    ${customTeacherRequest.sectionClass.groupFromSubject}
-                                </td>
-                                <td class="table-row-btn view">
-                                    <a href="/manager/sub-page/practice-schedule/teacher-request-detail?requestId=${customTeacherRequest.requestId}">
-                                        <i class="fa-solid fa-eye"></i>
-                                    </a>
-                                </td>
-                                <td class="table-row-btn add">
-                                    <a href="/manager/sub-page/practice-schedule/add-practice-schedule?requestId=${customTeacherRequest.requestId}">
-                                        <i class="fa-regular fa-calendar-plus"></i>
-                                    </a>
-                                </td>
-                                <td class="table-row-btn delete">
-                                    <button name="delete-btn" value="${customTeacherRequest.requestId}">
-                                        <i class="fa-regular fa-trash-can"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                        </c:forEach>
-                    </tbody>
-                </table>
+                </thead>
+                <tbody>
+                    <c:forEach items="${teacherRequestList}" var="customTeacherRequest">
+                        <tr id="${customTeacherRequest.requestId}">
+                            <td plain-value="${customTeacherRequest.teacher.lastName}
+                                ${customTeacherRequest.teacher.firstName}
+                                ${customTeacherRequest.teacher.account.instituteEmail}
+                                ${customTeacherRequest.teacher.teacherId}"
+                                class="base-profile">
+                                <span class="mock-avatar">${customTeacherRequest.teacher.firstName.charAt(0)}</span>
+                                <div class="teacher-info">
+                                    <b class="teacher-name">[${customTeacherRequest.teacher.teacherId}] ${customTeacherRequest.teacher.lastName} ${customTeacherRequest.teacher.firstName}</b>
+                                    <p class="institute-email">${customTeacherRequest.teacher.account.instituteEmail}</p>
+                                </div>
+                            </td>
+                            <c:choose>
+                                <c:when test="${customTeacherRequest.interactionStatus == 'PENDING'}">
+                                    <td plain-value="Chờ giải quyết Cho giai quyet" class="request-interaction-status">
+                                        <span class="status-is-pending">Chờ giải quyết</span>
+                                    </td>
+                                </c:when>
+                                <c:when test="${customTeacherRequest.interactionStatus == 'CANCEL'}">
+                                    <td plain-value="Đã huỷ Da huy" class="request-interaction-status">
+                                        <span class="status-is-cancel">Đã huỷ</span>
+                                    </td>
+                                </c:when>
+                                <c:when test="${customTeacherRequest.interactionStatus == 'CREATED'}">
+                                    <td plain-value="Đã tạo lịch Da tao lich" class="request-interaction-status">
+                                        <span class="status-is-true">Đã tạo lịch</span>
+                                    </td>
+                                </c:when>
+                                <c:when test="${customTeacherRequest.interactionStatus == 'DENIED'}">
+                                    <td plain-value="Đã từ chối Da tu choi" class="request-interaction-status">
+                                        <span class="status-is-false">Đã từ chối</span>
+                                    </td>
+                                </c:when>
+                            </c:choose>
+                            <td plain-value="${customTeacherRequest.sectionClass.subject.subjectName}" class="subject-name">
+                                ${customTeacherRequest.sectionClass.subject.subjectName}
+                            </td>
+                            <td plain-value="${customTeacherRequest.sectionClass.grade.gradeId}" class="grade-id">
+                                ${customTeacherRequest.sectionClass.grade.gradeId}
+                            </td>
+                            <td plain-value="${customTeacherRequest.sectionClass.groupFromSubject}" class="group-from-subject">
+                                ${customTeacherRequest.sectionClass.groupFromSubject}
+                            </td>
+                            <td class="table-row-btn view">
+                                <a href="/manager/sub-page/practice-schedule/teacher-request-detail?requestId=${customTeacherRequest.requestId}">
+                                    <i class="fa-solid fa-eye"></i>
+                                </a>
+                            </td>
+                            <td class="table-row-btn add">
+                                <a href="/manager/sub-page/practice-schedule/add-practice-schedule?requestId=${customTeacherRequest.requestId}">
+                                    <i class="fa-regular fa-calendar-plus"></i>
+                                </a>
+                            </td>
+                            <td class="table-row-btn delete">
+                                <button name="denyTeacherRequestBtn" id="${customTeacherRequest.requestId}">
+                                    <i class="fa-regular fa-trash-can"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
+            <form id="deny-request" action="/service/v1/manager/deny-teacher-request" method="POST" modelAttribute="requestInteraction">
+                <input name="requestId" type="number" value="" hidden />
+                <input name="interactionReason" type="text" value="" hidden />
             </form>
             <div id="table-footer">
                 <c:set var="prefixUrl" value="/manager/category/practice-schedule/teacher-request-list?page=" scope="page"/>

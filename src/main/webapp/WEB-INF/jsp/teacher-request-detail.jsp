@@ -16,6 +16,18 @@
 <body>
     <%@ include file="/WEB-INF/jsp/category.jsp" %>
     <div id="center-page" id="teacher-request-detail-page">
+        <c:if test="${errorMessage != null}">
+            <div class="error-service-message">
+                <span>${errorMessage}</span>
+                <i id="error-service-message_close-btn" class="fa fa-times-circle" aria-hidden="true"></i>
+            </div>
+        </c:if>
+        <c:if test="${succeedMessage != null}">
+            <div class="succeed-service-message">
+                <span>${succeedMessage}</span>
+                <i id="succeed-service-message_close-btn" class="fa fa-times-circle" aria-hidden="true"></i>
+            </div>
+        </c:if>
         <%@ include file="/WEB-INF/jsp/header.jsp" %>
         <div class="detail-block">
             <div class="detail-block_description" id="teacher-info">
@@ -66,7 +78,7 @@
                 <i class="fa-regular fa-calendar-minus"></i>
                 <p>LỊCH THỰC HÀNH</p>
             </div>
-            <form action="" method="">
+            <form action="/service/v1/manager/delete-practice-schedule" method="POST">
                 <table>
                     <thead>
                         <tr>
@@ -100,7 +112,7 @@
                                             </a>
                                         </td>
                                         <td class="delete table-row-btn">
-                                            <button id="${practiceSchedule.subjectScheduleId}">
+                                            <button name="deleteBtn" value="${practiceSchedule.subjectScheduleId}">
                                                 <i class="fa-regular fa-trash-can"></i>
                                             </button>
                                         </td>
@@ -111,6 +123,77 @@
                     </tbody>
                 </table>
             </form>
+        </div>
+        <div class="detail-block" id="student-list">
+            <div id="table-tools">
+                <div id="table-description">
+                    <i class="fa-solid fa-users"></i>
+                    <p>DANH SÁCH SINH VIÊN</p>
+                    <span id="quantity">${students.size()} người</span>
+                </div>
+                <div id="table-search-box">
+                    <select id="search">
+                        <option value="" selected disabled hidden>Chọn trường cần tìm</option>
+                        <option value="0">Mã sinh viên</option>
+                        <option value="1">Họ sinh viên</option>
+                        <option value="2">Tên</option>
+                        <option value="4">Giới tính</option>
+                        <option value="5">Mã lớp</option>
+                        <option value="6">Địa chỉ email</option>
+                    </select>
+                    <input type="text" id="search">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th id="studentId">
+                            Mã sinh viên
+                            <i class="fa-solid fa-arrow-down-a-z"></i>
+                        </th>
+                        <th id="lastName">
+                            Họ sinh viên
+                            <i class="fa-solid fa-arrow-down-a-z"></i>
+                        </th>
+                        <th id="firstName">
+                            Tên
+                            <i class="fa-solid fa-arrow-down-a-z"></i>
+                        </th>
+                        <th id="gender">
+                            Giới tính
+                            <i class="fa-solid fa-arrow-down-a-z"></i>
+                        </th>
+                        <th id="gradeId">
+                            Mã lớp
+                            <i class="fa-solid fa-arrow-down-a-z"></i>    
+                        </th>
+                        <th id="instituteEmail">
+                            Địa chỉ email
+                            <i class="fa-solid fa-arrow-down-a-z"></i>  
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <c:choose>
+                        <c:when test="${students.size() == 0}">
+                            <tr><td style="width:100%; text-align:center;">Không có sinh viên thuộc lớp này.</td></tr>
+                        </c:when>
+                        <c:otherwise>
+                            <c:forEach items="${students}" var="student">                        
+                                <tr>
+                                    <td plain-value="${student.studentId}" class="studentId">${student.studentId}</td>
+                                    <td plain-value="${student.lastName}" class="lastName">${student.lastName}</td>
+                                    <td plain-value="${student.firstName}" class="firstName">${student.firstName}</td>
+                                    <td plain-value="${(student.gender == "BOY") ? "Nam" : "Nữ"}" class="gender">${(student.gender == "BOY") ? "Nam" : "Nữ"}</td>
+                                    <td plain-value="${student.grade.gradeId}" class="gradeId">${student.grade.gradeId}</td>
+                                    <td plain-value="${student.instituteEmail}" class="instituteEmail">${student.instituteEmail}</td>
+                                </tr>
+                            </c:forEach>
+                        </c:otherwise>
+                    </c:choose>
+                </tbody>
+            </table>
         </div>
     </div>
     </div>

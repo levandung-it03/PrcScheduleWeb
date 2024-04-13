@@ -125,10 +125,11 @@ public class SubPageService {
         return modelAndView;
     }
 
-    public ModelAndView getTeacherRequestDetailPage(HttpServletRequest request) {
+    public ModelAndView getTeacherRequestDetailPage(HttpServletRequest request, Model model) {
         //--May throw NumberFormatException
         final Long requestId = Long.parseLong(request.getParameter("requestId"));
-        ModelAndView modelAndView = new ModelAndView("teacher-request-detail");
+        ModelAndView modelAndView = staticUtilMethods
+            .customResponseModelView(request, model.asMap(), "teacher-request-detail");
 
         ResDtoTeacherRequest customTeacherRequest = subjectScheduleRepository
             .findTeacherRequestByRequestId(requestId)
@@ -159,7 +160,8 @@ public class SubPageService {
                 throw new SQLIntegrityConstraintViolationException("error_teacherRequest_03");
         }
 
-        ModelAndView modelAndView = staticUtilMethods.customResponseModelView(model.asMap(), "add-practice-schedule");
+        ModelAndView modelAndView = staticUtilMethods
+            .customResponseModelView(request, model.asMap(), "add-practice-schedule");
         ResDtoTeacherRequest customTeacherRequest = subjectScheduleRepository
             .findTeacherRequestByRequestId(requestId)
             .orElseThrow(() -> new NoSuchElementException("Request Id not found"));
@@ -191,7 +193,8 @@ public class SubPageService {
 
     public ModelAndView getUpdatePracticeSchedulePage(HttpServletRequest request, Model model) throws SQLException {
         final Long practiceScheduleId = Long.parseLong(request.getParameter("practiceScheduleId"));
-        ModelAndView modelAndView = staticUtilMethods.customResponseModelView(model.asMap(), "add-practice-schedule");
+        ModelAndView modelAndView = staticUtilMethods
+            .customResponseModelView(request, model.asMap(), "add-practice-schedule");
 
         SubjectSchedule practiceSchedule = subjectScheduleRepository
             .findAllFieldsById(practiceScheduleId)

@@ -127,7 +127,7 @@ function customizeSearchingListEvent(plainTableRows) {
     const searchingInputTag = $('#table-search-box input#search');
     const selectedOption = $('#table-search-box select#search');
     const handleSearchingListEvent = e => {
-        const tableBody = $('table tbody');
+        const tableBody = e.target.parentElement.parentElement.parentElement.querySelector('tbody');
 
         //--Reset table data.
         if (searchingInputTag.value == "") {
@@ -149,7 +149,7 @@ function customizeSearchingListEvent(plainTableRows) {
         }, "");
 
         if (searchingResult == "")
-            tableBody.innerHTML = '<tr><td style="width: 100%">Không tìm thấy dữ liệu vừa nhập</td></tr>';
+            tableBody.innerHTML = '<tr><td style="width:100%; text-align:center;">Không tìm thấy dữ liệu vừa nhập</td></tr>';
         else
             tableBody.innerHTML = searchingResult;
 
@@ -164,8 +164,9 @@ function customizeSearchingListEvent(plainTableRows) {
 function customizeSortingListEvent() {
     [...$$('table thead th i')].forEach(btn => {
         btn.addEventListener("click", e => {
+            const table = e.target.parentElement.parentElement.parentElement.parentElement;
             const fieldId = e.target.parentElement.id;
-            const cellOfFields = [...$$('table tbody td.' + fieldId)];
+            const cellOfFields = [...table.querySelectorAll('tbody td.' + fieldId)];
             const firstCellOfSearchingColumn = cellOfFields[0].getAttribute('plain-value');
             let searchingDataFieldType = null;
 
@@ -182,7 +183,7 @@ function customizeSortingListEvent() {
                 else    return firstCell.localeCompare(secondCell);
             });
             alert("Sắp xếp thành công!");
-            $('table tbody').innerHTML = cellOfFields.reduce((accumulator, cell) => {
+            table.querySelector('tbody').innerHTML = cellOfFields.reduce((accumulator, cell) => {
                 return accumulator + cell.parentElement.outerHTML;
             }, "");
         })

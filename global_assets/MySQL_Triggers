@@ -1,0 +1,52 @@
+DELIMITER //
+
+CREATE TRIGGER Validating_Inserted_Subject_Schedule
+BEFORE INSERT ON Subject_Schedule
+FOR EACH ROW
+BEGIN
+	DECLARE current_semester_id BIGINT;
+    DECLARE grade_id_belong_to VARCHAR(20);
+    DECLARE is_invalid INT DEFAULT 0;
+	DECLARE teacher_request_status ENUM('PENDING', 'CANCEL', 'CREATED', 'DENIED');
+
+    -- Kiểm tra xem, các dữ liệu quan trọng cho phép NULL phải ứng với trạng thái của yêu cầu không phải CREATED.
+    IF NEW.day IS NULL OR NEW.last_period IS NULL OR NEW.starting_period IS NULL OR NEW.room_id IS NULL
+    OR NEW.total_week IS NULL OR NEW.starting_week IS NULL THEN
+    	IF (SELECT interaction_status_enum FROM Teacher_Request WHERE request_id = NEW.teacher_request_id) = 'CREATED' THEN
+        	SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Invalid NULL value with teacher_request_status "CREATED".';
+        END IF;
+    END IF;
+
+    -- Lấy giá trị học kỳ hiện tại.
+	SELECT semester_id, grade_id INTO current_semester_id, grade_id_belong_to FROM Section_Class
+    WHERE section_class_id = NEW.section_class_id;
+
+    -- Lấy toàn bộ lịch của học kỳ hiện tại.
+    SELECT COUNT(*) INTO is_invalid FROM Subject_Schedule
+    INNER JOIN (SELECT * FROM Section_Class WHERE semester_id = current_semester_id) AS Filtered_Section_Class
+    ON Subject_Schedule.section_class_id = Filtered_Section_Class.section_class_id
+    -- 1.1. Toàn bộ lịch mà GV đang dạy trong học kỳ này.
+    -- 1.2. Toàn bộ lịch của GradeId trong học kỳ này (đã bao gồm SectionClass được thêm PracticeSchedule).
+    -- 1.3. Tất cả lịch có học học phòng này.
+    WHERE (teacher_id = NEW.teacher_id OR Filtered_Section_Class.grade_id = grade_id_belong_to OR room_id = NEW.room_id)
+    -- 2. Xảy ra vào 'thứ' mấy (vì là data dạng cột mốc, không phải khoảng cách nên đem so sánh luôn).
+    	AND Subject_Schedule.day = NEW.day
+    -- 3. Nếu không thoả (SS.endWeek qua rồi, NEW.startWeek mới xảy ra)
+    -- hoặc (NEW.lastWeek qua rồi, SS.startWeek mới xảy ra), thì 2 lịch này chạm vào nhau về giới hạn 'week'.
+        AND NOT ((Subject_Schedule.starting_week + Subject_Schedule.total_week) < NEW.starting_week
+       		OR (NEW.starting_week + NEW.total_week) < Subject_Schedule.starting_week)
+    -- 4. Nếu không thoả (SS.lastPeriod qua rồi, NEW.startPeriod mới xảy ra)
+    -- hoặc (NEW.lastPeriod qua rồi, SS.startPeriod mới xảy ra), thì 2 lịch này chạm vào nhau về giới hạn 'period'.
+        AND NOT (Subject_Schedule.last_period < NEW.starting_period OR NEW.last_period < Subject_Schedule.starting_period)
+    -- Chỉ cần ít nhất 1 Subject_Schedule thoả hết 1 + 2 + 3 + 4 so với NEW.
+    LIMIT 1;
+
+    -- Lịch NEW thêm vào bị trùng với 1 lịch nào đó.
+    IF is_invalid > 0 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Duplicate subject_schedule occurs.';
+    END IF;
+
+END;
+//
+
+DELIMITER ;

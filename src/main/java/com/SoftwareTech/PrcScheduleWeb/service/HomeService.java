@@ -17,8 +17,8 @@ public class HomeService {
     public ModelAndView handleGettingHomeRequestFromBothRoles(HttpServletRequest request, Model model) {
         String loggedInRole = staticUtilMethods.isAValidAccessTokenInCookies(request);
         if (loggedInRole != null)
-            return staticUtilMethods.customResponseModelView(model.asMap(), loggedInRole + "-home");
+            return staticUtilMethods.customResponseModelView(request, model.asMap(), loggedInRole + "-home");
         else
-            return staticUtilMethods.customResponseModelView(model.asMap(), "login");
+            return staticUtilMethods.customResponseModelView(request, model.asMap(), "login");
     }
 }

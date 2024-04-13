@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -47,11 +48,11 @@ public class SubjectScheduleService {
         //--Split the plain-data, which is separated by ", " string.
         String[] practiceScheduleRows = practiceScheduleObj.getPracticeScheduleListAsString().split(", ");
         //--Loop through the split plain-data result. Example: ["week:10_day:2_period:3_roomId:2B11", ...].
-        for (String row: practiceScheduleRows) {
+        for (String row : practiceScheduleRows) {
             HashMap<String, String> currentDataFields = new HashMap<>();
             String[] tempSplitDataField;
             //--Extract data as: ["field:data", ...].
-            for (String plainDataField: row.split("_")) {
+            for (String plainDataField : row.split("_")) {
                 tempSplitDataField = plainDataField.split(":");
                 currentDataFields.put(tempSplitDataField[0], tempSplitDataField[1]);
             }
@@ -92,9 +93,9 @@ public class SubjectScheduleService {
             //--Combining the period in a 'day' of a 'week'.
             for (index = index + 1; index < extractedPlainData.size(); index++) {
                 if (extractedPlainData.get(index).get("roomId").equals(practiceSchedule.getClassroom().getRoomId())
-                    &&  extractedPlainData.get(index).get("day").equals(Byte.toString(practiceSchedule.getDay()))
-                    &&  extractedPlainData.get(index).get("week").equals(Byte.toString(practiceSchedule.getStartingWeek()))
-                    &&  Byte.parseByte(extractedPlainData.get(index).get("period")) - practiceSchedule.getLastPeriod() == 1
+                    && extractedPlainData.get(index).get("day").equals(Byte.toString(practiceSchedule.getDay()))
+                    && extractedPlainData.get(index).get("week").equals(Byte.toString(practiceSchedule.getStartingWeek()))
+                    && Byte.parseByte(extractedPlainData.get(index).get("period")) - practiceSchedule.getLastPeriod() == 1
                 ) {
                     practiceSchedule.setLastPeriod((byte) (practiceSchedule.getLastPeriod() + 1));
                 } else {
@@ -104,13 +105,13 @@ public class SubjectScheduleService {
             }
             //--Combining the practice-schedule similar to each other with the compatible 'week'.
             if (!combinedPracticeSchedule.isEmpty()
-            &&  combinedPracticeSchedule.getLast().canBeCombined(practiceSchedule)) {
+                && combinedPracticeSchedule.getLast().canBeCombined(practiceSchedule)) {
                 combinedPracticeSchedule.getLast().setTotalWeek(
                     (byte) (combinedPracticeSchedule.getLast().getTotalWeek() + practiceSchedule.getTotalWeek())
                 );
             }
             //--If it's not compatible, save it into main-result as a new practice-schedule.
-            else    combinedPracticeSchedule.add(practiceSchedule);
+            else combinedPracticeSchedule.add(practiceSchedule);
         }
         //--Save the main-result into DB.
         //--May throw DataIntegrityViolationException because of custom Trigger.
@@ -119,7 +120,7 @@ public class SubjectScheduleService {
         //--Update teacher-request status.
         teacherRequest.setInteractionStatus(EntityInteractionStatus.CREATED);
         teacherRequest.setUpdatingTime(LocalDateTime.now());
-        teacherRequestRepository.updateById(teacherRequest);
+        teacherRequestRepository.updateByRequestId(teacherRequest);
     }
 
     @Transactional(rollbackOn = {Exception.class})
@@ -133,7 +134,7 @@ public class SubjectScheduleService {
             practiceScheduleObj.getRequestId()
         );
         //--Convert it as str-schedule.
-        for (SubjectSchedule schedule: schedules) {
+        for (SubjectSchedule schedule : schedules) {
             int lastWeek = schedule.getStartingWeek() + schedule.getTotalWeek();
             for (int week = schedule.getStartingWeek(); week < lastWeek; week++) {
                 for (int period = schedule.getStartingPeriod(); period <= schedule.getLastPeriod(); period++) {
@@ -151,5 +152,21 @@ public class SubjectScheduleService {
 
         //--Add these updated practice-schedules again.
         this.addPracticeSchedule(practiceScheduleObj);
+    }
+
+    public void deletePracticeSchedule(String practiceScheduleId) throws SQLIntegrityConstraintViolationException {
+        //--May throw NumberFormatException
+        Long id = Long.parseLong(practiceScheduleId);
+
+        SubjectSchedule deletedSubjectSchedule = subjectScheduleRepository
+            .findById(id).orElseThrow(() -> new NoSuchElementException("Schedule Id not found!"));
+
+        int totalSchedulesQuantityOfTeacherRequest = subjectScheduleRepository.countByTeacherRequestRequestId(
+            deletedSubjectSchedule.getTeacherRequest().getRequestId()
+        );
+        if (totalSchedulesQuantityOfTeacherRequest == 1)
+            throw new SQLIntegrityConstraintViolationException("Each Teacher Request must has at least 1 Practice-Schedule");
+
+        subjectScheduleRepository.deleteById(id);
     }
 }

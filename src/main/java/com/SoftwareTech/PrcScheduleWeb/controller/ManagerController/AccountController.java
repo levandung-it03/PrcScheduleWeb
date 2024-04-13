@@ -91,7 +91,7 @@ public class AccountController {
         try {
             accountService.deleteTeacherAccount(accountId);
             redirectAttributes.addFlashAttribute("succeedCode", "succeed_delete_01");
-        } catch (NoSuchElementException e) {
+        } catch (NumberFormatException | NoSuchElementException e) {
             redirectAttributes.addFlashAttribute("errorCode", "error_entity_01");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("errorCode", "error_entity_02");

@@ -31,6 +31,6 @@ public interface TeacherRequestRepository extends JpaRepository<TeacherRequest, 
             t.interactionStatus = :#{#teacherRequest.interactionStatus},
             t.updatingTime = :#{#teacherRequest.updatingTime}
         WHERE t.requestId = :#{#teacherRequest.requestId}
-        """)
-    void updateById(@Param("teacherRequest") TeacherRequest teacherRequest);
+    """)
+    void updateByRequestId(@Param("teacherRequest") TeacherRequest teacherRequest);
 }

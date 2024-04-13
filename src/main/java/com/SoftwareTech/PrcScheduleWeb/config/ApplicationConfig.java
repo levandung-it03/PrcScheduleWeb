@@ -97,8 +97,10 @@ public class ApplicationConfig {
         messagePairs.put("error_teacherRequest_01", "Yêu cầu đã được thêm lịch nên không thể tạo!");
         messagePairs.put("error_teacherRequest_02", "Yêu cầu đã bị từ chối nên không thể tạo lịch!");
         messagePairs.put("error_teacherRequest_03", "Yêu cầu đã bị huỷ nên không thể tạo lịch!");
+        messagePairs.put("error_teacherRequest_04", "Chỉ có thể từ chối yêu cầu có trạng thái \"Đang chờ tạo\"!");
 
         messagePairs.put("error_schedule_01", "Lịch không hợp lệ hoặc đang để trống!");
+        messagePairs.put("error_schedule_02", "Lịch không thể xoá, phải có ít nhất 1 lịch của yêu cầu!");
         return messagePairs;
     }
 

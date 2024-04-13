@@ -164,8 +164,6 @@ form input[type=submit]:hover {
 #center-page_list #table-tools {
     width: 100%;
     height: 70px;
-}
-#center-page_list #table-tools {
     display: flex;
     flex-wrap: wrap;
     align-items: center;

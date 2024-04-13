@@ -91,7 +91,6 @@
                                         ${account.status ? "Còn hoạt động" : "Ngưng hoạt động"}
                                     </span>
                                 </td>
-                                
                                 <td class="table-row-btn update">
                                     <a href="/manager/sub-page/teacher/update-teacher-account?accountId=${account.accountId}">
                                         <i class="fa-regular fa-pen-to-square"></i>
