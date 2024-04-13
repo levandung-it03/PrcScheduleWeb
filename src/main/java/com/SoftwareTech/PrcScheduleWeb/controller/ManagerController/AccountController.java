@@ -4,12 +4,12 @@ import com.SoftwareTech.PrcScheduleWeb.dto.AuthDto.DtoRegisterAccount;
 import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.ReqDtoUpdateTeacherAccount;
 import com.SoftwareTech.PrcScheduleWeb.service.ManagerService.AccountService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.Errors;
-import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -17,6 +17,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.NoSuchElementException;
+import java.util.Set;
 
 @Controller
 @RequiredArgsConstructor
@@ -34,10 +35,9 @@ public class AccountController {
         HttpServletRequest request
     ) {
         final String standingUrl = request.getHeader("Referer");
-        Errors validationErr = hibernateValidator.validateObject(registerObject);
-        if (validationErr.hasErrors()) {
-            redirectAttributes.addFlashAttribute("errorCode", validationErr.getFieldErrors().getFirst()
-                .getDefaultMessage());
+        Set<ConstraintViolation<DtoRegisterAccount>> violations = hibernateValidator.validate(registerObject);
+        if (!violations.isEmpty()) {
+            redirectAttributes.addFlashAttribute("errorCode", violations.iterator().next().getMessage());
             return "redirect:" + standingUrl;
         }
 
@@ -65,10 +65,9 @@ public class AccountController {
     ) {
         String page = (request.getParameter("pageNumber") == null) ? "1" : request.getParameter("pageNumber");
         final String redirectedUrl = "/manager/category/teacher/teacher-account-list?page=" + page;
-        Errors validationErr = hibernateValidator.validateObject(account);
-        if (validationErr.hasErrors()) {
-            redirectAttributes.addFlashAttribute("errorCode", validationErr.getFieldErrors().getFirst()
-                .getDefaultMessage());
+        Set<ConstraintViolation<ReqDtoUpdateTeacherAccount>> violations = hibernateValidator.validate(account);
+        if (!violations.isEmpty()) {
+            redirectAttributes.addFlashAttribute("errorCode", violations.iterator().next().getMessage());
             return "redirect:" + redirectedUrl;
         }
 

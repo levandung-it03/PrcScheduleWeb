@@ -4,20 +4,19 @@ import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.ReqDtoAddComputerRo
 import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.ReqDtoUpdateComputerRoom;
 import com.SoftwareTech.PrcScheduleWeb.service.ManagerService.ComputerRoomService;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.validation.Valid;
+import jakarta.validation.ConstraintViolation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
-import org.springframework.validation.Validator;
+import jakarta.validation.Validator;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.NoSuchElementException;
+import java.util.Set;
 
 @Controller
 @RequiredArgsConstructor
@@ -35,10 +34,9 @@ public class ComputerRoomController {
         RedirectAttributes redirectAttributes
     ) {
         final String standingUrl = request.getHeader("Referer");
-        Errors validationErr = hibernateValidator.validateObject(roomObject);
-        if (validationErr.hasErrors()) {
-            redirectAttributes.addFlashAttribute("errorCode", validationErr.getFieldErrors().getFirst()
-                .getDefaultMessage());
+        Set<ConstraintViolation<ReqDtoAddComputerRoom>> violations = hibernateValidator.validate(roomObject);
+        if (!violations.isEmpty()) {
+            redirectAttributes.addFlashAttribute("errorCode", violations.iterator().next().getMessage());
             return "redirect:" + standingUrl;
         }
 
@@ -63,10 +61,9 @@ public class ComputerRoomController {
     ) {
         String page = (request.getParameter("pageNumber") == null) ? "1" : request.getParameter("pageNumber");
         final String redirectedUrl = "/manager/category/computer-room/computer-room-list?page=" + page;
-        Errors validationErr = hibernateValidator.validateObject(roomObject);
-        if (validationErr.hasErrors()) {
-            redirectAttributes.addFlashAttribute("errorCode", validationErr.getFieldErrors().getFirst()
-                .getDefaultMessage());
+        Set<ConstraintViolation<ReqDtoUpdateComputerRoom>> violations = hibernateValidator.validate(roomObject);
+        if (!violations.isEmpty()) {
+            redirectAttributes.addFlashAttribute("errorCode", violations.iterator().next().getMessage());
             return "redirect:" + redirectedUrl;
         }
 

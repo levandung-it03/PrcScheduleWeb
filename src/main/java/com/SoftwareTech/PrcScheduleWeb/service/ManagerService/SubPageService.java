@@ -135,9 +135,12 @@ public class SubPageService {
             .orElseThrow(() -> new NoSuchElementException("Request Id not found"));
 
         List<SubjectSchedule> schedules = subjectScheduleRepository.findAllByTeacherRequestRequestId(requestId);
+        List<Student> students = subjectRegistrationRepository.findAllStudentBySectionClassSectionClassId(
+            customTeacherRequest.getSectionClass().getSectionClassId());
 
         modelAndView.addObject("customTeacherRequest", customTeacherRequest);
         modelAndView.addObject("practiceSchedules", schedules);
+        modelAndView.addObject("students", students);
         return modelAndView;
     }
 

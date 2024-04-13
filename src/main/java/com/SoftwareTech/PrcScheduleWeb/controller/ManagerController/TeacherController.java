@@ -3,16 +3,17 @@ package com.SoftwareTech.PrcScheduleWeb.controller.ManagerController;
 import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.ReqDtoUpdateTeacher;
 import com.SoftwareTech.PrcScheduleWeb.service.ManagerService.TeacherService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.Errors;
-import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.NoSuchElementException;
+import java.util.Set;
 
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
@@ -33,10 +34,9 @@ public class TeacherController {
     ) {
         String page = (request.getParameter("pageNumber") == null) ? "1" : request.getParameter("pageNumber");
         final String redirectedUrl = "/manager/category/teacher/teacher-list?page=" + page;
-        Errors validationErr = hibernateValidator.validateObject(teacher);
-        if (validationErr.hasErrors()) {
-            redirectAttributes.addFlashAttribute("errorCode", validationErr.getFieldErrors().getFirst()
-                .getDefaultMessage());
+        Set<ConstraintViolation<ReqDtoUpdateTeacher>> violations = hibernateValidator.validate(teacher);
+        if (!violations.isEmpty()) {
+            redirectAttributes.addFlashAttribute("errorCode", violations.iterator().next().getMessage());
             return "redirect:" + redirectedUrl;
         }
 

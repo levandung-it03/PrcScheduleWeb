@@ -4,18 +4,20 @@ import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.ReqDtoPracticeSched
 import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.ReqDtoUpdatePracticeSchedule;
 import com.SoftwareTech.PrcScheduleWeb.service.ManagerService.SubjectScheduleService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validator;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
-import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.NoSuchElementException;
+import java.util.Set;
 
 @Controller
 @RequiredArgsConstructor
@@ -36,10 +38,9 @@ public class SubjectScheduleController {
         RedirectAttributes redirectAttributes
     ) {
         final String standingUrl = request.getHeader("Referer") + "?requestId=" + practiceScheduleObj.getRequestId();
-        Errors validationErr = hibernateValidator.validateObject(practiceScheduleObj);
-        if (validationErr.hasErrors()) {
-            redirectAttributes.addFlashAttribute("errorCode", validationErr.getFieldErrors().getFirst()
-                .getDefaultMessage());
+        Set<ConstraintViolation<ReqDtoPracticeSchedule>> violations = hibernateValidator.validate(practiceScheduleObj);
+        if (!violations.isEmpty()) {
+            redirectAttributes.addFlashAttribute("errorCode", violations.iterator().next().getMessage());
             return "redirect:" + standingUrl;
         }
 
@@ -65,10 +66,9 @@ public class SubjectScheduleController {
     ) {
         final String standingUrl = request.getHeader("Referer")
             + "?practiceScheduleId=" + practiceScheduleObj.getUpdatedPracticeScheduleId();
-        Errors validationErr = hibernateValidator.validateObject(practiceScheduleObj);
-        if (validationErr.hasErrors()) {
-            redirectAttributes.addFlashAttribute("errorCode", validationErr.getFieldErrors().getFirst()
-                .getDefaultMessage());
+        Set<ConstraintViolation<ReqDtoUpdatePracticeSchedule>> violations = hibernateValidator.validate(practiceScheduleObj);
+        if (!violations.isEmpty()) {
+            redirectAttributes.addFlashAttribute("errorCode", violations.iterator().next().getMessage());
             return "redirect:" + standingUrl;
         }
 
