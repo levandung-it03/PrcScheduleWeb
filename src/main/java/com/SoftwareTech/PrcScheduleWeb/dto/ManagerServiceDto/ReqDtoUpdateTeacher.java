@@ -17,17 +17,17 @@ public class ReqDtoUpdateTeacher {
     @NotBlank(message = "error_entity_01")
     private String teacherId;
 
-    @NotBlank(message = "error_account_01")
+    @NotBlank(message = "error_entity_03")
     @Pattern(regexp = "^[^@\\s]+[.\\w]*@(ptithcm\\.edu\\.vn|ptit\\.edu\\.vn|student\\.ptithcm\\.edu\\.vn)$",
         message = "error_account_01")
     private String instituteEmail;
 
     @NotBlank(message = "error_entity_03")
-    @Pattern(regexp = "^[A-Za-zÀ-ỹ]{1,50}( [A-Za-zÀ-ỹ]{1,50})*$", message = "error_account_01")
+    @Pattern(regexp = "^[A-Za-zÀ-ỹ]{1,50}( [A-Za-zÀ-ỹ]{1,50})*$", message = "error_entity_03")
     private String lastName;
 
     @NotBlank(message = "error_entity_03")
-    @Pattern(regexp = "^[A-Za-zÀ-ỹ]{1,50}$", message = "error_account_01")
+    @Pattern(regexp = "^[A-Za-zÀ-ỹ]{1,50}$", message = "error_entity_03")
     private String firstName;
 
     @NotNull(message = "error_entity_03")
@@ -41,6 +41,6 @@ public class ReqDtoUpdateTeacher {
     private String departmentId;
 
     @NotBlank(message = "error_entity_03")
-    @Pattern(regexp = "^[0-9]{4,12}$", message = "error_account_01")
+    @Pattern(regexp = "^[0-9]{4,12}$", message = "error_entity_03")
     private String phone;
 }

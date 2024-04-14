@@ -78,9 +78,9 @@
                 <label>TÍNH NĂNG PHỤ</label>
                 <ul class="category-index-container" id="cat_practice-schedule_box">
                     <li class="index">
-                        <a class="index_wrapper" href="/manager/category/teacher/extra-features">
+                        <a class="index_wrapper" href="/manager/category/extra-features/extra-features-page">
                             <i class="fa-solid fa-screwdriver-wrench"></i>
-                            <p>Danh sách tính năng</p>
+                            <p>Danh sách tính năng</p>  
                         </a>
                     </li>
                 </ul>

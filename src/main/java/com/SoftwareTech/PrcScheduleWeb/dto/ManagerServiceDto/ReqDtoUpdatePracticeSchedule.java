@@ -9,6 +9,6 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ReqDtoUpdatePracticeSchedule extends ReqDtoPracticeSchedule{
-    @NotNull(message = "error_systemApplication_01")
+    @NotNull(message = "error_entity_01")
     private Long updatedPracticeScheduleId;
 }

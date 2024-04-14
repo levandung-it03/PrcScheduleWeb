@@ -51,4 +51,9 @@ public class CategoryController {
         return categoryService.getTeacherAccountListPage(request, model);
     }
 
+    /*******************Extra_Features_On_Category*******************/
+    @RequestMapping(value = "/extra-features/extra-features-page", method = GET)
+    public ModelAndView getExtraFeaturePage(HttpServletRequest request, Model model) {
+        return categoryService.getExtraFeaturePage(request, model);
+    }
 }

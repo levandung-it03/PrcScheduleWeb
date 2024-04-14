@@ -17,7 +17,7 @@
 
 <body>
     <%@ include file="/WEB-INF/jsp/category.jsp" %>
-    <div id="center-page" id="teacher-request-list-page">
+    <div id="center-page">
         <c:if test="${errorMessage != null}">
             <div class="error-service-message">
                 <span>${errorMessage}</span>

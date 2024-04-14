@@ -12,13 +12,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class ReqDtoPracticeSchedule {
-    @NotNull(message = "error_systemApplication_01")
+    @NotNull(message = "error_entity_01")
     private String teacherId;
 
-    @NotNull(message = "error_systemApplication_01")
+    @NotNull(message = "error_entity_01")
     private Long requestId;
 
-    @NotNull(message = "error_systemApplication_01")
+    @NotNull(message = "error_entity_01")
     private Long sectionClassId;
 
     @NotBlank(message = "error_schedule_01")

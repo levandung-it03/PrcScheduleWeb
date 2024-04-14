@@ -101,6 +101,8 @@ public class ApplicationConfig {
 
         messagePairs.put("error_schedule_01", "Lịch không hợp lệ hoặc đang để trống!");
         messagePairs.put("error_schedule_02", "Lịch không thể xoá, phải có ít nhất 1 lịch của yêu cầu!");
+
+        messagePairs.put("error_subject_01", "Môn học đã tồn tại!");
         return messagePairs;
     }
 

@@ -13,10 +13,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class ReqDtoInteractTeacherRequest {
-    @NotNull(message = "error_systemApplication_01")
-    @Min(value = 0, message = "error_systemApplication_01")
+    @NotNull(message = "error_entity_03")
+    @Min(value = 0, message = "error_entity_03")
     private Long requestId;
 
-    @NotBlank(message = "error_systemApplication_01")
+    @NotBlank(message = "error_entity_03")
     private String interactionReason;
 }

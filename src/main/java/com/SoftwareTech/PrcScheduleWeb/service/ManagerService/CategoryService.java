@@ -97,4 +97,8 @@ public class CategoryService {
 
         return modelAndView;
     }
+
+    public ModelAndView getExtraFeaturePage(HttpServletRequest request, Model model) {
+        return staticUtilMethods.customResponseModelView(request, model.asMap(), "extra-features");
+    }
 }

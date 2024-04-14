@@ -16,9 +16,9 @@ public class ReqDtoUpdateTeacherAccount {
     @NotNull(message = "error_entity_01")
     private Long accountId;
 
-    @NotBlank(message = "error_account_01")
+    @NotBlank(message = "error_entity_03")
     @Pattern(regexp = "^[^@\\s]+[.\\w]*@(ptithcm\\.edu\\.vn|ptit\\.edu\\.vn|student\\.ptithcm\\.edu\\.vn)$",
-        message = "error_account_01")
+        message = "error_entity_03")
     private String instituteEmail;
 
     @NotNull(message = "error_entity_03")

@@ -54,6 +54,14 @@ function mappingCategoryNameWithCurrentPage() {
         ["update-practice-schedule"]: {
             ["category-name"]: "Cập nhật lịch thực hành đã tạo",
             ["page-description"]: "Cung cấp các tính năng hỗ trợ cập nhật lịch thực hành đã tạo từ yêu cầu."
+        },
+        ["extra-features-page"]: {
+            ["category-name"]: "Danh sách các tính năng thêm dữ liệu",
+            ["page-description"]: "Cung cấp các tính năng hỗ trợ thêm dữ liệu còn thiếu sót."
+        },
+        ["add-subject"]: {
+            ["category-name"]: "Thêm dữ liệu cho môn học",
+            ["page-description"]: "Thêm dữ liệu cho một môn học còn sót hoặc mới mở."
         }
     }
 

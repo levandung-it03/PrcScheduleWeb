@@ -60,14 +60,16 @@ function createErrBlocksOfInputTags(validatingBlocks) {
 }
 
 function customizeValidateEventInputTags(validatingBlocks) {
+    const validate = function(key, block) {
+        if (block.confirm(block.tag.value))     $('span#' + key).style.display = "none";
+        else    $('span#' + key).style.display = "inline";
+    }
     Object.entries(validatingBlocks).forEach(elem => {
-        let ignoredResult = elem[1].confirm(elem[1].tag.value);
-        elem[1].tag.addEventListener("keyup", e => {
-            if (elem[1].confirm(elem[1].tag.value))
-                $('span#' + elem[0]).style.display = "none";
-            else
-                $('span#' + elem[0]).style.display = "inline";
-        })
+        elem[1].tag.addEventListener("keyup", e => validate(elem[0], elem[1]));
+        //--Set the delay time to format by "customizeAutoFormatStrongInputTextEvent()" before validate.
+        elem[1].tag.addEventListener("blur", e => {
+            setTimeout(function() { validate(elem[0], elem[1]); }, 200);
+        });
     });
 }
 
@@ -197,6 +199,11 @@ function customizeAutoFormatStrongInputTextEvent() {
                 .filter(word => word != "")
                 .map(word => word.slice(0, 1).toUpperCase() + word.slice(1).toLowerCase())
                 .join(" ");
+        });
+    });
+    [...$$('div.capitalized-text input')].forEach(inputTag => {
+        inputTag.addEventListener("blur", e => {
+            inputTag.value = inputTag.value.trim().toUpperCase();
         });
     });
 }

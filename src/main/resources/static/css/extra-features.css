@@ -1,0 +1,76 @@
+div#center-page_list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: start;
+    padding-bottom: 20px;
+}
+div#center-page_list div.feature-blocks > a {
+    text-decoration: none;
+    display: block;
+    width: 275px;
+    padding: 20px;
+    margin: 20px;
+    margin-bottom: 0;
+    height: 290px;
+    border-radius: 15px;
+    border: 1px var(--grey-of-header-border) solid;
+    transition: background-color ease 0.2s, scale ease 0.2s;
+}
+div#center-page_list div.feature-blocks span.index {
+    display: block;
+    height: 28px;
+    width: 30px;
+    text-align: center;
+    padding-top: 3px;
+    border-radius: 5px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    background-color: var(--smoking-grey);
+}
+div#center-page_list div.feature-blocks span {
+    text-align: center;
+    display: block;
+    width: 100%;
+}
+div#center-page_list div.feature-blocks span.title {
+    display: flex;
+    align-items: end;
+    justify-content: center;
+    height: 70px;
+    padding: 5px;
+}
+div#center-page_list div.feature-blocks span.content {
+    padding: 0 10px;
+    color: grey;
+    font-size: 0.9rem;
+}
+div.feature-blocks span.avatar i {
+    font-size: 5rem;
+    display: block;
+    width: 100%;
+    height: 90px;
+    color: rgb(196, 196, 196);
+    text-shadow: 2px 2px rgb(106, 106, 106);
+}
+div#center-page_list div.feature-blocks span.title b {
+    font-size: 1.2rem;
+    font-weight: 1000;
+}
+div#center-page_list div.feature-blocks > a:hover {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    background-color: var(--black-text);
+    scale: 1.05;
+}
+div#center-page_list div.feature-blocks > a:hover > span.index {
+    color: var(--white-text);
+    background-color: transparent;
+    border: 1px var(--white-text) solid;
+}
+div#center-page_list div.feature-blocks > a:hover > span.avatar i {
+    color: var(--white-text);
+    text-shadow: 2px 2px rgb(106, 106, 106);
+}
+div#center-page_list div.feature-blocks > a:hover > span.title b  {
+    color: var(--white-text);
+}
