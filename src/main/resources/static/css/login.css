@@ -3,6 +3,43 @@ html {
     background-size: cover;
     margin: 0;
     padding: 0;
+    background-color: #eae3de;
+    min-height: 100vh;
+}
+
+div#center-block {
+    width: 925px;
+    height: 600px;
+    display: flex;
+    margin: auto;
+    margin-top: 60px;
+    background-color: rgb(176, 25, 58);
+    border: 30px rgb(176, 25, 58) solid;
+    border-radius: 35px;
+    box-shadow: 0 0 100px var(--blur-black);
+}
+div#center-block div#left-column {
+    background-size: cover;
+    width: 50%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+div#center-block div#left-column img {
+    width: 100px;
+    padding: 15px 0 105px 0;
+}
+div#center-block div#left-column span.web-description {
+    font-weight: 1000;
+    font-size: 2.4rem;
+    color: var(--white-text);
+    text-align: end;
+    display: block;
+    width: 100%;
+    padding: 0 50px;
 }
 
 form {
