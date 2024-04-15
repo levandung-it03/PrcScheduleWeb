@@ -191,6 +191,7 @@
                 <span id="submit">Xác nhận</span>
             </form>
         </div>
+        <%@ include file="/WEB-INF/jsp/footer.jsp" %>
     </div>
     <div style="display:none;" id="hidden-blocks">
         <div id="all-unavailable-subject-schedule">

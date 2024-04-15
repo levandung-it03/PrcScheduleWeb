@@ -195,6 +195,7 @@
                 </tbody>
             </table>
         </div>
+        <%@ include file="/WEB-INF/jsp/footer.jsp" %>
     </div>
     </div>
     <script type="application/javascript" src="${pageContext.request.contextPath}/js/base.js"></script>

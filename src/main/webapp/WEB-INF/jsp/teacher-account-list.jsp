@@ -136,6 +136,7 @@
                 </div>
             </div>
         </div>
+        <%@ include file="/WEB-INF/jsp/footer.jsp" %>
     </div>
     <script type="application/javascript" src="${pageContext.request.contextPath}/js/base.js"></script>
     <script type="application/javascript" src="${pageContext.request.contextPath}/js/teacher-account-list.js"></script>

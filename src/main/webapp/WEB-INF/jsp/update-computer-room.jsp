@@ -63,6 +63,7 @@
             <input name="pageNumber" value="${pageNumber}" hidden/>
             <input type="submit" type="text" value="Xác nhận"/>
         </form>
+        <%@ include file="/WEB-INF/jsp/footer.jsp" %>
     </div>
     <script type="application/javascript" src="${pageContext.request.contextPath}/js/base.js"></script>
     <script type="application/javascript" src="${pageContext.request.contextPath}/js/update-computer-room.js"></script>

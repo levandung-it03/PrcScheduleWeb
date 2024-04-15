@@ -32,6 +32,7 @@
         <div id="center-page_list">
             <%-- Contents-here --%>
         </div>
+        <%@ include file="/WEB-INF/jsp/footer.jsp" %>
     </div>
     <script type="application/javascript" src="${pageContext.request.contextPath}/js/base.js"></script>
     <script type="application/javascript" src="${pageContext.request.contextPath}/js/extra-features.js"></script>
