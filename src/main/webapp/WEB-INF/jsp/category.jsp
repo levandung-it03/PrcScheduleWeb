@@ -2,8 +2,8 @@
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/category.css">
     <div id="category">
         <div id="category_header">
-                <div id="category_header_logo">
-                    <img src="${pageContext.request.contextPath}/img/ptit_logo.png" alt="">
+            <div id="category_header_logo">
+                <img src="${pageContext.request.contextPath}/img/ptit_logo.png" alt="">
             </div>
         </div>
         <div id="category_body">
@@ -24,12 +24,6 @@
                         <a class="index_wrapper" href="/manager/category/practice-schedule/teacher-request-list">
                             <i class="fa-regular fa-envelope"></i>
                             <p>Toàn bộ yêu cầu</p>
-                        </a>
-                    </li>
-                    <li class="index">
-                        <a class="index_wrapper" href="">
-                            <i class="fa-regular fa-calendar-minus"></i>
-                            <p>Toàn bộ lịch</p>
                         </a>
                     </li>
                 </ul>

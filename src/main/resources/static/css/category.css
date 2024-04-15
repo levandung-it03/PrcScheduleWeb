@@ -23,8 +23,10 @@
 #category_header_logo img {
     display: block;
     margin: 5px;
-    margin-bottom: 30px;
-    height: 60px;
+    height: 45px;
+}
+#category_body {
+    padding: 10px 0;
 }
 .category-index-container li.index {
     display: block;

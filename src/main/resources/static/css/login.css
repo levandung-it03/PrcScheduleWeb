@@ -1,5 +1,4 @@
 html {
-    background-image: url('../img/form_img.jpeg');
     background-repeat: no-repeat;
     background-size: cover;
     margin: 0;
@@ -7,32 +6,26 @@ html {
 }
 
 form {
-    margin: auto;
-    margin-top: 100px;
-    max-width: 500px;
-    background-color: rgba(255, 255, 255, 0.85);
+    width: 50%;
     display: block;
-    width: auto;
     padding: 28px 56px;
-    border: 1px transparent solid;
-    border-radius: 20px;
-    box-shadow: 0 0 100px var(--blur-black);
-    color: var(--grey-text-form);
     font-size: 0.9rem;
     font-weight: 600;
+    border-radius: 0 20px 20px 0;
+    background-color: var(--white-text);
 }
 
 form #form-title {
     display: block;
-    text-align: center;
+    text-align: start;
     font-size: 2.4rem;
     font-weight: 700;
-    padding: 24px;
+    padding: 60px 0 20px 0;
 }
 
 form .form-input {
     position: relative;
-    width: 350px;
+    width: 100%;
     min-height: 90px !important;
     margin: auto;
 }
@@ -43,7 +36,7 @@ form .form-input {
 }
 
 .form-input input {
-    width: 350px;
+    width: 100%;
     height: 44px;
     border: 2px #d1d0d0 solid;
     border-radius: 10px;
