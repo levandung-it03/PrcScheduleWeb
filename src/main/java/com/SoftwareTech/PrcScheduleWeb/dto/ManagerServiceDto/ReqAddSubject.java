@@ -22,4 +22,6 @@ public class ReqAddSubject {
     @Min(value = 1, message = "error_entity_03")
     @Max(value = 20, message = "error_entity_03")
     private Byte creditsNumber;
+
+
 }

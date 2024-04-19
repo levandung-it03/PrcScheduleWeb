@@ -62,6 +62,14 @@ function mappingCategoryNameWithCurrentPage() {
         ["add-subject"]: {
             ["category-name"]: "Thêm dữ liệu cho môn học",
             ["page-description"]: "Thêm dữ liệu cho một môn học còn sót hoặc mới mở."
+        },
+        ["add-student"]: {
+           ["category-name"]: "Thêm dữ liệu cho sinh viên",
+           ["page-description"]: "Thêm dữ liệu cho một sinh viên còn sót hoặc mới mở."
+        },
+        ["add-grade"]: {
+           ["category-name"]: "Thêm dữ liệu cho lớp",
+           ["page-description"]: "Thêm dữ liệu cho một lớp còn sót hoặc mới mở."
         }
     }
 

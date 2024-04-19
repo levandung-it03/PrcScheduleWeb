@@ -21,4 +21,16 @@ public class GetExtraFeaturesController {
     public ModelAndView getAddSubjectPage(HttpServletRequest request, Model model) {
         return getExtraFeaturesService.getAddSubjectPage(request, model);
     }
+
+    @RequestMapping(value = "/add-student", method = GET)
+    public ModelAndView getAddStudentPage(HttpServletRequest request, Model model) {
+
+        return getExtraFeaturesService.getAddStudentPage(request, model);
+    }
+
+    @RequestMapping(value = "/add-grade", method = GET)
+    public ModelAndView getAddGradePage(HttpServletRequest request, Model model) {
+
+        return getExtraFeaturesService.getAddGradePage(request, model);
+    }
 }
