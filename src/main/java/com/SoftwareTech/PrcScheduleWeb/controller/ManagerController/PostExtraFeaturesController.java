@@ -28,6 +28,7 @@ public class PostExtraFeaturesController {
     @Autowired
     private final PostExtraFeaturesService postExtraFeaturesService;
 
+    /**Author: Le Van Dung**/
     @RequestMapping(value = "/add-subject", method = POST)
     public String addSubject(
         @ModelAttribute("subjectObject") ReqAddSubject subjectObject,
@@ -54,7 +55,9 @@ public class PostExtraFeaturesController {
         }
         return "redirect:" + standingUrl;
     }
+    /*----------------------*/
 
+    /**Author: Nguyen Quang Linh**/
     @RequestMapping(value = "/add-student", method = POST)
     public String addStudent(
             @ModelAttribute("studentObject") ReqAddStudent studentObject,
@@ -81,7 +84,6 @@ public class PostExtraFeaturesController {
         }
         return "redirect:" + standingUrl;
     }
-
     @RequestMapping(value = "/add-grade", method = POST)
     public String addGrade(
             @ModelAttribute("gradeObject") ReqAddGrade gradeObject,
@@ -108,4 +110,5 @@ public class PostExtraFeaturesController {
         }
         return "redirect:" + standingUrl;
     }
+    /*----------------------*/
 }

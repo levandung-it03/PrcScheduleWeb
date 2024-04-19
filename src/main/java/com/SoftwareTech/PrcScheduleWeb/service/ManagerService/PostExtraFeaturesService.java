@@ -22,6 +22,7 @@ public class PostExtraFeaturesService {
     private final StudentRepository studentRepository;
     private final GradeRepository gradeRepository;
 
+    /**Author: Le Van Dung**/
     public void addSubject(ReqAddSubject subjectObject) {
         if (subjectRepository.findByIdOrSubjectName(
                 subjectObject.getSubjectId(), subjectObject.getSubjectName()).isPresent()
@@ -36,7 +37,9 @@ public class PostExtraFeaturesService {
             .status(true)
             .build());
     }
+    /*----------------------*/
 
+    /**Author: Nguyen Quang Linh**/
     public void addStudent(ReqAddStudent studentObject) {
         if (studentRepository.findByStudentId(studentObject.getStudentId()).isPresent()) {
             throw new DuplicateKeyException("Student is already existing");
@@ -52,7 +55,6 @@ public class PostExtraFeaturesService {
                 .instituteEmail(studentObject.getInstituteEmail())
                 .build());
     }
-
     public void addGrade(ReqAddGrade gradeObject) {
         if (gradeRepository.findByGradeId(gradeObject.getGradeId()).isPresent()) {
             throw new DuplicateKeyException("Grade is already existing");
@@ -64,4 +66,6 @@ public class PostExtraFeaturesService {
                 .department(gradeObject.getDepartment())
                 .build());
     }
+    /*----------------------*/
+
 }

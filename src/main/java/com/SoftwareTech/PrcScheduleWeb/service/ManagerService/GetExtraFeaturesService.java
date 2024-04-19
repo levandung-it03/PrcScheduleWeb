@@ -17,6 +17,7 @@ public class GetExtraFeaturesService {
     @Autowired
     private final StaticUtilMethods staticUtilMethods;
 
+    /**Author: Le Van Dung**/
     public ModelAndView getAddSubjectPage(HttpServletRequest request, Model model) {
         ModelAndView modelAndView = staticUtilMethods
             .customResponseModelView(request, model.asMap(), "add-subject");
@@ -28,14 +29,16 @@ public class GetExtraFeaturesService {
 
         return modelAndView;
     }
+    /*----------------------*/
 
+    /**Author: Nguyen Quang Linh**/
     public ModelAndView getAddStudentPage(HttpServletRequest request, Model model) {
         ModelAndView modelAndView = staticUtilMethods
                 .customResponseModelView(request, model.asMap(), "add-student");
 
-        ReqAddStudent subjectObject = (ReqAddStudent) model.asMap().get("studentObject");
+        ReqAddStudent studentObject = (ReqAddStudent) model.asMap().get("studentObject");
 
-        if (subjectObject != null)
+        if (studentObject != null)
             modelAndView.addObject("studentObject", model.asMap().get("studentObject"));
 
         return modelAndView;
@@ -47,9 +50,10 @@ public class GetExtraFeaturesService {
 
         ReqAddGrade gradeObject = (ReqAddGrade) model.asMap().get("gradeObject");
 
-        if (subjectObject != null)
+        if (gradeObject != null)
             modelAndView.addObject("gradeObject", model.asMap().get("gradeObject"));
 
         return modelAndView;
     }
+    /*----------------------*/
 }

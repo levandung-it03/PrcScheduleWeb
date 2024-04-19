@@ -17,20 +17,23 @@ public class GetExtraFeaturesController {
     @Autowired
     private final GetExtraFeaturesService getExtraFeaturesService;
 
+    /**Author: Le Van Dung**/
     @RequestMapping(value = "/add-subject", method = GET)
     public ModelAndView getAddSubjectPage(HttpServletRequest request, Model model) {
         return getExtraFeaturesService.getAddSubjectPage(request, model);
     }
+    /*----------------------*/
 
+    /**Author: Nguyen Quang Linh**/
     @RequestMapping(value = "/add-student", method = GET)
     public ModelAndView getAddStudentPage(HttpServletRequest request, Model model) {
 
         return getExtraFeaturesService.getAddStudentPage(request, model);
     }
-
     @RequestMapping(value = "/add-grade", method = GET)
     public ModelAndView getAddGradePage(HttpServletRequest request, Model model) {
 
         return getExtraFeaturesService.getAddGradePage(request, model);
     }
+    /*----------------------*/
 }
