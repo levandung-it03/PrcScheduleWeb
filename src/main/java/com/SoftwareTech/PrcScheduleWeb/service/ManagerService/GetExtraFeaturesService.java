@@ -2,6 +2,8 @@ package com.SoftwareTech.PrcScheduleWeb.service.ManagerService;
 
 import com.SoftwareTech.PrcScheduleWeb.config.StaticUtilMethods;
 import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.ReqAddStudent;
+import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.ReqAddSubject;
+import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.ReqAddGrade;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +21,7 @@ public class GetExtraFeaturesService {
         ModelAndView modelAndView = staticUtilMethods
             .customResponseModelView(request, model.asMap(), "add-subject");
 
-        ReqAddStudent subjectObject = (ReqAddStudent) model.asMap().get("subjectObject");
+        ReqAddSubject subjectObject = (ReqAddSubject) model.asMap().get("subjectObject");
 
         if (subjectObject != null)
             modelAndView.addObject("subjectObject", model.asMap().get("subjectObject"));
@@ -43,7 +45,7 @@ public class GetExtraFeaturesService {
         ModelAndView modelAndView = staticUtilMethods
                 .customResponseModelView(request, model.asMap(), "add-grade");
 
-        ReqAddStudent subjectObject = (ReqAddStudent) model.asMap().get("gradeObject");
+        ReqAddGrade gradeObject = (ReqAddGrade) model.asMap().get("gradeObject");
 
         if (subjectObject != null)
             modelAndView.addObject("gradeObject", model.asMap().get("gradeObject"));
