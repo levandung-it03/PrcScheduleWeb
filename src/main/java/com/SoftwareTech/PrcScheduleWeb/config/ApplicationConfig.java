@@ -103,6 +103,16 @@ public class ApplicationConfig {
         messagePairs.put("error_schedule_02", "Lịch không thể xoá, phải có ít nhất 1 lịch của yêu cầu!");
 
         messagePairs.put("error_subject_01", "Môn học đã tồn tại!");
+
+        /***Author: Luong Dat Thien***/
+        messagePairs.put("error_semester_01", "Kì học đã tồn tại!");
+
+        messagePairs.put("error_section_class_01", "Lớp tín chỉ đã tồn tại!");
+        messagePairs.put("error_section_class_02", "Kì học không tồn tại!");
+        messagePairs.put("error_section_class_03", "Không tồn tại lớp!");
+        messagePairs.put("error_section_class_04", "Không tồn tại môn học!");
+        /******************/
+
         return messagePairs;
     }
 

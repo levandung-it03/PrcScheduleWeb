@@ -36,4 +36,18 @@ public class GetExtraFeaturesController {
         return getExtraFeaturesService.getAddGradePage(request, model);
     }
     /*----------------------*/
+
+    /**Author: Luong Dat Thien**/
+    @RequestMapping(value = "/add-semester", method = GET)
+    public ModelAndView getAddSemesterPage(HttpServletRequest request, Model model) {
+
+        return getExtraFeaturesService.getAddSemesterPage(request, model);
+    }
+
+    @RequestMapping(value = "/add-sectionClass", method = GET)
+    public ModelAndView getAddSectionClassPage(HttpServletRequest request, Model model) {
+
+        return getExtraFeaturesService.getAddSectionClassPage(request, model);
+    }
+    /*----------------------*/
 }

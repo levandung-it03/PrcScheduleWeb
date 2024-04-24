@@ -1,18 +1,15 @@
 package com.SoftwareTech.PrcScheduleWeb.service.ManagerService;
 
-import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.ReqAddGrade;
-import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.ReqAddStudent;
-import com.SoftwareTech.PrcScheduleWeb.model.Grade;
-import com.SoftwareTech.PrcScheduleWeb.model.Student;
-import com.SoftwareTech.PrcScheduleWeb.model.Subject;
-import com.SoftwareTech.PrcScheduleWeb.repository.GradeRepository;
-import com.SoftwareTech.PrcScheduleWeb.repository.StudentRepository;
-import com.SoftwareTech.PrcScheduleWeb.repository.SubjectRepository;
+import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.*;
+import com.SoftwareTech.PrcScheduleWeb.model.*;
+import com.SoftwareTech.PrcScheduleWeb.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
-import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.ReqAddSubject;
+
+import java.sql.Date;
+import java.time.LocalDate;
 
 @Service
 @RequiredArgsConstructor
@@ -21,6 +18,8 @@ public class PostExtraFeaturesService {
     private final SubjectRepository subjectRepository;
     private final StudentRepository studentRepository;
     private final GradeRepository gradeRepository;
+    private final SemesterRepository semesterRepository;
+    private final SectionClassRepository sectionClassRepository;
 
     /**Author: Le Van Dung**/
     public void addSubject(ReqAddSubject subjectObject) {
@@ -68,4 +67,53 @@ public class PostExtraFeaturesService {
     }
     /*----------------------*/
 
+    /**Author: Luong Dat Thien**/
+    public void addSemester(ReqAddSemester semesterObject) {
+        if (semesterRepository.findBySemesterAndRangeOfYear(semesterObject.getSemester(),
+                semesterObject.getRangeOfYear()).isPresent()) {
+            throw new DuplicateKeyException("Semester is already existing");
+        }
+
+        LocalDate localDate = LocalDate.now();
+        Date date = Date.valueOf(localDate);
+
+        //--May throw SQLException
+        semesterRepository.save(Semester.builder()
+                        .semester(semesterObject.getSemester())
+                        .rangeOfYear(semesterObject.getRangeOfYear())
+                        .firstWeek(semesterObject.getFirstWeek())
+                        .totalWeek(semesterObject.getTotalWeek())
+                        .startingDate(date)
+                .build());
+    }
+
+    public void addSectionClass(ReqAddSectionClass sectionClassObject) {
+        Semester semester = null;
+        Grade grade = null;
+        Subject subject = null;
+        try {
+             semester = semesterRepository.findById(sectionClassObject.getSemesterId()).orElseThrow(()
+                    -> new IllegalArgumentException("error_section_class_02"));
+             grade = gradeRepository.findById(sectionClassObject.getGradeId()).orElseThrow(()
+                    -> new IllegalArgumentException("error_section_class_03"));
+             subject = subjectRepository.findById(sectionClassObject.getSubjectId()).orElseThrow(()
+                    -> new IllegalArgumentException("error_section_class_04"));
+        } catch (IllegalArgumentException e){
+            throw new IllegalArgumentException(e.getMessage());
+        }
+
+        if (sectionClassRepository.findByGradeAndSemesterAndSubject(semester.getSemesterId()
+                ,grade.getGradeId(), subject.getSubjectId()).isPresent()
+        )
+            throw new DuplicateKeyException("SectionClass is already existing");
+
+        //--May throw SQLException
+        sectionClassRepository.save(SectionClass.builder()
+                .semester(semester)
+                .grade(grade)
+                .subject(subject)
+                .groupFromSubject(sectionClassObject.getGroupFromSubject())
+                .build());
+    }
+    /*----------------------*/
 }
