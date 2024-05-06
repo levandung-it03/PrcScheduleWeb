@@ -7,6 +7,10 @@
 function mappingCategoryNameWithCurrentPage() {
     const pageName = new URL(window.location.href).pathname.split("/").pop();
     const categoryNameObjects = {
+        ["home"]: {
+            ["category-name"]: "Chào mừng bạn quay trở lại với ứng dụng - Phân công lịch thực hành",
+            ["page-description"]: "Hãy tiếp tục xử lý yêu cầu nào!"
+        },
         ["add-teacher-account"]: {
             ["category-name"]: "Thêm tài khoản",
             ["page-description"]: "Thêm một tài khoản giảng viên đã có của học viện để cấp quyền sử dụng."

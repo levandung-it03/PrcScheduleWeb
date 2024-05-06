@@ -2,11 +2,13 @@ package com.SoftwareTech.PrcScheduleWeb.repository;
 
 import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.ResDtoTeacherRequest;
 import com.SoftwareTech.PrcScheduleWeb.model.TeacherRequest;
+import com.SoftwareTech.PrcScheduleWeb.model.enums.EntityInteractionStatus;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -24,6 +26,20 @@ public interface TeacherRequestRepository extends JpaRepository<TeacherRequest, 
     """)
     List<ResDtoTeacherRequest> findAllTeacherRequestInSubjectScheduleWithSpecifiedPage(PageRequest pageRequest);
 
+    @Query("""
+        SELECT new com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.ResDtoTeacherRequest(
+            s.teacherRequest.requestId, s.teacherRequest.interactionStatus,
+            s.teacherRequest.requestMessageDetail, s.teacherRequest.interactRequestReason,
+            s.subjectScheduleId, s.sectionClass, s.teacher
+        ) FROM SubjectSchedule s
+        WHERE s.teacherRequest IS NOT NULL AND s.teacherRequest.interactionStatus = :interactionStatus
+        GROUP BY s.teacherRequest.requestId
+        ORDER BY s.teacherRequest.updatingTime DESC
+    """)
+    List<ResDtoTeacherRequest> findAllTeacherRequestInSubjectScheduleWithInteractionStatus(
+        @Param("interactionStatus") EntityInteractionStatus interactionStatus
+    );
+
     @Modifying
     @Query("""
         UPDATE TeacherRequest t
@@ -33,4 +49,6 @@ public interface TeacherRequestRepository extends JpaRepository<TeacherRequest, 
         WHERE t.requestId = :#{#teacherRequest.requestId}
     """)
     void updateByRequestId(@Param("teacherRequest") TeacherRequest teacherRequest);
+
+    int countAllByInteractionStatus(EntityInteractionStatus interactionStatus);
 }

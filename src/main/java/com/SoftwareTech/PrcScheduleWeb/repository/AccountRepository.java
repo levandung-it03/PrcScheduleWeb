@@ -29,4 +29,6 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
         @Param("accountId") Long accountId,
         @Param("instituteEmail") String instituteEmail
     );
+
+    int countAllByStatus(boolean status);
 }
