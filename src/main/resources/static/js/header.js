@@ -78,6 +78,14 @@ function mappingCategoryNameWithCurrentPage() {
         ["add-subjectRegistration"]: {
             ["category-name"]: "Thêm dữ liệu sinh viên đăng kí học phần",
             ["page-description"]: "Thêm dữ liệu thông tin mà sinh viên đã đăng kí học phần tùy chọn."
+        },
+        ["add-sectionClass"]:{
+            ["category-name"]: "Thêm dữ liệu cho lớp học phần",
+            ["page-description"]: "Thêm dữ liệu cho một lớp học phần mới mở."
+        },
+        ["add-semester"]:{
+            ["category-name"]: "Thêm dữ liệu cho học kì",
+            ["page-description"]: "Thêm dữ liệu cho một học kì mới mở."
         }
     }
 
