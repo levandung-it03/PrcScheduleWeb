@@ -2,8 +2,10 @@ package com.SoftwareTech.PrcScheduleWeb.service.ManagerService;
 
 import com.SoftwareTech.PrcScheduleWeb.config.StaticUtilMethods;
 import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.*;
-import com.SoftwareTech.PrcScheduleWeb.model.Semester;
+import com.SoftwareTech.PrcScheduleWeb.model.*;
+import com.SoftwareTech.PrcScheduleWeb.repository.SectionClassRepository;
 import com.SoftwareTech.PrcScheduleWeb.repository.SemesterRepository;
+import com.SoftwareTech.PrcScheduleWeb.repository.StudentRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +20,12 @@ import java.util.List;
 public class GetExtraFeaturesService {
     @Autowired
     private final StaticUtilMethods staticUtilMethods;
-
-    /**Author: Luong Dat Thien**/
     @Autowired
     private final SemesterRepository semesterRepository;
+    @Autowired
+    private final StudentRepository studentRepository;
+    @Autowired
+    private final SectionClassRepository sectionClassRepository;
     /*----------------------*/
 
 
@@ -93,6 +97,34 @@ public class GetExtraFeaturesService {
 
         return modelAndView;
     }
+    /*----------------------*/
 
+    /**Author: Huynh Nhu Y**/
+    public ModelAndView getClassroomPage(HttpServletRequest request, Model model) {
+        ModelAndView modelAndView = staticUtilMethods
+            .customResponseModelView(request, model.asMap(), "add-classroom");
+
+        ReqAddClassroom classroomObject = (ReqAddClassroom) model.asMap().get("classroomObject");
+
+        if (classroomObject != null)
+            modelAndView.addObject("classroomObject", model.asMap().get("classroomObject"));
+
+        return modelAndView;
+    }
+
+    public ModelAndView getSubjectRegistrationPage(HttpServletRequest request, Model model){
+        List<Student> studentList = studentRepository.findAll();
+        List<SectionClass> sectionClassList = sectionClassRepository.findAll();
+        ModelAndView modelAndView = staticUtilMethods
+            .customResponseModelView(request, model.asMap(),"add-subjectRegistration");
+        ReqAddSubjectRegistration subjectRegistrationObject = (ReqAddSubjectRegistration) model.asMap()
+            .get("subjectRegistrationObject");
+        if (subjectRegistrationObject != null){
+            modelAndView.addObject("subjectRegistrationObject", model.asMap().get("subjectRegistrationObject"));
+        }
+        modelAndView.addObject(studentList);
+        modelAndView.addObject(sectionClassList);
+        return modelAndView;
+    }
     /*----------------------*/
 }

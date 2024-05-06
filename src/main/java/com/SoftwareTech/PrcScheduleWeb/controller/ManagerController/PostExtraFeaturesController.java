@@ -178,4 +178,60 @@ public class PostExtraFeaturesController {
         return errorMessage;
     }
     /*----------------------*/
+
+    /**Author: Huynh Nhu Y**/
+    @RequestMapping(value = "/add-classroom", method = POST)
+    public String addClassroom(
+        @ModelAttribute("classroomObject") ReqAddClassroom classroomObject,
+        HttpServletRequest request,
+        RedirectAttributes redirectAttributes
+    ) {
+        final String standingUrl = request.getHeader("Referer");
+        Set<ConstraintViolation<ReqAddClassroom>> violations = hibernateValidator.validate(classroomObject);
+        if (!violations.isEmpty()) {
+            redirectAttributes.addFlashAttribute("errorCode", violations.iterator().next().getMessage());
+            redirectAttributes.addFlashAttribute("classroomObject", classroomObject);
+            return "redirect:" + standingUrl;
+        }
+
+        try {
+            postExtraFeaturesService.addClassroom(classroomObject);
+            redirectAttributes.addFlashAttribute("succeedCode", "succeed_add_01");
+        } catch (DuplicateKeyException e) {
+            redirectAttributes.addFlashAttribute("classroomObject", classroomObject);
+            redirectAttributes.addFlashAttribute("errorCode", e.getMessage());
+        } catch (Exception ignored) {
+            redirectAttributes.addFlashAttribute("roomObject", classroomObject);
+            redirectAttributes.addFlashAttribute("errorCode", "error_systemApplication_01");
+        }
+        return "redirect:" + standingUrl;
+    }
+
+    @RequestMapping(value = "/add-subjectRegistration", method = POST)
+    public String addSubjectRegistration(
+        @ModelAttribute("subjectRegistrationObject") ReqAddSubjectRegistration subjectRegistrationObject,
+        HttpServletRequest request,
+        RedirectAttributes redirectAttributes
+    ) {
+        final String standingUrl = request.getHeader("Referer");
+        Set<ConstraintViolation<ReqAddSubjectRegistration>> violations = hibernateValidator.validate(subjectRegistrationObject);
+        if (!violations.isEmpty()) {
+            redirectAttributes.addFlashAttribute("errorCode", violations.iterator().next().getMessage());
+            redirectAttributes.addFlashAttribute("subjectRegistrationObject", subjectRegistrationObject);
+            return "redirect:" + standingUrl;
+        }
+
+        try {
+            postExtraFeaturesService.addSubjectRegistration(subjectRegistrationObject);
+            redirectAttributes.addFlashAttribute("succeedCode", "succeed_add_01");
+        } catch (DuplicateKeyException ignored) {
+            redirectAttributes.addFlashAttribute("subjectRegistrationObject", subjectRegistrationObject);
+            redirectAttributes.addFlashAttribute("errorCode", "error_entity_04");
+        } catch (Exception ignored) {
+            redirectAttributes.addFlashAttribute("subjectObject", subjectRegistrationObject);
+            redirectAttributes.addFlashAttribute("errorCode", "error_systemApplication_01");
+        }
+        return "redirect:" + standingUrl;
+    }
+    /*----------------------*/
 }

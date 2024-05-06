@@ -50,4 +50,16 @@ public class GetExtraFeaturesController {
         return getExtraFeaturesService.getAddSectionClassPage(request, model);
     }
     /*----------------------*/
+
+    /**Author: Huynh Nhu Y**/
+    @RequestMapping(value = "/add-classroom", method = GET)
+    public ModelAndView getAddClassroomPage (HttpServletRequest request, Model model){
+        return getExtraFeaturesService.getClassroomPage(request, model);
+    }
+
+    @RequestMapping(value = "/add-subjectRegistration", method = GET)
+    public ModelAndView getSubjectRegistrationPage (HttpServletRequest request, Model model){
+        return getExtraFeaturesService.getSubjectRegistrationPage(request, model);
+    }
+    /*----------------------*/
 }

@@ -70,6 +70,14 @@ function mappingCategoryNameWithCurrentPage() {
         ["add-grade"]: {
            ["category-name"]: "Thêm dữ liệu cho lớp",
            ["page-description"]: "Thêm dữ liệu cho một lớp còn sót hoặc mới mở."
+        },
+        ["add-classroom"]: {
+            ["category-name"]: "Thêm dữ liệu cho phòng học",
+            ["page-description"]: "Thêm dữ liệu cho một phòng mới mở."
+        },
+        ["add-subjectRegistration"]: {
+            ["category-name"]: "Thêm dữ liệu sinh viên đăng kí học phần",
+            ["page-description"]: "Thêm dữ liệu thông tin mà sinh viên đã đăng kí học phần tùy chọn."
         }
     }
 

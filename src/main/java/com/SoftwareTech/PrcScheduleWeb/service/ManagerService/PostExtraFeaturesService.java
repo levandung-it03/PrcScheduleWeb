@@ -2,6 +2,7 @@ package com.SoftwareTech.PrcScheduleWeb.service.ManagerService;
 
 import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.*;
 import com.SoftwareTech.PrcScheduleWeb.model.*;
+import com.SoftwareTech.PrcScheduleWeb.model.enums.RoomType;
 import com.SoftwareTech.PrcScheduleWeb.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,16 +11,26 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class PostExtraFeaturesService {
     @Autowired
     private final SubjectRepository subjectRepository;
+    @Autowired
     private final StudentRepository studentRepository;
+    @Autowired
     private final GradeRepository gradeRepository;
+    @Autowired
     private final SemesterRepository semesterRepository;
+    @Autowired
     private final SectionClassRepository sectionClassRepository;
+    @Autowired
+    private final ClassroomRepository classroomRepository;
+    @Autowired
+    private final SubjectRegistrationRepository subjectRegistrationRepository;
 
     /**Author: Le Van Dung**/
     public void addSubject(ReqAddSubject subjectObject) {
@@ -79,28 +90,24 @@ public class PostExtraFeaturesService {
 
         //--May throw SQLException
         semesterRepository.save(Semester.builder()
-                        .semester(semesterObject.getSemester())
-                        .rangeOfYear(semesterObject.getRangeOfYear())
-                        .firstWeek(semesterObject.getFirstWeek())
-                        .totalWeek(semesterObject.getTotalWeek())
-                        .startingDate(date)
-                .build());
+            .semester(semesterObject.getSemester())
+            .rangeOfYear(semesterObject.getRangeOfYear())
+            .firstWeek(semesterObject.getFirstWeek())
+            .totalWeek(semesterObject.getTotalWeek())
+            .startingDate(date)
+            .build());
     }
 
-    public void addSectionClass(ReqAddSectionClass sectionClassObject) {
-        Semester semester = null;
-        Grade grade = null;
-        Subject subject = null;
-        try {
-             semester = semesterRepository.findById(sectionClassObject.getSemesterId()).orElseThrow(()
-                    -> new IllegalArgumentException("error_section_class_02"));
-             grade = gradeRepository.findById(sectionClassObject.getGradeId()).orElseThrow(()
-                    -> new IllegalArgumentException("error_section_class_03"));
-             subject = subjectRepository.findById(sectionClassObject.getSubjectId()).orElseThrow(()
-                    -> new IllegalArgumentException("error_section_class_04"));
-        } catch (IllegalArgumentException e){
-            throw new IllegalArgumentException(e.getMessage());
-        }
+    public void addSectionClass(ReqAddSectionClass sectionClassObject) throws IllegalArgumentException {
+        Semester semester = semesterRepository
+            .findById(sectionClassObject.getSemesterId())
+            .orElseThrow(() -> new IllegalArgumentException("error_section_class_02"));
+        Grade grade = gradeRepository
+            .findById(sectionClassObject.getGradeId())
+            .orElseThrow(() -> new IllegalArgumentException("error_section_class_03"));
+        Subject subject = subjectRepository
+            .findById(sectionClassObject.getSubjectId())
+            .orElseThrow(() -> new IllegalArgumentException("error_section_class_04"));
 
         if (sectionClassRepository.findByGradeAndSemesterAndSubject(semester.getSemesterId()
                 ,grade.getGradeId(), subject.getSubjectId()).isPresent()
@@ -114,6 +121,47 @@ public class PostExtraFeaturesService {
                 .subject(subject)
                 .groupFromSubject(sectionClassObject.getGroupFromSubject())
                 .build());
+    }
+    /*----------------------*/
+
+    /**Author: Huynh Nhu Y**/
+    public void addClassroom(ReqAddClassroom classroomObject) throws DuplicateKeyException {
+        final String area = classroomObject.getArea().trim().toUpperCase();
+        final String inpClassRoom = String.format("2%s%s", area, classroomObject.getRoomCode());
+
+        //--Query result will be ignored because it belongs to validate.
+        if (classroomRepository.existsById(inpClassRoom))
+            throw new DuplicateKeyException("error_computerRoom_01");
+
+        //--Preparing added data.
+        Classroom classRoom = Classroom.builder()
+            .roomId(inpClassRoom)
+            .roomType(RoomType.NORM)
+            .maxQuantity(classroomObject.getMaxQuantity())
+            .status(true)
+            .build();
+
+        classroomRepository.save(classRoom);
+    }
+
+    public void addSubjectRegistration(ReqAddSubjectRegistration subjectRegistrationObject) {
+        if (subjectRegistrationRepository.findBySectionClassIdAndStudentId(
+            subjectRegistrationObject.getSectionClassId(), subjectRegistrationObject.getStudentId()).isPresent()
+        )
+            throw new DuplicateKeyException("Data is already existing");
+
+        SectionClass chosenSectionClass = sectionClassRepository
+            .findById(subjectRegistrationObject.getSectionClassId())
+            .orElseThrow(()-> new NoSuchElementException("SectionClass Id not found"));
+
+        Student chosenStudent = studentRepository
+            .findById(subjectRegistrationObject.getStudentId())
+            .orElseThrow(()-> new NoSuchElementException("Student Id not found"));
+
+        subjectRegistrationRepository.save(SubjectRegistration.builder()
+            .sectionClass(chosenSectionClass)
+            .student(chosenStudent)
+            .build());
     }
     /*----------------------*/
 }
