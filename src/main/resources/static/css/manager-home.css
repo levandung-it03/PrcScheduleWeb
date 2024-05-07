@@ -1,0 +1,238 @@
+:root {
+    --table-title-height: 70px;
+    --thead-height: 23px;
+    --max-component-width: 420px;
+}
+div#manager-home {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+/* -------------------Redirecting blocks------------------- */
+div#redirecting-blocks {
+    display: block;
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-evenly;
+}
+a.redirecting-blocks_items {
+    display: flex;
+    flex-wrap: wrap;
+    width: calc((100% - 5*25px) / 5);
+    height: 100px;
+    padding: 15px;
+    margin-top: 25px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    justify-content: space-between;
+    transition: background-color ease 0.2s;
+}
+div.redirecting-blocks_items_contents {
+    width: 85%;
+}
+span.redirecting-blocks_items_contents_quantity {
+    font-weight: 900;
+    font-size: 1.6rem;
+}
+i.redirecting-blocks_items_contents_description {
+    display: block;
+    width: 100%;
+    font-size: 0.85rem;
+    line-height: 15px;
+    color: grey;
+}
+span.redirecting-blocks_items_labels {
+    display: block;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    border-radius: 5px;
+}
+a#pending-requests span.redirecting-blocks_items_labels {
+    background-color: rgb(213, 213, 255);
+}
+a#created-requests span.redirecting-blocks_items_labels {
+    background-color: rgb(120, 255, 141);
+}
+a#successfully-created-requests span.redirecting-blocks_items_labels {
+    background: linear-gradient(135deg, rgb(255, 133, 133) 50%, rgb(124, 255, 135) 50%);
+}
+a#accounts span.redirecting-blocks_items_labels {
+    background: rgb(255, 160, 228);
+}
+a#computer-rooms span.redirecting-blocks_items_labels {
+    background: rgb(243, 240, 86);
+}
+/* --------------------------------------------------------------- */
+
+/* -------------------List of Pending Request from Teachers------------------- */
+div#pending-teacher-request-list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: start;
+    width: calc(100% - 30% - 3*22px);
+    margin: 20px 0 20px 20px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}
+div#table-as-list, table, thead {
+    width: 100%;
+}
+div#table-as-list {
+    height: calc(100% - 70px);
+    align-items: center;
+}
+
+table tbody tr {
+    height: 65px;
+}
+div#table-as-list table {
+    position: relative;
+    padding-top: var(--thead-height);
+}
+div#table-as-list table thead {
+    display: block;
+    position: absolute;
+    top: 0;
+}
+div#table-as-list table tbody {
+    display: block;
+    height: calc(var(--max-component-width) - var(--table-title-height) - var(--thead-height));
+    overflow-y: auto;
+    overflow-x: hidden; 
+}
+span#table-description {
+    text-align: left;
+    display: block;
+    font-weight: 900;
+    font-size: 1.2rem;
+    width: 100%;
+    text-align: left;
+}
+
+table tr th#base-profile,
+table tr td.base-profile {
+    padding-left: 10px;
+    text-align: start;
+    width: 40%;
+}
+
+table tr td.base-profile {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+
+table tr td.base-profile span.mock-avatar {
+    display: block;
+    width: 45px;
+    padding: 10px 0;
+    background-color: grey;
+    text-align: center;
+    border-radius: 30px;
+}
+
+table tr td.base-profile div.teacher-info {
+    width: calc(100% - 45px);
+    padding-left: 10px;
+}
+
+table tr td.base-profile div.teacher-info p.institute-email {
+    font-size: 0.85rem;
+}
+
+table tr th#section-class-info,
+table tr td.section-class-info {
+    text-align: start;
+    width: 35%;
+}
+table tr th#request-interaction-status,
+table tr td.request-interaction-status {
+    text-align: start;
+    width: 17%;
+}
+
+table tr th#add,
+table tr td.add {
+    text-align: center;
+    width: 8%;
+    padding-right: 10px;
+}
+
+/* --------------------------------------------------------------- */
+
+/* -------------------Main statistic-chart------------------- */
+div#main-chart {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 20px;
+    width: 400px;
+    height: var(--max-component-width);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+    transition: background-color ease 0.2s;
+    border-radius: 10px;
+}
+
+div.title,
+div#chart-container {
+    display: block;
+    width: 100%;
+    text-align: center;
+}
+
+div.title {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    height: var(--table-title-height);
+    border-bottom: 1px solid var(--grey-border);
+    padding-left: 20px;
+}
+
+span#chart-title {
+    text-align: left;
+    display: block;
+    font-weight: 900;
+    font-size: 1.2rem;
+}
+
+div#chart-container {
+    padding-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 0;
+}
+
+div#labels {
+    padding-top: 20px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+span.label-for-chart {
+    color: white;
+    padding: 3px 10px;
+    width: 40%;
+    text-align: left;
+    margin: 5px 0;
+    font-size: 0.9rem;
+    border-radius: 5px;
+}
+/* ------------------------------------------------------------- */ 
+
+div#main-chart:hover {
+    background-color: rgb(235, 235, 235);
+}
+a.redirecting-blocks_items:hover {
+    background-color: rgb(235, 235, 235);
+}

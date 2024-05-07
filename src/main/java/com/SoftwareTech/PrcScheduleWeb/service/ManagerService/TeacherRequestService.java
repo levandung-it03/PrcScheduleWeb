@@ -24,7 +24,7 @@ public class TeacherRequestService {
     private final SubjectScheduleRepository subjectScheduleRepository;
 
     @Transactional(rollbackOn = {Exception.class})
-    public void denyTeacherRequest(ReqDtoInteractTeacherRequest requestInteraction) throws SQLIntegrityConstraintViolationException {
+    public void denyingTeacherRequest(ReqDtoInteractTeacherRequest requestInteraction) throws SQLIntegrityConstraintViolationException {
         TeacherRequest deinedTeacherRequest = teacherRequestRepository
             .findById(requestInteraction.getRequestId())
             .orElseThrow(() -> new NoSuchElementException("Teacher Request Id not found!"));

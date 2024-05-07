@@ -18,18 +18,18 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping(path = "${url.post.manager.prefix.v1}")
-public class TeacherRequest {
+public class TeacherRequestController {
     @Autowired
     private final TeacherRequestService teacherRequestService;
 
     @RequestMapping(value = "/deny-teacher-request", method = POST)
-    public String denyTeacherRequest(
+    public String denyingTeacherRequest(
         @ModelAttribute("requestInteraction") ReqDtoInteractTeacherRequest requestInteraction,
         HttpServletRequest request,
         RedirectAttributes redirectAttributes
     ) {
         try {
-            teacherRequestService.denyTeacherRequest(requestInteraction);
+            teacherRequestService.denyingTeacherRequest(requestInteraction);
             redirectAttributes.addFlashAttribute("succeedCode", "succeed_update_01");
         } catch (NumberFormatException | NoSuchElementException e) {
             redirectAttributes.addFlashAttribute("errorCode", "error_entity_01");

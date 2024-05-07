@@ -33,3 +33,4 @@ build/
 .vscode/
 
 .fake
+/src/main/static_test/

@@ -260,7 +260,7 @@ table tr th > i:hover {
     background-color: var(--grey-border);
 }
 
-#table-tools #table-description span#quantity,
+#table-description span#quantity,
 table tr td span.status-is-true,
 table tr td span.status-is-false,
 table tr td span.status-is-pending,
@@ -289,7 +289,7 @@ table tr td span.status-is-cancel {
     color: #000000;
     font-weight: 500;
 }
-#table-tools #table-description span#quantity {
+#table-description span#quantity {
     background-color: #eae8fb;
     color: #0d0dac;
     font-weight: 600;

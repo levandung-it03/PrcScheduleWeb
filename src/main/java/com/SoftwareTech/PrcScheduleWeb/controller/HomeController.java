@@ -2,6 +2,7 @@ package com.SoftwareTech.PrcScheduleWeb.controller;
 
 import com.SoftwareTech.PrcScheduleWeb.service.HomeService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,8 +20,8 @@ public class HomeController {
     private final HomeService homeService;
 
     @RequestMapping(value = "/home", method = RequestMethod.GET)
-    public ModelAndView getHome(HttpServletRequest request, Model model) {
-        return homeService.handleGettingHomeRequestFromBothRoles(request, model);
+    public ModelAndView getHomePageOfBothRoles(HttpServletRequest request, HttpServletResponse response, Model model) {
+        return homeService.handleGettingHomeRequestFromBothRoles(request, response, model);
     }
 
 }

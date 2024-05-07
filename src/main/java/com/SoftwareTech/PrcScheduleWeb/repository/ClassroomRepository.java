@@ -2,6 +2,7 @@ package com.SoftwareTech.PrcScheduleWeb.repository;
 
 import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.ResDtoComputerRoom;
 import com.SoftwareTech.PrcScheduleWeb.model.Classroom;
+import com.SoftwareTech.PrcScheduleWeb.model.enums.RoomType;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -27,4 +28,6 @@ public interface ClassroomRepository extends JpaRepository<Classroom, String> {
             AND cl.maxQuantity >= :studentQuantity
         """)
     List<String> findAllComputerRoomIdWithQuantity(@Param("studentQuantity") int studentQuantity);
+
+    int countAllByRoomTypeAndStatus(RoomType roomType, boolean status);
 }

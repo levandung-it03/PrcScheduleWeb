@@ -11,7 +11,7 @@
     <link rel="stylesheet" type="text/css" href="../resources/static/css/base.css">
     <link rel="stylesheet" type="text/css" href="../resources/static/css/header.css">
     <link rel="stylesheet" type="text/css" href="../resources/static/css/category.css">
-    <link rel="stylesheet" type="text/css" href="../resources/static/css/add-practice-schedule.css">
+    <link rel="stylesheet" type="text/css" href="../resources/static/css/manager-home.css">
 </head>
 
 <body>
@@ -96,213 +96,223 @@
         </div>
     </div>
     <div id="center-page" id="add-account-page">
-        <div class="error-service-message hide" style="display:flex">
-            <span>Lỗi gì đó không biết!</span>
-            <i id="error-service-message_close-btn" class="fa fa-times-circle" aria-hidden="true"></i>
+        <div id="header">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+                integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
+                crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <link rel="stylesheet" type="text/css" href="../resources/static/css/base.css">
+            <style>
+                header {
+                    height: 60px;
+                    background-color: rgb(232, 232, 232);
+                }
+            </style>
+            <header>
+                <div id="header_left">
+                    <div id="toggle-hide-category">
+                        <i class="fa-solid fa-bars"></i>
+                    </div>
+                    <div id="category-name">
+
+                    </div>
+                    <div id="page-description">
+
+                    </div>
+                </div>
+                <div id="header_right">
+                    <div id="avatar">
+
+                    </div>
+                </div>
+            </header>
         </div>
-        <header>
-            <div id="header_left">
-                <div class="header_items" id="toggle-hide-category">
-                    <i class="fa-solid fa-bars"></i>
-                </div>
-            </div>
-            <div id="header_center">
-                <p id="category-name"></p>
-                <p id="page-description"></p>
-            </div>
-            <div id="header_right">
-                <div class="header_items" id="setting">
-                    <i class="fa-solid fa-gear"></i>
-                </div>
-                <div class="header_items" id="avatar">
-                    <a id="avatar_user" href="/home">MN</a>
-                </div>
-            </div>
-        </header>
-        <!-- ***********************Starting-coding-here*********************** -->
-        <form method="POST" action="/service/v1/manager/update-teacher" modelAttribute="teacher">
-            <div class="detail-block">
-                <input name="teacherId" type="text" value="${teacherRequest.teacher.teacherId}" hidden />
-                <input name="sectionClassId" type="text" value="${teacherRequest.sectionClass.sectionClassId}" hidden />
-                <div class="detail-block_description" id="request-info">
-                    <i class="fa-regular fa-envelope"></i>
-                    <p>CHI TIẾT YÊU CẦU</p>
-                </div>
-                <div class="data-row" id="teacher-id">
-                    <label for="teacher-id">Giảng viên</label>
-                    <p>${teacherRequest.teacher.teacherId} - ${teacherRequest.teacher.lastName}
-                        ${teacherRequest.teacher.firstName}</p>
-                </div>
-                <div class="data-row" id="subject-name">
-                    <label for="subject-name">Tên môn học</label>
-                    <p>${teacherRequest.sectionClass.subject.subjectName}</p>
-                </div>
-                <div class="data-row" id="grade-id">
-                    <label for="grade-id">Lớp mở môn</label>
-                    <p>${teacherRequest.sectionClass.grade.gradeId}</p>
-                </div>
-                <div class="data-row" id="group-from-subject">
-                    <label for="group-from-subject">Tổ mà giảng viên dạy</label>
-                    <p>${teacherRequest.sectionClass.groupFromSubject}</p>
-                </div>
-                <div class="data-row" id="request-message-detail">
-                    <label for="request-message-detail">Mô tả yêu cầu</label>
-                    <p>${teacherRequest.requestMessageDetail}</p>
-                </div>
-            </div>
-            <div id="add-schedule-block">
-                <div id="table-tools">
-                    <div class="form-input" id="semester">
-                        <label for="semester">Học kỳ hiện tại</label>
-                        <input type="text" disabled
-                        value="Học kỳ ${teacherRequest.sectionClass.semester.semester} - Năm học: ${teacherRequest.sectionClass.semester.rangeOfYear} "/>
+        <div id="manager-home">
+            <div id="redirecting-blocks">
+                <a id="pending-requests" class="redirecting-blocks_items" href="">
+                    <div class="redirecting-blocks_items_contents">
+                        <span class="redirecting-blocks_items_contents_quantity">100</span>
+                        <i class="redirecting-blocks_items_contents_description">
+                            Yêu cầu đang chờ giải quyết
+                        </i>
                     </div>
-                    <div class="form-input" id="list-of-week">
-                        <label for="list-of-week">Chọn tuần muốn xem</label>
-                        <select name="list-of-week" id="list-of-week">
-                        </select>
+                    <span class="redirecting-blocks_items_labels">
+                        <i class="fa-regular fa-envelope"></i>
+                    </span> 
+                </a>
+                <a id="created-requests" class="redirecting-blocks_items" href="">
+                    <div class="redirecting-blocks_items_contents">
+                        <span class="redirecting-blocks_items_contents_quantity">100</span>
+                        <i class="redirecting-blocks_items_contents_description">
+                            Yêu cầu đã được xử lý
+                        </i>
+                    </div>
+                    <span class="redirecting-blocks_items_labels">
+                        <i class="fa-solid fa-users-between-lines"></i>
+                    </span> 
+                </a>
+                <a id="successfully-created-requests" class="redirecting-blocks_items" href="">
+                    <div class="redirecting-blocks_items_contents">
+                        <span class="redirecting-blocks_items_contents_quantity">100%</span>
+                        <i class="redirecting-blocks_items_contents_description">
+                            Tỉ lệ yêu cầu được tạo lịch thành công
+                        </i>
+                    </div>
+                    <span class="redirecting-blocks_items_labels">
+                        <i class="fa-solid fa-users-between-lines"></i>
+                    </span> 
+                </a>
+                <a id="accounts" class="redirecting-blocks_items" href="">
+                    <div class="redirecting-blocks_items_contents">
+                        <span class="redirecting-blocks_items_contents_quantity">100</span>
+                        <i class="redirecting-blocks_items_contents_description">
+                            Người dùng hiện tại
+                        </i>
+                    </div>
+                    <span class="redirecting-blocks_items_labels">
+                        <i class="fa-solid fa-users-between-lines"></i>
+                    </span>
+                </a>
+                <a id="computer-rooms" class="redirecting-blocks_items" href="">
+                    <div class="redirecting-blocks_items_contents">
+                        <span class="redirecting-blocks_items_contents_quantity">100</span>
+                        <i class="redirecting-blocks_items_contents_description">
+                            Phòng thực hành hiện tại đang hoạt động
+                        </i>
+                    </div>
+                    <span class="redirecting-blocks_items_labels">
+                        <i class="fa-solid fa-users-between-lines"></i>
+                    </span> 
+                </a>
+            </div>
+            <div id="pending-teacher-request-list">
+                <div class="title" style="height: 71px;">
+                    <span id="table-description">
+                        Yêu cầu đang chờ
+                        <span id="quantity">${teacherRequestList.size()} yêu cầu</span>
+                    </span>
+                </div>
+                <div id="table-as-list">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th id="base-profile">
+                                    Thông tin cơ bản
+                                    <i class="fa-solid fa-arrow-down-a-z"></i>
+                                </th>
+                                <th id="request-interaction-status">
+                                    Trạng thái
+                                    <i class="fa-solid fa-arrow-down-a-z"></i>
+                                </th>
+                                <th id="section-class-info">
+                                    Thông tin lớp học phần
+                                    <i class="fa-solid fa-arrow-down-a-z"></i>
+                                </th>
+                                <th id="add">Tạo lịch</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr id="1">
+                                <td plain-value="Le Van Dung n21dccn021@student.ptithcm.edu.vn 1" class="base-profile">
+                                    <span class="mock-avatar">D</span>
+                                    <div class="teacher-info">
+                                        <b class="teacher-name">[1] Le Van Dung</b>
+                                        <p class="institute-email">n21dccn021@student.ptithcm.edu.vn</p>
+                                    </div>
+                                </td>
+                                <td plain-value="Đã huỷ Da huy" class="request-interaction-status">
+                                    <span class="status-is-cancel">Đã huỷ</span>
+                                </td>
+                                <td plain-value="D21CQDPT01-N" class="section-class-info">
+                                    D21CQDPT01-N - Lập trình hướng đối tượng - Tổ 1
+                                </td>
+                                <td class="table-row-btn add">
+                                    <a href="/manager/sub-page/practice-schedule/add-practice-schedule?requestId=1">
+                                        <i class="fa-regular fa-calendar-plus"></i>
+                                    </a>
+                                </td>
+                            </tr>
+
+                            <!-- <c:when test="${students.size() == 0}">
+                                <tr><td style="width:100%; text-align:center;">Không có yêu cầu nào đang chờ để tạo l.</td></tr>
+                            </c:when> -->
+                            <!-- <c:forEach items="${teacherRequestList}" var="customTeacherRequest">
+                                <tr id="${customTeacherRequest.requestId}">
+                                    <td plain-value="${customTeacherRequest.teacher.lastName}
+                                ${customTeacherRequest.teacher.firstName}
+                                ${customTeacherRequest.teacher.account.instituteEmail}
+                                ${customTeacherRequest.teacher.teacherId}" class="base-profile">
+                                        <span
+                                            class="mock-avatar">${customTeacherRequest.teacher.firstName.charAt(0)}</span>
+                                        <div class="teacher-info">
+                                            <b class="teacher-name">[${customTeacherRequest.teacher.teacherId}]
+                                                ${customTeacherRequest.teacher.lastName}
+                                                ${customTeacherRequest.teacher.firstName}</b>
+                                            <p class="institute-email">
+                                                ${customTeacherRequest.teacher.account.instituteEmail}</p>
+                                        </div>
+                                    </td>
+                                    <c:choose>
+                                        <c:when test="${customTeacherRequest.interactionStatus == 'PENDING'}">
+                                            <td plain-value="Chờ giải quyết Cho giai quyet"
+                                                class="request-interaction-status">
+                                                <span class="status-is-pending">Chờ giải quyết</span>
+                                            </td>
+                                        </c:when>
+                                        <c:when test="${customTeacherRequest.interactionStatus == 'CANCEL'}">
+                                            <td plain-value="Đã huỷ Da huy" class="request-interaction-status">
+                                                <span class="status-is-cancel">Đã huỷ</span>
+                                            </td>
+                                        </c:when>
+                                        <c:when test="${customTeacherRequest.interactionStatus == 'CREATED'}">
+                                            <td plain-value="Đã tạo lịch Da tao lich"
+                                                class="request-interaction-status">
+                                                <span class="status-is-true">Đã tạo lịch</span>
+                                            </td>
+                                        </c:when>
+                                        <c:when test="${customTeacherRequest.interactionStatus == 'DENIED'}">
+                                            <td plain-value="Đã từ chối Da tu choi" class="request-interaction-status">
+                                                <span class="status-is-false">Đã từ chối</span>
+                                            </td>
+                                        </c:when>
+                                    </c:choose>
+                                    <td plain-value="${customTeacherRequest.sectionClass.grade.gradeId}
+                                        ${customTeacherRequest.sectionClass.subject.subjectName}
+                                        ${customTeacherRequest.sectionClass.groupFromSubject}" class="subject-name">
+                                        ${customTeacherRequest.sectionClass.grade.gradeId}
+                                        - ${customTeacherRequest.sectionClass.subject.subjectName}
+                                        - ${customTeacherRequest.sectionClass.groupFromSubject}
+                                    </td>
+                                    <td class="table-row-btn add">
+                                        <a
+                                            href="/manager/sub-page/practice-schedule/add-practice-schedule?requestId=${customTeacherRequest.requestId}">
+                                            <i class="fa-regular fa-calendar-plus"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </c:forEach> -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div id="main-chart">
+                <div class="title">
+                    <span id="chart-title">
+                        Thống kê
+                        <i style="color:grey;font-weight: 100;font-size: 1rem;"> (Năm học 2023-2024)</i>
+                    </span>
+                </div>
+                <div id="chart-container">
+                    <canvas id="myChart" style="max-width:100%"></canvas>
+                    <div id="labels">
                     </div>
                 </div>
-                <table id="subject-schedule">
-                    <thead>
-                        <tr>
-                            <th class="table-description-column-item change-schedule-btn">
-                                <span>
-                                    <i style="padding-right: 5px;" class="fa-solid fa-arrow-left"></i>Trước
-                                </span>
-                            </th>
-                            <th class="schedule-item" id="2"><span>Thứ 2</span></th>
-                            <th class="schedule-item" id="3"><span>Thứ 3</span></th>
-                            <th class="schedule-item" id="4"><span>Thứ 4</span></th>
-                            <th class="schedule-item" id="5"><span>Thứ 5</span></th>
-                            <th class="schedule-item" id="6"><span>Thứ 6</span></th>
-                            <th class="schedule-item" id="7"><span>Thứ 7</span></th>
-                            <th class="schedule-item" id="8" style="border-color: black;"><span>Chủ nhật</span></th>
-                            <th class="table-description-column-item change-schedule-btn">
-                                <span>
-                                    Sau<i style="padding-left: 5px;" class="fa-solid fa-arrow-right"></i>
-                                </span>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        
-                    </tbody>
-                    <thead>
-                        <tr>
-                            <th class="table-description-column-item"></th>
-                            <th class="schedule-item" style="border-color: black transparent black transparent"></th>
-                            <th class="schedule-item"></th>
-                            <th class="schedule-item"></th>
-                            <th class="schedule-item"></th>
-                            <th class="schedule-item"></th>
-                            <th class="schedule-item"></th>
-                            <th class="schedule-item"></th>
-                            <th class="table-description-column-item"></th>
-                        </tr>
-                    </thead>
-                </table>
-                <span id="convert-btn">Chuyển đổi</span>
             </div>
-            <!-- --------Copy from here-------- -->
-            <div id="adjust-schedule-block">
-                <table id="ajdust-subject-schedule">
-                    <thead>
-                        <tr>
-                            <th id="firstWeek">Tuần bắt đầu</th>
-                            <th id="totalWeek">Tổng tuần</th>
-                            <th id="day">Thứ</th>
-                            <th id="startingPeriod">Tiết bắt đầu</th>
-                            <th id="lastPeriod">Tiết kết thúc</th>
-                            <th id="roomId">Phòng thực hành</th>
-                            <th id="delete">Xoá</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="firstWeek">2</td>
-                            <td class="totalWeek">5</td>
-                            <td class="day">3</td>
-                            <td class="startingPeriod">1</td>
-                            <td class="lastPeriod">4</td>
-                            <td class="roomId">
-                                <select class="available-room-options" name="roomId">
-                                    <option value="2B11">2B11</option>
-                                    <option value="2B12">2B12</option>
-                                </select>
-                            </td>
-                            <td class="delete table-row-btn">
-                                <button name="deleteBtn" value="${account.accountId}">
-                                    <i class="fa-regular fa-trash-can"></i>
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="font-size: 1.2rem;" class="firstWeek">...</td>
-                            <td style="font-size: 1.2rem;" class="totalWeek">...</td>
-                            <td style="font-size: 1.2rem;" class="day">...</td>
-                            <td style="font-size: 1.2rem;" class="startingPeriod">...</td>
-                            <td style="font-size: 1.2rem;" class="lastPeriod">...</td>
-                            <td style="font-size: 1.2rem;" class="roomId">...</td>
-                            <td style="font-size: 1.2rem;" class="delete">...</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <input type="submit" value="Xác nhận">
-            </div>
-            <!-- --------Copy the above one-------- -->
-        </form>
+        </div>
     </div>
     <!-- ***********************Ending-coding-here*********************** -->
     <script type="application/javascript" src="../resources/static/js/base.js"></script>
     <script type="application/javascript" src="../resources/static/js/header.js"></script>
-    <script>
-        for(var index = 1; index <= 15; index++) {
-            $('tbody').innerHTML += `
-                <tr class="period-row" id="${index}">
-                    <td class="table-description-column-item">
-                        <span class="schedule-data-item">Tiết ${index}</span>
-                    </td>
-                    <td class="schedule-item blank-schedule" period=${index} day="2">
-                        <span class="schedule-data-item"></span>
-                    </td>
-                    <td class="schedule-item blank-schedule" period=${index} day="3">
-                        <span class="schedule-data-item"></span>
-                    </td>
-                    <td class="schedule-item blank-schedule" period=${index} day="4">
-                        <span class="schedule-data-item"></span>
-                    </td>
-                    <td class="schedule-item blank-schedule" period=${index} day="5">
-                        <span class="schedule-data-item"></span>
-                    </td>
-                    <td class="schedule-item blank-schedule" period=${index} day="6">
-                        <span class="schedule-data-item"></span>
-                    </td>
-                    <td class="schedule-item blank-schedule" period=${index} day="7">
-                        <span class="schedule-data-item"></span>
-                    </td>
-                    <td class="schedule-item blank-schedule" period=${index} day="8">
-                        <span class="schedule-data-item"></span>
-                    </td>
-                    <td class="table-description-column-item">
-                        <span class="schedule-data-item"></span>
-                    </td>
-                </tr>`;
-        }
-        let nowDate= new Date(2024, 0, 1);
-        let startingWeek = 1;
-        for (var weekUnit = 0; weekUnit <= 24; weekUnit++) {
-            let nowWeek = startingWeek + weekUnit;
-            let nowStrDate = `${nowDate.getDate()}/${nowDate.getMonth() + 1}/${nowDate.getFullYear()}`;
-            $('select[name="list-of-week"]').innerHTML += `
-                <option week="${weekUnit}" startingDate="${nowStrDate}">
-                    Tuần ${nowWeek} - Ngày ${nowStrDate}
-                </option>
-            `;
-            nowDate.setDate(nowDate.getDate() + 7);
-        }
-    </script>
-    <script src="../resources/static/js/add-practice-schedule.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 </body>
 
 </html>
