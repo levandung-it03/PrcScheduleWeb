@@ -49,6 +49,12 @@ public class GetExtraFeaturesController {
 
         return getExtraFeaturesService.getAddSectionClassPage(request, model);
     }
+
+    @RequestMapping(value = "/add-department", method = GET)
+    public ModelAndView getAddDepartmentPage(HttpServletRequest request, Model model) {
+
+        return getExtraFeaturesService.getAddDepartmentPage(request, model);
+    }
     /*----------------------*/
 
     /**Author: Huynh Nhu Y**/

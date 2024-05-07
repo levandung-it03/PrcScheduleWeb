@@ -31,6 +31,8 @@ public class PostExtraFeaturesService {
     private final ClassroomRepository classroomRepository;
     @Autowired
     private final SubjectRegistrationRepository subjectRegistrationRepository;
+    @Autowired
+    private final DepartmentRepository departmentRepository;
 
     /**Author: Le Van Dung**/
     public void addSubject(ReqAddSubject subjectObject) {
@@ -120,6 +122,19 @@ public class PostExtraFeaturesService {
                 .grade(grade)
                 .subject(subject)
                 .groupFromSubject(sectionClassObject.getGroupFromSubject())
+                .build());
+    }
+
+    public void addDepartment(ReqAddDepartment departmentObject) {
+        if (departmentRepository.findByDepartmentIdAndDepartmentName(departmentObject.getDepartmentId(),
+                departmentObject.getDepartmentName()).isPresent()) {
+            throw new DuplicateKeyException("Department is already existing");
+        }
+
+        //--May throw SQLException
+        departmentRepository.save(Department.builder()
+                .departmentId(departmentObject.getDepartmentId())
+                .departmentName(departmentObject.getDepartmentName())
                 .build());
     }
     /*----------------------*/

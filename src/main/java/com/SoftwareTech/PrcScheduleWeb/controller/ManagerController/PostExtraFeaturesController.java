@@ -170,6 +170,33 @@ public class PostExtraFeaturesController {
         return "redirect:" + standingUrl;
     }
 
+    @RequestMapping(value = "/add-department", method = POST)
+    public String addDepartment(
+            @ModelAttribute("departmentObject") ReqAddDepartment departmentObject,
+            HttpServletRequest request,
+            RedirectAttributes redirectAttributes
+    ) {
+        final String standingUrl = request.getHeader("Referer");
+        Set<ConstraintViolation<ReqAddDepartment>> violations = hibernateValidator.validate(departmentObject);
+        if (!violations.isEmpty()) {
+            redirectAttributes.addFlashAttribute("errorCode", violations.iterator().next().getMessage());
+            redirectAttributes.addFlashAttribute("departmentObject", departmentObject);
+            return "redirect:" + standingUrl;
+        }
+
+        try {
+            postExtraFeaturesService.addDepartment(departmentObject);
+            redirectAttributes.addFlashAttribute("succeedCode", "succeed_add_01");
+        } catch (DuplicateKeyException ignored) {
+            redirectAttributes.addFlashAttribute("departmentObject", departmentObject);
+            redirectAttributes.addFlashAttribute("errorCode", "error_department_01");
+        } catch (Exception ignored) {
+            redirectAttributes.addFlashAttribute("departmentObject", departmentObject);
+            redirectAttributes.addFlashAttribute("errorCode", "error_systemApplication_01");
+        }
+        return "redirect:" + standingUrl;
+    }
+
     private String trimErrorMessage(String errorMessage) {
         int index = errorMessage.indexOf(":");
         if (index != -1) {

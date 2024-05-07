@@ -111,6 +111,9 @@ public class ApplicationConfig {
         messagePairs.put("error_section_class_02", "Kì học không tồn tại!");
         messagePairs.put("error_section_class_03", "Không tồn tại lớp!");
         messagePairs.put("error_section_class_04", "Không tồn tại môn học!");
+
+        messagePairs.put("error_department_01", "khoa đã tồn tại!");
+
         /******************/
 
         return messagePairs;

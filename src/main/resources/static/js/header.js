@@ -86,6 +86,10 @@ function mappingCategoryNameWithCurrentPage() {
         ["add-semester"]:{
             ["category-name"]: "Thêm dữ liệu cho học kì",
             ["page-description"]: "Thêm dữ liệu cho một học kì mới mở."
+        },
+        ["add-department"]:{
+            ["category-name"]: "Thêm dữ liệu cho khoa",
+            ["page-description"]: "Thêm dữ liệu cho một khoa mới mở."
         }
     }
 

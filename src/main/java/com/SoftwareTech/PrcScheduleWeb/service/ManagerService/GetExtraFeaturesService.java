@@ -97,6 +97,19 @@ public class GetExtraFeaturesService {
 
         return modelAndView;
     }
+
+    public ModelAndView getAddDepartmentPage(HttpServletRequest request, Model model) {
+
+        ModelAndView modelAndView = staticUtilMethods
+                .customResponseModelView(request, model.asMap(), "add-department");
+
+        ReqAddDepartment departmentObject = (ReqAddDepartment) model.asMap().get("departmentObject");
+
+        if (departmentObject != null)
+            modelAndView.addObject("departmentObject", model.asMap().get("departmentObject"));
+
+        return modelAndView;
+    }
     /*----------------------*/
 
     /**Author: Huynh Nhu Y**/
