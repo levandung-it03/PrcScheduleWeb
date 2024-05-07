@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,12 +24,21 @@ public class SubPageController {
     @Autowired
     private final SubPageService subPageService;
 
+    @RequestMapping(value = "/manager/set-manager-info")
+    public ModelAndView getSetManagerInfoPage(HttpServletRequest request) {
+        try {
+            return subPageService.getSetManagerInfoPage(request);
+        } catch (DuplicateKeyException ignored) {
+            //--Manager info is already existing so redirecting to HomePage.
+            return new ModelAndView("redirect:/home");
+        } catch (Exception ignored) {
+            request.getSession().setAttribute("errorCode", "error_systemApplication_01");
+        }
+        return new ModelAndView("redirect:" + request.getHeader("Referer"));
+    }
+
     @RequestMapping(value = "/computer-room/update-computer-room", method = GET)
-    public ModelAndView getUpdateComputerRoomPage(
-        HttpServletRequest request,
-        HttpServletResponse response
-    ) throws IOException {
-        final String redirectedUrl = "/manager/category/computer-room/computer-room-list";
+    public ModelAndView getUpdateComputerRoomPage(HttpServletRequest request) {
         final String standingUrl = request.getHeader("Referer");
 
         try {
@@ -43,23 +53,17 @@ public class SubPageController {
 
             return modelAndView;
         } catch (NullPointerException ignored) {
-            response.sendRedirect(redirectedUrl);
+            //--This exception may throw when user reloads our page, so do nothing.
         } catch (NoSuchElementException ignored) {
             request.getSession().setAttribute("errorCode", "error_entity_01");
-            response.sendRedirect(redirectedUrl);
         } catch (Exception ignored) {
             request.getSession().setAttribute("errorCode", "error_systemApplication_01");
-            response.sendRedirect(redirectedUrl);
         }
-        return null;
+        return new ModelAndView("redirect:/manager/category/computer-room/computer-room-list");
     }
 
     @RequestMapping(value = "/teacher/update-teacher", method = GET)
-    public ModelAndView getUpdateTeacherPage(
-        HttpServletRequest request,
-        HttpServletResponse response
-    ) throws IOException {
-        final String redirectedUrl = "/manager/category/teacher/teacher-list";
+    public ModelAndView getUpdateTeacherPage(HttpServletRequest request) {
         final String standingUrl = request.getHeader("Referer");
 
         try {
@@ -74,23 +78,17 @@ public class SubPageController {
 
             return modelAndView;
         } catch (NullPointerException ignored) {
-            response.sendRedirect(redirectedUrl);
+            //--This exception may throw when user reloads our page, so do nothing.
         } catch (NoSuchElementException ignored) {
             request.getSession().setAttribute("errorCode", "error_entity_01");
-            response.sendRedirect(redirectedUrl);
         } catch (Exception ignored) {
             request.getSession().setAttribute("errorCode", "error_systemApplication_01");
-            response.sendRedirect(redirectedUrl);
         }
-        return null;
+        return new ModelAndView("redirect:/manager/category/teacher/teacher-list");
     }
 
     @RequestMapping(value = "/teacher/update-teacher-account", method = GET)
-    public ModelAndView getUpdateTeacherAccountPage(
-        HttpServletRequest request,
-        HttpServletResponse response
-    ) throws IOException {
-        final String redirectedUrl = "/manager/category/teacher/teacher-account-list";
+    public ModelAndView getUpdateTeacherAccountPage(HttpServletRequest request) {
         final String standingUrl = request.getHeader("Referer");
 
         try {
@@ -105,83 +103,54 @@ public class SubPageController {
 
             return modelAndView;
         } catch (NullPointerException ignored) {
-            response.sendRedirect(redirectedUrl);
+            //--This exception may throw when user reloads our page, so do nothing.
         } catch (NoSuchElementException ignored) {
             request.getSession().setAttribute("errorCode", "error_entity_01");
-            response.sendRedirect(redirectedUrl);
         } catch (Exception ignored) {
             request.getSession().setAttribute("errorCode", "error_systemApplication_01");
-            response.sendRedirect(redirectedUrl);
         }
-        return null;
+        return new ModelAndView("redirect:/manager/category/teacher/teacher-account-list");
     }
 
     @RequestMapping(value = "/practice-schedule/teacher-request-detail", method = GET)
-    public ModelAndView getTeacherRequestDetailPage(
-        HttpServletRequest request,
-        HttpServletResponse response,
-        Model model
-    ) throws IOException {
-        final String redirectedUrl = "/manager/category/teacher/teacher-request-list";
-
+    public ModelAndView getTeacherRequestDetailPage(HttpServletRequest request, Model model) {
         try {
             return subPageService.getTeacherRequestDetailPage(request, model);
         } catch (NoSuchElementException ignored) {
             request.getSession().setAttribute("errorCode", "error_entity_01");
-            response.sendRedirect(redirectedUrl);
         } catch (Exception ignored) {
             request.getSession().setAttribute("errorCode", "error_systemApplication_01");
-            response.sendRedirect(redirectedUrl);
         }
-        return null;
+        return new ModelAndView("redirect:/manager/category/teacher/teacher-request-list");
     }
 
     @RequestMapping(value = "/practice-schedule/add-practice-schedule", method = GET)
-    public ModelAndView getAddPracticeSchedulePage(
-        HttpServletRequest request,
-        HttpServletResponse response,
-        RedirectAttributes redirectAttributes,
-        Model model
-    ) throws IOException {
-        final String redirectedUrl = "/manager/category/practice-schedule/teacher-request-list";
-
+    public ModelAndView getAddPracticeSchedulePage(HttpServletRequest request, Model model) {
         try {
             return subPageService.getAddPracticeSchedulePage(request, model);
         } catch (NumberFormatException | NullPointerException ignored) {
-            response.sendRedirect(redirectedUrl);
+            //--This exception may throw when user reloads our page, so do nothing.
         } catch (NoSuchElementException ignored) {
             request.getSession().setAttribute("errorCode", "error_entity_01");
-            response.sendRedirect(redirectedUrl);
         } catch (SQLIntegrityConstraintViolationException e) {
             request.getSession().setAttribute("errorCode", e.getMessage());
-            response.sendRedirect(redirectedUrl);
         } catch (Exception ignored) {
-            redirectAttributes.addFlashAttribute("errorCode", "error_systemApplication_01");
             request.getSession().setAttribute("errorCode", "error_systemApplication_01");
-            response.sendRedirect(redirectedUrl);
         }
-        return null;
+        return new ModelAndView("redirect:/manager/category/practice-schedule/teacher-request-list");
     }
 
     @RequestMapping(value = "/practice-schedule/update-practice-schedule", method = GET)
-    public ModelAndView getUpdatePracticeSchedulePage(
-        HttpServletRequest request,
-        HttpServletResponse response,
-        Model model
-    ) throws IOException {
-        final String redirectedUrl = "/manager/category/practice-schedule/teacher-request-list";
-
+    public ModelAndView getUpdatePracticeSchedulePage(HttpServletRequest request, Model model) {
         try {
             return subPageService.getUpdatePracticeSchedulePage(request, model);
         } catch (NumberFormatException | NullPointerException ignored) {
-            response.sendRedirect(redirectedUrl);
+            //--This exception may throw when user reloads our page, so do nothing.
         } catch (NoSuchElementException ignored) {
             request.getSession().setAttribute("errorCode", "error_entity_01");
-            response.sendRedirect(redirectedUrl);
         } catch (Exception ignored) {
             request.getSession().setAttribute("errorCode", "error_systemApplication_01");
-            response.sendRedirect(redirectedUrl);
         }
-        return null;
+        return new ModelAndView("redirect:/manager/category/practice-schedule/teacher-request-list");
     }
 }

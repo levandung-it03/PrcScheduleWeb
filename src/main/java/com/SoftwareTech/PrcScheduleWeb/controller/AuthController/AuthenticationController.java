@@ -4,6 +4,9 @@ import com.SoftwareTech.PrcScheduleWeb.dto.AuthDto.DtoAuthenticationResponse;
 import com.SoftwareTech.PrcScheduleWeb.dto.AuthDto.DtoAuthentication;
 
 import com.SoftwareTech.PrcScheduleWeb.dto.AuthDto.DtoRegisterAccount;
+import com.SoftwareTech.PrcScheduleWeb.model.enums.Role;
+import com.SoftwareTech.PrcScheduleWeb.repository.ManagerRepository;
+import com.SoftwareTech.PrcScheduleWeb.repository.TeacherRepository;
 import com.SoftwareTech.PrcScheduleWeb.service.AuthService.AuthenticationService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
@@ -20,6 +23,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.NoSuchElementException;
+
 /**
  * These are the controllers that don't need to Authorize
  **/
@@ -29,6 +34,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class AuthenticationController {
     @Autowired
     private final AuthenticationService authService;
+    @Autowired
+    private final ManagerRepository managerRepository;
+    @Autowired
+    private final TeacherRepository teacherRepository;
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ResponseEntity<DtoAuthenticationResponse> register(@RequestBody DtoRegisterAccount request) {
@@ -58,7 +67,8 @@ public class AuthenticationController {
             response.addCookie(accessTokenCookie);
 
             //--Get redirecting URL to Home: "classpath:/role/home".
-            return "redirect:/home";
+            String lowerCaseRole = authResult.getRole().toString().toLowerCase();
+            return String.format("redirect:/%s/sub-page/%s/set-%s-info", lowerCaseRole, lowerCaseRole, lowerCaseRole);
         } catch (UsernameNotFoundException ignored) {
             //--Will be ignored because of security.
             redirectAttributes.addFlashAttribute("errorCode", "error_account_01");

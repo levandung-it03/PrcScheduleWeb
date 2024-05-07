@@ -88,15 +88,18 @@ public class JwtService {
 
     /**JwtServices: Get the EncodedAccessToken as a Cookie in Cookies**/
     public String getAccessTokenInCookies(HttpServletRequest request) {
-        Optional<Cookie> authCookie = (request.getCookies() != null)
-            ? Arrays.stream(request.getCookies())
-            .filter(cookie -> cookie.getName().equals("AccessToken"))
-            .findFirst()
-            : Optional.empty();
-        if (authCookie.isPresent())
+        try {
+            Optional<Cookie> authCookie = Arrays.stream(request.getCookies())
+                .filter(cookie -> cookie.getName().equals("AccessToken"))
+                .findFirst();
+
+            if (authCookie.isEmpty() || authCookie.orElseThrow().getMaxAge() == 0)
+                return null;
+
             return new String(Base64.getDecoder().decode(authCookie.orElseThrow().getValue()));
-        else
+        } catch (Exception ignored) {
             return null;
+        }
     }
 
     /*

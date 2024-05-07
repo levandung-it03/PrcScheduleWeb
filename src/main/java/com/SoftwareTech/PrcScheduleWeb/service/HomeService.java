@@ -17,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 
 @Service
 @RequiredArgsConstructor
@@ -37,7 +38,7 @@ public class HomeService {
         HttpServletResponse response,
         Model model
     ) {
-        String loggedInRole = staticUtilMethods.isAValidAccessTokenInCookies(request);
+        String loggedInRole = staticUtilMethods.getAccountInfoInCookie(request).getRole().toString().toLowerCase();
         try {
             if (loggedInRole.equals("manager"))
                 return this.getManagerHomePage(request, model);
@@ -45,11 +46,7 @@ public class HomeService {
                 return this.getManagerHomePage(request, model);
         } catch (Exception e) {
             logger.info(e.toString());
-            //--Delete cookie from Client Local Storage Browser.
-            Cookie cookieToDelete = new Cookie("accessToken", "");
-            cookieToDelete.setMaxAge(0);
-            cookieToDelete.setPath("/");
-            response.addCookie(cookieToDelete);
+            staticUtilMethods.clearAllTokenCookies(request, response);
         }
         return new ModelAndView("redirect:/public/login");
     }

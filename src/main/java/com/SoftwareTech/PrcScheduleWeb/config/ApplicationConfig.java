@@ -1,5 +1,7 @@
 package com.SoftwareTech.PrcScheduleWeb.config;
 
+import com.SoftwareTech.PrcScheduleWeb.repository.ManagerRepository;
+import com.SoftwareTech.PrcScheduleWeb.repository.TeacherRepository;
 import com.SoftwareTech.PrcScheduleWeb.service.AuthService.JwtService;
 import com.SoftwareTech.PrcScheduleWeb.repository.AccountRepository;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +33,10 @@ public class ApplicationConfig {
     private final JwtService jwtService;
     @Autowired
     private final AccountRepository accountRepository;
+    @Autowired
+    private final ManagerRepository managerRepository;
+    @Autowired
+    private final TeacherRepository teacherRepository;
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
@@ -64,7 +70,9 @@ public class ApplicationConfig {
 
     @Bean
     public StaticUtilMethods staticUtilMethods() {
-        return new StaticUtilMethods(responseMessages(), jwtService, userDetailsService());
+        return new StaticUtilMethods(
+            responseMessages(), jwtService, userDetailsService(), managerRepository, teacherRepository
+        );
     }
 
     @Bean

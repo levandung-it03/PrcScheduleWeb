@@ -1,29 +1,65 @@
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
-integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
-crossorigin="anonymous" referrerpolicy="no-referrer" />
-<link rel="stylesheet" type="text/css" href="../resources/static/css/base.css">
-    <style>
-        header {
-            height: 60px;
-            background-color: blue;
-        }
-    </style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <link rel="stylesheet" type="text/css" href="../resources/static/css/header.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+        integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" type="text/css" href="../resources/static/css/base.css">
     <header>
         <div id="header_left">
-            <div id="toggle-hide-category">
+            <div class="header_items" id="header_left_menu-btn" id="toggle-hide-category">
                 <i class="fa-solid fa-bars"></i>
             </div>
-            <div id="category-name">
-    
-            </div>
-            <div id="page-description">
-    
+            <div id="header_left_category-content">
+                <p id="header_left_category-name">hehehehe</p>
+                <p id="header_left_page-description">heheheheheheheheheh</p>
             </div>
         </div>
         <div id="header_right">
-            <div id="avatar">
-    
+            <div class="header_items" id="avatar">
+                <span id="avatar_user" href="/home">M</span>
+                <p id="avatar_name">Bravion Manager</p>
+            </div>
+            <div id="panel-info" class="hide">
+                <ul class="panel-info_sub-components" id="panel-info_managing-client-info-features">
+                    <li>
+                        <a class="panel-info_sub-components_options" href="/manager/sub-page/manage-info/info">
+                            <i class="fa-solid fa-circle-info"></i>
+                            Thông tin cá nhân
+                        </a>
+                    </li>
+                    <li>
+                        <a class="panel-info_sub-components_options" href="/manager/sub-page/manage-info/update-info">
+                            <i class="fa-solid fa-user-pen"></i>
+                            Cập nhật thông tin
+                        </a>
+                    </li>
+                    <li>
+                        <a class="panel-info_sub-components_options" href="/manager/sub-page/manage-info/update-account/password">
+                            <i class="fa-solid fa-lock"></i>
+                            Đổi mật khẩu
+                        </a>
+                    </li>
+                </ul>
+                <ul id="panel-info_last-component" id="panel-info_app-features">
+                    <li>
+                        <form class="panel-info_sub-components_options" action="/service/v1/manager/logout">
+                            <button class="panel-info_sub-components_options" name="logout" value="${account.id}">
+                                <i class="fa-solid fa-right-from-bracket"></i>
+                                Đăng xuất
+                            </button>
+                        </form>
+                    </li>
+                </ul>
             </div>
         </div>
     </header>
+    <script type="application/javascript" src="../resources/static/js/header.js"></script>
+</body>
+</html>

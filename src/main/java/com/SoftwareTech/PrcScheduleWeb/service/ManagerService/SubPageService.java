@@ -9,6 +9,7 @@ import com.SoftwareTech.PrcScheduleWeb.repository.*;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.access.AuthorizationServiceException;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -41,6 +42,8 @@ public class SubPageService {
     private final SubjectRegistrationRepository subjectRegistrationRepository;
     @Autowired
     private final TeacherRequestRepository teacherRequestRepository;
+    @Autowired
+    private final ManagerRepository managerRepository;
 
     public ModelAndView getUpdateComputerRoomPage(HttpServletRequest request) {
         final String roomId = request.getParameter("roomId");
@@ -227,6 +230,19 @@ public class SubPageService {
         modelAndView.addObject("allPrcScheduleInSemester", allPrcScheduleInSemester);
         modelAndView.addObject("computerRoomList", computerRoomList);
         modelAndView.addObject("updatedPracticeSchedule", practiceSchedule);
+        return modelAndView;
+    }
+
+    public ModelAndView getSetManagerInfoPage(HttpServletRequest request) {
+        Account user = staticUtilMethods.getAccountInfoInCookie(request);
+        if (managerRepository.existsByAccountAccountId(user.getAccountId()))
+            throw new DuplicateKeyException("Manager Info is already existing!");
+
+        ModelAndView modelAndView = new ModelAndView("add-person");
+
+        modelAndView.addObject("roleName", "manager");
+        modelAndView.addObject("actionType", "add");
+        modelAndView.addObject("actionTail", "set-manager-info");
         return modelAndView;
     }
 }

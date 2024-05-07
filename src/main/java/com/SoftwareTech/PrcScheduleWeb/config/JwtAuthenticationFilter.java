@@ -30,6 +30,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtService jwtService;
     @Autowired
     private final UserDetailsService userDetailsService;
+    @Autowired
+    private final StaticUtilMethods staticUtilMethods;
 
     @Value("${url.post.auth.prefix.v1}")
     private String authPrefix;
@@ -101,11 +103,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             }
             //--Clear all invalid Token inside Cookies.
             else if (request.getCookies() != null) {
-                Arrays.stream(request.getCookies()).forEach(cookie -> {
-                        cookie.setMaxAge(0);
-                        response.addCookie(cookie);
-                    }
-                );
+                staticUtilMethods.clearAllTokenCookies(request, response);
                 response.sendRedirect("/public/login");
                 return;
             }

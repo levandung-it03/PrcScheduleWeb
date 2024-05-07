@@ -17,15 +17,9 @@ public class PublicPagesService {
     @Autowired
     private final StaticUtilMethods staticUtilMethods;
 
-    public ModelAndView renderLoginPage(
-        HttpServletRequest request,
-        HttpServletResponse response,
-        Model model
-    ) throws IOException {
-        String loggedInRole = staticUtilMethods.isAValidAccessTokenInCookies(request);
-        if (loggedInRole != null) {
-            response.sendRedirect("redirect:/home");
-            return null;
+    public ModelAndView renderLoginPage(HttpServletRequest request, Model model) throws IOException {
+        if (staticUtilMethods.getAccountInfoInCookie(request) != null) {
+            return new ModelAndView("redirect:/home");
         } else {
             return staticUtilMethods.customResponseModelView(request, model.asMap(), "login");
         }

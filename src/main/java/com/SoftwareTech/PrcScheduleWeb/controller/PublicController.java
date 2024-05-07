@@ -23,10 +23,9 @@ public class PublicController {
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public ModelAndView getLoginView(
         HttpServletRequest request,
-        HttpServletResponse response,
         Model model
     ) throws IOException{
-        return publicPagesService.renderLoginPage(request, response, model);
+        return publicPagesService.renderLoginPage(request, model);
     }
 
 }

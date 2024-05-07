@@ -1,12 +1,43 @@
 (function toggleHideCategory() {
-    document.querySelector("div#header_left i").addEventListener("click", (e) =>
-        document.querySelector("div#category").classList.toggle("hide")
-    );
+    try {
+        document.querySelector("div#header_left i").addEventListener("click", (e) =>
+            document.querySelector("div#category").classList.toggle("hide")
+        );
+    } catch (ignored) {}
+    try {
+        document.querySelector("div#header_right #avatar_user").addEventListener("click", (e) =>
+            document.querySelector("div#panel-info").classList.toggle("hide")
+        );
+    } catch (ignored) {}
+    window.addEventListener("click", e => {
+        if (!document.querySelector("div#panel-info").classList.contains("hide")
+        && e.target.id != "avatar_user") {
+            try {
+                document.querySelector("div#panel-info").classList.add("hide")
+            } catch (ignored) {}
+        }
+    });
 })();
 
 function mappingCategoryNameWithCurrentPage() {
     const pageName = new URL(window.location.href).pathname.split("/").pop();
     const categoryNameObjects = {
+        ["set-manager-info"]:{
+            ["category-name"]: "Thêm dữ liệu mới",
+            ["page-description"]: "Thêm dữ liệu cho tài khoản 'quản lý' mới tạo."
+        },
+        ["update-manager"]:{
+            ["category-name"]: "Cập nhật dữ liệu",
+            ["page-description"]: "Cập nhật dữ liệu của tài khoản 'quản lý'."
+        },
+        ["set-teacher-info"]:{
+            ["category-name"]: "Thêm dữ liệu mới",
+            ["page-description"]: "Thêm dữ liệu cho tài khoản 'giảng viên' mới tạo."
+        },
+        ["update-teacher"]:{
+            ["category-name"]: "Cập nhật dữ liệu",
+            ["page-description"]: "Cập nhật dữ liệu của tài khoản 'giảng viên'."
+        },
         ["home"]: {
             ["category-name"]: "Chào mừng bạn quay trở lại với ứng dụng - Phân công lịch thực hành",
             ["page-description"]: "Hãy tiếp tục xử lý yêu cầu nào!"
@@ -93,6 +124,6 @@ function mappingCategoryNameWithCurrentPage() {
         }
     }
 
-    document.querySelector('header #header_center p#category-name').innerText = categoryNameObjects[pageName]["category-name"];
-    document.querySelector('header #header_center p#page-description').innerText = categoryNameObjects[pageName]["page-description"];
+    document.querySelector('header p#header_left_category-name').innerText = categoryNameObjects[pageName]["category-name"];
+    document.querySelector('header p#header_left_page-description').innerText = categoryNameObjects[pageName]["page-description"];
 }
