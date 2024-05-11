@@ -4,18 +4,14 @@ import com.SoftwareTech.PrcScheduleWeb.model.Grade;
 import com.SoftwareTech.PrcScheduleWeb.model.enums.Gender;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Pattern;
 import lombok.*;
 
-import java.sql.Date;
-
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ReqAddStudent {
+public class ReqDtoAddStudent {
     @NotBlank(message = "error_entity_01")
     private String studentId;
 

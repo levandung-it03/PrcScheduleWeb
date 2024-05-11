@@ -2,31 +2,23 @@
 (function main() {
     const validatingBlocks = {
         gradeId: {
-            tag: $('input[name=studentId]'),
-            confirm: function (value) {
-                this.isValid = (value.length != 0) && (value.search(" ")== -1);
-                return this.isValid;
-            },
+            tag: $('input[name=gradeId]'),
+            validate: (value) => (value.length != 0) && (value.search(" ") == -1),
             errorMessage: "Mã lớp không hợp lệ.",
-            isValid: false,
         },
         department: {
-             tag: $('input[name=grade]'),
-             confirm: function (value) {
-                  this.isValid = (value.length != 0) && (value.search(" ")== -1);
-                  return this.isValid;
-             },
-             errorMessage: "Mã ngành không được để trống.",
-             isValid: false,
+            tag: $('input[name=department]'),
+            validate: (value) => (value.length != 0) && (value.search(" ") == -1),
+            errorMessage: "Mã ngành không được để trống.",
         },
     };
 
-       customizeClosingNoticeMessageEvent();
-       createErrBlocksOfInputTags(validatingBlocks);
-       customizeValidateEventInputTags(validatingBlocks);
-       customizeSubmitFormAction(validatingBlocks);
-       customizeAutoFormatStrongInputTextEvent();
-       recoveryAllSelectTagDataInForm();
-       removePathAttributes();
-       mappingCategoryNameWithCurrentPage();
+    customizeClosingNoticeMessageEvent();
+    createErrBlocksOfInputTags(validatingBlocks);
+    customizeValidateEventInputTags(validatingBlocks);
+    customizeSubmitFormAction('div#add-grade-page > form', validatingBlocks);
+    customizeAutoFormatStrongInputTextEvent();
+    recoveryAllSelectTagDataInForm();
+    removePathAttributes();
+    buildHeader();
 })();

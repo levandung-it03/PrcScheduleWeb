@@ -1,6 +1,6 @@
 package com.SoftwareTech.PrcScheduleWeb.controller.ManagerController;
 
-import com.SoftwareTech.PrcScheduleWeb.dto.AuthDto.DtoRegisterAccount;
+import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.ReqDtoAddTeacherAccount;
 import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.ReqDtoUpdateTeacherAccount;
 import com.SoftwareTech.PrcScheduleWeb.service.ManagerService.AccountService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.NoSuchElementException;
@@ -30,28 +31,28 @@ public class AccountController {
 
     @RequestMapping(value = "/add-teacher-account", method = POST)
     public String addTeacherAccount(
-        @ModelAttribute("registerObject") DtoRegisterAccount registerObject,
+        @ModelAttribute("newAccountObject") ReqDtoAddTeacherAccount newAccountObject,
         RedirectAttributes redirectAttributes,
         HttpServletRequest request
     ) {
         final String standingUrl = request.getHeader("Referer");
-        Set<ConstraintViolation<DtoRegisterAccount>> violations = hibernateValidator.validate(registerObject);
+        Set<ConstraintViolation<ReqDtoAddTeacherAccount>> violations = hibernateValidator.validate(newAccountObject);
         if (!violations.isEmpty()) {
             redirectAttributes.addFlashAttribute("errorCode", violations.iterator().next().getMessage());
             return "redirect:" + standingUrl;
         }
 
         try {
-            accountService.addTeacherAccount(registerObject);
+            accountService.addTeacherAccount(newAccountObject);
             redirectAttributes.addFlashAttribute("succeedCode", "succeed_add_01");
         } catch (IllegalArgumentException ignored) {
-            redirectAttributes.addFlashAttribute("registerObject", registerObject);
+            redirectAttributes.addFlashAttribute("newAccountObject", newAccountObject);
             redirectAttributes.addFlashAttribute("errorCode", "error_entity_03");
         } catch (DuplicateKeyException ignored) {
-            redirectAttributes.addFlashAttribute("registerObject", registerObject);
+            redirectAttributes.addFlashAttribute("newAccountObject", newAccountObject);
             redirectAttributes.addFlashAttribute("errorCode", "error_account_02");
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("registerObject", registerObject);
+            redirectAttributes.addFlashAttribute("newAccountObject", newAccountObject);
             redirectAttributes.addFlashAttribute("errorCode", "error_systemApplication_01");
         }
         return "redirect:" + standingUrl;

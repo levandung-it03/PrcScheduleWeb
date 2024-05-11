@@ -3,57 +3,37 @@
     const validatingBlocks = {
         studentId: {
             tag: $('input[name=studentId]'),
-            confirm: function (value) {
-                this.isValid = (value.length != 0) && (value.search(" ")== -1);
-                return this.isValid;
-            },
+            validate: (value) => (value.length != 0) && (value.search(" ") == -1),
             errorMessage: "Mã sinh viên không hợp lệ.",
-            isValid: false,
         },
         grade: {
-             tag: $('input[name=grade]'),
-             confirm: function (value) {
-                  this.isValid = (value.length != 0) && (value.search(" ")== -1);
-                  return this.isValid;
-             },
-             errorMessage: "Mã lớp không được để trống.",
-             isValid: false,
+            tag: $('input[name=grade]'),
+            validate: (value) => (value.length != 0) && (value.search(" ") == -1),
+            errorMessage: "Mã lớp không được để trống.",
         },
         lastName: {
             tag: $('input[name=lastName]'),
-            confirm: function (value) {
-                this.isValid = (/^[A-Za-zÀ-ỹ]{1,50}( [A-Za-zÀ-ỹ]{1,50})*$/).test(value);
-                return this.isValid;
-            },
+            validate: (value) => (/^[A-Za-zÀ-ỹ]{1,50}( [A-Za-zÀ-ỹ]{1,50})*$/).test(value),
             errorMessage: "Tên cuối không hợp lệ.",
-            isValid: false,
         },
         firstName: {
-                    tag: $('input[name=firstName]'),
-                    confirm: function (value) {
-                        this.isValid = (/^[A-Za-zÀ-ỹ]{1,50}( [A-Za-zÀ-ỹ]{1,50})*$/).test(value);
-                        return this.isValid;
-                    },
-                    errorMessage: "Tên cuối không hợp lệ.",
-                    isValid: false,
-                },
+            tag: $('input[name=firstName]'),
+            validate: (value) => (/^[A-Za-zÀ-ỹ]{1,50}( [A-Za-zÀ-ỹ]{1,50})*$/).test(value),
+            errorMessage: "Tên cuối không hợp lệ.",
+        },
         instituteEmail: {
             tag: $('input[name=instituteEmail]'),
-            confirm: function (value) {
-                this.isValid = (/^([^@\s]+)@(ptithcm\.edu\.vn|ptit\.edu\.vn|student\.ptithcm\.edu\.vn)$/).test(value);
-                return this.isValid;
-            },
+            validate: (value) => (/^([^@\s]+)@(ptithcm\.edu\.vn|ptit\.edu\.vn|student\.ptithcm\.edu\.vn)$/).test(value),
             errorMessage: "Định dạng email chưa đúng.",
-            isValid: false,
         },
     };
 
     customizeClosingNoticeMessageEvent();
     createErrBlocksOfInputTags(validatingBlocks);
     customizeValidateEventInputTags(validatingBlocks);
-    customizeSubmitFormAction(validatingBlocks);
+    customizeSubmitFormAction('div#add-student-page > form', validatingBlocks);
     customizeAutoFormatStrongInputTextEvent();
     recoveryAllSelectTagDataInForm();
     removePathAttributes();
-    mappingCategoryNameWithCurrentPage();
+    buildHeader();
 })();

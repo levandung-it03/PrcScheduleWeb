@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -31,9 +30,11 @@ public class PostExtraFeaturesService {
     private final ClassroomRepository classroomRepository;
     @Autowired
     private final SubjectRegistrationRepository subjectRegistrationRepository;
+    @Autowired
+    private final DepartmentRepository departmentRepository;
 
     /**Author: Le Van Dung**/
-    public void addSubject(ReqAddSubject subjectObject) {
+    public void addSubject(ReqDtoAddSubject subjectObject) {
         if (subjectRepository.findByIdOrSubjectName(
                 subjectObject.getSubjectId(), subjectObject.getSubjectName()).isPresent()
         )
@@ -50,7 +51,7 @@ public class PostExtraFeaturesService {
     /*----------------------*/
 
     /**Author: Nguyen Quang Linh**/
-    public void addStudent(ReqAddStudent studentObject) {
+    public void addStudent(ReqDtoAddStudent studentObject) {
         if (studentRepository.findByStudentId(studentObject.getStudentId()).isPresent()) {
             throw new DuplicateKeyException("Student is already existing");
         }
@@ -65,7 +66,7 @@ public class PostExtraFeaturesService {
                 .instituteEmail(studentObject.getInstituteEmail())
                 .build());
     }
-    public void addGrade(ReqAddGrade gradeObject) {
+    public void addGrade(ReqDtoAddGrade gradeObject) {
         if (gradeRepository.findByGradeId(gradeObject.getGradeId()).isPresent()) {
             throw new DuplicateKeyException("Grade is already existing");
         }
@@ -79,7 +80,7 @@ public class PostExtraFeaturesService {
     /*----------------------*/
 
     /**Author: Luong Dat Thien**/
-    public void addSemester(ReqAddSemester semesterObject) {
+    public void addSemester(ReqDtoAddSemester semesterObject) {
         if (semesterRepository.findBySemesterAndRangeOfYear(semesterObject.getSemester(),
                 semesterObject.getRangeOfYear()).isPresent()) {
             throw new DuplicateKeyException("Semester is already existing");
@@ -98,16 +99,16 @@ public class PostExtraFeaturesService {
             .build());
     }
 
-    public void addSectionClass(ReqAddSectionClass sectionClassObject) throws IllegalArgumentException {
+    public void addSectionClass(ReqDtoAddSectionClass sectionClassObject) throws IllegalArgumentException {
         Semester semester = semesterRepository
             .findById(sectionClassObject.getSemesterId())
-            .orElseThrow(() -> new IllegalArgumentException("error_section_class_02"));
+            .orElseThrow(() -> new IllegalArgumentException("error_semester_02"));
         Grade grade = gradeRepository
             .findById(sectionClassObject.getGradeId())
-            .orElseThrow(() -> new IllegalArgumentException("error_section_class_03"));
+            .orElseThrow(() -> new IllegalArgumentException("error_section_class_02"));
         Subject subject = subjectRepository
             .findById(sectionClassObject.getSubjectId())
-            .orElseThrow(() -> new IllegalArgumentException("error_section_class_04"));
+            .orElseThrow(() -> new IllegalArgumentException("error_section_class_03"));
 
         if (sectionClassRepository.findByGradeAndSemesterAndSubject(semester.getSemesterId()
                 ,grade.getGradeId(), subject.getSubjectId()).isPresent()
@@ -122,10 +123,23 @@ public class PostExtraFeaturesService {
                 .groupFromSubject(sectionClassObject.getGroupFromSubject())
                 .build());
     }
+
+    public void addDepartment(ReqDtoAddDepartment departmentObject) {
+        if (departmentRepository.findByDepartmentIdAndDepartmentName(departmentObject.getDepartmentId(),
+                departmentObject.getDepartmentName()).isPresent()) {
+            throw new DuplicateKeyException("Department is already existing");
+        }
+
+        //--May throw SQLException
+        departmentRepository.save(Department.builder()
+                .departmentId(departmentObject.getDepartmentId())
+                .departmentName(departmentObject.getDepartmentName())
+                .build());
+    }
     /*----------------------*/
 
     /**Author: Huynh Nhu Y**/
-    public void addClassroom(ReqAddClassroom classroomObject) throws DuplicateKeyException {
+    public void addClassroom(ReqDtoAddClassroom classroomObject) throws DuplicateKeyException {
         final String area = classroomObject.getArea().trim().toUpperCase();
         final String inpClassRoom = String.format("2%s%s", area, classroomObject.getRoomCode());
 
@@ -144,7 +158,7 @@ public class PostExtraFeaturesService {
         classroomRepository.save(classRoom);
     }
 
-    public void addSubjectRegistration(ReqAddSubjectRegistration subjectRegistrationObject) {
+    public void addSubjectRegistration(ReqDtoAddSubjectRegistration subjectRegistrationObject) {
         if (subjectRegistrationRepository.findBySectionClassIdAndStudentId(
             subjectRegistrationObject.getSectionClassId(), subjectRegistrationObject.getStudentId()).isPresent()
         )

@@ -16,27 +16,29 @@
 
 <body>
     <%@ include file="/WEB-INF/jsp/category.jsp" %>
-    <div id="center-page" id="teacher-list-page">
-        <c:if test="${errorMessage != null}">
-            <div class="error-service-message">
-                <span>${errorMessage}</span>
-                <i id="error-service-message_close-btn" class="fa fa-times-circle" aria-hidden="true"></i>
-            </div>
-        </c:if>
-        <c:if test="${succeedMessage != null}">
-            <div class="succeed-service-message">
-                <span>${succeedMessage}</span>
-                <i id="succeed-service-message_close-btn" class="fa fa-times-circle" aria-hidden="true"></i>
-            </div>
-        </c:if>
+    <div class="center-page" id="teacher-list-page">
+        <div id="message-blocks">
+            <c:if test="${errorMessage != null}">
+                <div class="error-service-message">
+                    <span>${errorMessage}</span>
+                    <i id="error-service-message_close-btn" class="fa fa-times-circle" aria-hidden="true"></i>
+                </div>
+            </c:if>
+            <c:if test="${succeedMessage != null}">
+                <div class="succeed-service-message">
+                    <span>${succeedMessage}</span>
+                    <i id="succeed-service-message_close-btn" class="fa fa-times-circle" aria-hidden="true"></i>
+                </div>
+            </c:if>
+        </div>
         <%@ include file="/WEB-INF/jsp/header.jsp" %>
-        <div id="center-page_list">
-            <div id="table-tools">
-                <div id="table-description">
+        <div class="center-page_list">
+            <div class="table-tools">
+                <div class="table-description">
                     <b>Danh sách</b>
                     <span id="quantity">${teacherList.size()} người</span>
                 </div>
-                <div id="table-search-box">
+                <div class="table-search-box">
                     <select id="search">
                         <option value="" selected disabled hidden>Chọn trường cần tìm</option>
                         <option value="0">Thông tin cơ bản</option>
@@ -51,75 +53,75 @@
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </div>
             </div>
-            <form action="/service/v1/manager/teacher-list-active-btn" method="POST">
-                <table>
-                    <thead>
-                        <tr>
-                            <th id="base-profile">
-                                Thông tin cơ bản
-                                <i class="fa-solid fa-arrow-down-a-z"></i>
-                            </th>
-                            <th id="teacher-id">
-                                Mã giảng viên
-                                <i class="fa-solid fa-arrow-down-a-z"></i>
-                            </th>
-                            <th id="department-id">
-                                Mã khoa
-                                <i class="fa-solid fa-arrow-down-a-z"></i>
-                            </th>
-                            <th id="birthday">
-                                Ngày sinh
-                                <i class="fa-solid fa-arrow-down-a-z"></i>
-                            </th>
-                            <th id="gender">
-                                Giới tính
-                                <i class="fa-solid fa-arrow-down-a-z"></i>
-                            </th>
-                            <th id="phone">
-                                Điện thoại
-                                <i class="fa-solid fa-arrow-down-a-z"></i>
-                            </th>
-                            <th id="update">Cập nhật</th>
+            <table>
+                <thead>
+                    <tr>
+                        <th id="base-profile">
+                            Thông tin cơ bản
+                            <i class="fa-solid fa-arrow-down-a-z"></i>
+                        </th>
+                        <th id="teacher-id">
+                            Mã giảng viên
+                            <i class="fa-solid fa-arrow-down-a-z"></i>
+                        </th>
+                        <th id="department-id">
+                            Mã khoa
+                            <i class="fa-solid fa-arrow-down-a-z"></i>
+                        </th>
+                        <th id="birthday">
+                            Ngày sinh
+                            <i class="fa-solid fa-arrow-down-a-z"></i>
+                        </th>
+                        <th id="gender">
+                            Giới tính
+                            <i class="fa-solid fa-arrow-down-a-z"></i>
+                        </th>
+                        <th id="phone">
+                            Điện thoại
+                            <i class="fa-solid fa-arrow-down-a-z"></i>
+                        </th>
+                        <th id="update">Cập nhật</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <c:forEach items="${teacherList}" var="teacher">
+                        <tr id="${teacher.teacherId}">
+                            <td plain-value="${teacher.lastName} ${teacher.firstName} ${teacher.account.instituteEmail}" class="base-profile">
+                                <span class="mock-avatar">
+                                    <i style="font-style:normal">${teacher.firstName.charAt(0)}</i>
+                                </span>
+                                <div class="teacher-info">
+                                    <b class="teacher-name">${teacher.lastName} ${teacher.firstName}</b>
+                                    <p class="institute-email">${teacher.account.instituteEmail}</p>
+                                </div>
+                            </td>
+                            <td plain-value="${teacher.teacherId}" class="teacher-id">
+                                ${teacher.teacherId}
+                            </td>
+                            <td plain-value="${teacher.department.departmentId}" class="department-id">
+                                ${teacher.department.departmentId}
+                            </td>
+                            <td plain-value="${teacher.birthday}" class="birthday">
+                                ${teacher.birthday}
+                            </td>
+                            <td plain-value="${teacher.gender == "BOY" ? "Nam" : "Nữ"}" class="gender">
+                                ${teacher.gender == "BOY" ? "Nam" : "Nữ"}
+                            </td>
+                            <td plain-value="${teacher.phone}" class="phone">
+                                ${teacher.phone}
+                            </td>
+                            <td class="table-row-btn update">
+                                <a href="/manager/sub-page/teacher/update-teacher?teacherId=${teacher.teacherId}">
+                                    <i class="fa-regular fa-pen-to-square"></i>
+                                </a>
+                            </td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        <c:forEach items="${teacherList}" var="teacher">
-                            <tr id="${teacher.teacherId}">
-                                <td plain-value="${teacher.lastName} ${teacher.firstName} ${teacher.account.instituteEmail}" class="base-profile">
-                                    <span class="mock-avatar">${teacher.firstName.charAt(0)}</span>
-                                    <div class="teacher-info">
-                                        <b class="teacher-name">${teacher.lastName} ${teacher.firstName}</b>
-                                        <p class="institute-email">${teacher.account.instituteEmail}</p>
-                                    </div>
-                                </td>
-                                <td plain-value="${teacher.teacherId}" class="teacher-id">
-                                    ${teacher.teacherId}
-                                </td>
-                                <td plain-value="${teacher.department.departmentId}" class="department-id">
-                                    ${teacher.department.departmentId}
-                                </td>
-                                <td plain-value="${teacher.birthday}" class="birthday">
-                                    ${teacher.birthday}
-                                </td>
-                                <td plain-value="${teacher.gender == "BOY" ? "Nam" : "Nữ"}" class="gender">
-                                    ${teacher.gender == "BOY" ? "Nam" : "Nữ"}
-                                </td>
-                                <td plain-value="${teacher.phone}" class="phone">
-                                    ${teacher.phone}
-                                </td>
-                                <td class="table-row-btn update">
-                                    <a href="/manager/sub-page/teacher/update-teacher?teacherId=${teacher.teacherId}">
-                                        <i class="fa-regular fa-pen-to-square"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                        </c:forEach>
-                    </tbody>
-                </table>
-            </form>
-            <div id="table-footer">
+                    </c:forEach>
+                </tbody>
+            </table>
+            <div class="table-footer">
                 <c:set var="prefixUrl" value="/manager/category/teacher/teacher-list?page=" scope="page"/>
-                <div id="table-footer_main">
+                <div class="table-footer_main">
                     <span class="interact-page-btn">
                         <a href="${prefixUrl}${(currentPage == 1) ? currentPage : (currentPage - 1)}">
                             <i class="fa-solid fa-angle-left"></i>
@@ -151,6 +153,7 @@
         <%@ include file="/WEB-INF/jsp/footer.jsp" %>
     </div>
     <script type="application/javascript" src="${pageContext.request.contextPath}/js/base.js"></script>
+    <script type="application/javascript" src="${pageContext.request.contextPath}/js/header.js"></script>
     <script type="application/javascript" src="${pageContext.request.contextPath}/js/teacher-list.js"></script>
 </body>
 

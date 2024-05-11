@@ -32,7 +32,7 @@ form .form-input {
 /*--Customize each input tag--*/
 form div#gradeId,
 form div#department {
-    width: 40%;
+    width: 48%;
 }
 form input,
 form select {

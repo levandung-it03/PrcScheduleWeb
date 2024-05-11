@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ReqAddSubjectRegistration {
+public class ReqDtoAddSubjectRegistration {
     @NotBlank(message = "error_entity_03")
     private String studentId;
     @NotNull(message = "error_entity_03")

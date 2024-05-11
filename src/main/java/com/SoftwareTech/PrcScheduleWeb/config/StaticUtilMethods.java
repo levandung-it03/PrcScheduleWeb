@@ -7,6 +7,7 @@ import com.SoftwareTech.PrcScheduleWeb.repository.ManagerRepository;
 import com.SoftwareTech.PrcScheduleWeb.repository.TeacherRepository;
 import com.SoftwareTech.PrcScheduleWeb.service.AuthService.JwtService;
 import com.SoftwareTech.PrcScheduleWeb.model.Account;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -18,9 +19,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Map;
+import java.security.SecureRandom;
+import java.util.*;
 
 @Component
 @RequiredArgsConstructor
@@ -35,47 +35,74 @@ public class StaticUtilMethods {
     private final ManagerRepository managerRepository;
     @Autowired
     private final TeacherRepository teacherRepository;
+    private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    private static final SecureRandom RANDOM = new SecureRandom();
 
-    /**Spring MVC: Customize returned ModelAndView to show ErrMessage or SucceedMessages.**/
-    public ModelAndView customResponseModelView(
+    /**
+     * Spring MVC: Customize returned ModelAndView to show ErrMessage or SucceedMessages.
+     **/
+    public ModelAndView customResponsiveModelView(
         @NonNull HttpServletRequest request,
-        @NonNull Map<String, Object> model,
+        @NonNull Model model,
         String pageModel
     ) {
         ModelAndView modelAndView = new ModelAndView(pageModel);
 
-        Object errCode = model.getOrDefault("errorCode", null);
-        if (errCode == null)    errCode = request.getSession().getAttribute("errorCode");
+        Map<String, Object> fieldValuePairsInModel = model.asMap();
+        Object errCode = fieldValuePairsInModel.getOrDefault("errorCode", null);
+        if (errCode == null) errCode = request.getSession().getAttribute("errorCode");
         if (errCode != null) {
             modelAndView.addObject("errorMessage", responseMessages.get(errCode.toString()));
             request.getSession().invalidate();
         }
 
-        Object succeedCode = model.getOrDefault("succeedCode", null);
-        if (succeedCode == null)    succeedCode = request.getSession().getAttribute("succeedCode");
+        Object succeedCode = fieldValuePairsInModel.getOrDefault("succeedCode", null);
+        if (succeedCode == null) succeedCode = request.getSession().getAttribute("succeedCode");
         if (succeedCode != null) {
             modelAndView.addObject("succeedMessage", responseMessages.get(succeedCode.toString()));
             request.getSession().invalidate();
         }
 
-        //--Prepare data for Header of Pages.
-        Account account = this.getAccountInfoInCookie(request);
-        if (account != null) {
-            if (account.getRole() == Role.MANAGER) {
-                Manager user = managerRepository.findByAccountAccountId(account.getAccountId());
-                modelAndView.addObject("user", user);
-                modelAndView.addObject("id", user.getManagerId());
-            } else if (account.getRole() == Role.TEACHER) {
-                Teacher user = teacherRepository.findByAccountAccountId(account.getAccountId());
-                modelAndView.addObject("user", user);
-                modelAndView.addObject("id", user.getTeacherId());
-            }
-        }
-
         return modelAndView;
     }
 
-    /**Spring MVC and Spring Security: Customize redirected HomePage when taking an unauthorized request with Cookies.**/
+    /**
+     * Spring MVC: Customize returned ModelAndView to show data of header.
+     **/
+    public ModelAndView insertingHeaderDataOfModelView(
+        @NonNull HttpServletRequest request,
+        @NonNull ModelAndView modelAndView
+    ) {
+        //--Prepare data for Header of Pages.
+        Account account = this.getAccountInfoInCookie(request);
+        if (account != null) {
+            try {
+                if (account.getRole() == Role.MANAGER) {
+                    Manager person = managerRepository
+                        .findByAccountAccountId(account.getAccountId())
+                        .orElseThrow(() -> new NoSuchElementException("Manager Id not found"));
+                    modelAndView.addObject("person", person);
+                    modelAndView.addObject("id", person.getManagerId());
+                } else if (account.getRole() == Role.TEACHER) {
+                    Teacher person = teacherRepository
+                        .findByAccountAccountId(account.getAccountId())
+                        .orElseThrow(() -> new NoSuchElementException("Teacher Id not found"));
+                    modelAndView.addObject("person", person);
+                }
+            } catch (NoSuchElementException ignored) {
+                //--Redirect to setting person-info page when account is has empty-person-info.
+                String lowerCaseRole = account.getRole().toString().toLowerCase();
+                return new ModelAndView(
+                    String.format("redirect:/%s/sub-page/%s/set-%s-info", lowerCaseRole, lowerCaseRole, lowerCaseRole)
+                );
+            }
+        }
+        return modelAndView;
+    }
+
+    /**
+     * Spring MVC and Spring Security: Customize redirected HomePage when taking an unauthorized request with Cookies.
+     **/
     public Account getAccountInfoInCookie(HttpServletRequest request) {
         final String authTokenFromCookies = jwtService.getAccessTokenInCookies(request);
         if (authTokenFromCookies != null) {
@@ -90,14 +117,18 @@ public class StaticUtilMethods {
         return null;
     }
 
-    /**Spring MVC: Get the "page" param in HttpServletRequest, customize and return as PageRequest Object.**/
+    /**
+     * Spring MVC: Get the "page" param in HttpServletRequest, customize and return as PageRequest Object.
+     **/
     public PageRequest getPageRequest(HttpServletRequest request) {
         //--Minimum the page index of Website interface is 1.
         int requestPage = 1;
 
         //--Compare Maximum with 1 if there's a negative(-) page number.
-        try { requestPage = Math.max(Integer.parseInt(request.getParameter("page")), 1); }
-        catch (NumberFormatException ignored) {}
+        try {
+            requestPage = Math.max(Integer.parseInt(request.getParameter("page")), 1);
+        } catch (NumberFormatException ignored) {
+        }
 
         /*
           - Minimum the "pageNumber" in "PagingAndSorting" is 0.
@@ -108,12 +139,14 @@ public class StaticUtilMethods {
         return PageRequest.of(requestPage - 1, 10);
     }
 
-    /**Spring Security: Clear all Cookies and kill all JWT Tokens.**/
-    public void clearAllTokenCookies(HttpServletRequest request, HttpServletResponse response) {
-        Arrays.stream(request.getCookies()).forEach(cookie -> {
-                cookie.setMaxAge(0);
-                response.addCookie(cookie);
-            }
-        );
+    /**
+     * Spring Security: Get the random OTP code with (length=6, chars=[A-Z, 0-9]).
+     **/
+    public String generateOTP(int length) {
+        StringBuilder otp = new StringBuilder(length);
+        for (int i = 0; i < length; i++) {
+            otp.append(CHARACTERS.charAt(RANDOM.nextInt(CHARACTERS.length())));
+        }
+        return otp.toString();
     }
 }

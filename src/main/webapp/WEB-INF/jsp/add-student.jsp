@@ -15,72 +15,63 @@
 </head>
 <body>
     <%@ include file="/WEB-INF/jsp/category.jsp" %>
-    <div id="center-page" id="add-computer-room-page">
-        <c:if test="${errorMessage != null}">
-            <div class="error-service-message">
-                <span>${errorMessage}</span>
-                <i id="error-service-message_close-btn" class="fa fa-times-circle" aria-hidden="true"></i>
-            </div>
-        </c:if>
-        <c:if test="${succeedMessage != null}">
-            <div class="succeed-service-message">
-                <span>${succeedMessage}</span>
-                <i id="succeed-service-message_close-btn" class="fa fa-times-circle" aria-hidden="true"></i>
-            </div>
-        </c:if>
+    <div class="center-page" id="add-student-page">
+        <div id="message-blocks">
+            <c:if test="${errorMessage != null}">
+                <div class="error-service-message">
+                    <span>${errorMessage}</span>
+                    <i id="error-service-message_close-btn" class="fa fa-times-circle" aria-hidden="true"></i>
+                </div>
+            </c:if>
+            <c:if test="${succeedMessage != null}">
+                <div class="succeed-service-message">
+                    <span>${succeedMessage}</span>
+                    <i id="succeed-service-message_close-btn" class="fa fa-times-circle" aria-hidden="true"></i>
+                </div>
+            </c:if>
+        </div>
         <%@ include file="/WEB-INF/jsp/header.jsp" %>
         <form method="POST" action="/service/v1/manager/add-student" modelAttribute="studentObject">
-
             <div class="form-input capitalized-text" id="studentId">
-                            <label for="studentId">Nhập mã sinh viên</label>
-                            <input onblur="this.value = this.value.toUpperCase();" name="studentId" type="text"
-                                value="${studentObject.studentId}" required/>
-                            <div class="form_text-input_err-message"></div>
-                        </div>
-
+                <label for="studentId">Nhập mã sinh viên</label>
+                <input onblur="this.value = this.value.toUpperCase();" name="studentId" type="text"
+                value="${studentObject.studentId}" autocomplete="off" required/>
+                    <div class="form_text-input_err-message"></div>
+            </div>
             <div class="form-input capitalized-text" id="grade">
-                             <label for="grade">Nhập mã lớp</label>
-                             <input name="grade" type="text"
-                                 value="${studentObject.grade}" required/>
-                             <div class="form_text-input_err-message"></div>
-                          </div>
-
+                <label for="grade">Nhập mã lớp</label>
+                    <input name="grade" type="text" value="${studentObject.grade}" autocomplete="off" required/>
+                <div class="form_text-input_err-message"></div>
+            </div>
             <div class="form-input strong-text" id="lastName">
-                               <label for="lastName">Tên cuối</label>
-                               <input name="lastName" type="text"
-                                    value="${studentObject.lastName}" required/>
-                               <div class="form_text-input_err-message"></div>
-                            </div>
-
+                <label for="lastName">Tên cuối</label>
+                <input name="lastName" type="text" value="${studentObject.lastName}" autocomplete="off" required/>
+                <div class="form_text-input_err-message"></div>
+            </div>
             <div class="form-input strong-text" id="firstName">
-                               <label for="firstName">Tên đầu</label>
-                               <input name="firstName" type="text"
-                                   value="${studentObject.firstName}" required/>
-                               <div class="form_text-input_err-message"></div>
-                          </div>
-
+                <label for="firstName">Tên đầu</label>
+                <input name="firstName" type="text" value="${studentObject.firstName}" autocomplete="off" required/>
+                <div class="form_text-input_err-message"></div>
+            </div>
             <div class="form-input" id="gender">
-                            <label for="gender">Giới tính</label>
-                            <select data="${student.gender}" name="gender">
-                                <option value="" disabled hidden selected>Chọn giới tính</option>
-                                <option value="BOY">Nam</option>
-                                <option value="GIRL">Nữ</option>
-                            </select>
-                        </div>
-
+                <label for="gender">Giới tính</label>
+                <select data="${student.gender}" name="gender">
+                    <option value="" disabled hidden selected>Chọn giới tính</option>
+                    <option value="BOY">Nam</option>
+                    <option value="GIRL">Nữ</option>
+                </select>
+            </div>
             <div class="form-input" id="instituteEmail">
-                               <label for="instituteEmail">Email</label>
-                               <input name="instituteEmail" type="text"
-                                   value="${studentObject.instituteEmail}" required/>
-                               <div class="form_text-input_err-message"></div>
-                           </div>
-
-
+                <label for="instituteEmail">Email</label>
+                <input name="instituteEmail" type="text" value="${studentObject.instituteEmail}" autocomplete="off" required/>
+                <div class="form_text-input_err-message"></div>
+            </div>
             <input type="submit" value="Xác nhận">
         </form>
         <%@ include file="/WEB-INF/jsp/footer.jsp" %>
     </div>
     <script type="application/javascript" src="${pageContext.request.contextPath}/js/base.js"></script>
+    <script type="application/javascript" src="${pageContext.request.contextPath}/js/header.js"></script>
     <script type="application/javascript" src="${pageContext.request.contextPath}/js/add-student.js"></script>
 </body>
 </html>

@@ -2,8 +2,7 @@ package com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto;
 
 import lombok.*;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder

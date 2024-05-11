@@ -105,7 +105,7 @@ div#table-as-list table tbody {
     overflow-y: auto;
     overflow-x: hidden; 
 }
-span#table-description {
+span.table-description {
     text-align: left;
     display: block;
     font-weight: 900;
@@ -127,7 +127,7 @@ table tr td.base-profile {
     flex-direction: column;
 }
 
-table tr td.base-profile span.mock-avatar {
+table tr td.base-profile span.mock-avatar i {
     display: block;
     width: 45px;
     padding: 10px 0;
@@ -171,7 +171,7 @@ div#main-chart {
     flex-wrap: wrap;
     justify-content: center;
     margin: 20px;
-    width: 400px;
+    width: 30%;
     height: var(--max-component-width);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
     transition: background-color ease 0.2s;

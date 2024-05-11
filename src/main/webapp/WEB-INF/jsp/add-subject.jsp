@@ -15,34 +15,36 @@
 </head>
 <body>
     <%@ include file="/WEB-INF/jsp/category.jsp" %>
-    <div id="center-page" id="add-computer-room-page">
-        <c:if test="${errorMessage != null}">
-            <div class="error-service-message">
-                <span>${errorMessage}</span>
-                <i id="error-service-message_close-btn" class="fa fa-times-circle" aria-hidden="true"></i>
-            </div>
-        </c:if>
-        <c:if test="${succeedMessage != null}">
-            <div class="succeed-service-message">
-                <span>${succeedMessage}</span>
-                <i id="succeed-service-message_close-btn" class="fa fa-times-circle" aria-hidden="true"></i>
-            </div>
-        </c:if>
+    <div class="center-page" id="add-subject-page">
+        <div id="message-blocks">
+            <c:if test="${errorMessage != null}">
+                <div class="error-service-message">
+                    <span>${errorMessage}</span>
+                    <i id="error-service-message_close-btn" class="fa fa-times-circle" aria-hidden="true"></i>
+                </div>
+            </c:if>
+            <c:if test="${succeedMessage != null}">
+                <div class="succeed-service-message">
+                    <span>${succeedMessage}</span>
+                    <i id="succeed-service-message_close-btn" class="fa fa-times-circle" aria-hidden="true"></i>
+                </div>
+            </c:if>
+        </div>
         <%@ include file="/WEB-INF/jsp/header.jsp" %>
         <form method="POST" action="/service/v1/manager/add-subject" modelAttribute="subjectObject">
             <div class="form-input capitalized-text" id="subjectId">
                 <label for="subjectId">Nhập mã môn</label>
-                <input name="subjectId" type="text" value="${subjectObject.subjectId}" required/>
+                <input name="subjectId" type="text" value="${subjectObject.subjectId}" autocomplete="off" required/>
                 <div class="form_text-input_err-message"></div>
             </div>
             <div class="form-input strong-text" id="subjectName">
                 <label for="subjectName">Nhập tên môn</label>
-                <input name="subjectName" type="text" value="${subjectObject.subjectName}" required/>
+                <input name="subjectName" type="text" value="${subjectObject.subjectName}" autocomplete="off" required/>
                 <div class="form_text-input_err-message"></div>
             </div>
             <div class="form-input" id="creditsNumber">
                 <label for="creditsNumber">Nhập số tín chỉ</label>
-                <input name="creditsNumber" type="number" value="${subjectObject.creditsNumber}" maxlength="2" required/>
+                <input name="creditsNumber" type="number" value="${subjectObject.creditsNumber}" maxlength="2" autocomplete="off" required/>
                 <div class="form_text-input_err-message"></div>
             </div>
             <input type="submit" value="Xác nhận">
@@ -50,6 +52,7 @@
         <%@ include file="/WEB-INF/jsp/footer.jsp" %>
     </div>
     <script type="application/javascript" src="${pageContext.request.contextPath}/js/base.js"></script>
+    <script type="application/javascript" src="${pageContext.request.contextPath}/js/header.js"></script>
     <script type="application/javascript" src="${pageContext.request.contextPath}/js/add-subject.js"></script>
 </body>
 </html>

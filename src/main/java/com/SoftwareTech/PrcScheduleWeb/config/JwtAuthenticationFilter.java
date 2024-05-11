@@ -75,12 +75,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return;
         }
 
-        if (jwtService.isExpiredToken(jwtInputToken)) {
-            //--If Token is expired, let user logins again.
-            response.sendRedirect("/public/login");
-            return;
-        }
-
         final String instituteEmail = jwtService.getInstituteEmail(jwtInputToken);
         if (instituteEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             //--Get UserDetails information (email, pass, roles,...)
@@ -103,7 +97,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             }
             //--Clear all invalid Token inside Cookies.
             else if (request.getCookies() != null) {
-                staticUtilMethods.clearAllTokenCookies(request, response);
+                jwtService.clearAllTokenCookies(request, response);
                 response.sendRedirect("/public/login");
                 return;
             }
@@ -115,7 +109,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         final String requestURL = request.getServletPath();
         final String requestMethod = request.getMethod();
 
-        boolean isStaticResourcesRequest = requestURL.startsWith("/js/")
+        boolean isStaticResourcesRequest = requestURL.startsWith("/public/")
+            || requestURL.startsWith("/js/")
             || requestURL.startsWith("/css/")
             || requestURL.startsWith("/img/")
             || requestURL.startsWith("/favicon.ico");
@@ -123,9 +118,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return true;
 
         final Map<String, String> bypassTokens = new HashMap<>();
-        bypassTokens.put("/public/login", "GET");
         bypassTokens.put(String.format("%s/register", this.authPrefix), "POST");
         bypassTokens.put(String.format("%s/authenticate", this.authPrefix), "POST");
+        bypassTokens.put(String.format("%s/change-password/otp-for-new-password", this.authPrefix), "POST");
 
         if (bypassTokens.containsKey(requestURL))
             return bypassTokens.get(requestURL).contains(requestMethod);

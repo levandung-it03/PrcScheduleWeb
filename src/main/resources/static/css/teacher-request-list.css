@@ -15,7 +15,7 @@ table tr td.base-profile {
     flex-direction: column;
     /* justify-content: start; */
 }
-table tr td.base-profile span.mock-avatar {
+table tr td.base-profile span.mock-avatar i {
     display: block;
     width: 45px;
     padding: 10px 0;

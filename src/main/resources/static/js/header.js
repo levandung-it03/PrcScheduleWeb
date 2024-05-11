@@ -1,38 +1,50 @@
-(function toggleHideCategory() {
+function toggleHideCategory() {
     try {
-        document.querySelector("div#header_left i").addEventListener("click", (e) =>
-            document.querySelector("div#category").classList.toggle("hide")
+        $("div#header_left i").addEventListener("click", (e) =>
+            $("div#category").classList.toggle("hide")
         );
     } catch (ignored) {}
     try {
-        document.querySelector("div#header_right #avatar_user").addEventListener("click", (e) =>
-            document.querySelector("div#panel-info").classList.toggle("hide")
-        );
+        $('div#header_right .avatar_user i').addEventListener("click", (e) => {
+            console.log(1)
+            $("div#panel-info").classList.toggle("hide")
+        });
     } catch (ignored) {}
     window.addEventListener("click", e => {
-        if (!document.querySelector("div#panel-info").classList.contains("hide")
-        && e.target.id != "avatar_user") {
+        if (!$("div#panel-info").classList.contains("hide") && !e.target.parentElement.classList.contains("avatar_user")) {
             try {
-                document.querySelector("div#panel-info").classList.add("hide")
+                $("div#panel-info").classList.add("hide")
             } catch (ignored) {}
         }
     });
-})();
+    $('form#logout-form > a').addEventListener("click", e => {
+        if (confirm("Bạn chắc chắn muốn thực hiện thao tác?"))
+            $('form#logout-form').submit();
+    });
+}
 
 function mappingCategoryNameWithCurrentPage() {
     const pageName = new URL(window.location.href).pathname.split("/").pop();
     const categoryNameObjects = {
+        ["show-info"]:{
+            ["category-name"]: "Dữ liệu cá nhân",
+            ["page-description"]: "Xem dữ liệu đang có hiện tại trên hệ thống."
+        },
         ["set-manager-info"]:{
             ["category-name"]: "Thêm dữ liệu mới",
             ["page-description"]: "Thêm dữ liệu cho tài khoản 'quản lý' mới tạo."
         },
-        ["update-manager"]:{
+        ["update-manager-info"]:{
             ["category-name"]: "Cập nhật dữ liệu",
             ["page-description"]: "Cập nhật dữ liệu của tài khoản 'quản lý'."
         },
         ["set-teacher-info"]:{
             ["category-name"]: "Thêm dữ liệu mới",
             ["page-description"]: "Thêm dữ liệu cho tài khoản 'giảng viên' mới tạo."
+        },
+        ["change-password"]:{
+            ["category-name"]: "Đổi mật khẩu",
+            ["page-description"]: "Đổi một mật khẩu mới cho tài khoản của bạn khi cần thiết."
         },
         ["update-teacher"]:{
             ["category-name"]: "Cập nhật dữ liệu",
@@ -121,9 +133,19 @@ function mappingCategoryNameWithCurrentPage() {
         ["add-semester"]:{
             ["category-name"]: "Thêm dữ liệu cho học kì",
             ["page-description"]: "Thêm dữ liệu cho một học kì mới mở."
+        },
+        ["add-department"]:{
+            ["category-name"]: "Thêm dữ liệu cho khoa",
+            ["page-description"]: "Thêm dữ liệu cho một khoa mới mở."
         }
     }
 
-    document.querySelector('header p#header_left_category-name').innerText = categoryNameObjects[pageName]["category-name"];
-    document.querySelector('header p#header_left_page-description').innerText = categoryNameObjects[pageName]["page-description"];
+    $('header p#header_left_category-name').textContent = categoryNameObjects[pageName]["category-name"];
+    $('header p#header_left_page-description').textContent = categoryNameObjects[pageName]["page-description"];
+}
+
+function buildHeader() {
+    mappingCategoryNameWithCurrentPage();
+    toggleHideCategory();
+    customizeAllAvatarColor();
 }

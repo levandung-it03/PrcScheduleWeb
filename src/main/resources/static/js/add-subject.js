@@ -3,28 +3,17 @@
     const validatingBlocks = {
         subjectId: {
             tag: $('input[name=subjectId]'),
-            confirm: function (value) {
-                this.isValid = (value.length != 0) && (value.search(" ") == -1);
-                return this.isValid;
-            },
+            validate: (value) => (value.length != 0) && (value.search(" ") == -1),
             errorMessage: "Mã môn học không hợp lệ.",
-            isValid: false,
         },
         subjectName: {
             tag: $('input[name=subjectName]'),
-            confirm: function (value) {
-                this.isValid = (/^[A-Za-zÀ-ỹ]{1,50}( [A-Za-zÀ-ỹ]{1,50})*$/).test(value);
-                return this.isValid;
-            },
+            validate: (value) => (/^[A-Za-zÀ-ỹ]{1,50}( [A-Za-zÀ-ỹ]{1,50})*$/).test(value),
             errorMessage: "Tên môn học không hợp lệ.",
-            isValid: false,
         },
         creditsNumber: {
             tag: $('input[name=creditsNumber]'),
-            confirm: function (value) {
-                this.isValid = (0 < value) && (value < 21);
-                return this.isValid;
-            },
+            validate: (value) => (0 < value) && (value < 21),
             errorMessage: "Số tín chỉ không hợp lệ.",
             isValid: false,
         },
@@ -33,9 +22,9 @@
     customizeClosingNoticeMessageEvent();
     createErrBlocksOfInputTags(validatingBlocks);
     customizeValidateEventInputTags(validatingBlocks);
-    customizeSubmitFormAction(validatingBlocks);
+    customizeSubmitFormAction('div#add-subject-page > form', validatingBlocks);
     customizeAutoFormatStrongInputTextEvent();
     recoveryAllSelectTagDataInForm();
     removePathAttributes();
-    mappingCategoryNameWithCurrentPage();
+    buildHeader();
 })();

@@ -77,26 +77,26 @@ div#add-schedule-block .form-input {
 }
 
 /*--Customize each input tag--*/
-div#table-tools {
+div.table-tools {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
 }
-div#table-tools div#semester {
+div.table-tools div#semester {
     width: 30%;
 }
-div#table-tools div#list-of-week {
+div.table-tools div#list-of-week {
     width: 65%;
 }
-div#table-tools div#list-of-week select,
-div#table-tools div#semester input {
+div.table-tools div#list-of-week select,
+div.table-tools div#semester input {
     width: 100%;
     border: 1px black solid;
 } 
-div#table-tools div#semester input,
-div#table-tools div#list-of-week select,
-div#table-tools div#list-of-week select option {
+div.table-tools div#semester input,
+div.table-tools div#list-of-week select,
+div.table-tools div#list-of-week select option {
     font-size: 1rem;
 }
 /*------------*/

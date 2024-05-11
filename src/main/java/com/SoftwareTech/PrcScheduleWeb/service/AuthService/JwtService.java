@@ -2,6 +2,7 @@ package com.SoftwareTech.PrcScheduleWeb.service.AuthService;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -100,6 +101,19 @@ public class JwtService {
         } catch (Exception ignored) {
             return null;
         }
+    }
+
+    /**
+     * Spring Security: Clear all Cookies and kill all JWT Tokens.
+     **/
+    public void clearAllTokenCookies(HttpServletRequest request, HttpServletResponse response) {
+        //--Clear cookies from client device.
+        Arrays.stream(request.getCookies()).forEach(cookie -> {
+            cookie.setMaxAge(0);
+            cookie.setValue(null);
+            cookie.setPath("/");
+            response.addCookie(cookie);
+        });
     }
 
     /*

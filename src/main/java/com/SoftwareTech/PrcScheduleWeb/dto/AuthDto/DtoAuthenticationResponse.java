@@ -4,8 +4,7 @@ import com.SoftwareTech.PrcScheduleWeb.model.enums.Role;
 import lombok.*;
 
 @Builder
-@Setter
-@Getter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class DtoAuthenticationResponse {

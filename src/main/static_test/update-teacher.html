@@ -11,7 +11,7 @@
     <link rel="stylesheet" type="text/css" href="../resources/static/css/update-teacher.css">
 </head>
 <body>
-    <div id="center-page" id="add-account-page">
+    <div class="center-page" id="add-account-page">
         <form method="POST" action="/service/v1/manager/update-teacher?teacherId=${}" modelAttribute="">
             <div class="form-input" id="teacherId">
                 <label for="teacherId">Mã giảng viên</label>
@@ -19,17 +19,17 @@
             </div>
             <div class="form-input" id="lastName">
                 <label for="lastName">Họ giảng viên</label>
-                <input name="lastName" type="text" value="${}" required/>
+                <input name="lastName" type="text" value="${}" autocomplete="off" required/>
                 <div class="form_text-input_err-message"></div>
             </div>
             <div class="form-input" id="firstName">
                 <label for="firstName">Tên giảng viên</label>
-                <input name="firstName" type="text" value="${}" required/>
+                <input name="firstName" type="text" value="${}" autocomplete="off" required/>
                 <div class="form_text-input_err-message"></div>
             </div>
             <div class="form-input" id="birthday">
                 <label for="birthday">Ngày sinh</label>
-                <input name="birthday" type="date" value="2003-11-11" required/>
+                <input name="birthday" type="date" value="2003-11-11" autocomplete="off" required/>
                 <div class="form_text-input_err-message"></div>
             </div>
             <div class="form-input" id="gender">
@@ -49,12 +49,14 @@
             </div>
             <div class="form-input" id="phone">
                 <label for="phone">Số điện thoại</label>
-                <input name="phone" type="text" value="${}" required/>
+                <input name="phone" type="text" value="${}" autocomplete="off" required/>
                 <div class="form_text-input_err-message"></div>
             </div>
             <input type="submit" value="Xác nhận">
         </form>
     </div>
+    <script type="application/javascript" src="${pageContext.request.contextPath}/js/base.js"></script>
+    <script type="application/javascript" src="${pageContext.request.contextPath}/js/header.js"></script>
     <script type="application/javascript" src="../resources/static/js/base.js"></script>
     <script type="application/javascript" src="../resources/static/js/update-teacher.js"></script>
 </body>

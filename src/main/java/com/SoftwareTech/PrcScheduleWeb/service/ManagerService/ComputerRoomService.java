@@ -60,7 +60,7 @@ public class ComputerRoomService {
     @Transactional(rollbackOn = {Exception.class})
     public void updateComputerRoom(ReqDtoUpdateComputerRoom roomInp, HttpServletRequest request) {
         if (roomInp.getAvailableComputerQuantity() > roomInp.getMaxComputerQuantity())
-            throw new IllegalStateException("Available quantity must be least than maximum quantity.");
+            throw new IllegalArgumentException("Available quantity must be least than maximum quantity.");
 
         final String roomCode = request.getParameter("roomId");
         Classroom practiceRoom = classroomRepository

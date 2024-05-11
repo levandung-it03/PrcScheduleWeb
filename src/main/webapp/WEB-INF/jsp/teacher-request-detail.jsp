@@ -15,19 +15,21 @@
 </head>
 <body>
     <%@ include file="/WEB-INF/jsp/category.jsp" %>
-    <div id="center-page" id="teacher-request-detail-page">
-        <c:if test="${errorMessage != null}">
-            <div class="error-service-message">
-                <span>${errorMessage}</span>
-                <i id="error-service-message_close-btn" class="fa fa-times-circle" aria-hidden="true"></i>
-            </div>
-        </c:if>
-        <c:if test="${succeedMessage != null}">
-            <div class="succeed-service-message">
-                <span>${succeedMessage}</span>
-                <i id="succeed-service-message_close-btn" class="fa fa-times-circle" aria-hidden="true"></i>
-            </div>
-        </c:if>
+    <div class="center-page" id="teacher-request-detail-page">
+        <div id="message-blocks">
+            <c:if test="${errorMessage != null}">
+                <div class="error-service-message">
+                    <span>${errorMessage}</span>
+                    <i id="error-service-message_close-btn" class="fa fa-times-circle" aria-hidden="true"></i>
+                </div>
+            </c:if>
+            <c:if test="${succeedMessage != null}">
+                <div class="succeed-service-message">
+                    <span>${succeedMessage}</span>
+                    <i id="succeed-service-message_close-btn" class="fa fa-times-circle" aria-hidden="true"></i>
+                </div>
+            </c:if>
+        </div>
         <%@ include file="/WEB-INF/jsp/header.jsp" %>
         <div class="detail-block">
             <div class="detail-block_description" id="teacher-info">
@@ -125,13 +127,13 @@
             </form>
         </div>
         <div class="detail-block" id="student-list">
-            <div id="table-tools">
-                <div id="table-description">
+            <div class="table-tools">
+                <div class="table-description">
                     <i class="fa-solid fa-users"></i>
                     <p>DANH SÁCH SINH VIÊN</p>
                     <span id="quantity">${students.size()} người</span>
                 </div>
-                <div id="table-search-box">
+                <div class="table-search-box">
                     <select id="search">
                         <option value="" selected disabled hidden>Chọn trường cần tìm</option>
                         <option value="0">Mã sinh viên</option>
@@ -197,8 +199,8 @@
         </div>
         <%@ include file="/WEB-INF/jsp/footer.jsp" %>
     </div>
-    </div>
     <script type="application/javascript" src="${pageContext.request.contextPath}/js/base.js"></script>
+    <script type="application/javascript" src="${pageContext.request.contextPath}/js/header.js"></script>
     <script type="application/javascript" src="${pageContext.request.contextPath}/js/teacher-request-detail.js"></script>
 </body>
 </html>

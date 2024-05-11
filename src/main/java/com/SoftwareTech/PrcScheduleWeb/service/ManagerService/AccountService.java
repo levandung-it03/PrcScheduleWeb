@@ -1,10 +1,11 @@
 package com.SoftwareTech.PrcScheduleWeb.service.ManagerService;
 
-import com.SoftwareTech.PrcScheduleWeb.dto.AuthDto.DtoRegisterAccount;
+import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.ReqDtoAddTeacherAccount;
 import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.ReqDtoUpdateTeacherAccount;
 import com.SoftwareTech.PrcScheduleWeb.model.Account;
 import com.SoftwareTech.PrcScheduleWeb.model.enums.Role;
 import com.SoftwareTech.PrcScheduleWeb.repository.AccountRepository;
+import com.SoftwareTech.PrcScheduleWeb.repository.ManagerRepository;
 import com.SoftwareTech.PrcScheduleWeb.repository.TeacherRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
@@ -26,13 +27,15 @@ public class AccountService {
     private final PasswordEncoder getPasswordEncoder;
     @Autowired
     private final TeacherRepository teacherRepository;
+    @Autowired
+    private final ManagerRepository managerRepository;
 
-    public void addTeacherAccount(DtoRegisterAccount registerObject) {
-        final String email = registerObject.getInstituteEmail().trim();
-        final String password = registerObject.getPassword().trim();
+    public void addTeacherAccount(ReqDtoAddTeacherAccount newAccountObject) {
+        final String email = newAccountObject.getInstituteEmail().trim();
+        final String password = newAccountObject.getPassword().trim();
 
-        if (!password.equals(registerObject.getRetypePassword().trim()))
-            throw new IllegalStateException("Password not correct");
+        if (!password.equals(newAccountObject.getRetypePassword().trim()))
+            throw new IllegalArgumentException("Password not correct");
 
         if (accountRepository.findByInstituteEmail(email).isPresent())
             throw new DuplicateKeyException("Email is already existed");

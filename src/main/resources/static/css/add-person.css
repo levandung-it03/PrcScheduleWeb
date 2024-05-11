@@ -5,7 +5,7 @@ html {
     padding: 0;
 }
 
-#center-page > form {
+.center-page > form {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -20,7 +20,7 @@ html {
     font-weight: 600;
 }
 
-#center-page > form .form-input {
+.center-page > form .form-input {
     position: relative;
     min-height: 90px !important;
 }
@@ -31,10 +31,10 @@ html {
 }
 
 /*--Customize each input tag--*/
-#center-page > form div#teacherId {
+.center-page > form div#teacherId {
     width: 100%;
 }
-#center-page > form > div{
+.center-page > form > div{
     width: 48%;
 }
 
@@ -60,7 +60,7 @@ html {
     font-size: 12px;
 }
 
-#center-page > form input[type=submit] {
+.center-page > form input[type=submit] {
     padding: 12px 42px;
     margin: auto;
     margin-top: 30px;

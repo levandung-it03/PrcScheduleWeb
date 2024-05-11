@@ -14,9 +14,10 @@
             }
         });
     })();
+    customizeClosingNoticeMessageEvent();
     drawStatisticRequestsChart(hiddenData);
     customizeSortingListEvent();
-    mappingCategoryNameWithCurrentPage();
+    buildHeader();
     customizeAllAvatarColor();
 })();
 

@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -98,6 +99,7 @@ public class ApplicationConfig {
         messagePairs.put("error_account_01", "Email không đúng!");
         messagePairs.put("error_account_02", "Email đã tồn tại!");
         messagePairs.put("error_account_03", "Mật khẩu không đúng!");
+        messagePairs.put("error_account_04", "Mật khẩu mới gửi về Gmail thành công!");
 
         messagePairs.put("error_computerRoom_01", "Đã tồn tại 'phòng học' tại khu vực bạn chọn!");
         messagePairs.put("error_computerRoom_02", "Đã tồn tại 'phòng thực hành' tại khu vực bạn chọn!");
@@ -112,13 +114,16 @@ public class ApplicationConfig {
 
         messagePairs.put("error_subject_01", "Môn học đã tồn tại!");
 
-        /***Author: Luong Dat Thien***/
         messagePairs.put("error_semester_01", "Kì học đã tồn tại!");
+        messagePairs.put("error_semester_02", "Kì học không tồn tại!");
 
         messagePairs.put("error_section_class_01", "Lớp tín chỉ đã tồn tại!");
-        messagePairs.put("error_section_class_02", "Kì học không tồn tại!");
-        messagePairs.put("error_section_class_03", "Không tồn tại lớp!");
-        messagePairs.put("error_section_class_04", "Không tồn tại môn học!");
+        messagePairs.put("error_section_class_02", "Không tồn tại lớp!");
+        messagePairs.put("error_section_class_03", "Không tồn tại môn học!");
+
+        messagePairs.put("error_department_01", "khoa đã tồn tại!");
+
+        messagePairs.put("error_manager_01", "Đã tồn tại mã của người quản lý!");
         /******************/
 
         return messagePairs;

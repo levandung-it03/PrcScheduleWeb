@@ -3,40 +3,32 @@
     const validatingBlocks = {
         instituteEmail: {
             tag: $('input[name=instituteEmail]'),
-            confirm: function (value) {
-                this.isValid = (/^([^@\s]+)@(ptithcm\.edu\.vn|ptit\.edu\.vn|student\.ptithcm\.edu\.vn)$/).test(value);
-                return this.isValid;
-            },
+            validate: (value) => (/^([^@\s]+)@(ptithcm\.edu\.vn|ptit\.edu\.vn|student\.ptithcm\.edu\.vn)$/).test(value),
             errorMessage: "Nhập đúng định dạng name01@ptithcm.edu.vn",
-            isValid: false,
         },
         password: {
             tag: $('input[name=password]'),
-            confirm: function (value) {
-                this.isValid = value.length >= 8;
-                validatingBlocks.retypePassword.confirm(validatingBlocks.retypePassword.tag.value);
-                return this.isValid;
+            validate: function (value) {
+                //--Using function to make "this" work correctly.
+                if (validatingBlocks.retypePassword.tag.value !== "")
+                    validatingBlocks.retypePassword.tag.dispatchEvent(new Event("keyup"));
+                return value.length >= 8;
             },
             errorMessage: "Mật khẩu không đủ dài.",
             isValid: false,
         },
         retypePassword: {
             tag: $('input[name=retypePassword]'),
-            confirm: function (value) {
-                this.isValid = value == validatingBlocks.password.tag.value;
-                return this.isValid;
-            },
-            errorMessage: "Mật khẩu không chính xác.",
-            isValid: false,
+            validate: (value) => (value == validatingBlocks.password.tag.value),
+            errorMessage: "Mật khẩu không chính xác."
         },
     };
 
-    
     customizeClosingNoticeMessageEvent();
     createErrBlocksOfInputTags(validatingBlocks);
     customizeValidateEventInputTags(validatingBlocks);
     customizeToggleDisplayPasswordEvent();
-    customizeSubmitFormAction(validatingBlocks);
+    customizeSubmitFormAction('div#add-account-page > form', validatingBlocks);
     removePathAttributes();
-    mappingCategoryNameWithCurrentPage();
+    buildHeader();
 })();

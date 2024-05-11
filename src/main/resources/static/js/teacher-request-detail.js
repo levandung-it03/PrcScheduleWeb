@@ -1,9 +1,9 @@
 const plainTableRows = [...$$('div#student-list table tbody tr')];
 
 (function main() {
-    mappingCategoryNameWithCurrentPage();
+    buildHeader();
     customizeClosingNoticeMessageEvent();
+    customizeSubmitFormAction('div#teacher-request-detail-page div#practice-schedule > form');
     customizeSearchingListEvent(plainTableRows);
     customizeSortingListEvent();
-    customizeSubmitFormAction({mockTag: {isValid: true}});
 })();

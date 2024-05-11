@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Update Teacher</title>
+    <title>${actionType.toUpperCase()} ${roleName.toUpperCase()}</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
         integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -17,7 +17,7 @@
     <c:if test="${actionType == 'update'}">
         <%@ include file="/WEB-INF/jsp/category.jsp" %>
     </c:if>
-    <div id="center-page" id="${actionType}-person-page">
+    <div class="center-page" id="${actionType}-person-page">
         <div id="message-blocks">
             <c:if test="${errorMessage != null}">
                 <div class="error-service-message">
@@ -46,24 +46,18 @@
                         </div>
                     </div>
                     <div id="header_right">
-                        <div class="header_items" id="avatar">
+                        <div class="header_items" class="avatar">
                             <style>
                                 #header_left_category-content {
                                     padding-left: 80px;
                                 }
-                                #avatar_user > i {
-                                    padding: 0;
-                                }
-                                #avatar_user > i:hover {
-                                    background-color: rgb(177, 177, 177);
-                                }
                             </style>
-                            <span id="avatar_user">
+                            <span class="avatar_user">
                                 <i class="fa-solid fa-gear"></i>
                             </span>
                         </div>
                         <div id="panel-info" class="hide">
-                            <ul id="panel-info_last-component" id="panel-info_app-features">
+                            <ul class="panel-info_last-component" id="panel-info_app-features">
                                 <li>
                                     <a class="panel-info_sub-components_options" href="/manager/sub-page/manage-info/info">
                                         <i class="fa-solid fa-triangle-exclamation"></i>
@@ -71,30 +65,38 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <form class="panel-info_sub-components_options" action="/service/v1/${roleName}/logout">
-                                        <button class="panel-info_sub-components_options" name="logout" value="${id}">
+                                    <form id="logout-form" action="/service/v1/auth/logout" method="POST">
+                                        <a class="panel-info_sub-components_options">
                                             <i class="fa-solid fa-right-from-bracket"></i>
                                             Đăng xuất
-                                        </button>
+                                        </a>
                                     </form>
                                 </li>
                             </ul>
                         </div>
                     </div>
                 </header>
-                <script type="application/javascript" src="${pageContext.request.contextPath}/js/header.js"></script>
             </c:otherwise>
         </c:choose>
         <form method="POST" action="/service/v1/${roleName}/${actionTail}" modelAttribute="person">
-            <input name="instituteEmail" type="text" value="${person.instituteEmail}" hidden/>
+            <c:choose>
+                <c:when test="${actionType == 'add'}">
+                    <input name="instituteEmail" type="text" value="${instituteEmail}" hidden/>
+                </c:when>
+                <c:otherwise>
+                    <input name="instituteEmail" type="text" value="${person.account.instituteEmail}" hidden/>
+                </c:otherwise>
+            </c:choose>
             <c:set var="roleNameAsVietnamese" value="${roleName == 'manager' ? 'quản lý' : 'giảng viên'}" />
             <div class="form-input" id="${roleName}Id">
+                <span id="id-name" style="display:none;">${roleName}Id</span>
                 <label for="${roleName}Id">Mã ${roleNameAsVietnamese}</label>
                 <c:choose>
                     <c:when test="${roleName == 'teacher'}">
                         <c:choose>
                             <c:when test="${actionType == 'add'}">
                                 <input name="${roleName}Id" type="text" value="${person.teacherId}"/>
+                                <div class="form_text-input_err-message"></div>
                             </c:when>
                             <c:otherwise>
                                 <input name="${roleName}Id" type="text" value="${person.teacherId}" readonly disabled/>
@@ -106,6 +108,7 @@
                         <c:choose>
                             <c:when test="${actionType == 'add'}">
                                 <input name="${roleName}Id" type="text" value="${person.managerId}"/>
+                                <div class="form_text-input_err-message"></div>
                             </c:when>
                             <c:otherwise>
                                 <input name="${roleName}Id" type="text" value="${person.managerId}" readonly disabled/>
@@ -117,17 +120,17 @@
             </div>
             <div class="form-input strong-text" id="lastName">
                 <label for="lastName">Họ ${roleNameAsVietnamese}</label>
-                <input name="lastName" type="text" value="${person.lastName}" required/>
+                <input name="lastName" type="text" value="${person.lastName}" autocomplete="off" required/>
                 <div class="form_text-input_err-message"></div>
             </div>
             <div class="form-input strong-text" id="firstName">
                 <label for="firstName">Tên ${roleNameAsVietnamese}</label>
-                <input name="firstName" type="text" value="${person.firstName}" required/>
+                <input name="firstName" type="text" value="${person.firstName}" autocomplete="off" required/>
                 <div class="form_text-input_err-message"></div>
             </div>
             <div class="form-input" id="birthday">
                 <label for="birthday">Ngày sinh</label>
-                <input name="birthday" type="date" value="${person.birthday}" required/>
+                <input name="birthday" type="date" value="${person.birthday}" autocomplete="off" required/>
                 <div class="form_text-input_err-message"></div>
             </div>
             <div class="form-input" id="gender">
@@ -151,7 +154,7 @@
             </c:if>
             <div class="form-input" id="phone">
                 <label for="phone">Số điện thoại</label>
-                <input name="phone" type="text" value="${person.phone}" required/>
+                <input name="phone" type="text" value="${person.phone}" autocomplete="off" required/>
                 <div class="form_text-input_err-message"></div>
             </div>
             <input name="pageNumber" value="${pageNumber}" hidden/>
@@ -160,6 +163,7 @@
         <%@ include file="/WEB-INF/jsp/footer.jsp" %>
     </div>
     <script type="application/javascript" src="${pageContext.request.contextPath}/js/base.js"></script>
+    <script type="application/javascript" src="${pageContext.request.contextPath}/js/header.js"></script>
     <script type="application/javascript" src="${pageContext.request.contextPath}/js/add-person.js"></script>
 </body>
 </html>

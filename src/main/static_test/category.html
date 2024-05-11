@@ -1,20 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" style="display:flex; width: 150px!important;">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+        integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" type="text/css" href="../resources/static/css/category.css">
+    <link rel="stylesheet" type="text/css" href="../resources/static/css/base.css">
+</head>
+
+<body>
     <div id="category">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
-            integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
-            crossorigin="anonymous" referrerpolicy="no-referrer" />
-        <link rel="stylesheet" type="text/css" href="../resources/static/css/category.css">
-        <link rel="stylesheet" type="text/css" href="../resources/static/css/base.css">
         <div id="category_header">
             <div id="category_header_logo">
-                <img src="../resources/static/img/ptit_logo.png" alt="">
+                <img src="${pageContext.request.contextPath}/img/ptit_logo.png" alt="">
             </div>
         </div>
         <div id="category_body">
             <div id="category_body_home">
                 <ul class="category-index-container" id="cat_home_box">
                     <li class="index">
-                        <a class="index_wrapper" href="">
+                        <a class="index_wrapper" href="/home">
                             <i class="fa-solid fa-tv"></i>
                             <p>Trang chủ</p>
                         </a>
@@ -25,15 +34,9 @@
                 <label>LỊCH THỰC HÀNH</label>
                 <ul class="category-index-container" id="cat_practice-schedule_box">
                     <li class="index">
-                        <a class="index_wrapper" href="">
+                        <a class="index_wrapper" href="/manager/category/practice-schedule/teacher-request-list">
                             <i class="fa-regular fa-envelope"></i>
                             <p>Toàn bộ yêu cầu</p>
-                        </a>
-                    </li>
-                    <li class="index">
-                        <a class="index_wrapper" href="">
-                            <i class="fa-regular fa-calendar-minus"></i>
-                            <p>Toàn bộ lịch</p>
                         </a>
                     </li>
                 </ul>
@@ -42,32 +45,49 @@
                 <label>PHÒNG MÁY</label>
                 <ul class="category-index-container" id="cat_practice-schedule_box">
                     <li class="index">
-                        <a class="index_wrapper" href="">
-                            <i class="fa-regular fa-envelope"></i>
-                            <p>Các yêu cầu</p>
+                        <a class="index_wrapper" href="/manager/category/computer-room/add-computer-room">
+                            <i class="fa-solid fa-house-laptop"></i>
+                            <p>Thêm phòng máy mới</p>
                         </a>
                     </li>
                     <li class="index">
-                        <a class="index_wrapper" href="">
-                            <i class="fa-regular fa-calendar-minus"></i>
-                            <p>Toàn bộ lịch</p>
+                        <a class="index_wrapper" href="/manager/category/computer-room/computer-room-list">
+                            <i class="fa-solid fa-book-bookmark"></i>
+                            <p>Toàn bộ phòng</p>
                         </a>
                     </li>
                 </ul>
             </div>
-            <div id="category_body_teacher">
-                <label>GIẢNG VIÊN</label>
+            <div id="category_body_teacher-account">
+                <label>TÀI KHOẢN</label>
                 <ul class="category-index-container" id="cat_practice-schedule_box">
                     <li class="index">
-                        <a class="index_wrapper" href="">
-                            <i class="fa-regular fa-envelope"></i>
-                            <p>Các yêu cầu</p>
+                        <a class="index_wrapper" href="/manager/category/teacher/add-teacher-account">
+                            <i class="fa-solid fa-user-plus"></i>
+                            <p>Thêm tài khoản</p>
                         </a>
                     </li>
                     <li class="index">
-                        <a class="index_wrapper" href="">
-                            <i class="fa-regular fa-calendar-minus"></i>
-                            <p>Toàn bộ lịch</p>
+                        <a class="index_wrapper" href="/manager/category/teacher/teacher-account-list">
+                            <i class="fa-regular fa-address-book"></i>
+                            <p>Danh sách tài khoản</p>
+                        </a>
+                    </li>
+                    <li class="index">
+                        <a class="index_wrapper" href="/manager/category/teacher/teacher-list">
+                            <i class="fa-solid fa-address-book"></i>
+                            <p>Danh sách Giảng viên</p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div id="category_body_extra-features">
+                <label>TÍNH NĂNG PHỤ</label>
+                <ul class="category-index-container" id="cat_practice-schedule_box">
+                    <li class="index">
+                        <a class="index_wrapper" href="/manager/category/extra-features/extra-features-page">
+                            <i class="fa-solid fa-screwdriver-wrench"></i>
+                            <p>Danh sách tính năng</p>  
                         </a>
                     </li>
                 </ul>
@@ -84,3 +104,4 @@
             </ul>
         </div>
     </div>
+</body>

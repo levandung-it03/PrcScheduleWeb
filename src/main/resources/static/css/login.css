@@ -52,7 +52,7 @@ form {
     background-color: var(--white-text);
 }
 
-form #form-title {
+form .form-title {
     display: block;
     text-align: start;
     font-size: 2.4rem;

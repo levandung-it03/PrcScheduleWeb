@@ -14,7 +14,21 @@
 </head>
 <body>
     <%@ include file="/WEB-INF/jsp/category.jsp" %>
-    <div id="center-page" id="add-account-page">
+    <div class="center-page" id="manager-home-page">
+        <div id="message-blocks">
+            <c:if test="${errorMessage != null}">
+                <div class="error-service-message">
+                    <span>${errorMessage}</span>
+                    <i id="error-service-message_close-btn" class="fa fa-times-circle" aria-hidden="true"></i>
+                </div>
+            </c:if>
+            <c:if test="${succeedMessage != null}">
+                <div class="succeed-service-message">
+                    <span>${succeedMessage}</span>
+                    <i id="succeed-service-message_close-btn" class="fa fa-times-circle" aria-hidden="true"></i>
+                </div>
+            </c:if>
+        </div>
         <%@ include file="/WEB-INF/jsp/header.jsp" %>
         <div id="manager-home">
             <div id="redirecting-blocks">
@@ -76,7 +90,7 @@
             </div>
             <div id="pending-teacher-request-list">
                 <div class="title" style="height: 71px;">
-                    <span id="table-description">
+                    <span class="table-description">
                         Yêu cầu đang chờ
                         <span id="quantity">${pendingRequestsList.size()} yêu cầu</span>
                     </span>
@@ -107,7 +121,9 @@
                             <c:forEach items="${pendingRequestsList}" var="teacherRequest">
                                 <tr id="${teacherRequest.requestId}">
                                     <td plain-value="" class="base-profile">
-                                        <span class="mock-avatar">${teacherRequest.teacher.firstName.charAt(0)}</span>
+                                        <span class="mock-avatar">
+                                            <i style="font-style:normal">${teacherRequest.teacher.firstName.charAt(0)}</i>
+                                        </span>
                                         <div class="teacher-info">
                                             <b class="teacher-name">[${teacherRequest.teacher.teacherId}]
                                                 ${teacherRequest.teacher.lastName}
@@ -162,7 +178,7 @@
                     </span>
                 </div>
                 <div id="chart-container">
-                    <canvas id="myChart" style="max-width:100%"></canvas>
+                    <canvas id="myChart" style="max-width:400px"></canvas>
                     <div id="labels">
                     </div>
                 </div>
@@ -177,6 +193,7 @@
         <%@ include file="/WEB-INF/jsp/footer.jsp" %>
     </div>
     <script type="application/javascript" src="${pageContext.request.contextPath}/js/base.js"></script>
+    <script type="application/javascript" src="${pageContext.request.contextPath}/js/header.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
     <script type="application/javascript" src="${pageContext.request.contextPath}/js/manager-home.js"></script>
 </body>

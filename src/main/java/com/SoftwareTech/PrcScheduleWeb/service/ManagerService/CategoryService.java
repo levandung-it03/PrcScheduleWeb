@@ -1,7 +1,7 @@
 package com.SoftwareTech.PrcScheduleWeb.service.ManagerService;
 
 import com.SoftwareTech.PrcScheduleWeb.config.StaticUtilMethods;
-import com.SoftwareTech.PrcScheduleWeb.dto.AuthDto.DtoRegisterAccount;
+import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.ReqDtoAddTeacherAccount;
 import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.ReqDtoAddComputerRoom;
 import com.SoftwareTech.PrcScheduleWeb.repository.AccountRepository;
 import com.SoftwareTech.PrcScheduleWeb.repository.ClassroomRepository;
@@ -30,20 +30,21 @@ public class CategoryService {
     private final TeacherRequestRepository teacherRequestRepository;
 
     public ModelAndView getAddTeacherAccountPage(HttpServletRequest request, Model model) {
-        ModelAndView modelAndView = staticUtilMethods
-            .customResponseModelView(request, model.asMap(), "add-account");
+        ModelAndView modelAndView = staticUtilMethods.customResponsiveModelView(request, model, "add-account");
+        modelAndView = staticUtilMethods.insertingHeaderDataOfModelView(request, modelAndView);
 
         //--Refill data form after an error occurs.
-        DtoRegisterAccount registerObject = (DtoRegisterAccount) model.asMap().get("registerObject");
+        ReqDtoAddTeacherAccount newAccountObject = (ReqDtoAddTeacherAccount) model.asMap().get("newAccountObject");
 
-        if (registerObject != null)
-            modelAndView.addObject(registerObject);
+        if (newAccountObject != null)
+            modelAndView.addObject(newAccountObject);
         return modelAndView;
     }
 
     public ModelAndView getAddComputerRoomPage(HttpServletRequest request, Model model) {
         ModelAndView modelAndView = staticUtilMethods
-            .customResponseModelView(request, model.asMap(), "add-computer-room");
+            .customResponsiveModelView(request, model, "add-computer-room");
+        modelAndView = staticUtilMethods.insertingHeaderDataOfModelView(request, modelAndView);
 
         //--Refill data form after an error occurs.
         ReqDtoAddComputerRoom roomObject = (ReqDtoAddComputerRoom) model.asMap().get("roomObject");
@@ -55,7 +56,8 @@ public class CategoryService {
 
     public ModelAndView getComputerRoomListPage(HttpServletRequest request, Model model) {
         ModelAndView modelAndView = staticUtilMethods
-            .customResponseModelView(request, model.asMap(), "computer-room-list");
+            .customResponsiveModelView(request, model, "computer-room-list");
+        modelAndView = staticUtilMethods.insertingHeaderDataOfModelView(request, modelAndView);
         PageRequest pageRequest = staticUtilMethods.getPageRequest(request);
 
         modelAndView.addObject("currentPage", pageRequest.getPageNumber() + 1);
@@ -65,8 +67,8 @@ public class CategoryService {
     }
 
     public ModelAndView getTeacherListPage(HttpServletRequest request, Model model) {
-        ModelAndView modelAndView = staticUtilMethods
-            .customResponseModelView(request, model.asMap(), "teacher-list");
+        ModelAndView modelAndView = staticUtilMethods.customResponsiveModelView(request, model, "teacher-list");
+        modelAndView = staticUtilMethods.insertingHeaderDataOfModelView(request, modelAndView);
         PageRequest pageRequest = staticUtilMethods.getPageRequest(request);
 
         modelAndView.addObject("currentPage", pageRequest.getPageNumber() + 1);
@@ -77,7 +79,8 @@ public class CategoryService {
 
     public ModelAndView getTeacherAccountListPage(HttpServletRequest request, Model model) {
         ModelAndView modelAndView = staticUtilMethods
-            .customResponseModelView(request, model.asMap(), "teacher-account-list");
+            .customResponsiveModelView(request, model, "teacher-account-list");
+        modelAndView = staticUtilMethods.insertingHeaderDataOfModelView(request, modelAndView);
         PageRequest pageRequest = staticUtilMethods.getPageRequest(request);
 
         modelAndView.addObject("currentPage", pageRequest.getPageNumber() + 1);
@@ -88,7 +91,8 @@ public class CategoryService {
 
     public ModelAndView getTeacherRequestListPage(HttpServletRequest request, Model model) {
         ModelAndView modelAndView = staticUtilMethods
-            .customResponseModelView(request, model.asMap(), "teacher-request-list");
+            .customResponsiveModelView(request, model, "teacher-request-list");
+        modelAndView = staticUtilMethods.insertingHeaderDataOfModelView(request, modelAndView);
         PageRequest pageRequest = staticUtilMethods.getPageRequest(request);
 
         modelAndView.addObject("currentPage", pageRequest.getPageNumber() + 1);
@@ -99,6 +103,8 @@ public class CategoryService {
     }
 
     public ModelAndView getExtraFeaturePage(HttpServletRequest request, Model model) {
-        return staticUtilMethods.customResponseModelView(request, model.asMap(), "extra-features");
+        ModelAndView modelAndView = staticUtilMethods.customResponsiveModelView(request, model, "extra-features");
+        modelAndView = staticUtilMethods.insertingHeaderDataOfModelView(request, modelAndView);
+        return modelAndView;
     }
 }

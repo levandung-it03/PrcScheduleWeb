@@ -17,11 +17,19 @@ public class PublicPagesService {
     @Autowired
     private final StaticUtilMethods staticUtilMethods;
 
-    public ModelAndView renderLoginPage(HttpServletRequest request, Model model) throws IOException {
+    public ModelAndView renderLoginPage(HttpServletRequest request, Model model) {
         if (staticUtilMethods.getAccountInfoInCookie(request) != null) {
             return new ModelAndView("redirect:/home");
         } else {
-            return staticUtilMethods.customResponseModelView(request, model.asMap(), "login");
+            return staticUtilMethods.customResponsiveModelView(request, model, "login");
+        }
+    }
+
+    public ModelAndView getForgotPasswordView(HttpServletRequest request, Model model) {
+        if (staticUtilMethods.getAccountInfoInCookie(request) != null) {
+            return new ModelAndView("redirect:/home");
+        } else {
+            return staticUtilMethods.customResponsiveModelView(request, model, "forgot-password-page");
         }
     }
 }

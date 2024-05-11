@@ -2,21 +2,13 @@
     const validatingBlocks = {
         instituteEmail: {
             tag: $('input[name=instituteEmail]'),
-            confirm: function (value) {
-                this.isValid = (/^([^@\s]+)@(ptithcm\.edu\.vn|ptit\.edu\.vn|student\.ptithcm\.edu\.vn)$/).test(value);
-                return this.isValid;
-            },
+            validate: (value) => (/^([^@\s]+)@(ptithcm\.edu\.vn|ptit\.edu\.vn|student\.ptithcm\.edu\.vn)$/).test(value),
             errorMessage: "Nhập đúng định dạng name01@ptithcm.edu.vn",
-            isValid: false,
         },
         password: {
             tag: $('input[name=password]'),
-            confirm: function (value) {
-                this.isValid = value.length >= 8;
-                return this.isValid;
-            },
+            validate: (value) => value.length >= 8,
             errorMessage: "Mật khẩu không đủ dài.",
-            isValid: false,
         },
     };
 
@@ -24,6 +16,6 @@
     createErrBlocksOfInputTags(validatingBlocks);
     customizeValidateEventInputTags(validatingBlocks);
     customizeToggleDisplayPasswordEvent();
-    customizeSubmitFormAction(validatingBlocks);
+    customizeSubmitFormAction('div#center-block > form', validatingBlocks);
     removePathAttributes();
 })();

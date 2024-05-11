@@ -17,27 +17,29 @@
 
 <body>
     <%@ include file="/WEB-INF/jsp/category.jsp" %>
-    <div id="center-page">
-        <c:if test="${errorMessage != null}">
-            <div class="error-service-message">
-                <span>${errorMessage}</span>
-                <i id="error-service-message_close-btn" class="fa fa-times-circle" aria-hidden="true"></i>
-            </div>
-        </c:if>
-        <c:if test="${succeedMessage != null}">
-            <div class="succeed-service-message">
-                <span>${succeedMessage}</span>
-                <i id="succeed-service-message_close-btn" class="fa fa-times-circle" aria-hidden="true"></i>
-            </div>
-        </c:if>
+    <div class="center-page" id="teacher-request-list-page">
+        <div id="message-blocks">
+            <c:if test="${errorMessage != null}">
+                <div class="error-service-message">
+                    <span>${errorMessage}</span>
+                    <i id="error-service-message_close-btn" class="fa fa-times-circle" aria-hidden="true"></i>
+                </div>
+            </c:if>
+            <c:if test="${succeedMessage != null}">
+                <div class="succeed-service-message">
+                    <span>${succeedMessage}</span>
+                    <i id="succeed-service-message_close-btn" class="fa fa-times-circle" aria-hidden="true"></i>
+                </div>
+            </c:if>
+        </div>
         <%@ include file="/WEB-INF/jsp/header.jsp" %>
-        <div id="center-page_list">
-            <div id="table-tools">
-                <div id="table-description">
+        <div class="center-page_list">
+            <div class="table-tools">
+                <div class="table-description">
                     <b>Danh sách</b>
                     <span id="quantity">${teacherRequestList.size()} yêu cầu</span>
                 </div>
-                <div id="table-search-box">
+                <div class="table-search-box">
                     <select id="search">
                         <option value="" selected disabled hidden>Chọn trường cần tìm</option>
                         <option value="0">Thông tin cơ bản</option>
@@ -87,7 +89,9 @@
                                 ${customTeacherRequest.teacher.account.instituteEmail}
                                 ${customTeacherRequest.teacher.teacherId}"
                                 class="base-profile">
-                                <span class="mock-avatar">${customTeacherRequest.teacher.firstName.charAt(0)}</span>
+                                <span class="mock-avatar">
+                                    <i style="font-style:normal">${customTeacherRequest.teacher.firstName.charAt(0)}</i>
+                                </span>
                                 <div class="teacher-info">
                                     <b class="teacher-name">[${customTeacherRequest.teacher.teacherId}] ${customTeacherRequest.teacher.lastName} ${customTeacherRequest.teacher.firstName}</b>
                                     <p class="institute-email">${customTeacherRequest.teacher.account.instituteEmail}</p>
@@ -147,9 +151,9 @@
                 <input name="requestId" type="number" value="" hidden />
                 <input name="interactionReason" type="text" value="" hidden />
             </form>
-            <div id="table-footer">
+            <div class="table-footer">
                 <c:set var="prefixUrl" value="/manager/category/practice-schedule/teacher-request-list?page=" scope="page"/>
-                <div id="table-footer_main">
+                <div class="table-footer_main">
                     <span class="interact-page-btn">
                         <a href="${prefixUrl}${(currentPage == 1) ? currentPage : (currentPage - 1)}">
                             <i class="fa-solid fa-angle-left"></i>
@@ -181,6 +185,7 @@
         <%@ include file="/WEB-INF/jsp/footer.jsp" %>
     </div>
     <script type="application/javascript" src="${pageContext.request.contextPath}/js/base.js"></script>
+    <script type="application/javascript" src="${pageContext.request.contextPath}/js/header.js"></script>
     <script type="application/javascript" src="${pageContext.request.contextPath}/js/teacher-request-list.js"></script>
 </body>
 

@@ -33,11 +33,7 @@ public class HomeService {
     @Autowired
     private final Logger logger;
 
-    public ModelAndView handleGettingHomeRequestFromBothRoles(
-        HttpServletRequest request,
-        HttpServletResponse response,
-        Model model
-    ) {
+    public ModelAndView handleGettingHomeRequestFromBothRoles(HttpServletRequest request, Model model) {
         String loggedInRole = staticUtilMethods.getAccountInfoInCookie(request).getRole().toString().toLowerCase();
         try {
             if (loggedInRole.equals("manager"))
@@ -46,13 +42,13 @@ public class HomeService {
                 return this.getManagerHomePage(request, model);
         } catch (Exception e) {
             logger.info(e.toString());
-            staticUtilMethods.clearAllTokenCookies(request, response);
         }
         return new ModelAndView("redirect:/public/login");
     }
 
     public ModelAndView getManagerHomePage(HttpServletRequest request, Model model) {
-        ModelAndView modelAndView = staticUtilMethods.customResponseModelView(request, model.asMap(), "manager-home");
+        ModelAndView modelAndView = staticUtilMethods.customResponsiveModelView(request, model, "manager-home");
+        modelAndView = staticUtilMethods.insertingHeaderDataOfModelView(request, modelAndView);
 
         //--Prepare data to transmit to home.jsp
         int createdRequests = teacherRequestRepository.countAllByInteractionStatus(EntityInteractionStatus.CREATED);

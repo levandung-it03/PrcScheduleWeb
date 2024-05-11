@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
+
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.NoSuchElementException;
 import java.util.Set;
@@ -70,7 +72,7 @@ public class ComputerRoomController {
         try {
             computerRoomService.updateComputerRoom(roomObject, request);
             redirectAttributes.addFlashAttribute("succeedCode", "succeed_update_01");
-        } catch (IllegalStateException ignored) {
+        } catch (IllegalArgumentException ignored) {
             redirectAttributes.addFlashAttribute("errorCode", "error_entity_03");
         } catch (NoSuchElementException e) {
             redirectAttributes.addFlashAttribute("errorCode", "error_entity_01");

@@ -1,8 +1,8 @@
 
 (function main() {
     customizeClosingNoticeMessageEvent();
-    customizeSubmitFormAction({mockTag: {isValid: true}});
+    customizeSubmitFormAction('div#update-teacher-account-page > form');
     recoveryAllSelectTagDataInForm();
     removePathAttributes();
-    mappingCategoryNameWithCurrentPage();
+    buildHeader();
 })();

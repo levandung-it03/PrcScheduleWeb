@@ -6,6 +6,5 @@ const plainTableRows = [...$$('table tbody tr')];
     customizeClosingNoticeMessageEvent();
     customizeSearchingListEvent(plainTableRows);
     customizeSortingListEvent();
-    customizeSubmitFormAction({mockTag: {isValid: true}});
-    mappingCategoryNameWithCurrentPage();
+    buildHeader();
 })();

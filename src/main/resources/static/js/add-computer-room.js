@@ -3,38 +3,26 @@
     const validatingBlocks = {
         roomCode: {
             tag: $('input[name=roomCode]'),
-            confirm: function (value) {
-                this.isValid = value.length != 0;
-                return this.isValid;
-            },
+            validate: (value) => (value.length != 0),
             errorMessage: "Bạn chưa nhập giá trị.",
-            isValid: false,
         },
         maxQuantity: {
             tag: $('input[name=maxQuantity]'),
-            confirm: function (value) {
-                this.isValid = value.length != 0;
-                return this.isValid;
-            },
+            validate: (value) => (value.length != 0),
             errorMessage: "Bạn chưa nhập giá trị.",
-            isValid: false,
         },
         maxComputerQuantity: {
             tag: $('input[name=maxComputerQuantity]'),
-            confirm: function (value) {
-                this.isValid = value.length != 0;
-                return this.isValid;
-            },
+            validate: (value) => (value.length != 0),
             errorMessage: "Bạn chưa nhập giá trị.",
-            isValid: false,
         },
     };
     
     customizeClosingNoticeMessageEvent();
     createErrBlocksOfInputTags(validatingBlocks);
     customizeValidateEventInputTags(validatingBlocks);
-    customizeSubmitFormAction(validatingBlocks);
+    customizeSubmitFormAction('div#add-computer-room-page > form', validatingBlocks);
     recoveryAllSelectTagDataInForm();
     removePathAttributes();
-    mappingCategoryNameWithCurrentPage();
+    buildHeader();
 })();

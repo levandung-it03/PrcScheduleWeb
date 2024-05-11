@@ -20,8 +20,8 @@ public class HomeController {
     private final HomeService homeService;
 
     @RequestMapping(value = "/home", method = RequestMethod.GET)
-    public ModelAndView getHomePageOfBothRoles(HttpServletRequest request, HttpServletResponse response, Model model) {
-        return homeService.handleGettingHomeRequestFromBothRoles(request, response, model);
+    public ModelAndView getHomePageOfBothRoles(HttpServletRequest request, Model model) {
+        return homeService.handleGettingHomeRequestFromBothRoles(request, model);
     }
 
 }

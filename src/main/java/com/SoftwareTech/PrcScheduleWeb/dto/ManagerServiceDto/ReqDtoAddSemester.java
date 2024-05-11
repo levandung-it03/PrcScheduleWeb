@@ -5,13 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.Length;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ReqAddSemester {
+public class ReqDtoAddSemester {
     @NotNull(message = "error_entity_03")
     @Min(value = 1, message = "error_entity_03")
     @Max(value = 3, message = "error_entity_03")

@@ -27,5 +27,7 @@ public interface TeacherRepository extends JpaRepository<Teacher, String> {
     @Query("DELETE FROM Teacher t WHERE t.account.accountId = :accountId")
     void deleteByAccountId(@Param("accountId") Long accountId);
 
-    Teacher findByAccountAccountId(Long accountId);
+    Optional<Teacher> findByAccountAccountId(Long accountId);
+
+    boolean existsByAccountAccountId(Long accountId);
 }

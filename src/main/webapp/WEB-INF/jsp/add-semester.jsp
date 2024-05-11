@@ -14,48 +14,51 @@
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/add-semester.css">
 </head>
 <body>
-<%@ include file="/WEB-INF/jsp/category.jsp" %>
-<div id="center-page" id="add-semester-page">
-    <c:if test="${errorMessage != null}">
-        <div class="error-service-message">
-            <span>${errorMessage}</span>
-            <i id="error-service-message_close-btn" class="fa fa-times-circle" aria-hidden="true"></i>
+    <%@ include file="/WEB-INF/jsp/category.jsp" %>
+    <div class="center-page" id="add-semester-page">
+        <div id="message-blocks">
+            <c:if test="${errorMessage != null}">
+                <div class="error-service-message">
+                    <span>${errorMessage}</span>
+                    <i id="error-service-message_close-btn" class="fa fa-times-circle" aria-hidden="true"></i>
+                </div>
+            </c:if>
+            <c:if test="${succeedMessage != null}">
+                <div class="succeed-service-message">
+                    <span>${succeedMessage}</span>
+                    <i id="succeed-service-message_close-btn" class="fa fa-times-circle" aria-hidden="true"></i>
+                </div>
+            </c:if>
         </div>
-    </c:if>
-    <c:if test="${succeedMessage != null}">
-        <div class="succeed-service-message">
-            <span>${succeedMessage}</span>
-            <i id="succeed-service-message_close-btn" class="fa fa-times-circle" aria-hidden="true"></i>
-        </div>
-    </c:if>
-    <%@ include file="/WEB-INF/jsp/header.jsp" %>
-    <form method="POST" action="/service/v1/manager/add-semester" modelAttribute="semesterObject">
-        <div class="form-input" id="semester">
-            <label for="semester">Nhập học kì</label>
-            <input name="semester" type="number" value="${semesterObject.semester}" required/>
-            <div class="form_text-input_err-message"></div>
-        </div>
-        <div class="form-input" id="rangeOfYear">
-            <label for="rangeOfYear">Nhập năm học</label>
-            <input name="rangeOfYear" type="text" style="display: none" value="${semesterObject.rangeOfYear}">
-            <select name="SelectRangeOfYear" required></select>
-        </div>
-        <div class="form-input" id="firstWeek">
-            <label for="firstWeek">Nhập tuần bắt đầu</label>
-            <input name="firstWeek" type="number" value="${semesterObject.firstWeek}" required/>
-            <div class="form_text-input_err-message"></div>
-        </div>
-        <div class="form-input" id="totalWeek">
-            <label for="totalWeek">Nhập tổng số tuần học</label>
-            <input name="totalWeek" type="number" value="${semesterObject.totalWeek}" required/>
-            <div class="form_text-input_err-message"></div>
-        </div>
-        <input type="submit" value="Xác nhận">
-    </form>
-    <%@ include file="/WEB-INF/jsp/footer.jsp" %>
-</div>
-<script type="application/javascript" src="${pageContext.request.contextPath}/js/base.js"></script>
-<script type="application/javascript" src="${pageContext.request.contextPath}/js/add-semester.js"></script>
+        <%@ include file="/WEB-INF/jsp/header.jsp" %>
+        <form method="POST" action="/service/v1/manager/add-semester" modelAttribute="semesterObject">
+            <div class="form-input" id="semester">
+                <label for="semester">Nhập học kì</label>
+                <input name="semester" type="number" value="${semesterObject.semester}" autocomplete="off" required/>
+                <div class="form_text-input_err-message"></div>
+            </div>
+            <div class="form-input" id="rangeOfYear">
+                <label for="rangeOfYear">Nhập năm học</label>
+                <input name="rangeOfYear" type="text" style="display: none" value="${semesterObject.rangeOfYear}">
+                <select name="SelectRangeOfYear" required></select>
+            </div>
+            <div class="form-input" id="firstWeek">
+                <label for="firstWeek">Nhập tuần bắt đầu</label>
+                <input name="firstWeek" type="number" value="${semesterObject.firstWeek}" autocomplete="off" required/>
+                <div class="form_text-input_err-message"></div>
+            </div>
+            <div class="form-input" id="totalWeek">
+                <label for="totalWeek">Nhập tổng số tuần học</label>
+                <input name="totalWeek" type="number" value="${semesterObject.totalWeek}" autocomplete="off" required/>
+                <div class="form_text-input_err-message"></div>
+            </div>
+            <input type="submit" value="Xác nhận">
+        </form>
+        <%@ include file="/WEB-INF/jsp/footer.jsp" %>
+    </div>
+    <script type="application/javascript" src="${pageContext.request.contextPath}/js/base.js"></script>
+    <script type="application/javascript" src="${pageContext.request.contextPath}/js/header.js"></script>
+    <script type="application/javascript" src="${pageContext.request.contextPath}/js/add-semester.js"></script>
 </body>
 </html>
 

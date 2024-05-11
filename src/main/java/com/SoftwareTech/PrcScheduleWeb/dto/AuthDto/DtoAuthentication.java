@@ -6,8 +6,7 @@ import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
 @Builder
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class DtoAuthentication {

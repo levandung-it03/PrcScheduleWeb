@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.Map;
 import java.util.Set;
 
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -30,12 +29,12 @@ public class PostExtraFeaturesController {
     /**Author: Le Van Dung**/
     @RequestMapping(value = "/add-subject", method = POST)
     public String addSubject(
-        @ModelAttribute("subjectObject") ReqAddSubject subjectObject,
+        @ModelAttribute("subjectObject") ReqDtoAddSubject subjectObject,
         HttpServletRequest request,
         RedirectAttributes redirectAttributes
     ) {
         final String standingUrl = request.getHeader("Referer");
-        Set<ConstraintViolation<ReqAddSubject>> violations = hibernateValidator.validate(subjectObject);
+        Set<ConstraintViolation<ReqDtoAddSubject>> violations = hibernateValidator.validate(subjectObject);
         if (!violations.isEmpty()) {
             redirectAttributes.addFlashAttribute("errorCode", violations.iterator().next().getMessage());
             redirectAttributes.addFlashAttribute("subjectObject", subjectObject);
@@ -59,12 +58,12 @@ public class PostExtraFeaturesController {
     /**Author: Nguyen Quang Linh**/
     @RequestMapping(value = "/add-student", method = POST)
     public String addStudent(
-            @ModelAttribute("studentObject") ReqAddStudent studentObject,
+            @ModelAttribute("studentObject") ReqDtoAddStudent studentObject,
             HttpServletRequest request,
             RedirectAttributes redirectAttributes
     ) {
         final String standingUrl = request.getHeader("Referer");
-        Set<ConstraintViolation<ReqAddStudent>> violations = hibernateValidator.validate(studentObject);
+        Set<ConstraintViolation<ReqDtoAddStudent>> violations = hibernateValidator.validate(studentObject);
         if (!violations.isEmpty()) {
             redirectAttributes.addFlashAttribute("errorCode", violations.iterator().next().getMessage());
             redirectAttributes.addFlashAttribute("studentObject", studentObject);
@@ -85,12 +84,12 @@ public class PostExtraFeaturesController {
     }
     @RequestMapping(value = "/add-grade", method = POST)
     public String addGrade(
-            @ModelAttribute("gradeObject") ReqAddGrade gradeObject,
+            @ModelAttribute("gradeObject") ReqDtoAddGrade gradeObject,
             HttpServletRequest request,
             RedirectAttributes redirectAttributes
     ) {
         final String standingUrl = request.getHeader("Referer");
-        Set<ConstraintViolation<ReqAddGrade>> violations = hibernateValidator.validate(gradeObject);
+        Set<ConstraintViolation<ReqDtoAddGrade>> violations = hibernateValidator.validate(gradeObject);
         if (!violations.isEmpty()) {
             redirectAttributes.addFlashAttribute("errorCode", violations.iterator().next().getMessage());
             redirectAttributes.addFlashAttribute("studentObject", gradeObject);
@@ -114,12 +113,12 @@ public class PostExtraFeaturesController {
     /**Author: Luong Dat Thien**/
     @RequestMapping(value = "/add-semester", method = POST)
     public String addSemester(
-            @ModelAttribute("semesterObject") ReqAddSemester semesterObject,
+            @ModelAttribute("semesterObject") ReqDtoAddSemester semesterObject,
             HttpServletRequest request,
             RedirectAttributes redirectAttributes
     ) {
         final String standingUrl = request.getHeader("Referer");
-        Set<ConstraintViolation<ReqAddSemester>> violations = hibernateValidator.validate(semesterObject);
+        Set<ConstraintViolation<ReqDtoAddSemester>> violations = hibernateValidator.validate(semesterObject);
         if (!violations.isEmpty()) {
             redirectAttributes.addFlashAttribute("errorCode", violations.iterator().next().getMessage());
             redirectAttributes.addFlashAttribute("semesterObject", semesterObject);
@@ -141,12 +140,12 @@ public class PostExtraFeaturesController {
 
     @RequestMapping(value = "/add-section-class", method = POST)
     public String addSectionClass(
-            @ModelAttribute("sectionClassObject") ReqAddSectionClass sectionClassObject,
+            @ModelAttribute("sectionClassObject") ReqDtoAddSectionClass sectionClassObject,
             HttpServletRequest request,
             RedirectAttributes redirectAttributes
     ) {
         final String standingUrl = request.getHeader("Referer");
-        Set<ConstraintViolation<ReqAddSectionClass>> violations = hibernateValidator.validate(sectionClassObject);
+        Set<ConstraintViolation<ReqDtoAddSectionClass>> violations = hibernateValidator.validate(sectionClassObject);
         if (!violations.isEmpty()) {
             redirectAttributes.addFlashAttribute("errorCode", violations.iterator().next().getMessage());
             redirectAttributes.addFlashAttribute("sectionClassObject", sectionClassObject);
@@ -170,6 +169,33 @@ public class PostExtraFeaturesController {
         return "redirect:" + standingUrl;
     }
 
+    @RequestMapping(value = "/add-department", method = POST)
+    public String addDepartment(
+            @ModelAttribute("departmentObject") ReqDtoAddDepartment departmentObject,
+            HttpServletRequest request,
+            RedirectAttributes redirectAttributes
+    ) {
+        final String standingUrl = request.getHeader("Referer");
+        Set<ConstraintViolation<ReqDtoAddDepartment>> violations = hibernateValidator.validate(departmentObject);
+        if (!violations.isEmpty()) {
+            redirectAttributes.addFlashAttribute("errorCode", violations.iterator().next().getMessage());
+            redirectAttributes.addFlashAttribute("departmentObject", departmentObject);
+            return "redirect:" + standingUrl;
+        }
+
+        try {
+            postExtraFeaturesService.addDepartment(departmentObject);
+            redirectAttributes.addFlashAttribute("succeedCode", "succeed_add_01");
+        } catch (DuplicateKeyException ignored) {
+            redirectAttributes.addFlashAttribute("departmentObject", departmentObject);
+            redirectAttributes.addFlashAttribute("errorCode", "error_department_01");
+        } catch (Exception ignored) {
+            redirectAttributes.addFlashAttribute("departmentObject", departmentObject);
+            redirectAttributes.addFlashAttribute("errorCode", "error_systemApplication_01");
+        }
+        return "redirect:" + standingUrl;
+    }
+
     private String trimErrorMessage(String errorMessage) {
         int index = errorMessage.indexOf(":");
         if (index != -1) {
@@ -182,12 +208,12 @@ public class PostExtraFeaturesController {
     /**Author: Huynh Nhu Y**/
     @RequestMapping(value = "/add-classroom", method = POST)
     public String addClassroom(
-        @ModelAttribute("classroomObject") ReqAddClassroom classroomObject,
+        @ModelAttribute("classroomObject") ReqDtoAddClassroom classroomObject,
         HttpServletRequest request,
         RedirectAttributes redirectAttributes
     ) {
         final String standingUrl = request.getHeader("Referer");
-        Set<ConstraintViolation<ReqAddClassroom>> violations = hibernateValidator.validate(classroomObject);
+        Set<ConstraintViolation<ReqDtoAddClassroom>> violations = hibernateValidator.validate(classroomObject);
         if (!violations.isEmpty()) {
             redirectAttributes.addFlashAttribute("errorCode", violations.iterator().next().getMessage());
             redirectAttributes.addFlashAttribute("classroomObject", classroomObject);
@@ -209,12 +235,12 @@ public class PostExtraFeaturesController {
 
     @RequestMapping(value = "/add-subjectRegistration", method = POST)
     public String addSubjectRegistration(
-        @ModelAttribute("subjectRegistrationObject") ReqAddSubjectRegistration subjectRegistrationObject,
+        @ModelAttribute("subjectRegistrationObject") ReqDtoAddSubjectRegistration subjectRegistrationObject,
         HttpServletRequest request,
         RedirectAttributes redirectAttributes
     ) {
         final String standingUrl = request.getHeader("Referer");
-        Set<ConstraintViolation<ReqAddSubjectRegistration>> violations = hibernateValidator.validate(subjectRegistrationObject);
+        Set<ConstraintViolation<ReqDtoAddSubjectRegistration>> violations = hibernateValidator.validate(subjectRegistrationObject);
         if (!violations.isEmpty()) {
             redirectAttributes.addFlashAttribute("errorCode", violations.iterator().next().getMessage());
             redirectAttributes.addFlashAttribute("subjectRegistrationObject", subjectRegistrationObject);

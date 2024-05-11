@@ -15,7 +15,7 @@
 </head>
 <body>
     <%@ include file="/WEB-INF/jsp/category.jsp" %>
-    <div id="center-page" id="add-subjectRegistration-page">
+    <div class="center-page" id="add-subjectRegistration-page">
         <c:if test="${errorMessage != null}">
             <div class="error-service-message">
                 <span>${errorMessage}</span>
@@ -58,6 +58,7 @@
         <%@ include file="/WEB-INF/jsp/footer.jsp" %>
     </div>
     <script type="application/javascript" src="${pageContext.request.contextPath}/js/base.js"></script>
+    <script type="application/javascript" src="${pageContext.request.contextPath}/js/header.js"></script>
     <script type="application/javascript" src="${pageContext.request.contextPath}/js/add-subjectRegistration.js"></script>
 </body>
 </html>

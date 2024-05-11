@@ -16,27 +16,29 @@
 
 <body>
     <%@ include file="/WEB-INF/jsp/category.jsp" %>
-    <div id="center-page" id="teacher-account-list-page">
-        <c:if test="${errorMessage != null}">
-            <div class="error-service-message">
-                <span>${errorMessage}</span>
-                <i id="error-service-message_close-btn" class="fa fa-times-circle" aria-hidden="true"></i>
-            </div>
-        </c:if>
-        <c:if test="${succeedMessage != null}">
-            <div class="succeed-service-message">
-                <span>${succeedMessage}</span>
-                <i id="succeed-service-message_close-btn" class="fa fa-times-circle" aria-hidden="true"></i>
-            </div>
-        </c:if>
+    <div class="center-page" id="teacher-account-list-page">
+        <div id="message-blocks">
+            <c:if test="${errorMessage != null}">
+                <div class="error-service-message">
+                    <span>${errorMessage}</span>
+                    <i id="error-service-message_close-btn" class="fa fa-times-circle" aria-hidden="true"></i>
+                </div>
+            </c:if>
+            <c:if test="${succeedMessage != null}">
+                <div class="succeed-service-message">
+                    <span>${succeedMessage}</span>
+                    <i id="succeed-service-message_close-btn" class="fa fa-times-circle" aria-hidden="true"></i>
+                </div>
+            </c:if>
+        </div>
         <%@ include file="/WEB-INF/jsp/header.jsp" %>
-        <div id="center-page_list">
-            <div id="table-tools">
-                <div id="table-description">
+        <div class="center-page_list">
+            <div class="table-tools">
+                <div class="table-description">
                     <b>Danh sách</b>
                     <span id="quantity">${accountList.size()} tài khoản</span>
                 </div>
-                <div id="table-search-box">
+                <div class="table-search-box">
                     <select id="search">
                         <option value="" selected disabled hidden>Chọn trường cần tìm</option>
                         <option value="0">Email Học viện</option>
@@ -105,9 +107,9 @@
                         </c:forEach>
                     </tbody>
                 </table>
-            <div id="table-footer">
+            <div class="table-footer">
                 <c:set var="prefixUrl" value="/manager/category/teacher/teacher-account-list?page=" scope="page"/>
-                <div id="table-footer_main">
+                <div class="table-footer_main">
                     <span class="interact-page-btn">
                         <a href="${prefixUrl}${(currentPage == 1) ? currentPage : (currentPage - 1)}">
                             <i class="fa-solid fa-angle-left"></i>
@@ -139,6 +141,7 @@
         <%@ include file="/WEB-INF/jsp/footer.jsp" %>
     </div>
     <script type="application/javascript" src="${pageContext.request.contextPath}/js/base.js"></script>
+    <script type="application/javascript" src="${pageContext.request.contextPath}/js/header.js"></script>
     <script type="application/javascript" src="${pageContext.request.contextPath}/js/teacher-account-list.js"></script>
 </body>
 

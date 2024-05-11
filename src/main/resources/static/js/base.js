@@ -50,37 +50,41 @@ function customizeClosingNoticeMessageEvent() {
     return;
 }
 
-function createErrBlocksOfInputTags(validatingBlocks) {
-    [...$$('.form-input .form_text-input_err-message')].forEach((e) => {
-        e.innerHTML = `
-        <span class='err-message-block' id='${e.parentNode.id}'>
+function createErrBlocksOfInputTags(validatingBlocks, parentFormElement="html") {
+    [...$$(`${parentFormElement} .form-input .form_text-input_err-message`)].forEach((e) => {
+        e.innerHTML = `<span class='err-message-block' id='${e.parentNode.id}'>
             ${validatingBlocks[e.parentNode.id].errorMessage}
         </span>`;
     })
 }
 
 function customizeValidateEventInputTags(validatingBlocks) {
-    const validate = function(key, block) {
-        if (block.confirm(block.tag.value))     $('span#' + key).style.display = "none";
-        else    $('span#' + key).style.display = "inline";
-    }
     Object.entries(validatingBlocks).forEach(elem => {
-        elem[1].tag.addEventListener("keyup", e => validate(elem[0], elem[1]));
-        //--Set the delay time to format by "customizeAutoFormatStrongInputTextEvent()" before validate.
-        elem[1].tag.addEventListener("blur", e => {
-            setTimeout(function() { validate(elem[0], elem[1]); }, 200);
-        });
+        const toggleShowMessage = (elem) => {
+            if (elem[1].validate(elem[1].tag.value)) $('span#' + elem[0]).style.display = "none";
+            else    $('span#' + elem[0]).style.display = "inline";
+        };
+        elem[1].tag.addEventListener("keyup", e => toggleShowMessage(elem));
+        elem[1].tag.addEventListener("change", e => toggleShowMessage(elem));
     });
 }
 
-function customizeSubmitFormAction(validatingBlocks) {
-    $('form').onsubmit = e => {
-        if (confirm("Bạn chắc chắn muốn thực hiện thao tác?") == true) {
-            let isValid = Object.entries(validatingBlocks).every((elem) => elem[1].isValid);
-            if (!isValid) alert("Thông tin đầu vào bị lỗi!");
-            return isValid;
-        } else return false;
-    }
+function customizeSubmitFormAction(formSelector, validatingBlocks=null) {
+    $(formSelector).addEventListener("submit", e => {
+        if (confirm("Bạn chắc chắn muốn thực hiện thao tác?")) {
+            let isValid = validatingBlocks == null ? true : Object.entries(validatingBlocks)
+                .every(elem => {
+                    elem[1].tag.value = elem[1].tag.value.trim();
+                    return elem[1].validate(elem[1].tag.value);
+                });
+
+            if (isValid)    return true;
+            else {
+                e.preventDefault();
+                alert("Thông tin đầu vào bị lỗi!");
+            }
+        } else  e.preventDefault();
+    });
 }
 
 function removePathAttributes() {
@@ -126,8 +130,8 @@ function recoveryAllSelectTagDataInForm() {
 }
 
 function customizeSearchingListEvent(plainTableRows) {
-    const searchingInputTag = $('#table-search-box input#search');
-    const selectedOption = $('#table-search-box select#search');
+    const searchingInputTag = $('.table-search-box input#search');
+    const selectedOption = $('.table-search-box select#search');
     const handleSearchingListEvent = e => {
         const tableBody = e.target.parentElement.parentElement.parentElement.querySelector('tbody');
 
@@ -158,7 +162,7 @@ function customizeSearchingListEvent(plainTableRows) {
         return null;
     }
 
-    $('#table-search-box i').addEventListener("click", handleSearchingListEvent);
+    $('.table-search-box i').addEventListener("click", handleSearchingListEvent);
     searchingInputTag.addEventListener("keyup", handleSearchingListEvent);
 }
 
@@ -214,7 +218,7 @@ function convertStrDateToDateObj(strDate) {
 }
 
 function customizeAllAvatarColor() {
-    [...$$('table tbody tr td.base-profile span.mock-avatar')].forEach(avatarTag => {
+    [...$$('.mock-avatar i')].forEach(avatarTag => {
         const avatarColor = colorMap[avatarTag.innerText.trim().toUpperCase()];
 
         // Convert background color to RGB

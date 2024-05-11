@@ -16,12 +16,20 @@
 </head>
 
 <body>
-    <c:if test="${errorMessage != null}">
-        <div class="error-service-message">
-            <span>${errorMessage}</span>
-            <i id="error-service-message_close-btn" class="fa fa-times-circle" aria-hidden="true"></i>
-        </div>
-    </c:if>
+    <div id="message-blocks">
+        <c:if test="${errorMessage != null}">
+            <div class="error-service-message">
+                <span>${errorMessage}</span>
+                <i id="error-service-message_close-btn" class="fa fa-times-circle" aria-hidden="true"></i>
+            </div>
+        </c:if>
+        <c:if test="${succeedMessage != null}">
+            <div class="succeed-service-message">
+                <span>${succeedMessage}</span>
+                <i id="succeed-service-message_close-btn" class="fa fa-times-circle" aria-hidden="true"></i>
+            </div>
+        </c:if>
+    </div>
     <div id="center-block">
         <div id="left-column">
             <span id="des-component-0" class="web-description">PHÂN CÔNG</span>
@@ -29,7 +37,7 @@
             <img src="${pageContext.request.contextPath}/img/form_img.jpeg" alt="">
         </div>
         <form method="POST" action="/service/v1/auth/authenticate" modelAttribute="authObject">
-            <span id="form-title">Đăng nhập</span>
+            <span class="form-title">Đăng nhập</span>
             <div class="form-input" id="instituteEmail">
                 <label for="instituteEmail">Email Học Viện</label>
                 <input name="instituteEmail" type="text" placeholder="nguoiquanly@ptithcm.edu.vn" required/>
@@ -39,7 +47,7 @@
             <div class="form-input" id="password">
                 <label for="password">Mật khẩu</label>
                 <span id="forgot-pass">
-                    <a href="/public/forgot-password">Quên mật khẩu?</a>
+                    <a href="/public/forgot-password-page">Quên mật khẩu?</a>
                 </span>
                 <input name="password" type="password" required/>
                 <div class="form_text-input_err-message"></div>

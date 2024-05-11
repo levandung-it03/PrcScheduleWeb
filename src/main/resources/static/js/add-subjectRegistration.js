@@ -1,7 +1,7 @@
 (function main() {
     customizeClosingNoticeMessageEvent();
-    customizeSubmitFormAction({mockValidator: {isValid: true}});
+    customizeSubmitFormAction('div#add-subjectRegistration-page > form');
     recoveryAllSelectTagDataInForm();
     removePathAttributes();
-    mappingCategoryNameWithCurrentPage();
+    buildHeader();
 })();

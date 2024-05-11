@@ -3,8 +3,8 @@ package com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto;
 import jakarta.validation.constraints.*;
 import lombok.*;
 
-@Getter
-@Setter
+
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder

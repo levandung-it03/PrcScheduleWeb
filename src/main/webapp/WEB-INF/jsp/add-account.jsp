@@ -15,31 +15,33 @@
 </head>
 <body>
     <%@ include file="/WEB-INF/jsp/category.jsp" %>
-    <div id="center-page" id="add-account-page">
-        <c:if test="${errorMessage != null}">
-            <div class="error-service-message">
-                <span>${errorMessage}</span>
-                <i id="error-service-message_close-btn" class="fa fa-times-circle" aria-hidden="true"></i>
-            </div>
-        </c:if>
-        <c:if test="${succeedMessage != null}">
-            <div class="succeed-service-message">
-                <span>${succeedMessage}</span>
-                <i id="succeed-service-message_close-btn" class="fa fa-times-circle" aria-hidden="true"></i>
-            </div>
-        </c:if>
+    <div class="center-page" id="add-account-page">
+        <div id="message-blocks">
+            <c:if test="${errorMessage != null}">
+                <div class="error-service-message">
+                    <span>${errorMessage}</span>
+                    <i id="error-service-message_close-btn" class="fa fa-times-circle" aria-hidden="true"></i>
+                </div>
+            </c:if>
+            <c:if test="${succeedMessage != null}">
+                <div class="succeed-service-message">
+                    <span>${succeedMessage}</span>
+                    <i id="succeed-service-message_close-btn" class="fa fa-times-circle" aria-hidden="true"></i>
+                </div>
+            </c:if>
+        </div>
         <%@ include file="/WEB-INF/jsp/header.jsp" %>
-        <form method="POST" action="/service/v1/manager/add-teacher-account" modelAttribute="registerObject">
+        <form method="POST" action="/service/v1/manager/add-teacher-account" modelAttribute="newAccountObject">
             <div class="form-input" id="instituteEmail">
                 <label for="instituteEmail">Email giảng viên</label>
                 <input name="instituteEmail" type="text" placeholder="giangvien@ptithcm.edu.vn"
-                value="${registerObject.instituteEmail}" required/>
+                value="${newAccountObject.instituteEmail}" autocomplete="off" required/>
                 <div class="form_text-input_err-message"></div>
             </div>
 
             <div class="form-input" id="password">
                 <label for="password">Mật khẩu</label>
-                <input name="password" type="password" value="${registerObject.password}" required/>
+                <input name="password" type="password" value="${newAccountObject.password}" autocomplete="off" required/>
                 <div class="form_text-input_err-message"></div>
                 <div class="password_toggle-hidden">
                     <i id="password" class="show-pass fa-solid fa-eye"></i>
@@ -49,7 +51,7 @@
 
             <div class="form-input" id="retypePassword">
                 <label for="retypePassword">Mật khẩu xác nhận</label>
-                <input name="retypePassword" type="password" value="${registerObject.retypePassword}" required/>
+                <input name="retypePassword" type="password" value="${newAccountObject.retypePassword}" autocomplete="off" required/>
                 <div class="form_text-input_err-message"></div>
                 <div class="password_toggle-hidden">
                     <i id="retypePassword" class="show-pass fa-solid fa-eye"></i>
@@ -61,8 +63,7 @@
         <%@ include file="/WEB-INF/jsp/footer.jsp" %>
     </div>
     <script type="application/javascript" src="${pageContext.request.contextPath}/js/base.js"></script>
+    <script type="application/javascript" src="${pageContext.request.contextPath}/js/header.js"></script>
     <script type="application/javascript" src="${pageContext.request.contextPath}/js/add-account.js"></script>
 </body>
 </html>
- 
- 

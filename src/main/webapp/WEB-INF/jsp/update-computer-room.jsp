@@ -15,19 +15,21 @@
 </head>
 <body>
     <%@ include file="/WEB-INF/jsp/category.jsp" %>
-    <div id="center-page" id="add-computer-room-page">
-        <c:if test="${errorMessage != null}">
-            <div class="error-service-message">
-                <span>${errorMessage}</span>
-                <i id="error-service-message_close-btn" class="fa fa-times-circle" aria-hidden="true"></i>
-            </div>
-        </c:if>
-        <c:if test="${succeedMessage != null}">
-            <div class="succeed-service-message">
-                <span>${succeedMessage}</span>
-                <i id="succeed-service-message_close-btn" class="fa fa-times-circle" aria-hidden="true"></i>
-            </div>
-        </c:if>
+    <div class="center-page" id="update-computer-room-page">
+        <div id="message-blocks">
+            <c:if test="${errorMessage != null}">
+                <div class="error-service-message">
+                    <span>${errorMessage}</span>
+                    <i id="error-service-message_close-btn" class="fa fa-times-circle" aria-hidden="true"></i>
+                </div>
+            </c:if>
+            <c:if test="${succeedMessage != null}">
+                <div class="succeed-service-message">
+                    <span>${succeedMessage}</span>
+                    <i id="succeed-service-message_close-btn" class="fa fa-times-circle" aria-hidden="true"></i>
+                </div>
+            </c:if>
+        </div>
         <%@ include file="/WEB-INF/jsp/header.jsp" %>
         <form method="POST" action="/service/v1/manager/update-computer-room?roomId=${roomObject.roomId}"
         modelAttribute="roomObject">
@@ -38,7 +40,7 @@
             <div class="form-input" id="maxQuantity">
                 <label for="maxQuantity">Nhập số lượng người tối đa</label>
                 <input onblur="cuttingStringValueOfInputTag(this, 3)" name="maxQuantity" type="number" min="1" max="999"
-                    value="${roomObject.maxQuantity}" required/>
+                    value="${roomObject.maxQuantity}" autocomplete="off" required/>
                 <div class="form_text-input_err-message"></div>
             </div>
             <div class="form-input" id="status">
@@ -51,13 +53,13 @@
             <div class="form-input" id="maxComputerQuantity">
                 <label for="maxComputerQuantity">Nhập số lượng máy tối đa</label>
                 <input onblur="cuttingStringValueOfInputTag(this, 3)" name="maxComputerQuantity" type="number" min="1" max="999"
-                    value="${roomObject.maxComputerQuantity}" required/>
+                    value="${roomObject.maxComputerQuantity}" autocomplete="off" required/>
                 <div class="form_text-input_err-message"></div>
             </div>
             <div class="form-input" id="availableComputerQuantity">
                 <label for="availableComputerQuantity">Nhập số lượng máy hiện hành</label>
                 <input onblur="cuttingStringValueOfInputTag(this, 3)" name="availableComputerQuantity" type="number" min="1" max="999"
-                    value="${roomObject.availableComputerQuantity}" required/>
+                    value="${roomObject.availableComputerQuantity}" autocomplete="off" required/>
                 <div class="form_text-input_err-message"></div>
             </div>
             <input name="pageNumber" value="${pageNumber}" hidden/>
@@ -66,6 +68,7 @@
         <%@ include file="/WEB-INF/jsp/footer.jsp" %>
     </div>
     <script type="application/javascript" src="${pageContext.request.contextPath}/js/base.js"></script>
+    <script type="application/javascript" src="${pageContext.request.contextPath}/js/header.js"></script>
     <script type="application/javascript" src="${pageContext.request.contextPath}/js/update-computer-room.js"></script>
 </body>
 </html>

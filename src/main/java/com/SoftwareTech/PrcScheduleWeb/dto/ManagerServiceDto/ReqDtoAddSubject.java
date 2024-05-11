@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ReqAddSubject {
+public class ReqDtoAddSubject {
     @NotBlank(message = "error_entity_03")
     private String subjectId;
 

@@ -31,10 +31,10 @@ public class GetExtraFeaturesService {
 
     /**Author: Le Van Dung**/
     public ModelAndView getAddSubjectPage(HttpServletRequest request, Model model) {
-        ModelAndView modelAndView = staticUtilMethods
-            .customResponseModelView(request, model.asMap(), "add-subject");
+        ModelAndView modelAndView = staticUtilMethods.customResponsiveModelView(request, model, "add-subject");
+        modelAndView = staticUtilMethods.insertingHeaderDataOfModelView(request, modelAndView);
 
-        ReqAddSubject subjectObject = (ReqAddSubject) model.asMap().get("subjectObject");
+        ReqDtoAddSubject subjectObject = (ReqDtoAddSubject) model.asMap().get("subjectObject");
 
         if (subjectObject != null)
             modelAndView.addObject("subjectObject", model.asMap().get("subjectObject"));
@@ -45,10 +45,10 @@ public class GetExtraFeaturesService {
 
     /**Author: Nguyen Quang Linh**/
     public ModelAndView getAddStudentPage(HttpServletRequest request, Model model) {
-        ModelAndView modelAndView = staticUtilMethods
-                .customResponseModelView(request, model.asMap(), "add-student");
+        ModelAndView modelAndView = staticUtilMethods.customResponsiveModelView(request, model, "add-student");
+        modelAndView = staticUtilMethods.insertingHeaderDataOfModelView(request, modelAndView);
 
-        ReqAddStudent studentObject = (ReqAddStudent) model.asMap().get("studentObject");
+        ReqDtoAddStudent studentObject = (ReqDtoAddStudent) model.asMap().get("studentObject");
 
         if (studentObject != null)
             modelAndView.addObject("studentObject", model.asMap().get("studentObject"));
@@ -57,10 +57,10 @@ public class GetExtraFeaturesService {
     }
 
     public ModelAndView getAddGradePage(HttpServletRequest request, Model model) {
-        ModelAndView modelAndView = staticUtilMethods
-                .customResponseModelView(request, model.asMap(), "add-grade");
+        ModelAndView modelAndView = staticUtilMethods.customResponsiveModelView(request, model, "add-grade");
+        modelAndView = staticUtilMethods.insertingHeaderDataOfModelView(request, modelAndView);
 
-        ReqAddGrade gradeObject = (ReqAddGrade) model.asMap().get("gradeObject");
+        ReqDtoAddGrade gradeObject = (ReqDtoAddGrade) model.asMap().get("gradeObject");
 
         if (gradeObject != null)
             modelAndView.addObject("gradeObject", model.asMap().get("gradeObject"));
@@ -71,10 +71,10 @@ public class GetExtraFeaturesService {
 
     /**Author: Luong Dat Thien**/
     public ModelAndView getAddSemesterPage(HttpServletRequest request, Model model) {
-        ModelAndView modelAndView = staticUtilMethods
-                .customResponseModelView(request, model.asMap(), "add-semester");
+        ModelAndView modelAndView = staticUtilMethods.customResponsiveModelView(request, model, "add-semester");
+        modelAndView = staticUtilMethods.insertingHeaderDataOfModelView(request, modelAndView);
 
-        ReqAddSemester semesterObject = (ReqAddSemester) model.asMap().get("semesterObject");
+        ReqDtoAddSemester semesterObject = (ReqDtoAddSemester) model.asMap().get("semesterObject");
 
         if (semesterObject != null)
             modelAndView.addObject("semesterObject", model.asMap().get("semesterObject"));
@@ -83,11 +83,10 @@ public class GetExtraFeaturesService {
     }
 
     public ModelAndView getAddSectionClassPage(HttpServletRequest request, Model model) {
+        ModelAndView modelAndView = staticUtilMethods.customResponsiveModelView(request, model, "add-section-class");
+        modelAndView = staticUtilMethods.insertingHeaderDataOfModelView(request, modelAndView);
 
-        ModelAndView modelAndView = staticUtilMethods
-                .customResponseModelView(request, model.asMap(), "add-section-class");
-
-        ReqAddSectionClass sectionClassObject = (ReqAddSectionClass) model.asMap().get("sectionClassObject");
+        ReqDtoAddSectionClass sectionClassObject = (ReqDtoAddSectionClass) model.asMap().get("sectionClassObject");
 
         List<Semester> semesters = semesterRepository.findAll();
 
@@ -97,14 +96,26 @@ public class GetExtraFeaturesService {
 
         return modelAndView;
     }
+
+    public ModelAndView getAddDepartmentPage(HttpServletRequest request, Model model) {
+        ModelAndView modelAndView = staticUtilMethods.customResponsiveModelView(request, model, "add-department");
+        modelAndView = staticUtilMethods.insertingHeaderDataOfModelView(request, modelAndView);
+
+        ReqDtoAddDepartment departmentObject = (ReqDtoAddDepartment) model.asMap().get("departmentObject");
+
+        if (departmentObject != null)
+            modelAndView.addObject("departmentObject", model.asMap().get("departmentObject"));
+
+        return modelAndView;
+    }
     /*----------------------*/
 
     /**Author: Huynh Nhu Y**/
     public ModelAndView getClassroomPage(HttpServletRequest request, Model model) {
-        ModelAndView modelAndView = staticUtilMethods
-            .customResponseModelView(request, model.asMap(), "add-classroom");
+        ModelAndView modelAndView = staticUtilMethods.customResponsiveModelView(request, model, "add-classroom");
+        modelAndView = staticUtilMethods.insertingHeaderDataOfModelView(request, modelAndView);
 
-        ReqAddClassroom classroomObject = (ReqAddClassroom) model.asMap().get("classroomObject");
+        ReqDtoAddClassroom classroomObject = (ReqDtoAddClassroom) model.asMap().get("classroomObject");
 
         if (classroomObject != null)
             modelAndView.addObject("classroomObject", model.asMap().get("classroomObject"));
@@ -116,8 +127,10 @@ public class GetExtraFeaturesService {
         List<Student> studentList = studentRepository.findAll();
         List<SectionClass> sectionClassList = sectionClassRepository.findAll();
         ModelAndView modelAndView = staticUtilMethods
-            .customResponseModelView(request, model.asMap(),"add-subjectRegistration");
-        ReqAddSubjectRegistration subjectRegistrationObject = (ReqAddSubjectRegistration) model.asMap()
+            .customResponsiveModelView(request, model,"add-subjectRegistration");
+        modelAndView = staticUtilMethods.insertingHeaderDataOfModelView(request, modelAndView);
+
+        ReqDtoAddSubjectRegistration subjectRegistrationObject = (ReqDtoAddSubjectRegistration) model.asMap()
             .get("subjectRegistrationObject");
         if (subjectRegistrationObject != null){
             modelAndView.addObject("subjectRegistrationObject", model.asMap().get("subjectRegistrationObject"));

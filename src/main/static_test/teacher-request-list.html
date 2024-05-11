@@ -97,7 +97,7 @@
             </ul>
         </div>
     </div>
-    <div id="center-page" id="add-account-page">
+    <div class="center-page" id="add-account-page">
         <div class="error-service-message hide" style="display:flex">
             <span>Lỗi gì đó không biết!</span>
             <i id="error-service-message_close-btn" class="fa fa-times-circle" aria-hidden="true"></i>
@@ -116,18 +116,18 @@
                 <div class="header_items" id="setting">
                     <i class="fa-solid fa-gear"></i>
                 </div>
-                <div class="header_items" id="avatar">
-                    <a id="avatar_user" href="/home">MN</a>
+                <div class="header_items" class="avatar">
+                    <a class="avatar_user" href="/home">MN</a>
                 </div>
             </div>
         </header>
-        <div id="center-page_list">
-            <div id="table-tools">
-                <div id="table-description">
+        <div class="center-page_list">
+            <div class="table-tools">
+                <div class="table-description">
                     <b>Danh sách</b>
                     <span id="quantity">10 người</span>
                 </div>
-                <div id="table-search-box">
+                <div class="table-search-box">
                     <select id="search">
                         <option value="" selected disabled hidden>Chọn trường cần tìm</option>
                         <option value="0">Thông tin cơ bản</option>
@@ -212,9 +212,10 @@
             </form>
         </div>
     </div>
+    <script type="application/javascript" src="${pageContext.request.contextPath}/js/base.js"></script>
+    <script type="application/javascript" src="${pageContext.request.contextPath}/js/header.js"></script>
     <script type="application/javascript" src="../resources/static/js/base.js"></script>
     <script type="application/javascript" src="../resources/static/js/teacher-request-list.js"></script>
-    <!-- <script type="application/javascript" src="../resources/static/js/header.js"></script> -->
 </body>
 
 </html>

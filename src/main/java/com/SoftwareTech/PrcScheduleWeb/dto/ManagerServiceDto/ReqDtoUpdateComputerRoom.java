@@ -6,8 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 @Builder
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class ReqDtoUpdateComputerRoom {

@@ -6,5 +6,5 @@
 </head>
 <body>
     Teacher
-</body>
+<script type="application/javascript" src="${pageContext.request.contextPath}/js/base.js"></script>
 </html>

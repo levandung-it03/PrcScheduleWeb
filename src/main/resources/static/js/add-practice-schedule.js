@@ -8,7 +8,7 @@ let updatedPracticeSchedule = {};
 (function main() {
     customizeClosingNoticeMessageEvent();
     removePathAttributes();
-    mappingCategoryNameWithCurrentPage();
+    buildHeader();
     /*---------------Own-methods------------------*/
     popAllHiddenDataFields();
     selectCurrentWeekOptionTagAndRenderTimeTable();
@@ -132,7 +132,7 @@ let updatedPracticeSchedule = {};
                 rentRoomsQuantity[period][schedule.day]++;
 
         });
-        //--Then, we color all cells which dosen't have enough quantity to select.
+        //--Then, we color all cells which dosen't have enough computer-room-quan to select.
         for (var periodRow = 1; periodRow <= 16; periodRow++) {
             for (var dayColumn = 2; dayColumn <= 8; dayColumn++) {
                 //--If this cell is already colored, passing it.
@@ -320,7 +320,6 @@ let updatedPracticeSchedule = {};
         if (Object.keys(updatedPracticeSchedule).length != 0) {
             (function removeUpdatedScheduleFromScheduleList() {
                 for (var index = 0; index < allUnavailableScheduleInThisSemester.length; index++) {
-                    console.log(allUnavailableScheduleInThisSemester[index].subjectScheduleId);
                     if (updatedPracticeSchedule.subjectScheduleId === allUnavailableScheduleInThisSemester[index].subjectScheduleId) {
                         delete allUnavailableScheduleInThisSemester[index];
                         break;

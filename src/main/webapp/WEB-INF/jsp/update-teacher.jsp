@@ -15,19 +15,21 @@
 </head>
 <body>
     <%@ include file="/WEB-INF/jsp/category.jsp" %>
-    <div id="center-page" id="add-computer-room-page">
-        <c:if test="${errorMessage != null}">
-            <div class="error-service-message">
-                <span>${errorMessage}</span>
-                <i id="error-service-message_close-btn" class="fa fa-times-circle" aria-hidden="true"></i>
-            </div>
-        </c:if>
-        <c:if test="${succeedMessage != null}">
-            <div class="succeed-service-message">
-                <span>${succeedMessage}</span>
-                <i id="succeed-service-message_close-btn" class="fa fa-times-circle" aria-hidden="true"></i>
-            </div>
-        </c:if>
+    <div class="center-page" id="update-teacher-page">
+        <div id="message-blocks">
+            <c:if test="${errorMessage != null}">
+                <div class="error-service-message">
+                    <span>${errorMessage}</span>
+                    <i id="error-service-message_close-btn" class="fa fa-times-circle" aria-hidden="true"></i>
+                </div>
+            </c:if>
+            <c:if test="${succeedMessage != null}">
+                <div class="succeed-service-message">
+                    <span>${succeedMessage}</span>
+                    <i id="succeed-service-message_close-btn" class="fa fa-times-circle" aria-hidden="true"></i>
+                </div>
+            </c:if>
+        </div>
         <%@ include file="/WEB-INF/jsp/header.jsp" %>
         <form method="POST" action="/service/v1/manager/update-teacher" modelAttribute="teacher">
             <input name="instituteEmail" type="text" value="${teacher.instituteEmail}" hidden/>
@@ -38,17 +40,17 @@
             </div>
             <div class="form-input strong-text" id="lastName">
                 <label for="lastName">Họ giảng viên</label>
-                <input name="lastName" type="text" value="${teacher.lastName}" required/>
+                <input name="lastName" type="text" value="${teacher.lastName}" autocomplete="off" required/>
                 <div class="form_text-input_err-message"></div>
             </div>
             <div class="form-input strong-text" id="firstName">
                 <label for="firstName">Tên giảng viên</label>
-                <input name="firstName" type="text" value="${teacher.firstName}" required/>
+                <input name="firstName" type="text" value="${teacher.firstName}" autocomplete="off" required/>
                 <div class="form_text-input_err-message"></div>
             </div>
             <div class="form-input" id="birthday">
                 <label for="birthday">Ngày sinh</label>
-                <input name="birthday" type="date" value="${teacher.birthday}" required/>
+                <input name="birthday" type="date" value="${teacher.birthday}" autocomplete="off" required/>
                 <div class="form_text-input_err-message"></div>
             </div>
             <div class="form-input" id="gender">
@@ -70,7 +72,7 @@
             </div>
             <div class="form-input" id="phone">
                 <label for="phone">Số điện thoại</label>
-                <input name="phone" type="text" value="${teacher.phone}" required/>
+                <input name="phone" type="text" value="${teacher.phone}" autocomplete="off" required/>
                 <div class="form_text-input_err-message"></div>
             </div>
             <input name="pageNumber" value="${pageNumber}" hidden/>
@@ -79,6 +81,7 @@
         <%@ include file="/WEB-INF/jsp/footer.jsp" %>
     </div>
     <script type="application/javascript" src="${pageContext.request.contextPath}/js/base.js"></script>
+    <script type="application/javascript" src="${pageContext.request.contextPath}/js/header.js"></script>
     <script type="application/javascript" src="${pageContext.request.contextPath}/js/update-teacher.js"></script>
 </body>
 </html>

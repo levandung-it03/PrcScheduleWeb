@@ -1,0 +1,52 @@
+
+.show-person-info-page_detail-container {
+    margin: 40px;
+    border-radius: 15px;
+    padding: 40px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-wrap: wrap;
+
+}
+.show-person-info-page_detail-container_left-grid {
+    max-width: 220px;
+    margin: 40px;
+    margin-left: 0;
+    border-radius: 15px 0 0 15px;
+}
+.show-person-info-page_detail-container_left-grid #left-grid-avatar {
+    width: 180px;
+    text-align: center;
+    display: block;
+    font-size: 4rem;
+    height: 230px;
+    line-height: 230px;
+    margin: 10px 20px;
+    text-align: center;
+    background-color: bisque;
+}
+.show-person-info-page_detail-container_left-grid #left-grid-fullName {
+    text-align: center;
+    display: block;
+    width: 220px;
+}
+.show-person-info-page_detail-container_right-grid {
+    width: calc(100% - (220px + 40px));
+    font-size: 1.2rem;
+    padding: 20px;
+    background-color: #e5edef;
+    border: 1px var(--grey-border) solid;
+    border-radius: 0 15px 15px 0;
+}
+.show-person-info-page_detail-container_right-grid .right-grid-lines,
+.show-person-info-page_detail-container_right-grid .right-grid-last-lines {
+    display: flex;
+    flex-wrap: wrap;
+}
+.show-person-info-page_detail-container_right-grid .right-grid-lines {
+    padding-bottom: 20px;
+}
+.show-person-info-page_detail-container_right-grid .right-grid-lines_field-name {
+    display: block;
+    width: 150px;
+}

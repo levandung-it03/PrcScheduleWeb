@@ -5,6 +5,6 @@ const plainTableRows = [...$$('table tbody tr')];
     customizeClosingNoticeMessageEvent();
     customizeSearchingListEvent(plainTableRows);
     customizeSortingListEvent();
-    customizeSubmitFormAction({mockTag: {isValid: true}});
-    mappingCategoryNameWithCurrentPage();
+    customizeSubmitFormAction('div#teacher-account-list-page div.center-page_list > form');
+    buildHeader();
 })();

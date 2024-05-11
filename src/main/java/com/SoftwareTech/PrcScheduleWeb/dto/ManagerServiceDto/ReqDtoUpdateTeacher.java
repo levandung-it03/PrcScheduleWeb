@@ -8,8 +8,7 @@ import lombok.*;
 
 import java.sql.Date;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder

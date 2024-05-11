@@ -1,6 +1,7 @@
 package com.SoftwareTech.PrcScheduleWeb.service.ManagerService;
 
 import com.SoftwareTech.PrcScheduleWeb.config.StaticUtilMethods;
+import com.SoftwareTech.PrcScheduleWeb.dto.AuthDto.DtoChangePassword;
 import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.*;
 import com.SoftwareTech.PrcScheduleWeb.model.*;
 import com.SoftwareTech.PrcScheduleWeb.model.enums.EntityInteractionStatus;
@@ -45,9 +46,11 @@ public class SubPageService {
     @Autowired
     private final ManagerRepository managerRepository;
 
-    public ModelAndView getUpdateComputerRoomPage(HttpServletRequest request) {
+    public ModelAndView getUpdateComputerRoomPage(HttpServletRequest request, Model model) {
         final String roomId = request.getParameter("roomId");
-        ModelAndView modelAndView = new ModelAndView("update-computer-room");
+        ModelAndView modelAndView = staticUtilMethods
+            .customResponsiveModelView(request, model, "update-computer-room");
+        modelAndView = staticUtilMethods.insertingHeaderDataOfModelView(request, modelAndView);
 
         //--Serve reload-page action on update-page (update-page doesn't have updated id on the URL bar).
         if (roomId == null)
@@ -72,9 +75,10 @@ public class SubPageService {
         return modelAndView;
     }
 
-    public ModelAndView getUpdateTeacherPage(HttpServletRequest request) {
+    public ModelAndView getUpdateTeacherPage(HttpServletRequest request, Model model) {
         final String teacherId = request.getParameter("teacherId");
-        ModelAndView modelAndView = new ModelAndView("update-teacher");
+        ModelAndView modelAndView = staticUtilMethods.customResponsiveModelView(request, model, "update-teacher");
+        modelAndView = staticUtilMethods.insertingHeaderDataOfModelView(request, modelAndView);
 
         //--Serve reload-page action on update-page (update-page doesn't have updated id on the URL bar).
         if (teacherId == null)
@@ -104,9 +108,11 @@ public class SubPageService {
         return modelAndView;
     }
 
-    public ModelAndView getUpdateTeacherAccountPage(HttpServletRequest request) {
+    public ModelAndView getUpdateTeacherAccountPage(HttpServletRequest request, Model model) {
         final String accountId = request.getParameter("accountId");
-        ModelAndView modelAndView = new ModelAndView("update-teacher-account");
+        ModelAndView modelAndView = staticUtilMethods
+            .customResponsiveModelView(request, model, "update-teacher-account");
+        modelAndView = staticUtilMethods.insertingHeaderDataOfModelView(request, modelAndView);
 
         //--Serve reload-page action on update-page (update-page doesn't have updated id on the URL bar).
         if (accountId == null)
@@ -132,7 +138,8 @@ public class SubPageService {
         //--May throw NumberFormatException
         final Long requestId = Long.parseLong(request.getParameter("requestId"));
         ModelAndView modelAndView = staticUtilMethods
-            .customResponseModelView(request, model.asMap(), "teacher-request-detail");
+            .customResponsiveModelView(request, model, "teacher-request-detail");
+        modelAndView = staticUtilMethods.insertingHeaderDataOfModelView(request, modelAndView);
 
         ResDtoTeacherRequest customTeacherRequest = subjectScheduleRepository
             .findTeacherRequestByRequestId(requestId)
@@ -164,7 +171,8 @@ public class SubPageService {
         }
 
         ModelAndView modelAndView = staticUtilMethods
-            .customResponseModelView(request, model.asMap(), "add-practice-schedule");
+            .customResponsiveModelView(request, model, "add-practice-schedule");
+        modelAndView = staticUtilMethods.insertingHeaderDataOfModelView(request, modelAndView);
         ResDtoTeacherRequest customTeacherRequest = subjectScheduleRepository
             .findTeacherRequestByRequestId(requestId)
             .orElseThrow(() -> new NoSuchElementException("Request Id not found"));
@@ -197,7 +205,8 @@ public class SubPageService {
     public ModelAndView getUpdatePracticeSchedulePage(HttpServletRequest request, Model model) throws SQLException {
         final Long practiceScheduleId = Long.parseLong(request.getParameter("practiceScheduleId"));
         ModelAndView modelAndView = staticUtilMethods
-            .customResponseModelView(request, model.asMap(), "add-practice-schedule");
+            .customResponsiveModelView(request, model, "add-practice-schedule");
+        modelAndView = staticUtilMethods.insertingHeaderDataOfModelView(request, modelAndView);
 
         SubjectSchedule practiceSchedule = subjectScheduleRepository
             .findAllFieldsById(practiceScheduleId)
@@ -233,16 +242,53 @@ public class SubPageService {
         return modelAndView;
     }
 
-    public ModelAndView getSetManagerInfoPage(HttpServletRequest request) {
+    public ModelAndView getSetManagerInfoPage(HttpServletRequest request, Model model) {
         Account user = staticUtilMethods.getAccountInfoInCookie(request);
         if (managerRepository.existsByAccountAccountId(user.getAccountId()))
             throw new DuplicateKeyException("Manager Info is already existing!");
 
-        ModelAndView modelAndView = new ModelAndView("add-person");
+        ModelAndView modelAndView = staticUtilMethods.customResponsiveModelView(request, model, "add-person");
 
+        modelAndView.addObject("instituteEmail", user.getInstituteEmail());
         modelAndView.addObject("roleName", "manager");
         modelAndView.addObject("actionType", "add");
         modelAndView.addObject("actionTail", "set-manager-info");
+        return modelAndView;
+    }
+
+    public ModelAndView getUpdateManagerInfoPage(HttpServletRequest request, Model model) {
+        Account user = staticUtilMethods.getAccountInfoInCookie(request);
+        ModelAndView modelAndView = staticUtilMethods.customResponsiveModelView(request, model, "add-person");
+        modelAndView = staticUtilMethods.insertingHeaderDataOfModelView(request, modelAndView);
+
+        //--We already have a "person" in header, so we don't need this line:
+        //--modelAndView.addObject("person", person);
+        modelAndView.addObject("instituteEmail", user.getInstituteEmail());
+        modelAndView.addObject("roleName", "manager");
+        modelAndView.addObject("actionType", "update");
+        modelAndView.addObject("actionTail", "update-manager-info");
+        return modelAndView;
+    }
+
+    public ModelAndView getPersonInfoPage(HttpServletRequest request, Model model) {
+        Account user = staticUtilMethods.getAccountInfoInCookie(request);
+        ModelAndView modelAndView = staticUtilMethods.customResponsiveModelView(request, model, "show-person-info");
+        modelAndView = staticUtilMethods.insertingHeaderDataOfModelView(request, modelAndView);
+
+        //--We already have a "person" in header, so we don't need this line:
+        //--modelAndView.addObject("person", person);
+        modelAndView.addObject("user", user);
+        return modelAndView;
+    }
+
+    public ModelAndView getChangePasswordPage(HttpServletRequest request, Model model) {
+        ModelAndView modelAndView = staticUtilMethods.customResponsiveModelView(request, model, "change-password");
+        modelAndView = staticUtilMethods.insertingHeaderDataOfModelView(request, modelAndView);
+
+        DtoChangePassword changePasswordObj = (DtoChangePassword) model.asMap().get("changePasswordObj");
+        if (changePasswordObj != null)
+            modelAndView.addObject("changePasswordObj", model.asMap().get("changePasswordObj"));
+
         return modelAndView;
     }
 }

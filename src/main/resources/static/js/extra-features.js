@@ -2,11 +2,11 @@
 (function main() {
     renderFeatureBlocks();
     customizeClosingNoticeMessageEvent();
-    mappingCategoryNameWithCurrentPage();
+    buildHeader();
 })();
 
 function renderFeatureBlocks() {
-    $('div#center-page div#center-page_list').innerHTML = [
+    $('div.center-page div.center-page_list').innerHTML = [
         {
             name: "department",
             avatar: `<i class="fa-solid fa-building-user"></i>`,

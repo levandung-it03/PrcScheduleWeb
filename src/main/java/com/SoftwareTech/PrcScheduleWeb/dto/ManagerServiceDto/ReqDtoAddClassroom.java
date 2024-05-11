@@ -2,12 +2,11 @@ package com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto;
 import jakarta.validation.constraints.*;
 import lombok.*;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ReqAddClassroom {
+public class ReqDtoAddClassroom {
     @NotBlank(message = "error_entity_03")
     @Pattern(regexp = "^[A-Z]$", message = "error_entity_03")
     private String area;

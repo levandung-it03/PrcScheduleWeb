@@ -1,4 +1,15 @@
-
+.panel-info_last-component > li > form#logout-form{
+    /* Reset <form> of header by base.css or another-page.css */
+    padding: 0;
+    margin: 0;
+    width: auto;
+    background-color: none;
+    border: none;
+    border-radius: none;
+    color: none;
+    font-size: 1rem;
+    font-weight: 100;
+}
 header {
     position: relative;
     height: 60px;
@@ -32,39 +43,45 @@ header #header_right {
     flex-wrap: wrap;
     align-items: center;
     position: relative;
+    justify-self: start;
 }
-header #avatar {
+header .avatar {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     flex-direction: row-reverse;
 }
-header #avatar #avatar_name {
+header .avatar .avatar_name {
     padding: 0 10px;
 }
-header #avatar #avatar_user {
+header span.avatar_user {
+    width: auto;
+}
+header span.avatar_user > i {
     display: block;
-    padding: 8px 14px;
+    width: 42px;
+    line-height: 40px;
+    text-align: center;
     background-color: #e5edef;
     border-radius: 20px;
     color: var(--black-text);
     transition: background-color ease 0.3s;
 }
-header #avatar #avatar_user:hover {
+header span.avatar_user > i:hover {
     border: 1px black solid;
-    padding: 7px 13px;
+    line-height: 38px;
     background-color: rgb(177, 177, 177);
     cursor: pointer;
 }
 .header_items {
     margin: 0 15px;
 }
-header .header_items i {
+header .header_items li i {
     padding: 12px;
     border-radius: 15px;
     transition: background-color ease 0.3s;
 }
-header .header_items i:hover {
+header .header_items li i:hover {
     background-color: #e5edef;
     border-radius: 23px;
     cursor: pointer;
@@ -96,7 +113,7 @@ header #panel-info {
     z-index: 10;
 }
 header .panel-info_sub-components,
-header #panel-info_last-component {
+header .panel-info_last-component {
     display: flex;
     flex-wrap: wrap;
     min-width: 220px;
@@ -106,12 +123,12 @@ header .panel-info_sub-components {
     border-bottom: 1px black solid;
 }
 header .panel-info_sub-components > li,
-header #panel-info_last-component > li {
+header .panel-info_last-component > li {
     display: block;
     width: 100%;
 }
-header button.panel-info_sub-components_options,
-header a.panel-info_sub-components_options {
+header a.panel-info_sub-components_options,
+header a.panel-info_last-components_options {
     display: block;
     width: 100%;
     line-height: 38px;
@@ -121,14 +138,11 @@ header a.panel-info_sub-components_options {
     transition: background-color ease 0.3s!important;
 }
 header .panel-info_sub-components_options:hover,
-header .panel-info_sub-components_options:hover {
+header .panel-info_last-components_options:hover {
     background-color: #c2cdd0;
+    cursor: pointer;
 }
-header form.panel-info_sub-components_options {
-    display: flex;
-    align-items: center;
-    justify-content: start;
-}
+header .panel-info_last-components_options i,
 header .panel-info_sub-components_options i {
     padding: 10px 7px;
     max-width: 27px;
