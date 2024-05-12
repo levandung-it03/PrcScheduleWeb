@@ -47,6 +47,8 @@ table tr th#view,
 table tr td.view,
 table tr th#add,
 table tr td.add,
+table tr th#update,
+table tr td.update,
 table tr th#delete,
 table tr td.delete {
     text-align: center;

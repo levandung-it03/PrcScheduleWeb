@@ -8,7 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -31,12 +30,27 @@ public interface TeacherRequestRepository extends JpaRepository<TeacherRequest, 
             s.teacherRequest.requestId, s.teacherRequest.interactionStatus,
             s.teacherRequest.requestMessageDetail, s.teacherRequest.interactRequestReason,
             s.subjectScheduleId, s.sectionClass, s.teacher
+        ) FROM SubjectSchedule s WHERE s.teacherRequest IS NOT NULL AND s.teacher.teacherId = :teacherId
+        GROUP BY s.teacherRequest.requestId
+        ORDER BY s.teacherRequest.interactionStatus ASC, s.teacherRequest.updatingTime DESC
+    """)
+    List<ResDtoTeacherRequest> findAllTeacherRequestInSubjectScheduleByTeacherIdWithSpecifiedPage(
+        @Param("teacherId") String teacherId,
+        PageRequest pageRequest
+    );
+
+
+    @Query("""
+        SELECT new com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.ResDtoTeacherRequest(
+            s.teacherRequest.requestId, s.teacherRequest.interactionStatus,
+            s.teacherRequest.requestMessageDetail, s.teacherRequest.interactRequestReason,
+            s.subjectScheduleId, s.sectionClass, s.teacher
         ) FROM SubjectSchedule s
         WHERE s.teacherRequest IS NOT NULL AND s.teacherRequest.interactionStatus = :interactionStatus
         GROUP BY s.teacherRequest.requestId
         ORDER BY s.teacherRequest.updatingTime DESC
     """)
-    List<ResDtoTeacherRequest> findAllTeacherRequestInSubjectScheduleWithInteractionStatus(
+    List<ResDtoTeacherRequest> findAllTeacherRequestInSubjectScheduleByInteractionStatus(
         @Param("interactionStatus") EntityInteractionStatus interactionStatus
     );
 
@@ -51,4 +65,23 @@ public interface TeacherRequestRepository extends JpaRepository<TeacherRequest, 
     void updateByRequestId(@Param("teacherRequest") TeacherRequest teacherRequest);
 
     int countAllByInteractionStatus(EntityInteractionStatus interactionStatus);
+
+    @Modifying
+    @Query("""
+        UPDATE TeacherRequest t
+        SET t.requestMessageDetail = :#{#teacherRequest.requestMessageDetail},
+            t.updatingTime = :#{#teacherRequest.updatingTime}
+        WHERE t.requestId = :#{#teacherRequest.requestId}
+    """)
+    void update(@Param("teacherRequest") TeacherRequest savedTeacherRequest);
+
+    @Modifying
+    @Query("""
+        UPDATE TeacherRequest t
+        SET t.interactRequestReason = :#{#teacherRequest.interactRequestReason},
+            t.interactionStatus = :#{#teacherRequest.interactionStatus},
+            t.updatingTime = :#{#teacherRequest.updatingTime}
+        WHERE t.requestId = :#{#teacherRequest.requestId}
+    """)
+    void cancelTeacherRequest(@Param("teacherRequest") TeacherRequest savedTeacherRequest);
 }

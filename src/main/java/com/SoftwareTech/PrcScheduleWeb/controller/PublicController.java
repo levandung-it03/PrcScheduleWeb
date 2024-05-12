@@ -1,6 +1,6 @@
 package com.SoftwareTech.PrcScheduleWeb.controller;
 
-import com.SoftwareTech.PrcScheduleWeb.service.PublicPagesService;
+import com.SoftwareTech.PrcScheduleWeb.service.ManagerService.M_PublicPagesService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 @RequiredArgsConstructor
 public class PublicController {
     @Autowired
-    private final PublicPagesService publicPagesService;
+    private final M_PublicPagesService publicPagesService;
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public ModelAndView getLoginView(HttpServletRequest request, Model model) {

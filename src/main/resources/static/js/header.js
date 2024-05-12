@@ -26,6 +26,14 @@ function toggleHideCategory() {
 function mappingCategoryNameWithCurrentPage() {
     const pageName = new URL(window.location.href).pathname.split("/").pop();
     const categoryNameObjects = {
+        ["update-teacher-request"]:{
+            ["category-name"]: "Chỉnh sửa một yêu cầu tạo lịch",
+            ["page-description"]: "Giúp giảng viên sửa yêu cầu đã gửi tới quản lý để tạo lịch thực hành."
+        },
+        ["add-teacher-request"]:{
+            ["category-name"]: "Thêm một yêu cầu tạo lịch",
+            ["page-description"]: "Giúp giảng viên tạo yêu cầu tới quản lý để tạo lịch thực hành."
+        },
         ["show-info"]:{
             ["category-name"]: "Dữ liệu cá nhân",
             ["page-description"]: "Xem dữ liệu đang có hiện tại trên hệ thống."
@@ -46,7 +54,7 @@ function mappingCategoryNameWithCurrentPage() {
             ["category-name"]: "Đổi mật khẩu",
             ["page-description"]: "Đổi một mật khẩu mới cho tài khoản của bạn khi cần thiết."
         },
-        ["update-teacher"]:{
+        ["update-teacher-info"]:{
             ["category-name"]: "Cập nhật dữ liệu",
             ["page-description"]: "Cập nhật dữ liệu của tài khoản 'giảng viên'."
         },

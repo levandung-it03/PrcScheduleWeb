@@ -17,7 +17,14 @@
 </head>
 
 <body>
-    <%@ include file="/WEB-INF/jsp/category.jsp" %>
+    <c:choose>
+        <c:when test="${role == 'manager'}">
+            <%@ include file="/WEB-INF/jsp/manager-category.jsp" %>
+        </c:when>
+        <c:otherwise>
+            <%@ include file="/WEB-INF/jsp/teacher-category.jsp" %>
+        </c:otherwise>
+    </c:choose>
     <div class="center-page" id="show-person-info-page">
         <div id="message-blocks">
             <c:if test="${errorMessage != null}">

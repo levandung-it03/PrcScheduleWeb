@@ -7,8 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,4 +28,20 @@ public interface TeacherRepository extends JpaRepository<Teacher, String> {
     Optional<Teacher> findByAccountAccountId(Long accountId);
 
     boolean existsByAccountAccountId(Long accountId);
+
+    boolean existsByAccountInstituteEmail(String instituteEmail);
+
+
+    @Modifying
+    @Query("""
+       UPDATE Teacher t SET
+            t.firstName = :#{#teacher.firstName},
+            t.lastName = :#{#teacher.lastName},
+            t.birthday = :#{#teacher.birthday},
+            t.phone = :#{#teacher.phone},
+            t.department = :#{#teacher.department},
+            t.gender = :#{#teacher.gender}
+        WHERE t.teacherId = :#{#teacher.teacherId}
+    """)
+    void updateById(@Param("teacher") Teacher teacher);
 }

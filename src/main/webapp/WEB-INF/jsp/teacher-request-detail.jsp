@@ -14,7 +14,7 @@
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/teacher-request-detail.css">
 </head>
 <body>
-    <%@ include file="/WEB-INF/jsp/category.jsp" %>
+    <%@ include file="/WEB-INF/jsp/manager-category.jsp" %>
     <div class="center-page" id="teacher-request-detail-page">
         <div id="message-blocks">
             <c:if test="${errorMessage != null}">
@@ -74,6 +74,10 @@
                 <label for="request-message-detail">Mô tả yêu cầu</label>
                 <p>${customTeacherRequest.requestMessageDetail}</p>
             </div>
+            <div class="data-row" id="interaction-request-reason">
+                <label for="interaction-request-reason">Lời nhắn khi tương tác</label>
+                <p>${customTeacherRequest.interactRequestReason == null ? 'Không' : customTeacherRequest.interactRequestReason}</p>
+            </div>
         </div>
         <div class="detail-block" id="practice-schedule">
             <div class="detail-block_description" id="practice-schedule-info">
@@ -89,9 +93,11 @@
                             <th id="day">Thứ</th>
                             <th id="startingPeriod">Tiết bắt đầu</th>
                             <th id="lastPeriod">Tiết kết thúc</th>
-                            <th id="roomId">Phòng thực hành</th>
-                            <th id="update">Cập nhật</th>
-                            <th id="delete">Xoá</th>
+                            <th id="roomId" style="${role == 'teacher' ? 'width:27%' : ''}">Phòng thực hành</th>
+                            <c:if test="${role == 'manager'}">
+                                <th id="update">Cập nhật</th>
+                                <th id="delete">Xoá</th>
+                            </c:if>
                         </tr>
                     </thead>
                     <tbody>
@@ -107,17 +113,21 @@
                                         <td class="day">${practiceSchedule.day}</td>
                                         <td class="startingPeriod">${practiceSchedule.startingPeriod}</td>
                                         <td class="lastPeriod">${practiceSchedule.lastPeriod}</td>
-                                        <td class="roomId">${practiceSchedule.classroom.roomId}</td>
-                                        <td class="update table-row-btn">
-                                            <a href="/manager/sub-page/practice-schedule/update-practice-schedule?practiceScheduleId=${practiceSchedule.subjectScheduleId}">
-                                                <i class="fa-regular fa-pen-to-square"></i>
-                                            </a>
+                                        <td class="roomId" style="${role == 'teacher' ? 'width:27%' : ''}">
+                                            ${practiceSchedule.classroom.roomId}
                                         </td>
-                                        <td class="delete table-row-btn">
-                                            <button name="deleteBtn" value="${practiceSchedule.subjectScheduleId}">
-                                                <i class="fa-regular fa-trash-can"></i>
-                                            </button>
-                                        </td>
+                                        <c:if test="${role == 'manager'}">
+                                            <td class="update table-row-btn">
+                                                <a href="/manager/sub-page/practice-schedule/update-practice-schedule?practiceScheduleId=${practiceSchedule.subjectScheduleId}">
+                                                    <i class="fa-regular fa-pen-to-square"></i>
+                                                </a>
+                                            </td>
+                                            <td class="delete table-row-btn">
+                                                <button name="deleteBtn" value="${practiceSchedule.subjectScheduleId}">
+                                                    <i class="fa-regular fa-trash-can"></i>
+                                                </button>
+                                            </td>
+                                        </c:if>
                                     </tr>
                                 </c:otherwise>
                             </c:choose>

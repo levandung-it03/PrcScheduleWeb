@@ -16,7 +16,14 @@
 </head>
 
 <body>
-    <%@ include file="/WEB-INF/jsp/category.jsp" %>
+    <c:choose>
+        <c:when test="${role == 'manager'}">
+            <%@ include file="/WEB-INF/jsp/manager-category.jsp" %>
+        </c:when>
+        <c:otherwise>
+            <%@ include file="/WEB-INF/jsp/teacher-category.jsp" %>
+        </c:otherwise>
+    </c:choose>
     <div class="center-page" id="teacher-request-list-page">
         <div id="message-blocks">
             <c:if test="${errorMessage != null}">
@@ -77,9 +84,17 @@
                             <i class="fa-solid fa-arrow-down-a-z"></i>
                         </th>
                         <th id="view">Chi tiết</th>
-                        <th id="add">Tạo lịch</th>
-                        <th id="delete">Từ chối</th>
-                        </tr>
+                        <c:choose>
+                            <c:when test="${role == 'manager'}">
+                                <th id="add">Tạo lịch</th>
+                                <th id="delete">Từ chối</th>
+                            </c:when>
+                            <c:otherwise>
+                                <th id="update">Cập nhật</th>
+                                <th id="delete">Huỷ</th>
+                            </c:otherwise>
+                        </c:choose>
+                    </tr>
                 </thead>
                 <tbody>
                     <c:forEach items="${teacherRequestList}" var="customTeacherRequest">
@@ -129,30 +144,55 @@
                                 ${customTeacherRequest.sectionClass.groupFromSubject}
                             </td>
                             <td class="table-row-btn view">
-                                <a href="/manager/sub-page/practice-schedule/teacher-request-detail?requestId=${customTeacherRequest.requestId}">
+                                <a href="/${role}/sub-page/practice-schedule/teacher-request-detail?requestId=${customTeacherRequest.requestId}">
                                     <i class="fa-solid fa-eye"></i>
                                 </a>
                             </td>
-                            <td class="table-row-btn add">
-                                <a href="/manager/sub-page/practice-schedule/add-practice-schedule?requestId=${customTeacherRequest.requestId}">
-                                    <i class="fa-regular fa-calendar-plus"></i>
-                                </a>
-                            </td>
-                            <td class="table-row-btn delete">
-                                <button name="denyTeacherRequestBtn" id="${customTeacherRequest.requestId}">
-                                    <i class="fa-regular fa-trash-can"></i>
-                                </button>
-                            </td>
+                            <c:choose>
+                                <c:when test="${role == 'manager'}">
+                                    <td class="table-row-btn add">
+                                        <a href="/manager/sub-page/practice-schedule/add-practice-schedule?requestId=${customTeacherRequest.requestId}">
+                                            <i class="fa-regular fa-calendar-plus"></i>
+                                        </a>
+                                    </td>
+                                    <td class="table-row-btn delete">
+                                        <button name="denyTeacherRequestBtn" id="${customTeacherRequest.requestId}">
+                                            <i class="fa-regular fa-trash-can"></i>
+                                        </button>
+                                    </td>
+                                </c:when>
+                                <c:otherwise>
+                                    <td class="table-row-btn add">
+                                        <a href="/teacher/sub-page/practice-schedule/update-teacher-request?requestId=${customTeacherRequest.requestId}">
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                        </a>
+                                    </td>
+                                    <td class="table-row-btn delete">
+                                        <button name="cancelTeacherRequestBtn" id="${customTeacherRequest.requestId}">
+                                            <i class="fa-regular fa-trash-can"></i>
+                                        </button>
+                                    </td>
+                                </c:otherwise>
+                            </c:choose>
                         </tr>
                     </c:forEach>
                 </tbody>
             </table>
-            <form id="deny-request" action="/service/v1/manager/deny-teacher-request" method="POST" modelAttribute="requestInteraction">
+            <c:choose>
+                <c:when test="${role == 'manager'}">
+                    <form id="deny-request" action="/service/v1/manager/deny-teacher-request"
+                        method="POST" modelAttribute="requestInteraction">
+                </c:when>
+                <c:otherwise>
+                    <form id="cancel-request" action="/service/v1/teacher/cancel-teacher-request"
+                        method="POST" modelAttribute="requestInteraction">
+                </c:otherwise>
+            </c:choose>
                 <input name="requestId" type="number" value="" hidden />
                 <input name="interactionReason" type="text" value="" hidden />
             </form>
             <div class="table-footer">
-                <c:set var="prefixUrl" value="/manager/category/practice-schedule/teacher-request-list?page=" scope="page"/>
+                <c:set var="prefixUrl" value="/${role}/category/practice-schedule/teacher-request-list?page=" scope="page"/>
                 <div class="table-footer_main">
                     <span class="interact-page-btn">
                         <a href="${prefixUrl}${(currentPage == 1) ? currentPage : (currentPage - 1)}">

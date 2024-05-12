@@ -15,7 +15,7 @@
 </head>
 
 <body>
-    <%@ include file="/WEB-INF/jsp/category.jsp" %>
+    <%@ include file="/WEB-INF/jsp/manager-category.jsp" %>
     <div class="center-page" id="teacher-list-page">
         <div id="message-blocks">
             <c:if test="${errorMessage != null}">

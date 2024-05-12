@@ -16,7 +16,7 @@ public class ResDtoTeacherRequest {
     private Long requestId;
     private EntityInteractionStatus interactionStatus;
     private String requestMessageDetail;
-    private String denyingRequestReason;
+    private String interactRequestReason;
     private Long pendingSubjectScheduleId;
     private SectionClass sectionClass;
     private Teacher teacher;

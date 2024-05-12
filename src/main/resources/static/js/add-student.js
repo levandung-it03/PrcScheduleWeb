@@ -13,12 +13,12 @@
         },
         lastName: {
             tag: $('input[name=lastName]'),
-            validate: (value) => (/^[A-Za-zÀ-ỹ]{1,50}( [A-Za-zÀ-ỹ]{1,50})*$/).test(value),
+            validate: (value) => (/^ *[A-Za-zÀ-ỹ]{1,50}( *[A-Za-zÀ-ỹ]{1,50})* *$/).test(value),
             errorMessage: "Tên cuối không hợp lệ.",
         },
         firstName: {
             tag: $('input[name=firstName]'),
-            validate: (value) => (/^[A-Za-zÀ-ỹ]{1,50}( [A-Za-zÀ-ỹ]{1,50})*$/).test(value),
+            validate: (value) => (/^ *[A-Za-zÀ-ỹ]{1,50}( *[A-Za-zÀ-ỹ]{1,50})* *$/).test(value),
             errorMessage: "Tên cuối không hợp lệ.",
         },
         instituteEmail: {

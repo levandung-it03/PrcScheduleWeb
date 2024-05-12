@@ -53,14 +53,14 @@ public class StaticUtilMethods {
         if (errCode == null) errCode = request.getSession().getAttribute("errorCode");
         if (errCode != null) {
             modelAndView.addObject("errorMessage", responseMessages.get(errCode.toString()));
-            request.getSession().invalidate();
+            request.getSession().removeAttribute("errorMessage");
         }
 
         Object succeedCode = fieldValuePairsInModel.getOrDefault("succeedCode", null);
         if (succeedCode == null) succeedCode = request.getSession().getAttribute("succeedCode");
         if (succeedCode != null) {
             modelAndView.addObject("succeedMessage", responseMessages.get(succeedCode.toString()));
-            request.getSession().invalidate();
+            request.getSession().removeAttribute("succeedMessage");
         }
 
         return modelAndView;
@@ -82,12 +82,13 @@ public class StaticUtilMethods {
                         .findByAccountAccountId(account.getAccountId())
                         .orElseThrow(() -> new NoSuchElementException("Manager Id not found"));
                     modelAndView.addObject("person", person);
-                    modelAndView.addObject("id", person.getManagerId());
+                    modelAndView.addObject("role", "manager");
                 } else if (account.getRole() == Role.TEACHER) {
                     Teacher person = teacherRepository
                         .findByAccountAccountId(account.getAccountId())
                         .orElseThrow(() -> new NoSuchElementException("Teacher Id not found"));
                     modelAndView.addObject("person", person);
+                    modelAndView.addObject("role", "teacher");
                 }
             } catch (NoSuchElementException ignored) {
                 //--Redirect to setting person-info page when account is has empty-person-info.

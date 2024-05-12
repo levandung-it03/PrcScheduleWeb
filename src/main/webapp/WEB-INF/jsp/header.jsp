@@ -19,20 +19,22 @@
             </div>
             <div id="panel-info" class="hide">
                 <ul class="panel-info_sub-components" id="panel-info_managing-client-info-features">
+                    <c:if test="${role == 'manager'}">
+                        <li>
+                            <a class="panel-info_sub-components_options" href="/manager/sub-page/manager/show-info">
+                                <i class="fa-solid fa-circle-info"></i>
+                                Thông tin cá nhân
+                            </a>
+                        </li>
+                    </c:if>
                     <li>
-                        <a class="panel-info_sub-components_options" href="/manager/sub-page/manager/show-info">
-                            <i class="fa-solid fa-circle-info"></i>
-                            Thông tin cá nhân
-                        </a>
-                    </li>
-                    <li>
-                        <a class="panel-info_sub-components_options" href="/manager/sub-page/manager/update-manager-info">
+                        <a class="panel-info_sub-components_options" href="/${role}/sub-page/${role}/update-${role}-info">
                             <i class="fa-solid fa-user-pen"></i>
                             Cập nhật thông tin
                         </a>
                     </li>
                     <li>
-                        <a class="panel-info_sub-components_options" href="/manager/sub-page/manager/update-account/change-password">
+                        <a class="panel-info_sub-components_options" href="/${role}/sub-page/${role}/update-account/change-password">
                             <i class="fa-solid fa-lock"></i>
                             Đổi mật khẩu
                         </a>

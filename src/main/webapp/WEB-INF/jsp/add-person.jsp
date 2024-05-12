@@ -15,7 +15,7 @@
 </head>
 <body>
     <c:if test="${actionType == 'update'}">
-        <%@ include file="/WEB-INF/jsp/category.jsp" %>
+        <%@ include file="/WEB-INF/jsp/manager-category.jsp" %>
     </c:if>
     <div class="center-page" id="${actionType}-person-page">
         <div id="message-blocks">
@@ -78,7 +78,7 @@
                 </header>
             </c:otherwise>
         </c:choose>
-        <form method="POST" action="/service/v1/${roleName}/${actionTail}" modelAttribute="person">
+        <form method="POST" action="/service/v1/${actionTail}" modelAttribute="person">
             <c:choose>
                 <c:when test="${actionType == 'add'}">
                     <input name="instituteEmail" type="text" value="${instituteEmail}" hidden/>
@@ -144,10 +144,12 @@
             <c:if test="${roleName == 'teacher'}">
                 <div class="form-input" id="departmentId">
                     <label for="departmentId">Khoa giảng viên thuộc</label>
-                    <select data="${person.departmentId}" name="departmentId">
+                    <select data="${person.department.departmentId}" name="departmentId">
                         <option value="" disabled hidden selected>Chọn mã khoa</option>
                         <c:forEach var="department" items="${departmentList}">
-                            <option value="${department.departmentId}">${department.departmentId}</option>
+                            <option value="${department.departmentId}">
+                                ${department.departmentId} - ${department.departmentName}
+                            </option>
                         </c:forEach>
                     </select>
                 </div>

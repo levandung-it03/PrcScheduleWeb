@@ -98,7 +98,7 @@ public class ApplicationConfig {
 
         messagePairs.put("error_account_01", "Email không đúng!");
         messagePairs.put("error_account_02", "Email đã tồn tại!");
-        messagePairs.put("error_account_03", "Mật khẩu không đúng!");
+        messagePairs.put("error_account_03", "Thông tin đăng nhập không đúng!");
         messagePairs.put("error_account_04", "Mật khẩu mới gửi về Gmail thành công!");
 
         messagePairs.put("error_computerRoom_01", "Đã tồn tại 'phòng học' tại khu vực bạn chọn!");
@@ -108,6 +108,9 @@ public class ApplicationConfig {
         messagePairs.put("error_teacherRequest_02", "Yêu cầu đã bị từ chối nên không thể tạo lịch!");
         messagePairs.put("error_teacherRequest_03", "Yêu cầu đã bị huỷ nên không thể tạo lịch!");
         messagePairs.put("error_teacherRequest_04", "Chỉ có thể từ chối yêu cầu có trạng thái \"Đang chờ tạo\"!");
+        messagePairs.put("error_teacherRequest_05",
+            "Lớp học phần đã tồn tại yêu cầu có trạng thái  \"Đang chờ tạo\" nên không thể tạo!");
+        messagePairs.put("error_teacherRequest_06", "Chỉ có thể sửa yêu cầu có trạng thái \"Đang chờ tạo\"!");
 
         messagePairs.put("error_schedule_01", "Lịch không hợp lệ hoặc đang để trống!");
         messagePairs.put("error_schedule_02", "Lịch không thể xoá, phải có ít nhất 1 lịch của yêu cầu!");
@@ -124,6 +127,7 @@ public class ApplicationConfig {
         messagePairs.put("error_department_01", "khoa đã tồn tại!");
 
         messagePairs.put("error_manager_01", "Đã tồn tại mã của người quản lý!");
+        messagePairs.put("error_teacher_01", "Đã tồn tại mã của giảng viên!");
         /******************/
 
         return messagePairs;

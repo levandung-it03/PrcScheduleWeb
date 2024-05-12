@@ -14,7 +14,7 @@
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/extra-features.css">
 </head>
 <body>
-    <%@ include file="/WEB-INF/jsp/category.jsp" %>
+    <%@ include file="/WEB-INF/jsp/manager-category.jsp" %>
     <div class="center-page">
         <c:if test="${errorMessage != null}">
             <div class="error-service-message">

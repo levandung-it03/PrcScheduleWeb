@@ -3,7 +3,11 @@ package com.SoftwareTech.PrcScheduleWeb.repository;
 import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.ResDtoPracticeSchedule;
 import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.ResDtoSubjectSchedule;
 import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.ResDtoTeacherRequest;
+import com.SoftwareTech.PrcScheduleWeb.model.SectionClass;
+import com.SoftwareTech.PrcScheduleWeb.model.Semester;
 import com.SoftwareTech.PrcScheduleWeb.model.SubjectSchedule;
+import com.SoftwareTech.PrcScheduleWeb.model.Teacher;
+import com.SoftwareTech.PrcScheduleWeb.model.enums.EntityInteractionStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -58,6 +62,25 @@ public interface SubjectScheduleRepository extends JpaRepository<SubjectSchedule
     ) throws SQLException;
 
     @Query("""
+        SELECT DISTINCT new com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.ResDtoSubjectSchedule(
+            s.subjectScheduleId, s.sectionClass.subject.subjectName, s.day, s.startingWeek, s.totalWeek,
+            s.startingPeriod, s.lastPeriod, s.classroom.roomId
+        ) FROM SubjectSchedule s
+        WHERE s.day IS NOT NULL
+            AND s.startingWeek IS NOT NULL
+            AND s.totalWeek IS NOT NULL
+            AND s.startingPeriod IS NOT NULL
+            AND s.lastPeriod IS NOT NULL
+            AND s.classroom IS NOT NULL
+            AND s.sectionClass.semester.semesterId = :semesterId
+            AND s.teacher.teacherId = :teacherId
+    """)
+    List<ResDtoSubjectSchedule> findAllScheduleByTeacher(
+        @Param("semesterId") Long semesterId,
+        @Param("teacherId") String teacherId
+    ) throws SQLException;
+
+    @Query("""
         SELECT new com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.ResDtoPracticeSchedule(
             s.subjectScheduleId, s.day, s.startingWeek, s.totalWeek, s.startingPeriod, s.lastPeriod, s.classroom.roomId
         ) FROM SubjectSchedule s
@@ -100,4 +123,30 @@ public interface SubjectScheduleRepository extends JpaRepository<SubjectSchedule
     void deleteScheduleByPendingRequestId(Long requestId);
 
     int countByTeacherRequestRequestId(Long requestId);
+    @Query("""
+        SELECT DISTINCT ss.sectionClass FROM SubjectSchedule ss
+        WHERE ss.sectionClass.semester = :currentSemester AND ss.teacher = :teacher
+    """)
+    List<SectionClass> findAllBySectionClassSemesterAndTeacher(
+        @Param("currentSemester") Semester currentSemester,
+        @Param("teacher") Teacher teacher
+    );
+
+    @Query("""
+        SELECT COUNT(ss) FROM SubjectSchedule ss
+        WHERE ss.sectionClass.sectionClassId = :sectionClassId AND ss.teacherRequest.interactionStatus = :interactionStatus
+    """)
+    int existsByIdSectionClassIdAndRequestStatus(
+        @Param("sectionClassId") Long sectionClassId,
+        @Param("interactionStatus")EntityInteractionStatus interactionStatus
+    );
+
+
+    @Modifying
+    @Query("""
+       UPDATE SubjectSchedule s SET s.sectionClass = :#{#subjectSchedule.sectionClass}
+       WHERE s.teacherRequest = :#{#subjectSchedule.teacherRequest}
+    """)
+    void updateByTeacherRequestAndSectionClass(@Param("subjectSchedule") SubjectSchedule sectionClassIdIsInvalid);
+
 }

@@ -14,7 +14,7 @@
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/change-password.css">
 </head>
 <body>
-    <%@ include file="/WEB-INF/jsp/category.jsp" %>
+    <%@ include file="/WEB-INF/jsp/manager-category.jsp" %>
     <div class="center-page" id="change-password-page">
         <div id="message-blocks">
             <c:if test="${errorMessage != null}">
