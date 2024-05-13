@@ -22,6 +22,11 @@ public class M_GetExtraFeaturesController {
     public ModelAndView getAddSubjectPage(HttpServletRequest request, Model model) {
         return getExtraFeaturesService.getAddSubjectPage(request, model);
     }
+
+    @RequestMapping(value = "/add-file", method = GET)
+    public ModelAndView getImportFilePage(HttpServletRequest request, Model model) {
+        return getExtraFeaturesService.getImportFilePage(request, model);
+    }
     /*----------------------*/
 
     /**Author: Nguyen Quang Linh**/

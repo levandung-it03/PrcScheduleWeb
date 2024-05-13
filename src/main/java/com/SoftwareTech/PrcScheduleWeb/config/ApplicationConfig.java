@@ -22,6 +22,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import jakarta.validation.Validator;
 import jakarta.validation.Validation;
+import org.springframework.web.multipart.MultipartResolver;
 
 import java.security.SecureRandom;
 import java.util.HashMap;

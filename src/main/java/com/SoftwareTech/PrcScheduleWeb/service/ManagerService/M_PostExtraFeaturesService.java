@@ -6,10 +6,13 @@ import com.SoftwareTech.PrcScheduleWeb.model.enums.RoomType;
 import com.SoftwareTech.PrcScheduleWeb.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.sql.Date;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.NoSuchElementException;
 
@@ -32,7 +35,8 @@ public class M_PostExtraFeaturesService {
     private final SubjectRegistrationRepository subjectRegistrationRepository;
     @Autowired
     private final DepartmentRepository departmentRepository;
-
+    @Autowired
+    private final EntityDataFormatterRepository entityDataFormatterRepository;
     /**Author: Le Van Dung**/
     public void addSubject(ReqDtoAddSubject subjectObject) {
         if (subjectRepository.findByIdOrSubjectName(
@@ -176,6 +180,12 @@ public class M_PostExtraFeaturesService {
             .sectionClass(chosenSectionClass)
             .student(chosenStudent)
             .build());
+    }
+
+    public int importDataFromTxt(MultipartFile file) throws DataIntegrityViolationException {
+        EntityDataFormatInTxtFiles formatter = new EntityDataFormatInTxtFiles(file);
+        StringBuilder query = formatter.extractTxtFilesDataIntoInsertionQueryFormat();
+        return entityDataFormatterRepository.runInsertionQuery(query.toString());
     }
     /*----------------------*/
 }

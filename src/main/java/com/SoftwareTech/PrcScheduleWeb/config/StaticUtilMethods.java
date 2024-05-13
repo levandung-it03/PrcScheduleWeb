@@ -47,23 +47,21 @@ public class StaticUtilMethods {
         String pageModel
     ) {
         ModelAndView modelAndView = new ModelAndView(pageModel);
-
-        Map<String, Object> fieldValuePairsInModel = model.asMap();
-        Object errCode = fieldValuePairsInModel.getOrDefault("errorCode", null);
-        if (errCode == null) errCode = request.getSession().getAttribute("errorCode");
-        if (errCode != null) {
-            modelAndView.addObject("errorMessage", responseMessages.get(errCode.toString()));
-            request.getSession().removeAttribute("errorMessage");
-        }
-
-        Object succeedCode = fieldValuePairsInModel.getOrDefault("succeedCode", null);
-        if (succeedCode == null) succeedCode = request.getSession().getAttribute("succeedCode");
-        if (succeedCode != null) {
-            modelAndView.addObject("succeedMessage", responseMessages.get(succeedCode.toString()));
-            request.getSession().removeAttribute("succeedMessage");
-        }
-
+        modelAndView.addObject("errorMessage", this.getMessageFromCode("errorCode", request, model));
+        modelAndView.addObject("succeedMessage", this.getMessageFromCode("succeedCode", request, model));
         return modelAndView;
+    }
+    private String getMessageFromCode(String codeType, HttpServletRequest request, Model model) {
+        Map<String, Object> fieldValuePairsInModel = model.asMap();
+        Object messageCode = fieldValuePairsInModel.getOrDefault(codeType, null);
+        if (messageCode == null) {
+            messageCode = request.getSession().getAttribute(codeType);
+            request.getSession().removeAttribute(codeType);
+        }
+        if (messageCode != null) {
+            return responseMessages.getOrDefault(messageCode.toString(), messageCode.toString());
+        }
+        return null;
     }
 
     /**

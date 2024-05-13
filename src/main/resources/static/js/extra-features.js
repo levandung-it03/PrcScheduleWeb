@@ -8,6 +8,12 @@
 function renderFeatureBlocks() {
     $('div.center-page div.center-page_list').innerHTML = [
         {
+            name: "file",
+            avatar: `<i class="fa-solid fa-file-arrow-up"></i>`,
+            title: "Nhập một file dữ liệu",
+            content: "Nhập một file chứa tập dữ liệu, làm nền tảng cho các dữ liệu khác"
+        },
+        {
             name: "department",
             avatar: `<i class="fa-solid fa-building-user"></i>`,
             title: "Thêm một khoa mới",

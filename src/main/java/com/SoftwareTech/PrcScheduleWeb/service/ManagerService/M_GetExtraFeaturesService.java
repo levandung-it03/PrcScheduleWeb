@@ -139,5 +139,11 @@ public class M_GetExtraFeaturesService {
         modelAndView.addObject(sectionClassList);
         return modelAndView;
     }
+
+    public ModelAndView getImportFilePage(HttpServletRequest request, Model model) {
+        ModelAndView modelAndView = staticUtilMethods.customResponsiveModelView(request, model, "import-file");
+        modelAndView = staticUtilMethods.insertingHeaderDataOfModelView(request, modelAndView);
+        return modelAndView;
+    }
     /*----------------------*/
 }

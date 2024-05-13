@@ -12,10 +12,10 @@ let updatedPracticeSchedule = {};
     /*---------------Own-methods------------------*/
     popAllHiddenDataFields();
     selectCurrentWeekOptionTagAndRenderTimeTable();
-    continouslyUpdateSelectedWeekOptionTag();
+    continuouslyUpdateSelectedWeekOptionTag();
     customizeSelectedTableCellsEvent();
     customizeConvertingScheduleAction();
-    customizeSubmitFormAction();
+    customizeSubmitFormAction("div#adjust-schedule-block > form");
     /*---------Update-subject-schedule------------*/
     mappingUpdatedSubjectSchedule();
     /*--------------------------------------------*/
@@ -77,7 +77,7 @@ let updatedPracticeSchedule = {};
         renderTimeTable();
     }
 
-    function continouslyUpdateSelectedWeekOptionTag() {
+    function continuouslyUpdateSelectedWeekOptionTag() {
         $('select[name="list-of-week"]').addEventListener("change", e => {
             selectedWeekOptionTag = e.target.options[e.target.selectedIndex];
             renderTimeTable();

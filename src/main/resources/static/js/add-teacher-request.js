@@ -6,19 +6,14 @@ let selectedWeekOptionTag = null;
 
 (function main() {
     customizeClosingNoticeMessageEvent();
-    customizeSubmitFormAction('div#add-teacher-request-page > form', {
-        mockValidator: {
-            tag: {value: true},
-            validate: () => true
-        }
-    });
+    customizeSubmitFormAction('div#add-teacher-request-page > form');
     recoveryAllSelectTagDataInForm();
     removePathAttributes();
     buildHeader();
     /*---------------Own-methods------------------*/
     popAllHiddenDataFields();
     selectCurrentWeekOptionTagAndRenderTimeTable();
-    continouslyUpdateSelectedWeekOptionTag();
+    continuouslyUpdateSelectedWeekOptionTag();
     customizeSelectedTableCellsEvent();
     customizeConvertingScheduleAction();
     customizeSubmitFormAction();
@@ -80,7 +75,7 @@ let selectedWeekOptionTag = null;
         renderTimeTable();
     }
 
-    function continouslyUpdateSelectedWeekOptionTag() {
+    function continuouslyUpdateSelectedWeekOptionTag() {
         $('select[name="list-of-week"]').addEventListener("change", e => {
             selectedWeekOptionTag = e.target.options[e.target.selectedIndex];
             renderTimeTable();

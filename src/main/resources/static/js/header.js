@@ -114,6 +114,10 @@ function mappingCategoryNameWithCurrentPage() {
             ["category-name"]: "Danh sách các tính năng thêm dữ liệu",
             ["page-description"]: "Cung cấp các tính năng hỗ trợ thêm dữ liệu còn thiếu sót."
         },
+        ["add-file"]:{
+            ["category-name"]: "Nhập dữ liệu từ file",
+            ["page-description"]: "Nhập lượng lớn dữ liệu từ file theo bảng riêng."
+        },
         ["add-subject"]: {
             ["category-name"]: "Thêm dữ liệu cho môn học",
             ["page-description"]: "Thêm dữ liệu cho một môn học còn sót hoặc mới mở."
