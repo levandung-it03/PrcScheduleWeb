@@ -63,3 +63,45 @@ form input[type=submit] {
 #error-message-close-btn:hover {
     cursor: pointer;
 }
+
+#instruction-block {
+    padding: 28px 56px;
+    margin: 20px;
+    width: calc(100% - 2 * 20px);
+    background-color: rgba(255, 255, 255, 0.85);
+    border: 1px var(--grey-of-header-border) solid;
+    border-radius: 10px;
+    color: var(--grey-text-form);
+    font-size: 1rem;
+}
+#instruction-block .index {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: rgb(65, 83, 199);
+}
+#instruction-block .sub-index {
+    font-size: 1.2rem;
+    color: rgb(65, 83, 199);
+}
+#instruction-block .code-review {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-items: start;
+    background-color: #272822;
+    font: 0.9rem consolas;
+    padding: 10px 15px;
+}
+#instruction-block .code-review span {
+    display: block;
+    width: 100%;
+}
+.code-review_table-name {
+    color: #a6e22e;
+}
+.code-review_fields-order {
+    color: #66d9ef;
+}
+.code-review_data-example {
+    color: white;
+}

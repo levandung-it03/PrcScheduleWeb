@@ -99,23 +99,25 @@ let updatedPracticeSchedule = {};
         $$('tbody tr td.schedule-item').forEach(cell => {
             //--Reset cell status before setting-up subject schedule.
             cell.querySelector('span').innerText = "";
-            cell.classList.remove("unhover");
+            cell.classList.remove("un-hover");
             cell.classList.remove("selected");
+            cell.classList.remove("cant-choose");
         });
 
         //--Color each cell that already has subject-schedule.
         allUnavailableScheduleInThisSemester.forEach((schedule, index) => {
             const selectedWeek = Number.parseInt(selectedWeekOptionTag.getAttribute("week"));
 
-            //--This subject is having a schedule in this seleted_week.
+            //--This subject is having a schedule in this selected-week.
             if ((schedule.startingWeek <= selectedWeek) && (selectedWeek <= (schedule.startingWeek + schedule.totalWeek - 1))) {
                 //--Add the subject name into schedule-item. 
                 const periodAsRowOfSubjectNameCell = Number.parseInt((schedule.lastPeriod + schedule.startingPeriod) / 2);
                 $(`tr[id="${periodAsRowOfSubjectNameCell}"] td[day="${schedule.day}"] span`).innerText = schedule.subjectName;
 
                 for (let period = schedule.startingPeriod; period <= schedule.lastPeriod; period++) {
-                    //--Make every schedule cells this subject "unhover" (change: background-color, cursor).
-                    $(`tr[id="${period}"] td[day="${schedule.day}"]`).classList.add("unhover");
+                    //--Make every schedule cells this subject "un-hover" (change: background-color, cursor).
+                    $(`tr[id="${period}"] td[day="${schedule.day}"]`).classList.add("un-hover");
+                    $(`tr[id="${period}"] td[day="${schedule.day}"]`).classList.add("cant-choose");
                 }
             }
         });
@@ -132,18 +134,21 @@ let updatedPracticeSchedule = {};
                 rentRoomsQuantity[period][schedule.day]++;
 
         });
-        //--Then, we color all cells which dosen't have enough computer-room-quan to select.
-        for (var periodRow = 1; periodRow <= 16; periodRow++) {
-            for (var dayColumn = 2; dayColumn <= 8; dayColumn++) {
-                //--If this cell is already colored, passing it.
-                if ($(`tr[id="${periodRow}"] td[day="${dayColumn}"]`).classList.contains("unhover"))
-                    continue;
-
+        //--Then, we color all cells which don't have enough computer-room-quan to select.
+        let startingDateOfSelectedWeek = getDateObjFromCommonFormat(selectedWeekOptionTag.getAttribute("startingDate"));
+        for (var dayColumn = 2; dayColumn <= 8; dayColumn++) {
+            for (var periodRow = 1; periodRow <= 16; periodRow++) {
+                let tempCell = $(`tr[id="${periodRow}"] td[day="${dayColumn}"]`);
                 if (rentRoomsQuantity[periodRow][dayColumn] >= computerRoomList.length) {
-                    $(`tr[id="${periodRow}"] td[day="${dayColumn}"] span`).innerText = "Hết phòng";
-                    $(`tr[id="${periodRow}"] td[day="${dayColumn}"]`).classList.add("unhover");
+                    tempCell.querySelector('span').innerText = "Hết phòng";
+                    tempCell.classList.add("un-hover");
+                    tempCell.classList.add("cant-choose");
                 }
+                //--Make all cells which are in the past can't be selected.
+                if (startingDateOfSelectedWeek <= new Date())
+                    tempCell.classList.add("un-hover");
             }
+            startingDateOfSelectedWeek.setDate(startingDateOfSelectedWeek.getDate() + 1);
         }
 
         //--Color all cells that was selected before.
@@ -172,7 +177,7 @@ let updatedPracticeSchedule = {};
         [...$$('div#add-schedule-block table#subject-schedule tr.period-row td.schedule-item')].forEach(cell => {
             cell.addEventListener("click", e => {
                 //--Selected cell is a schedule-cell which already has schedule or fully rent computer-room quantity.
-                if (cell.classList.contains("unhover"))
+                if (cell.classList.contains("un-hover"))
                     return null;
 
                 const selectedWeek = selectedWeekOptionTag.getAttribute("week");

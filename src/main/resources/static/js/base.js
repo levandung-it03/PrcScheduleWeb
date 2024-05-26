@@ -29,7 +29,10 @@ const colorMap = {
     Y: "#FFFF00",
     Z: "#0014A8"
 };
-  
+
+function getDateObjFromCommonFormat(dateInCurrentFormatAsStr) {
+    return new Date(dateInCurrentFormatAsStr.split("/").reverse().join("-"));
+}
 
 function customizeClosingNoticeMessageEvent() {
     const errMessageCloseBtn = $('div.error-service-message i#error-service-message_close-btn');

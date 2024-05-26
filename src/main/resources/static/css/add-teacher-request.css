@@ -164,9 +164,9 @@ div#schedule-block table thead th.change-schedule-btn:hover {
     color: white;
     cursor: pointer;
 }
-.unhover {
+.un-hover {
     background-color: rgb(211, 217, 219)!important;
 }
-.unhover:hover {
+.un-hover:hover {
     cursor: not-allowed!important;
 }

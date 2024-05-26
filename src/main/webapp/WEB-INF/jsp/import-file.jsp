@@ -38,6 +38,25 @@
             </div>
             <input type="submit" value="Nhập file" />
         </form>
+        <div id="instruction-block">
+            <span class="index">I. Quy tắc:</br></span>
+            <p class="content">
+                <span class="code-review">
+                    </br><span class="code-review_table-name">&lt;Tên bảng&gt;</span>
+                    </br><span class="code-review_fields-order">&lt;Các trường dữ liệu bắt buộc&gt;</span>
+                    </br><span class="code-review_data-example">&lt;Dữ liệu cần nhập vào tương ứng theo ĐÚNG THỨ TỰ với trường dữ liệu&gt;</span>
+                </span>
+                </br>- Các trường dữ liệu: nhập theo "Cú pháp" bên dưới, có thể không theo đúng thứ tự nhưng phải tương ứng với thứ tự nhập vào.
+                </br>- Dữ liệu cần nhập: lưu ý rõ các kiểu dữ liệu.
+                </br>&emsp;&emsp;+ <b>Số</b>: không có dấu "..".
+                </br>&emsp;&emsp;+ <b>Ký tự</b>: có dấu "..".
+                </br>&emsp;&emsp;+ <b>Ngày tháng</b>: có dấu "..".
+                </br>&emsp;&emsp;....
+            </p>
+
+            </br><span class="index">II. Cú pháp cụ thể:</span>
+            <div id="replaced-data"></div>
+        </div>
         <%@ include file="/WEB-INF/jsp/footer.jsp" %>
     </div>
     <script type="application/javascript" src="${pageContext.request.contextPath}/js/base.js"></script>

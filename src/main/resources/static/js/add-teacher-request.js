@@ -97,7 +97,7 @@ let selectedWeekOptionTag = null;
         $$('tbody tr td.schedule-item').forEach(cell => {
             //--Reset cell status before setting-up subject schedule.
             cell.querySelector('span').innerText = "";
-            cell.classList.remove("unhover");
+            cell.classList.remove("un-hover");
             cell.classList.remove("selected");
         });
 
@@ -112,8 +112,8 @@ let selectedWeekOptionTag = null;
                 $(`tr[id="${periodAsRowOfSubjectNameCell}"] td[day="${schedule.day}"] span`).innerText = schedule.subjectName;
 
                 for (let period = schedule.startingPeriod; period <= schedule.lastPeriod; period++) {
-                    //--Make every schedule cells this subject "unhover" (change: background-color, cursor).
-                    $(`tr[id="${period}"] td[day="${schedule.day}"]`).classList.add("unhover");
+                    //--Make every schedule cells this subject "un-hover" (change: background-color, cursor).
+                    $(`tr[id="${period}"] td[day="${schedule.day}"]`).classList.add("un-hover");
                 }
             }
         });
@@ -134,12 +134,12 @@ let selectedWeekOptionTag = null;
         for (var periodRow = 1; periodRow <= 16; periodRow++) {
             for (var dayColumn = 2; dayColumn <= 8; dayColumn++) {
                 //--If this cell is already colored, passing it.
-                if ($(`tr[id="${periodRow}"] td[day="${dayColumn}"]`).classList.contains("unhover"))
+                if ($(`tr[id="${periodRow}"] td[day="${dayColumn}"]`).classList.contains("un-hover"))
                     continue;
 
                 if (rentRoomsQuantity[periodRow][dayColumn] >= computerRoomList.length) {
                     $(`tr[id="${periodRow}"] td[day="${dayColumn}"] span`).innerText = "Hết phòng";
-                    $(`tr[id="${periodRow}"] td[day="${dayColumn}"]`).classList.add("unhover");
+                    $(`tr[id="${periodRow}"] td[day="${dayColumn}"]`).classList.add("un-hover");
                 }
             }
         }

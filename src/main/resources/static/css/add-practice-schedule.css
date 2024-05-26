@@ -251,10 +251,10 @@ div#adjust-schedule-block table tbody tr:hover select {
     cursor: pointer;
 }
 
-.unhover {
+.cant-choose {
     background-color: rgb(211, 217, 219)!important;
 }
-.unhover:hover {
+.un-hover:hover {
     cursor: not-allowed!important;
 }
 .selected,
