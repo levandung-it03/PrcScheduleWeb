@@ -122,6 +122,8 @@ public class AuthenticationController {
             //--Sending information back to this page.
             redirectAttributes.addFlashAttribute("changePasswordObj", changePasswordObj);
             return "redirect:" + standingUrl;
+        } catch (NoSuchElementException ignored) {
+            redirectAttributes.addFlashAttribute("errorCode", "error_entity_03");
         } catch (Exception ignored) {
             redirectAttributes.addFlashAttribute("errorCode", "error_systemApplication_01");
         }

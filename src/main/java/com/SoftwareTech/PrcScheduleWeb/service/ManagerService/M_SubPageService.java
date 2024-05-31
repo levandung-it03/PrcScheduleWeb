@@ -6,9 +6,11 @@ import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.*;
 import com.SoftwareTech.PrcScheduleWeb.model.*;
 import com.SoftwareTech.PrcScheduleWeb.model.enums.EntityInteractionStatus;
 import com.SoftwareTech.PrcScheduleWeb.model.enums.Role;
+import com.SoftwareTech.PrcScheduleWeb.model.enums.RoomType;
 import com.SoftwareTech.PrcScheduleWeb.repository.*;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.access.AuthorizationServiceException;
@@ -16,8 +18,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -45,6 +49,8 @@ public class M_SubPageService {
     private final TeacherRequestRepository teacherRequestRepository;
     @Autowired
     private final ManagerRepository managerRepository;
+    @Autowired
+    private final SemesterRepository semesterRepository;
 
     public ModelAndView getUpdateComputerRoomPage(HttpServletRequest request, Model model) {
         final String roomId = request.getParameter("roomId");
@@ -197,6 +203,22 @@ public class M_SubPageService {
 
     public ModelAndView getUpdatePracticeSchedulePage(HttpServletRequest request, Model model) throws SQLException {
         final Long practiceScheduleId = Long.parseLong(request.getParameter("practiceScheduleId"));
+
+        Semester currentSemester = semesterRepository
+            .findByCurrentDate(new java.sql.Date(System.currentTimeMillis()))
+            .orElseThrow(() -> new NoSuchElementException("There no semester data for this current date"));
+
+        Optional<SubjectSchedule> firstSchedule = subjectScheduleRepository
+            .findFirstBySubjectScheduleIdAndSemester(RoomType.PRC, practiceScheduleId, currentSemester);
+
+        if (firstSchedule.isPresent()) {
+            Date startingDate = M_SubjectScheduleService.getFirstSqlDateOfSchedule(firstSchedule.get(), currentSemester);
+
+            //--If the starting-date of this first practice-schedule happened before this current-date.
+            if (new Date(System.currentTimeMillis()).after(startingDate))
+                throw new SQLIntegrityConstraintViolationException("Can not update happened practice-schedule");
+        }
+
         ModelAndView modelAndView = staticUtilMethods
             .customResponsiveModelView(request, model, "add-practice-schedule");
         modelAndView = staticUtilMethods.insertingHeaderDataOfModelView(request, modelAndView);

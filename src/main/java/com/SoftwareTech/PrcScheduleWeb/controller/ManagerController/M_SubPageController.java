@@ -141,7 +141,7 @@ public class M_SubPageController {
         } catch (Exception ignored) {
             request.getSession().setAttribute("errorCode", "error_systemApplication_01");
         }
-        return new ModelAndView("redirect:/manager/category/teacher/teacher-request-list");
+        return new ModelAndView("redirect:/manager/category/practice-schedule/teacher-request-list");
     }
 
     @RequestMapping(value = "/practice-schedule/add-practice-schedule", method = GET)
@@ -168,6 +168,8 @@ public class M_SubPageController {
             //--This exception may throw when user reloads our page, so do nothing.
         } catch (NoSuchElementException ignored) {
             request.getSession().setAttribute("errorCode", "error_entity_01");
+        } catch (SQLIntegrityConstraintViolationException ignored) {
+            request.getSession().setAttribute("errorCode", "error_schedule_03");
         } catch (Exception ignored) {
             request.getSession().setAttribute("errorCode", "error_systemApplication_01");
         }

@@ -8,6 +8,7 @@ import com.SoftwareTech.PrcScheduleWeb.model.Semester;
 import com.SoftwareTech.PrcScheduleWeb.model.SubjectSchedule;
 import com.SoftwareTech.PrcScheduleWeb.model.Teacher;
 import com.SoftwareTech.PrcScheduleWeb.model.enums.EntityInteractionStatus;
+import com.SoftwareTech.PrcScheduleWeb.model.enums.RoomType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -149,4 +150,17 @@ public interface SubjectScheduleRepository extends JpaRepository<SubjectSchedule
     """)
     void updateByTeacherRequestAndSectionClass(@Param("subjectSchedule") SubjectSchedule sectionClassIdIsInvalid);
 
+    @Query("""
+        SELECT ss FROM SubjectSchedule ss
+        WHERE ss.subjectScheduleId = :subjectScheduleId
+        AND ss.classroom.roomType = :roomType
+        AND ss.sectionClass.semester = :currentSemester
+        ORDER BY ss.startingWeek ASC, ss.day ASC, ss.startingPeriod ASC
+        LIMIT 1
+    """)
+    Optional<SubjectSchedule> findFirstBySubjectScheduleIdAndSemester(
+        @Param("roomType") RoomType roomType,
+        @Param("subjectScheduleId") Long practiceScheduleId,
+        @Param("currentSemester") Semester currentSemester
+    );
 }

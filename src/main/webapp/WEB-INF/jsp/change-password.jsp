@@ -14,7 +14,14 @@
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/change-password.css">
 </head>
 <body>
-    <%@ include file="/WEB-INF/jsp/manager-category.jsp" %>
+    <c:choose>
+        <c:when test="${role == 'manager'}">
+            <%@ include file="/WEB-INF/jsp/manager-category.jsp" %>
+        </c:when>
+        <c:otherwise>
+            <%@ include file="/WEB-INF/jsp/teacher-category.jsp" %>
+        </c:otherwise>
+    </c:choose>
     <div class="center-page" id="change-password-page">
         <div id="message-blocks">
             <c:if test="${errorMessage != null}">

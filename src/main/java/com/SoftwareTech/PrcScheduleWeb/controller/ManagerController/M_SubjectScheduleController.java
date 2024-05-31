@@ -101,7 +101,7 @@ public class M_SubjectScheduleController {
             redirectAttributes.addFlashAttribute("errorCode", "error_entity_01");
         } catch (SQLIntegrityConstraintViolationException e) {
             logger.info(e.toString());
-            redirectAttributes.addFlashAttribute("errorCode", "error_schedule_02");
+            redirectAttributes.addFlashAttribute("errorCode", e.getMessage());
         } catch (Exception e) {
             logger.info(e.toString());
             redirectAttributes.addFlashAttribute("errorCode", "error_systemApplication_01");

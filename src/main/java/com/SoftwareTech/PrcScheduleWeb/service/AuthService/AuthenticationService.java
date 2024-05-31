@@ -118,6 +118,7 @@ public class AuthenticationService {
         accountInDB.setPassword(passwordEncoder.encode(changePasswordObj.getPassword()));
         accountRepository.changePassword(accountInDB);
         request.getSession().removeAttribute("OTP-" + changePasswordObj.getInstituteEmail());
+        //--Logout after changing password successfully
         jwtService.clearAllTokenCookies(request, response);
     }
 

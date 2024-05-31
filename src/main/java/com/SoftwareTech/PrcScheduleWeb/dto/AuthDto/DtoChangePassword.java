@@ -28,6 +28,6 @@ public class DtoChangePassword {
     private String retypePassword;
 
     @NotBlank(message = "error_account_03")
-    @Length(min = 6, message = "error_account_03")
+    @Length(min = 6, max = 6, message = "error_account_03")
     private String otpCode = "______";
 }

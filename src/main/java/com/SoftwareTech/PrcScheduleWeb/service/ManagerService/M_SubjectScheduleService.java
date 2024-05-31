@@ -4,12 +4,15 @@ import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.ReqDtoPracticeSched
 import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.ReqDtoUpdatePracticeSchedule;
 import com.SoftwareTech.PrcScheduleWeb.model.*;
 import com.SoftwareTech.PrcScheduleWeb.model.enums.EntityInteractionStatus;
+import com.SoftwareTech.PrcScheduleWeb.model.enums.RoomType;
 import com.SoftwareTech.PrcScheduleWeb.repository.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -27,6 +30,8 @@ public class M_SubjectScheduleService {
     private final ClassroomRepository classroomRepository;
     @Autowired
     private final SubjectScheduleRepository subjectScheduleRepository;
+    @Autowired
+    private final SemesterRepository semesterRepository;
 
     @Transactional(rollbackOn = {Exception.class})
     public void addPracticeSchedule(ReqDtoPracticeSchedule practiceScheduleObj) {
@@ -165,8 +170,37 @@ public class M_SubjectScheduleService {
             deletedSubjectSchedule.getTeacherRequest().getRequestId()
         );
         if (totalSchedulesQuantityOfTeacherRequest == 1)
-            throw new SQLIntegrityConstraintViolationException("Each Teacher Request must has at least 1 Practice-Schedule");
+            throw new SQLIntegrityConstraintViolationException("error_schedule_02");
+
+        Semester currentSemester = semesterRepository
+            .findByCurrentDate(new java.sql.Date(System.currentTimeMillis()))
+            .orElseThrow(() -> new NoSuchElementException("There no semester data for this current date"));
+
+        Optional<SubjectSchedule> firstSchedule = subjectScheduleRepository
+            .findFirstBySubjectScheduleIdAndSemester(RoomType.PRC, id, currentSemester);
+
+        if (firstSchedule.isPresent()) {
+            Date startingDate = getFirstSqlDateOfSchedule(firstSchedule.get(), currentSemester);
+
+            //--If the starting-date of this first practice-schedule happened before this current-date.
+            if (new Date(System.currentTimeMillis()).after(startingDate))
+                throw new SQLIntegrityConstraintViolationException("error_schedule_03");
+        }
 
         subjectScheduleRepository.deleteById(id);
+    }
+
+    @NotNull
+    public static Date getFirstSqlDateOfSchedule(SubjectSchedule schedule, Semester currentSemester) {
+        //--Total weeks after the first week of current-semester to now-date.
+        int totalWeekFromCurrentSemester = schedule.getStartingWeek() - currentSemester.getFirstWeek();
+
+        //--Total dates, from starting-date of current-semester, to starting-date of schedule .
+        int totalDatesToFistPracticeDate = (totalWeekFromCurrentSemester * 7) + (schedule.getDay() - 2);
+
+        //--Get java.sql.Date object from the starting-date of this first practice-schedule.
+        long startingSemesterDateAsMillis = currentSemester.getStartingDate().getTime();
+
+        return new Date(startingSemesterDateAsMillis + (long) totalDatesToFistPracticeDate *24*60*60*1000);
     }
 }

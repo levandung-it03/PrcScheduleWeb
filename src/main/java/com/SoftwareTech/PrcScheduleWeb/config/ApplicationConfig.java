@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.mail.javamail.JavaMailSender;
+//import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -22,7 +22,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import jakarta.validation.Validator;
 import jakarta.validation.Validation;
-import org.springframework.web.multipart.MultipartResolver;
 
 import java.security.SecureRandom;
 import java.util.HashMap;
@@ -108,13 +107,14 @@ public class ApplicationConfig {
         messagePairs.put("error_teacherRequest_01", "Yêu cầu đã được thêm lịch nên không thể tạo!");
         messagePairs.put("error_teacherRequest_02", "Yêu cầu đã bị từ chối nên không thể tạo lịch!");
         messagePairs.put("error_teacherRequest_03", "Yêu cầu đã bị huỷ nên không thể tạo lịch!");
-        messagePairs.put("error_teacherRequest_04", "Chỉ có thể từ chối yêu cầu có trạng thái \"Đang chờ tạo\"!");
+        messagePairs.put("error_teacherRequest_04", "Chỉ có thể từ chối yêu cầu có trạng thái \"Chờ giải quyết\"!");
         messagePairs.put("error_teacherRequest_05",
-            "Lớp học phần đã tồn tại yêu cầu có trạng thái  \"Đang chờ tạo\" nên không thể tạo!");
-        messagePairs.put("error_teacherRequest_06", "Chỉ có thể sửa yêu cầu có trạng thái \"Đang chờ tạo\"!");
+            "Lớp học phần đã tồn tại yêu cầu có trạng thái  \"Chờ giải quyết\" nên không thể tạo!");
+        messagePairs.put("error_teacherRequest_06", "Chỉ có thể sửa yêu cầu có trạng thái \"Chờ giải quyết\"!");
 
         messagePairs.put("error_schedule_01", "Lịch không hợp lệ hoặc đang để trống!");
         messagePairs.put("error_schedule_02", "Lịch không thể xoá, phải có ít nhất 1 lịch của yêu cầu!");
+        messagePairs.put("error_schedule_03", "Lịch không thể tương tác do đã được bắt đầu!");
 
         messagePairs.put("error_subject_01", "Môn học đã tồn tại!");
 

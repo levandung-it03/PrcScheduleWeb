@@ -14,9 +14,6 @@ let selectedWeekOptionTag = null;
     popAllHiddenDataFields();
     selectCurrentWeekOptionTagAndRenderTimeTable();
     continuouslyUpdateSelectedWeekOptionTag();
-    customizeSelectedTableCellsEvent();
-    customizeConvertingScheduleAction();
-    customizeSubmitFormAction();
 
     function popAllHiddenDataFields() {
         [...$$("div#hidden-blocks div#all-unavailable-subject-schedule div.subject-schedule-hidden-block")].forEach((block, index) => {
