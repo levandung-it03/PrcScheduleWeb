@@ -29,7 +29,7 @@
                     orderedFields: "(department_id, department_name)",
                     simpleLineDataExample: "('CNTT01', 'Công nghệ thông tin 01');",
                     multipleLinesDatExample: [
-                        "('CNTT01', 'Công nghệ thông tin 01');",
+                        "('CNTT01', 'Công nghệ thông tin 01'),",
                         "(......., .........),",
                         "('DTVT02', 'Điện tử 02');"
                     ]
@@ -43,7 +43,7 @@
                     orderedFields: "(grade_id, department_id)",
                     simpleLineDataExample: "('D21CQCN01-N', 'CNTT01');",
                     multipleLinesDatExample: [
-                        "('D21CQCN01-N', 'CNTT01');",
+                        "('D21CQCN01-N', 'CNTT01'),",
                         "(......., .........),",
                         "('D21CQDT02-N', 'DTVT02');"
                     ]
@@ -57,7 +57,7 @@
                     orderedFields: "(semester, range_of_year, first_week, total_week)",
                     simpleLineDataExample: "('1', '2021_2022', '1', '10');",
                     multipleLinesDatExample: [
-                        "('1', '2023_2024', '4', '10');",
+                        "('1', '2023_2024', '4', '10'),",
                         "(......., .........),",
                         "('2', '2023_2024', '14', '10');"
                     ]
@@ -71,7 +71,7 @@
                     orderedFields: "(subject_id , subject_name, credits_number)",
                     simpleLineDataExample: "('INT13147', 'Python', '3');",
                     multipleLinesDatExample: [
-                        "('INT13147', 'Python', '3');",
+                        "('INT13147', 'Python', '3'),",
                         "(......., .........),",
                         "('INT13142', 'Hệ điều hành', '2');"
                     ]
@@ -85,7 +85,7 @@
                     orderedFields: "(semester_id , grade_id , subject_id, group_from_subject)",
                     simpleLineDataExample: "('1', 'D21CQCN01-N', 'INT13147', '4');",
                     multipleLinesDatExample: [
-                        "('1', 'D21CQCN01-N', 'INT13147', '4');",
+                        "('1', 'D21CQCN01-N', 'INT13147', '4'),",
                         "(......., .........),",
                         "('2', 'D21CQCN01-N', 'INT13142', '2');"
                     ]
@@ -99,7 +99,7 @@
                     orderedFields: "(section_class_id, student_id)",
                     simpleLineDataExample: "('1', 'N21DCCN152');",
                     multipleLinesDatExample: [
-                        "('1', 'N21DCCN152');",
+                        "('1', 'N21DCCN152'),",
                         "(......., .........),",
                         "('3', 'N21DCCN057');"
                     ]
@@ -113,7 +113,7 @@
                     orderedFields: "(room_id, room_type_enum, max_quantity)",
                     simpleLineDataExample: "('2A12', 'PRC', '60');",
                     multipleLinesDatExample: [
-                        "('2A12', 'PRC', '60');",
+                        "('2A12', 'PRC', '60'),",
                         "(......., .........),",
                         "('2B31', 'NORM', '40');",
                         "--Quy ước: Phòng học=NORM, Phòng thực hành=PRC.--"
