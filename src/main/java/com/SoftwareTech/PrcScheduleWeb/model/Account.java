@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -31,7 +32,6 @@ public class Account implements UserDetails {
 
     @Column(name = "creating_time", nullable = false, columnDefinition = "DATETIME DEFAULT (CURRENT_TIMESTAMP())")
     private LocalDateTime creatingTime;
-
     @Enumerated(EnumType.STRING)
     @Column(name = "role_enum", nullable = false)
     private Role role;

@@ -50,11 +50,10 @@
                     <select id="search">
                         <option value="" selected disabled hidden>Chọn trường cần tìm</option>
                         <option value="0">Thông tin cơ bản</option>
-                        <option value="1">Mã giảng viên</option>
+                        <option value="1">Trạng thái của yêu cầu</option>
                         <option value="2">Tên môn</option>
                         <option value="3">Mã lớp mở môn</option>
                         <option value="4">Tổ</option>
-                        <option value="5">Trạng thái của yêu cầu</option>
                     </select>
                     <input type="text" id="search">
                     <i class="fa-solid fa-magnifying-glass"></i>
@@ -99,10 +98,7 @@
                 <tbody>
                     <c:forEach items="${teacherRequestList}" var="customTeacherRequest">
                         <tr id="${customTeacherRequest.requestId}">
-                            <td plain-value="${customTeacherRequest.teacher.lastName}
-                                ${customTeacherRequest.teacher.firstName}
-                                ${customTeacherRequest.teacher.account.instituteEmail}
-                                ${customTeacherRequest.teacher.teacherId}"
+                            <td plain-value="${customTeacherRequest.teacher.lastName} ${customTeacherRequest.teacher.firstName} ${customTeacherRequest.teacher.account.instituteEmail} ${customTeacherRequest.teacher.teacherId}"
                                 class="base-profile">
                                 <span class="mock-avatar">
                                     <i style="font-style:normal">${customTeacherRequest.teacher.firstName.charAt(0)}</i>
@@ -114,22 +110,22 @@
                             </td>
                             <c:choose>
                                 <c:when test="${customTeacherRequest.interactionStatus == 'PENDING'}">
-                                    <td plain-value="Chờ giải quyết Cho giai quyet" class="request-interaction-status">
+                                    <td plain-value="Chờ giải quyết" class="request-interaction-status">
                                         <span class="status-is-pending">Chờ giải quyết</span>
                                     </td>
                                 </c:when>
                                 <c:when test="${customTeacherRequest.interactionStatus == 'CANCEL'}">
-                                    <td plain-value="Đã huỷ Da huy" class="request-interaction-status">
+                                    <td plain-value="Đã huỷ" class="request-interaction-status">
                                         <span class="status-is-cancel">Đã huỷ</span>
                                     </td>
                                 </c:when>
                                 <c:when test="${customTeacherRequest.interactionStatus == 'CREATED'}">
-                                    <td plain-value="Đã tạo lịch Da tao lich" class="request-interaction-status">
+                                    <td plain-value="Đã tạo lịch" class="request-interaction-status">
                                         <span class="status-is-true">Đã tạo lịch</span>
                                     </td>
                                 </c:when>
                                 <c:when test="${customTeacherRequest.interactionStatus == 'DENIED'}">
-                                    <td plain-value="Đã từ chối Da tu choi" class="request-interaction-status">
+                                    <td plain-value="Đã từ chối" class="request-interaction-status">
                                         <span class="status-is-false">Đã từ chối</span>
                                     </td>
                                 </c:when>

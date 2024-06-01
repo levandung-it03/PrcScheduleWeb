@@ -18,7 +18,7 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
 
     @Query("""
         SELECT new com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.ResDtoTeacherAccountList(
-            a.accountId, a.instituteEmail, a.creatingTime, a.role, a.status, t.teacherId
+            a.accountId, a.instituteEmail, DATE(a.creatingTime), a.role, a.status, t.teacherId
         ) FROM Teacher t
         RIGHT JOIN t.account a
         WHERE a.role = 'TEACHER'

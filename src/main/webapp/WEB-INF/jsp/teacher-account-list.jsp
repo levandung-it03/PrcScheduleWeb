@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -80,9 +81,7 @@
                                 <td plain-value="${account.instituteEmail}" class="institute-email">
                                     ${account.instituteEmail}
                                 </td>
-                                <td plain-value="${account.creatingTime}" class="creating-time">
-                                    ${account.creatingTime}
-                                </td>
+                                <td plain-value="${account.creatingTime}" class="creating-time">${account.creatingTime}</td>
                                 <td plain-value="${(account.teacherId == null) ? "Chưa liên kết" : "Đã liên kết"}" class="linking-status">
                                     <span class="status-is-${account.teacherId != null}">
                                         ${(account.teacherId == null) ? "Chưa liên kết" : "Đã liên kết"}

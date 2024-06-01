@@ -3,7 +3,7 @@ package com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto;
 import com.SoftwareTech.PrcScheduleWeb.model.enums.Role;
 import lombok.*;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Data
 @NoArgsConstructor
@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 public class ResDtoTeacherAccountList {
     private Long accountId;
     private String instituteEmail;
-    private LocalDateTime creatingTime;
+    private Date creatingTime;
     private Role role;
     private boolean status;
     private String teacherId;
