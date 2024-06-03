@@ -8,6 +8,7 @@ import com.SoftwareTech.PrcScheduleWeb.model.enums.RoomType;
 import com.SoftwareTech.PrcScheduleWeb.repository.*;
 
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -47,86 +48,58 @@ public class InitialDataLoader implements CommandLineRunner {
     private final StudentRepository studentRepository;
     @Autowired
     private final SubjectRegistrationRepository subjectRegistrationRepository;
+    @Autowired
+    private final Logger logger;
 
     @Override
     public void run(String... args) {
         if (accountRepository.count() == 0) {
-            accountRepository.saveAll(List.of(
+            List<Account> accounts = List.of(
                 Account.builder()
-                    .status(true)
-                    .creatingTime(LocalDateTime.now())
+                    .status(true).creatingTime(LocalDateTime.now())
                     .instituteEmail("manager0@ptithcm.edu.vn")
                     .password("$2a$12$dzSEHUe6lixG0EkEzrcQfuV18XLaZpvDvF9apXe9.9PigXDgGw9p.")
-                    .role(Role.MANAGER)
-                    .build(),
+                    .role(Role.MANAGER).build(),
                 Account.builder()
-                    .status(true)
-                    .creatingTime(LocalDateTime.now())
+                    .status(true).creatingTime(LocalDateTime.now())
                     .instituteEmail("giangvien0@ptithcm.edu.vn")
                     .password("$2a$12$dzSEHUe6lixG0EkEzrcQfuV18XLaZpvDvF9apXe9.9PigXDgGw9p.")
-                    .role(Role.TEACHER)
-                    .build(),
+                    .role(Role.TEACHER).build(),
                 Account.builder()
-                    .status(true)
-                    .creatingTime(LocalDateTime.now())
+                    .status(true).creatingTime(LocalDateTime.now())
                     .instituteEmail("giangvien1@ptithcm.edu.vn")
                     .password("$2a$12$dzSEHUe6lixG0EkEzrcQfuV18XLaZpvDvF9apXe9.9PigXDgGw9p.")
-                    .role(Role.TEACHER)
-                    .build()
-            ));
+                    .role(Role.TEACHER).build(),
+                Account.builder()
+                    .status(true).creatingTime(LocalDateTime.now())
+                    .instituteEmail("giangvien2@ptithcm.edu.vn")
+                    .password("$2a$12$dzSEHUe6lixG0EkEzrcQfuV18XLaZpvDvF9apXe9.9PigXDgGw9p.")
+                    .role(Role.TEACHER).build()
+            );
+            accountRepository.saveAll(accounts);
         }
         if (classroomRepository.count() == 0) {
             List<Classroom> classrooms = List.of(
-                Classroom.builder()
-                    .roomId("2B11")
-                    .roomType(RoomType.PRC)
-                    .maxQuantity(60)
-                    .status(true)
-                    .build(),
-                Classroom.builder()
-                    .roomId("2B21")
-                    .roomType(RoomType.PRC)
-                    .maxQuantity(60)
-                    .status(true)
-                    .build(),
-                Classroom.builder()
-                    .roomId("2B12")
-                    .roomType(RoomType.NORM)
-                    .maxQuantity(60)
-                    .status(true)
-                    .build(),
-                Classroom.builder()
-                    .roomId("2B13")
-                    .roomType(RoomType.NORM)
-                    .maxQuantity(60)
-                    .status(true)
-                    .build()
+                Classroom.builder().roomId("2B11").roomType(RoomType.PRC).maxQuantity(60).status(true).build(),
+                Classroom.builder().roomId("2B21").roomType(RoomType.PRC).maxQuantity(60).status(true).build(),
+                Classroom.builder().roomId("2B12").roomType(RoomType.NORM).maxQuantity(60).status(true).build(),
+                Classroom.builder().roomId("2B13").roomType(RoomType.NORM).maxQuantity(60).status(true).build()
             );
             classroomRepository.saveAll(classrooms);
             computerRoomDetailRepository.saveAll(List.of(
-                ComputerRoomDetail.builder()
-                    .classroom(classrooms.getFirst())
-                    .maxComputerQuantity(30)
-                    .availableComputerQuantity(30)
-                    .build(),
-                ComputerRoomDetail.builder()
-                    .classroom(classrooms.get(1))
-                    .maxComputerQuantity(30)
-                    .availableComputerQuantity(30)
-                    .build()
+                ComputerRoomDetail.builder().classroom(classrooms.getFirst()).maxComputerQuantity(30).availableComputerQuantity(30).build(),
+                ComputerRoomDetail.builder().classroom(classrooms.get(1)).maxComputerQuantity(30).availableComputerQuantity(30).build()
             ));
             if (semesterRepository.count() == 0) {
                 Semester semester = Semester.builder()
-                    .semester((byte) 2)
-                    .rangeOfYear("2023_2024")
-                    .firstWeek((byte) 1)
-                    .totalWeek((byte) 28)
-                    .startingDate(Date.valueOf(LocalDate.of(2024, 1, 8)))
-                    .build();
+                    .semester((byte) 2).rangeOfYear("2023_2024").firstWeek((byte) 1).totalWeek((byte) 28)
+                    .startingDate(Date.valueOf(LocalDate.of(2024, 1, 8))).build();
                 semesterRepository.save(semester);
                 List<Subject> subjects = List.of(
                     Subject.builder().subjectId("INT13147").subjectName("Python").creditsNumber((byte) 3).status(true).build(),
-                    Subject.builder().subjectId("INT13148").subjectName("Hệ điều hành").creditsNumber((byte) 3).status(true).build()
+                    Subject.builder().subjectId("INT13148").subjectName("Hệ điều hành").creditsNumber((byte) 3).status(true).build(),
+                    Subject.builder().subjectId("INT13149").subjectName("Mạng máy tính").creditsNumber((byte) 3).status(true).build(),
+                    Subject.builder().subjectId("INT13150").subjectName("Đại số").creditsNumber((byte) 3).status(true).build()
                 );
                 subjectRepository.saveAll(subjects);
                 if (departmentRepository.count() == 0) {
@@ -138,7 +111,7 @@ public class InitialDataLoader implements CommandLineRunner {
                     List<Teacher> teachers = List.of(
                         Teacher.builder()
                             .teacherId("GV111")
-                            .department(departmentRepository.findById("CNTT02").orElseThrow())
+                            .department(departments.getFirst())
                             .lastName("Dinh Van")
                             .firstName("Han")
                             .birthday(Date.valueOf(LocalDate.of(1991, 3, 25)))
@@ -148,119 +121,223 @@ public class InitialDataLoader implements CommandLineRunner {
                             .build(),
                         Teacher.builder()
                             .teacherId("GV112")
-                            .department(departmentRepository.findById("CNTT02").orElseThrow())
+                            .department(departments.getFirst())
                             .lastName("Nguyen Thi")
                             .firstName("Huong")
                             .birthday(Date.valueOf(LocalDate.of(1991, 3, 25)))
                             .gender(Gender.GIRL)
                             .phone("0377869999")
                             .account(accountRepository.findByInstituteEmail("giangvien1@ptithcm.edu.vn").orElseThrow())
+                            .build(),
+                        Teacher.builder()
+                            .teacherId("GV113")
+                            .department(departments.get(1))
+                            .lastName("Nguyen Thi")
+                            .firstName("Van")
+                            .birthday(Date.valueOf(LocalDate.of(1991, 3, 25)))
+                            .gender(Gender.GIRL)
+                            .phone("0377862345")
+                            .account(accountRepository.findByInstituteEmail("giangvien2@ptithcm.edu.vn").orElseThrow())
                             .build()
                     );
                     teacherRepository.saveAll(teachers);
                     List<Grade> grades = List.of(
                         Grade.builder().gradeId("D21CQCN01-N").department(departments.getFirst()).build(),
-                        Grade.builder().gradeId("D21CQCN02-N").department(departments.getFirst()).build()
+                        Grade.builder().gradeId("D21CQCN02-N").department(departments.getFirst()).build(),
+                        Grade.builder().gradeId("D21CQDT01-N").department(departments.get(1)).build()
                     );
                     gradeRepository.saveAll(grades);
                     List<SectionClass> sectionClasses = List.of(
+                        //--D21CN01
                         SectionClass.builder().groupFromSubject((byte) 1).grade(grades.getFirst())
                             .subject(subjects.getFirst()).semester(semester).build(),
                         SectionClass.builder().groupFromSubject((byte) 2).grade(grades.getFirst())
                             .subject(subjects.getFirst()).semester(semester).build(),
                         SectionClass.builder().groupFromSubject((byte) 1).grade(grades.getFirst())
                             .subject(subjects.get(1)).semester(semester).build(),
+                        SectionClass.builder().groupFromSubject((byte) 2).grade(grades.getFirst())
+                            .subject(subjects.get(1)).semester(semester).build(),
+                        SectionClass.builder().groupFromSubject((byte) 1).grade(grades.getFirst())
+                            .subject(subjects.get(2)).semester(semester).build(),
+                        SectionClass.builder().groupFromSubject((byte) 1).grade(grades.getFirst())
+                            .subject(subjects.get(3)).semester(semester).build(),
+                        //--D21CN02
                         SectionClass.builder().groupFromSubject((byte) 1).grade(grades.get(1))
-                            .subject(subjects.get(1)).semester(semester).build()
+                            .subject(subjects.getFirst()).semester(semester).build(),
+                        SectionClass.builder().groupFromSubject((byte) 2).grade(grades.get(1))
+                            .subject(subjects.getFirst()).semester(semester).build(),
+                        SectionClass.builder().groupFromSubject((byte) 1).grade(grades.get(1))
+                            .subject(subjects.get(1)).semester(semester).build(),
+                        SectionClass.builder().groupFromSubject((byte) 2).grade(grades.get(1))
+                            .subject(subjects.get(1)).semester(semester).build(),
+                        //--D21DT01
+                        SectionClass.builder().groupFromSubject((byte) 1).grade(grades.get(2))
+                            .subject(subjects.get(2)).semester(semester).build()
                     );
                     sectionClassRepository.saveAll(sectionClasses);
                     subjectScheduleRepository.saveAll(List.of(
+                        //--D21CN01
+                        //--Python(NORM) HDH MMT DS
                         SubjectSchedule.builder()
-                            .sectionClass(sectionClasses.getFirst())
-                            .day((byte) 2)
-                            .startingWeek((byte) 2)
-                            .totalWeek((byte) 2)
-                            .startingPeriod((byte) 1)
-                            .lastPeriod((byte) 4)
-                            .classroom(classrooms.get(2))
-                            .teacher(teachers.getFirst())
-                            .teacherRequest(null)
-                            .build(),
+                            .startingWeek((byte) 2).totalWeek((byte) 2).day((byte) 2).startingPeriod((byte) 1).lastPeriod((byte) 4).classroom(classrooms.get(3))
+                            .sectionClass(sectionClasses.getFirst()).teacher(teachers.getFirst()).teacherRequest(null).build(),
                         SubjectSchedule.builder()
-                            .sectionClass(sectionClasses.getFirst())
-                            .day((byte) 2)
-                            .startingWeek((byte) 7)
-                            .totalWeek((byte) 9)
-                            .startingPeriod((byte) 1)
-                            .lastPeriod((byte) 4)
-                            .classroom(classrooms.get(2))
-                            .teacher(teachers.getFirst())
-                            .teacherRequest(null)
-                            .build(),
+                            .startingWeek((byte) 5).totalWeek((byte) 9).day((byte) 2).startingPeriod((byte) 1).lastPeriod((byte) 4).classroom(classrooms.get(3))
+                            .sectionClass(sectionClasses.getFirst()).teacher(teachers.getFirst()).teacherRequest(null).build(),
                         SubjectSchedule.builder()
-                            .sectionClass(sectionClasses.getFirst())
-                            .day((byte) 3)
-                            .startingWeek((byte) 10)
-                            .totalWeek((byte) 3)
-                            .startingPeriod((byte) 1)
-                            .lastPeriod((byte) 4)
-                            .classroom(classrooms.getFirst())
-                            .teacher(teachers.getFirst())
-                            .teacherRequest(null)
-                            .build(),
+                            .startingWeek((byte) 2).totalWeek((byte) 2).day((byte) 2).startingPeriod((byte) 1).lastPeriod((byte) 4).classroom(classrooms.get(3))
+                            .sectionClass(sectionClasses.get(1)).teacher(teachers.getFirst()).teacherRequest(null).build(),
                         SubjectSchedule.builder()
-                            .sectionClass(sectionClasses.get(1))
-                            .day((byte) 2)
-                            .startingWeek((byte) 7)
-                            .totalWeek((byte) 9)
-                            .startingPeriod((byte) 1)
-                            .lastPeriod((byte) 4)
-                            .classroom(classrooms.get(2))
-                            .teacher(teachers.get(1))
-                            .teacherRequest(null)
-                            .build(),
+                            .startingWeek((byte) 5).totalWeek((byte) 9).day((byte) 2).startingPeriod((byte) 1).lastPeriod((byte) 4).classroom(classrooms.get(3))
+                            .sectionClass(sectionClasses.get(1)).teacher(teachers.getFirst()).teacherRequest(null).build(),
+                        //--Python(PRC)
                         SubjectSchedule.builder()
-                            .sectionClass(sectionClasses.get(2))
-                            .day((byte) 5)
-                            .startingWeek((byte) 7)
-                            .totalWeek((byte) 11)
-                            .startingPeriod((byte) 7)
-                            .lastPeriod((byte) 10)
-                            .classroom(classrooms.get(3))
-                            .teacher(teachers.getFirst())
-                            .teacherRequest(null)
-                            .build(),
+                            .startingWeek((byte) 6).totalWeek((byte) 4).day((byte) 2).startingPeriod((byte) 7).lastPeriod((byte) 10).classroom(classrooms.get(1))
+                            .sectionClass(sectionClasses.getFirst()).teacher(teachers.getFirst()).teacherRequest(null).build(),
                         SubjectSchedule.builder()
-                            .sectionClass(sectionClasses.get(3))
-                            .day((byte) 5)
-                            .startingWeek((byte) 13)
-                            .totalWeek((byte) 11)
-                            .startingPeriod((byte) 7)
-                            .lastPeriod((byte) 10)
-                            .classroom(classrooms.getFirst())
-                            .teacher(teachers.get(1))
-                            .teacherRequest(null)
-                            .build()
+                            .startingWeek((byte) 11).totalWeek((byte) 4).day((byte) 2).startingPeriod((byte) 7).lastPeriod((byte) 10).classroom(classrooms.get(1))
+                            .sectionClass(sectionClasses.get(1)).teacher(teachers.getFirst()).teacherRequest(null).build(),
+                        //--He Dieu Hanh(NORM)
+                        SubjectSchedule.builder()
+                            .startingWeek((byte) 2).totalWeek((byte) 2).day((byte) 4).startingPeriod((byte) 1).lastPeriod((byte) 4).classroom(classrooms.get(3))
+                            .sectionClass(sectionClasses.get(2)).teacher(teachers.get(1)).teacherRequest(null).build(),
+                        SubjectSchedule.builder()
+                            .startingWeek((byte) 5).totalWeek((byte) 9).day((byte) 4).startingPeriod((byte) 1).lastPeriod((byte) 4).classroom(classrooms.get(3))
+                            .sectionClass(sectionClasses.get(2)).teacher(teachers.get(1)).teacherRequest(null).build(),
+                        SubjectSchedule.builder()
+                            .startingWeek((byte) 2).totalWeek((byte) 2).day((byte) 4).startingPeriod((byte) 1).lastPeriod((byte) 4).classroom(classrooms.get(3))
+                            .sectionClass(sectionClasses.get(3)).teacher(teachers.get(1)).teacherRequest(null).build(),
+                        SubjectSchedule.builder()
+                            .startingWeek((byte) 5).totalWeek((byte) 9).day((byte) 4).startingPeriod((byte) 1).lastPeriod((byte) 4).classroom(classrooms.get(3))
+                            .sectionClass(sectionClasses.get(3)).teacher(teachers.get(1)).teacherRequest(null).build(),
+                        //--He Dieu Hanh(PRC)
+                        SubjectSchedule.builder()
+                            .startingWeek((byte) 18).totalWeek((byte) 4).day((byte) 4).startingPeriod((byte) 7).lastPeriod((byte) 10).classroom(classrooms.get(1))
+                            .sectionClass(sectionClasses.get(2)).teacher(teachers.get(1)).teacherRequest(null).build(),
+                        SubjectSchedule.builder()
+                            .startingWeek((byte) 23).totalWeek((byte) 4).day((byte) 4).startingPeriod((byte) 7).lastPeriod((byte) 10).classroom(classrooms.get(1))
+                            .sectionClass(sectionClasses.get(3)).teacher(teachers.get(1)).teacherRequest(null).build(),
+                        //--Mang May Tinh(NORM)
+                        SubjectSchedule.builder()
+                            .startingWeek((byte) 16).totalWeek((byte) 11).day((byte) 5).startingPeriod((byte) 7).lastPeriod((byte) 10).classroom(classrooms.get(3))
+                            .sectionClass(sectionClasses.get(4)).teacher(teachers.getFirst()).teacherRequest(null).build(),
+                        //--Mang May Tinh(PRC)
+                        SubjectSchedule.builder()
+                            .startingWeek((byte) 25).totalWeek((byte) 2).day((byte) 6).startingPeriod((byte) 1).lastPeriod((byte) 4).classroom(classrooms.getFirst())
+                            .sectionClass(sectionClasses.get(4)).teacher(teachers.get(2)).teacherRequest(null).build(),
+                        //--DS(NORM)
+                        SubjectSchedule.builder()
+                            .startingWeek((byte) 16).totalWeek((byte) 11).day((byte) 5).startingPeriod((byte) 1).lastPeriod((byte) 4).classroom(classrooms.get(3))
+                            .sectionClass(sectionClasses.get(5)).teacher(teachers.get(2)).teacherRequest(null).build(),
+                        //--D21CN02
+                        //--Python(NORM) HDH MMT DS
+                        SubjectSchedule.builder()
+                            .startingWeek((byte) 2).totalWeek((byte) 2).day((byte) 2).startingPeriod((byte) 1).lastPeriod((byte) 4).classroom(classrooms.get(2))
+                            .sectionClass(sectionClasses.get(6)).teacher(teachers.get(1)).teacherRequest(null).build(),
+                        SubjectSchedule.builder()
+                            .startingWeek((byte) 5).totalWeek((byte) 9).day((byte) 2).startingPeriod((byte) 1).lastPeriod((byte) 4).classroom(classrooms.get(2))
+                            .sectionClass(sectionClasses.get(6)).teacher(teachers.get(1)).teacherRequest(null).build(),
+                        SubjectSchedule.builder()
+                            .startingWeek((byte) 2).totalWeek((byte) 2).day((byte) 2).startingPeriod((byte) 1).lastPeriod((byte) 4).classroom(classrooms.get(2))
+                            .sectionClass(sectionClasses.get(7)).teacher(teachers.get(1)).teacherRequest(null).build(),
+                        SubjectSchedule.builder()
+                            .startingWeek((byte) 5).totalWeek((byte) 9).day((byte) 2).startingPeriod((byte) 1).lastPeriod((byte) 4).classroom(classrooms.get(2))
+                            .sectionClass(sectionClasses.get(7)).teacher(teachers.get(1)).teacherRequest(null).build(),
+                        //--Python(PRC)
+                        SubjectSchedule.builder()
+                            .startingWeek((byte) 6).totalWeek((byte) 4).day((byte) 2).startingPeriod((byte) 7).lastPeriod((byte) 10).classroom(classrooms.getFirst())
+                            .sectionClass(sectionClasses.get(6)).teacher(teachers.get(1)).teacherRequest(null).build(),
+                        SubjectSchedule.builder()
+                            .startingWeek((byte) 11).totalWeek((byte) 4).day((byte) 2).startingPeriod((byte) 7).lastPeriod((byte) 10).classroom(classrooms.getFirst())
+                            .sectionClass(sectionClasses.get(7)).teacher(teachers.get(1)).teacherRequest(null).build(),
+                        //--He Dieu Hanh(NORM)
+                        SubjectSchedule.builder()
+                            .startingWeek((byte) 2).totalWeek((byte) 2).day((byte) 4).startingPeriod((byte) 1).lastPeriod((byte) 4).classroom(classrooms.get(2))
+                            .sectionClass(sectionClasses.get(8)).teacher(teachers.getFirst()).teacherRequest(null).build(),
+                        SubjectSchedule.builder()
+                            .startingWeek((byte) 5).totalWeek((byte) 9).day((byte) 4).startingPeriod((byte) 1).lastPeriod((byte) 4).classroom(classrooms.get(2))
+                            .sectionClass(sectionClasses.get(8)).teacher(teachers.getFirst()).teacherRequest(null).build(),
+                        SubjectSchedule.builder()
+                            .startingWeek((byte) 2).totalWeek((byte) 2).day((byte) 4).startingPeriod((byte) 1).lastPeriod((byte) 4).classroom(classrooms.get(2))
+                            .sectionClass(sectionClasses.get(9)).teacher(teachers.getFirst()).teacherRequest(null).build(),
+                        SubjectSchedule.builder()
+                            .startingWeek((byte) 5).totalWeek((byte) 9).day((byte) 4).startingPeriod((byte) 1).lastPeriod((byte) 4).classroom(classrooms.get(2))
+                            .sectionClass(sectionClasses.get(9)).teacher(teachers.getFirst()).teacherRequest(null).build(),
+                        //--He Dieu Hanh(PRC)
+                        SubjectSchedule.builder()
+                            .startingWeek((byte) 18).totalWeek((byte) 4).day((byte) 4).startingPeriod((byte) 7).lastPeriod((byte) 10).classroom(classrooms.getFirst())
+                            .sectionClass(sectionClasses.get(8)).teacher(teachers.getFirst()).teacherRequest(null).build(),
+                        SubjectSchedule.builder()
+                            .startingWeek((byte) 23).totalWeek((byte) 4).day((byte) 4).startingPeriod((byte) 7).lastPeriod((byte) 10).classroom(classrooms.getFirst())
+                            .sectionClass(sectionClasses.get(9)).teacher(teachers.getFirst()).teacherRequest(null).build(),
+                        //--D21DT01
+                        //--Mang May Tinh(NORM)
+                        SubjectSchedule.builder()
+                            .startingWeek((byte) 16).totalWeek((byte) 11).day((byte) 5).startingPeriod((byte) 7).lastPeriod((byte) 10).classroom(classrooms.get(3))
+                            .sectionClass(sectionClasses.get(10)).teacher(teachers.get(2)).teacherRequest(null).build(),
+                        //--Mang May Tinh(PRC)
+                        SubjectSchedule.builder()
+                            .startingWeek((byte) 18).totalWeek((byte) 8).day((byte) 6).startingPeriod((byte) 1).lastPeriod((byte) 4).classroom(classrooms.get(1))
+                            .sectionClass(sectionClasses.get(10)).teacher(teachers.get(2)).teacherRequest(null).build()
+
                     ));
-                    TeacherRequest teacherRequest = TeacherRequest.builder()
+                    List<TeacherRequest> teacherRequests = List.of(
+                        TeacherRequest.builder()
                             .requestMessageDetail("Quản lý tạo cho em 4 tuần, 1 buổi 1 tuần, 4 tiết 1 buổi nhé, ưu tiên thứ 2,3,6")
                             .interactRequestReason(null)
                             .interactionStatus(EntityInteractionStatus.PENDING)
                             .updatingTime(LocalDateTime.now())
-                            .build();
-                    teacherRequestRepository.save(teacherRequest);
-                    subjectScheduleRepository.save(SubjectSchedule.builder()
-                        .sectionClass(sectionClassRepository.findById(1L).orElseThrow())
-                        .day(null)
-                        .startingWeek(null)
-                        .totalWeek(null)
-                        .startingPeriod(null)
-                        .lastPeriod(null)
-                        .classroom(null)
-                        .teacher(teachers.getFirst())
-                        .teacherRequest(teacherRequest)
-                        .build()
+                            .build(),
+                        TeacherRequest.builder()
+                            .requestMessageDetail("Tôi cần dạy thêm 2 tuần 4 tiết vào tuần 3,4 lịch bất kỳ")
+                            .interactRequestReason(null)
+                            .interactionStatus(EntityInteractionStatus.PENDING)
+                            .updatingTime(LocalDateTime.now())
+                            .build(),
+                        TeacherRequest.builder()
+                            .requestMessageDetail("Tạo giúp chị 1 tuần Thực Hành 4 tiết gần nhất nha!")
+                            .interactRequestReason(null)
+                            .interactionStatus(EntityInteractionStatus.PENDING)
+                            .updatingTime(LocalDateTime.now())
+                            .build()
                     );
+                    teacherRequestRepository.saveAll(teacherRequests);
+                    List<SubjectSchedule> emptySubjectSchedules = List.of(
+                        SubjectSchedule.builder()
+                            .sectionClass(sectionClassRepository.findById(1L).orElseThrow())
+                            .day(null)
+                            .startingWeek(null)
+                            .totalWeek(null)
+                            .startingPeriod(null)
+                            .lastPeriod(null)
+                            .classroom(null)
+                            .teacher(teachers.getFirst())
+                            .teacherRequest(teacherRequests.getFirst())
+                            .build(),
+                        SubjectSchedule.builder()
+                            .sectionClass(sectionClassRepository.findById(7L).orElseThrow())
+                            .day(null)
+                            .startingWeek(null)
+                            .totalWeek(null)
+                            .startingPeriod(null)
+                            .lastPeriod(null)
+                            .classroom(null)
+                            .teacher(teachers.get(1))
+                            .teacherRequest(teacherRequests.get(1))
+                            .build(),
+                        SubjectSchedule.builder()
+                            .sectionClass(sectionClassRepository.findById(10L).orElseThrow())
+                            .day(null)
+                            .startingWeek(null)
+                            .totalWeek(null)
+                            .startingPeriod(null)
+                            .lastPeriod(null)
+                            .classroom(null)
+                            .teacher(teachers.get(2))
+                            .teacherRequest(teacherRequests.get(2))
+                            .build()
+                    );
+                    subjectScheduleRepository.saveAll(emptySubjectSchedules);
 
                     if (studentRepository.count() == 0) {
                         Grade cn1Grade = gradeRepository.findById("D21CQCN01-N").orElseThrow();
