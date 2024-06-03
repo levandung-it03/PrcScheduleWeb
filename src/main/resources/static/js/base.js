@@ -30,6 +30,8 @@ const colorMap = {
     Z: "#0014A8"
 };
 
+const log = (str) => console.log(str);
+
 function getDateObjFromCommonFormat(dateInCurrentFormatAsStr) {
     return new Date(dateInCurrentFormatAsStr.split("/").reverse().join("-"));
 }

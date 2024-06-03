@@ -50,7 +50,7 @@ public class M_HomeService {
         //--Prepare data to transmit to home.jsp
         int createdRequests = teacherRequestRepository.countAllByInteractionStatus(EntityInteractionStatus.CREATED);
         int deniedRequests = teacherRequestRepository.countAllByInteractionStatus(EntityInteractionStatus.DENIED);
-        if (deniedRequests == 0)
+        if (deniedRequests == 0 && createdRequests == 0)
             modelAndView.addObject("successfullyCreatedRequestsRatio", 0);
         else
             modelAndView.addObject("successfullyCreatedRequestsRatio",

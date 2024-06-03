@@ -139,10 +139,14 @@ let updatedPracticeSchedule = {};
         for (var dayColumn = 2; dayColumn <= 8; dayColumn++) {
             for (var periodRow = 1; periodRow <= 16; periodRow++) {
                 let tempCell = $(`tr[id="${periodRow}"] td[day="${dayColumn}"]`);
-                if (rentRoomsQuantity[periodRow][dayColumn] >= computerRoomList.length) {
-                    tempCell.querySelector('span').innerText = "Hết phòng";
-                    tempCell.classList.add("un-hover");
-                    tempCell.classList.add("cant-choose");
+                //--Check if this cell is already filled by a subject-schedule, pass it!
+                if (!tempCell.classList.contains("un-hover")) {
+                    //--Check if this cell doesn't has enough prc-rooms-quantity to be selected.
+                    if (rentRoomsQuantity[periodRow][dayColumn] >= Object.keys(computerRoomList).length) {
+                        tempCell.querySelector('span').innerText = "Hết phòng";
+                        tempCell.classList.add("un-hover");
+                        tempCell.classList.add("cant-choose");
+                    }
                 }
                 //--Make all cells which are in the past can't be selected.
                 if (startingDateOfSelectedWeek <= new Date())
