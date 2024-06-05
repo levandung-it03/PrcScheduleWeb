@@ -111,6 +111,7 @@ public class ApplicationConfig {
         messagePairs.put("error_teacherRequest_05",
             "Lớp học phần đã tồn tại yêu cầu có trạng thái  \"Chờ giải quyết\" nên không thể tạo!");
         messagePairs.put("error_teacherRequest_06", "Chỉ có thể sửa yêu cầu có trạng thái \"Chờ giải quyết\"!");
+        messagePairs.put("error_teacherRequest_07", "Yêu cầu đã bị quá hạn xử lý do hiện tại đã là học kỳ khác!");
 
         messagePairs.put("error_schedule_01", "Lịch không hợp lệ hoặc đang để trống!");
         messagePairs.put("error_schedule_02", "Lịch không thể xoá, phải có ít nhất 1 lịch của yêu cầu!");

@@ -24,6 +24,7 @@ import java.sql.SQLIntegrityConstraintViolationException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -176,6 +177,13 @@ public class M_SubPageService {
             .findTeacherRequestByRequestId(requestId)
             .orElseThrow(() -> new NoSuchElementException("Request Id not found"));
 
+        Semester currentSemester = semesterRepository
+            .findByCurrentDate(new Date(System.currentTimeMillis()))
+            .orElseThrow(() -> new NoSuchElementException("Semester Id not found"));
+        //--If this request doesn't belong to current Semester
+        if (!currentSemester.getSemesterId().equals(customTeacherRequest.getSectionClass().getSemester().getSemesterId()))
+            throw new SQLIntegrityConstraintViolationException("error_teacherRequest_07");
+
         List<ResDtoSubjectSchedule> allSubjectSchedules = subjectScheduleRepository
             .findAllScheduleByTeacherRequest(
                 customTeacherRequest.getSectionClass().getSemester().getSemesterId(),
@@ -183,7 +191,7 @@ public class M_SubPageService {
                 customTeacherRequest.getSectionClass().getGrade().getGradeId()
             );
         //--Search all practiceSchedule and remove the available computer-rooms which are in this schedule.
-            List<ResDtoPracticeSchedule> allPrcScheduleInSemester = subjectScheduleRepository
+        List<ResDtoPracticeSchedule> allPrcScheduleInSemester = subjectScheduleRepository
             .findAllPracticeScheduleInCurrentSemester(
                 customTeacherRequest.getSectionClass().getSemester().getSemesterId()
             );

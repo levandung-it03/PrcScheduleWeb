@@ -91,9 +91,13 @@ public class InitialDataLoader implements CommandLineRunner {
                 ComputerRoomDetail.builder().classroom(classrooms.get(1)).maxComputerQuantity(30).availableComputerQuantity(30).build()
             ));
             if (semesterRepository.count() == 0) {
+                Semester oldSemester = Semester.builder()
+                    .semester((byte) 1).rangeOfYear("2023_2024").firstWeek((byte) 1).totalWeek((byte) 25)
+                    .startingDate(Date.valueOf(LocalDate.of(2023, 8, 14))).build();
                 Semester semester = Semester.builder()
-                    .semester((byte) 2).rangeOfYear("2023_2024").firstWeek((byte) 1).totalWeek((byte) 28)
+                    .semester((byte) 2).rangeOfYear("2023_2024").firstWeek((byte) 28).totalWeek((byte) 20)
                     .startingDate(Date.valueOf(LocalDate.of(2024, 1, 8))).build();
+                semesterRepository.save(oldSemester);
                 semesterRepository.save(semester);
                 List<Subject> subjects = List.of(
                     Subject.builder().subjectId("INT13147").subjectName("Python").creditsNumber((byte) 3).status(true).build(),
@@ -172,7 +176,9 @@ public class InitialDataLoader implements CommandLineRunner {
                             .subject(subjects.get(1)).semester(semester).build(),
                         //--D21DT01
                         SectionClass.builder().groupFromSubject((byte) 1).grade(grades.get(2))
-                            .subject(subjects.get(2)).semester(semester).build()
+                            .subject(subjects.get(2)).semester(semester).build(),
+                        SectionClass.builder().groupFromSubject((byte) 1).grade(grades.get(2))
+                            .subject(subjects.getFirst()).semester(oldSemester).build()
                     );
                     sectionClassRepository.saveAll(sectionClasses);
                     subjectScheduleRepository.saveAll(List.of(
@@ -278,7 +284,11 @@ public class InitialDataLoader implements CommandLineRunner {
                         //--Mang May Tinh(PRC)
                         SubjectSchedule.builder()
                             .startingWeek((byte) 18).totalWeek((byte) 8).day((byte) 6).startingPeriod((byte) 1).lastPeriod((byte) 4).classroom(classrooms.get(1))
-                            .sectionClass(sectionClasses.get(10)).teacher(teachers.get(2)).teacherRequest(null).build()
+                            .sectionClass(sectionClasses.get(10)).teacher(teachers.get(2)).teacherRequest(null).build(),
+                        //--Mang May Tinh(PRC)
+                        SubjectSchedule.builder()
+                            .startingWeek((byte) 25).totalWeek((byte) 11).day((byte) 6).startingPeriod((byte) 1).lastPeriod((byte) 4).classroom(classrooms.get(1))
+                            .sectionClass(sectionClasses.get(11)).teacher(teachers.get(2)).teacherRequest(null).build()
 
                     ));
                     List<TeacherRequest> teacherRequests = List.of(
@@ -290,6 +300,12 @@ public class InitialDataLoader implements CommandLineRunner {
                             .build(),
                         TeacherRequest.builder()
                             .requestMessageDetail("Tôi cần dạy thêm 2 tuần 4 tiết vào tuần 3,4 lịch bất kỳ")
+                            .interactRequestReason(null)
+                            .interactionStatus(EntityInteractionStatus.PENDING)
+                            .updatingTime(LocalDateTime.now())
+                            .build(),
+                        TeacherRequest.builder()
+                            .requestMessageDetail("Tạo giúp chị 1 tuần Thực Hành 4 tiết gần nhất nha!")
                             .interactRequestReason(null)
                             .interactionStatus(EntityInteractionStatus.PENDING)
                             .updatingTime(LocalDateTime.now())
@@ -335,6 +351,17 @@ public class InitialDataLoader implements CommandLineRunner {
                             .classroom(null)
                             .teacher(teachers.get(2))
                             .teacherRequest(teacherRequests.get(2))
+                            .build(),
+                        SubjectSchedule.builder()
+                            .sectionClass(sectionClassRepository.findById(12L).orElseThrow())
+                            .day(null)
+                            .startingWeek(null)
+                            .totalWeek(null)
+                            .startingPeriod(null)
+                            .lastPeriod(null)
+                            .classroom(null)
+                            .teacher(teachers.get(2))
+                            .teacherRequest(teacherRequests.get(3))
                             .build()
                     );
                     subjectScheduleRepository.saveAll(emptySubjectSchedules);

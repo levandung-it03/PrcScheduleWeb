@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
@@ -98,6 +99,8 @@ public class T_TeacherRequestController {
             redirectAttributes.addFlashAttribute("errorCode", "error_entity_01");
         } catch (DuplicateKeyException ignored) {
             redirectAttributes.addFlashAttribute("errorCode", "error_teacherRequest_05");
+        } catch (SQLIntegrityConstraintViolationException ignored) {
+            redirectAttributes.addFlashAttribute("errorCode", "error_teacherRequest_07");
         } catch (Exception ignored) {
             redirectAttributes.addFlashAttribute("errorCode", "error_systemApplication_01");
         }

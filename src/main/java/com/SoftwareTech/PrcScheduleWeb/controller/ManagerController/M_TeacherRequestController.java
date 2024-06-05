@@ -34,7 +34,7 @@ public class M_TeacherRequestController {
         } catch (NumberFormatException | NoSuchElementException e) {
             redirectAttributes.addFlashAttribute("errorCode", "error_entity_01");
         } catch (SQLIntegrityConstraintViolationException e) {
-            redirectAttributes.addFlashAttribute("errorCode", "error_teacherRequest_04");
+            redirectAttributes.addFlashAttribute("errorCode", e.getMessage());
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("errorCode", "error_systemApplication_01");
         }

@@ -142,7 +142,6 @@ public interface SubjectScheduleRepository extends JpaRepository<SubjectSchedule
         @Param("interactionStatus")EntityInteractionStatus interactionStatus
     );
 
-
     @Modifying
     @Query("""
        UPDATE SubjectSchedule s SET s.sectionClass = :#{#subjectSchedule.sectionClass}

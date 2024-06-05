@@ -13,5 +13,5 @@ import lombok.NoArgsConstructor;
 public class ReqDtoTeacherRequest {
     @NotNull(message = "error_entity_03")
     private Long sectionClassId;
-    private String requestMessageDetail;
+    private String requestMessageDetail = "";
 }

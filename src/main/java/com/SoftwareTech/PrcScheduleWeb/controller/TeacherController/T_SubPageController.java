@@ -71,8 +71,8 @@ public class T_SubPageController {
             //--This exception may throw when user reloads our page, so do nothing.
         } catch (NoSuchElementException ignored) {
             request.getSession().setAttribute("errorCode", "error_entity_01");
-        } catch (SQLIntegrityConstraintViolationException ignored) {
-            request.getSession().setAttribute("errorCode", "error_teacherRequest_06");
+        } catch (SQLIntegrityConstraintViolationException e) {
+            request.getSession().setAttribute("errorCode", e.getMessage());
         } catch (Exception ignored) {
             request.getSession().setAttribute("errorCode", "error_systemApplication_01");
         }

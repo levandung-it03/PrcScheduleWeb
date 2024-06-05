@@ -111,8 +111,9 @@ public class T_SubPageService {
         TeacherRequest teacherRequest = teacherRequestRepository
             .findById(requestId)
             .orElseThrow(() -> new NoSuchElementException("Teacher Request Id not found"));
+        //--Can not update a Teacher Request which is not 'PENDING'
         if (!teacherRequest.getInteractionStatus().equals(EntityInteractionStatus.PENDING))
-            throw new SQLIntegrityConstraintViolationException("Can not update a Teacher Request which is not 'PENDING'");
+            throw new SQLIntegrityConstraintViolationException("error_teacherRequest_06");
 
         ModelAndView modelAndView = staticUtilMethods
             .customResponsiveModelView(request, model, "add-teacher-request");
@@ -122,6 +123,13 @@ public class T_SubPageService {
         Semester currentSemester = semesterRepository
             .findByCurrentDate(new Date(System.currentTimeMillis()))
             .orElseThrow(() -> new NoSuchElementException("There's no data of Semester in your DB"));
+        SubjectSchedule updatedSubjectSchedule = subjectScheduleRepository
+            .findAllByTeacherRequestRequestId(requestId)
+            .getFirst();
+        //--This request doesn't belong to current Semester.
+        if (!currentSemester.getSemesterId().equals(updatedSubjectSchedule.getSectionClass().getSemester().getSemesterId()))
+            throw new SQLIntegrityConstraintViolationException("error_teacherRequest_07");
+
         Teacher teacher = teacherRepository
             .findByAccountAccountId(user.getAccountId())
             .orElseThrow(() -> new NoSuchElementException("Account Id is invalid"));
