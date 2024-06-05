@@ -5,6 +5,7 @@ import com.SoftwareTech.PrcScheduleWeb.model.enums.EntityInteractionStatus;
 import com.SoftwareTech.PrcScheduleWeb.model.enums.RoomType;
 import com.SoftwareTech.PrcScheduleWeb.repository.AccountRepository;
 import com.SoftwareTech.PrcScheduleWeb.repository.ClassroomRepository;
+import com.SoftwareTech.PrcScheduleWeb.repository.SemesterRepository;
 import com.SoftwareTech.PrcScheduleWeb.repository.TeacherRequestRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.sql.Date;
 
 @Service
 @RequiredArgsConstructor
@@ -27,6 +30,8 @@ public class M_HomeService {
     private final ClassroomRepository classroomRepository;
     @Autowired
     private final M_SubPageService subPageService;
+    @Autowired
+    private final SemesterRepository semesterRepository;
     @Autowired
     private final Logger logger;
 
@@ -67,7 +72,10 @@ public class M_HomeService {
         modelAndView.addObject("computerRoomQuantity",
             classroomRepository.countAllByRoomTypeAndStatus(RoomType.PRC, true));
         modelAndView.addObject("pendingRequestsList", teacherRequestRepository
-            .findAllTeacherRequestInSubjectScheduleByInteractionStatus(EntityInteractionStatus.PENDING));
+            .findAllTeacherRequestInSubjectScheduleByInteractionStatusInCurrentSemester(
+                EntityInteractionStatus.PENDING,
+                semesterRepository.findByCurrentDate(new Date(System.currentTimeMillis())).orElseThrow()
+            ));
 
         return modelAndView;
     }

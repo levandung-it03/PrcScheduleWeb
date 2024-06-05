@@ -1,6 +1,7 @@
 package com.SoftwareTech.PrcScheduleWeb.repository;
 
 import com.SoftwareTech.PrcScheduleWeb.dto.ManagerServiceDto.ResDtoTeacherRequest;
+import com.SoftwareTech.PrcScheduleWeb.model.Semester;
 import com.SoftwareTech.PrcScheduleWeb.model.TeacherRequest;
 import com.SoftwareTech.PrcScheduleWeb.model.enums.EntityInteractionStatus;
 import org.springframework.data.domain.PageRequest;
@@ -21,7 +22,8 @@ public interface TeacherRequestRepository extends JpaRepository<TeacherRequest, 
             s.subjectScheduleId, s.sectionClass, s.teacher
         ) FROM SubjectSchedule s WHERE s.teacherRequest IS NOT NULL
         GROUP BY s.teacherRequest.requestId
-        ORDER BY s.teacherRequest.interactionStatus ASC, s.teacherRequest.updatingTime DESC
+        ORDER BY s.sectionClass.semester.startingDate DESC, s.teacherRequest.interactionStatus ASC,
+            s.teacherRequest.updatingTime DESC
     """)
     List<ResDtoTeacherRequest> findAllTeacherRequestInSubjectScheduleWithSpecifiedPage(PageRequest pageRequest);
 
@@ -32,7 +34,8 @@ public interface TeacherRequestRepository extends JpaRepository<TeacherRequest, 
             s.subjectScheduleId, s.sectionClass, s.teacher
         ) FROM SubjectSchedule s WHERE s.teacherRequest IS NOT NULL AND s.teacher.teacherId = :teacherId
         GROUP BY s.teacherRequest.requestId
-        ORDER BY s.teacherRequest.interactionStatus ASC, s.teacherRequest.updatingTime DESC
+        ORDER BY s.sectionClass.semester.startingDate DESC, s.teacherRequest.interactionStatus ASC,
+            s.teacherRequest.updatingTime DESC
     """)
     List<ResDtoTeacherRequest> findAllTeacherRequestInSubjectScheduleByTeacherIdWithSpecifiedPage(
         @Param("teacherId") String teacherId,
@@ -47,11 +50,13 @@ public interface TeacherRequestRepository extends JpaRepository<TeacherRequest, 
             s.subjectScheduleId, s.sectionClass, s.teacher
         ) FROM SubjectSchedule s
         WHERE s.teacherRequest IS NOT NULL AND s.teacherRequest.interactionStatus = :interactionStatus
+            AND s.sectionClass.semester = :currentSemester
         GROUP BY s.teacherRequest.requestId
         ORDER BY s.teacherRequest.updatingTime DESC
     """)
-    List<ResDtoTeacherRequest> findAllTeacherRequestInSubjectScheduleByInteractionStatus(
-        @Param("interactionStatus") EntityInteractionStatus interactionStatus
+    List<ResDtoTeacherRequest> findAllTeacherRequestInSubjectScheduleByInteractionStatusInCurrentSemester(
+        @Param("interactionStatus") EntityInteractionStatus interactionStatus,
+        @Param("currentSemester") Semester currentSemester
     );
 
     @Modifying
