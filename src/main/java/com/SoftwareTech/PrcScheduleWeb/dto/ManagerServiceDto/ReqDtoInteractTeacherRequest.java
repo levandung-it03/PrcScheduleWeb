@@ -17,6 +17,5 @@ public class ReqDtoInteractTeacherRequest {
     @Min(value = 0, message = "error_entity_03")
     private Long requestId;
 
-    @NotBlank(message = "error_entity_03")
     private String interactionReason;
 }
