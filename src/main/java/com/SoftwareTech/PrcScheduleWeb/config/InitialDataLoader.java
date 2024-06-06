@@ -95,7 +95,7 @@ public class InitialDataLoader implements CommandLineRunner {
                     .semester((byte) 1).rangeOfYear("2023_2024").firstWeek((byte) 1).totalWeek((byte) 25)
                     .startingDate(Date.valueOf(LocalDate.of(2023, 8, 14))).build();
                 Semester semester = Semester.builder()
-                    .semester((byte) 2).rangeOfYear("2023_2024").firstWeek((byte) 28).totalWeek((byte) 20)
+                    .semester((byte) 2).rangeOfYear("2023_2024").firstWeek((byte) 28).totalWeek((byte) 28)
                     .startingDate(Date.valueOf(LocalDate.of(2024, 1, 8))).build();
                 semesterRepository.save(oldSemester);
                 semesterRepository.save(semester);
@@ -185,109 +185,109 @@ public class InitialDataLoader implements CommandLineRunner {
                         //--D21CN01
                         //--Python(NORM) HDH MMT DS
                         SubjectSchedule.builder()
-                            .startingWeek((byte) 2).totalWeek((byte) 2).day((byte) 2).startingPeriod((byte) 1).lastPeriod((byte) 4).classroom(classrooms.get(3))
+                            .startingWeek((byte) 22).totalWeek((byte) 2).day((byte) 2).startingPeriod((byte) 1).lastPeriod((byte) 4).classroom(classrooms.get(3))
                             .sectionClass(sectionClasses.getFirst()).teacher(teachers.getFirst()).teacherRequest(null).build(),
                         SubjectSchedule.builder()
-                            .startingWeek((byte) 5).totalWeek((byte) 9).day((byte) 2).startingPeriod((byte) 1).lastPeriod((byte) 4).classroom(classrooms.get(3))
+                            .startingWeek((byte) 25).totalWeek((byte) 9).day((byte) 2).startingPeriod((byte) 1).lastPeriod((byte) 4).classroom(classrooms.get(3))
                             .sectionClass(sectionClasses.getFirst()).teacher(teachers.getFirst()).teacherRequest(null).build(),
                         SubjectSchedule.builder()
-                            .startingWeek((byte) 2).totalWeek((byte) 2).day((byte) 2).startingPeriod((byte) 1).lastPeriod((byte) 4).classroom(classrooms.get(3))
+                            .startingWeek((byte) 22).totalWeek((byte) 2).day((byte) 2).startingPeriod((byte) 1).lastPeriod((byte) 4).classroom(classrooms.get(3))
                             .sectionClass(sectionClasses.get(1)).teacher(teachers.getFirst()).teacherRequest(null).build(),
                         SubjectSchedule.builder()
-                            .startingWeek((byte) 5).totalWeek((byte) 9).day((byte) 2).startingPeriod((byte) 1).lastPeriod((byte) 4).classroom(classrooms.get(3))
+                            .startingWeek((byte) 25).totalWeek((byte) 9).day((byte) 2).startingPeriod((byte) 1).lastPeriod((byte) 4).classroom(classrooms.get(3))
                             .sectionClass(sectionClasses.get(1)).teacher(teachers.getFirst()).teacherRequest(null).build(),
                         //--Python(PRC)
                         SubjectSchedule.builder()
-                            .startingWeek((byte) 6).totalWeek((byte) 4).day((byte) 2).startingPeriod((byte) 7).lastPeriod((byte) 10).classroom(classrooms.get(1))
+                            .startingWeek((byte) 26).totalWeek((byte) 4).day((byte) 2).startingPeriod((byte) 7).lastPeriod((byte) 10).classroom(classrooms.get(1))
                             .sectionClass(sectionClasses.getFirst()).teacher(teachers.getFirst()).teacherRequest(null).build(),
                         SubjectSchedule.builder()
-                            .startingWeek((byte) 11).totalWeek((byte) 4).day((byte) 2).startingPeriod((byte) 7).lastPeriod((byte) 10).classroom(classrooms.get(1))
+                            .startingWeek((byte) 31).totalWeek((byte) 4).day((byte) 2).startingPeriod((byte) 7).lastPeriod((byte) 10).classroom(classrooms.get(1))
                             .sectionClass(sectionClasses.get(1)).teacher(teachers.getFirst()).teacherRequest(null).build(),
                         //--He Dieu Hanh(NORM)
                         SubjectSchedule.builder()
-                            .startingWeek((byte) 2).totalWeek((byte) 2).day((byte) 4).startingPeriod((byte) 1).lastPeriod((byte) 4).classroom(classrooms.get(3))
+                            .startingWeek((byte) 22).totalWeek((byte) 2).day((byte) 4).startingPeriod((byte) 1).lastPeriod((byte) 4).classroom(classrooms.get(3))
                             .sectionClass(sectionClasses.get(2)).teacher(teachers.get(1)).teacherRequest(null).build(),
                         SubjectSchedule.builder()
-                            .startingWeek((byte) 5).totalWeek((byte) 9).day((byte) 4).startingPeriod((byte) 1).lastPeriod((byte) 4).classroom(classrooms.get(3))
+                            .startingWeek((byte) 25).totalWeek((byte) 9).day((byte) 4).startingPeriod((byte) 1).lastPeriod((byte) 4).classroom(classrooms.get(3))
                             .sectionClass(sectionClasses.get(2)).teacher(teachers.get(1)).teacherRequest(null).build(),
                         SubjectSchedule.builder()
-                            .startingWeek((byte) 2).totalWeek((byte) 2).day((byte) 4).startingPeriod((byte) 1).lastPeriod((byte) 4).classroom(classrooms.get(3))
+                            .startingWeek((byte) 22).totalWeek((byte) 2).day((byte) 4).startingPeriod((byte) 1).lastPeriod((byte) 4).classroom(classrooms.get(3))
                             .sectionClass(sectionClasses.get(3)).teacher(teachers.get(1)).teacherRequest(null).build(),
                         SubjectSchedule.builder()
-                            .startingWeek((byte) 5).totalWeek((byte) 9).day((byte) 4).startingPeriod((byte) 1).lastPeriod((byte) 4).classroom(classrooms.get(3))
+                            .startingWeek((byte) 25).totalWeek((byte) 9).day((byte) 4).startingPeriod((byte) 1).lastPeriod((byte) 4).classroom(classrooms.get(3))
                             .sectionClass(sectionClasses.get(3)).teacher(teachers.get(1)).teacherRequest(null).build(),
                         //--He Dieu Hanh(PRC)
                         SubjectSchedule.builder()
-                            .startingWeek((byte) 18).totalWeek((byte) 4).day((byte) 4).startingPeriod((byte) 7).lastPeriod((byte) 10).classroom(classrooms.get(1))
+                            .startingWeek((byte) 38).totalWeek((byte) 4).day((byte) 4).startingPeriod((byte) 7).lastPeriod((byte) 10).classroom(classrooms.get(1))
                             .sectionClass(sectionClasses.get(2)).teacher(teachers.get(1)).teacherRequest(null).build(),
                         SubjectSchedule.builder()
-                            .startingWeek((byte) 23).totalWeek((byte) 4).day((byte) 4).startingPeriod((byte) 7).lastPeriod((byte) 10).classroom(classrooms.get(1))
+                            .startingWeek((byte) 43).totalWeek((byte) 4).day((byte) 4).startingPeriod((byte) 7).lastPeriod((byte) 10).classroom(classrooms.get(1))
                             .sectionClass(sectionClasses.get(3)).teacher(teachers.get(1)).teacherRequest(null).build(),
                         //--Mang May Tinh(NORM)
                         SubjectSchedule.builder()
-                            .startingWeek((byte) 16).totalWeek((byte) 11).day((byte) 5).startingPeriod((byte) 7).lastPeriod((byte) 10).classroom(classrooms.get(3))
+                            .startingWeek((byte) 36).totalWeek((byte) 11).day((byte) 5).startingPeriod((byte) 7).lastPeriod((byte) 10).classroom(classrooms.get(3))
                             .sectionClass(sectionClasses.get(4)).teacher(teachers.getFirst()).teacherRequest(null).build(),
                         //--Mang May Tinh(PRC)
                         SubjectSchedule.builder()
-                            .startingWeek((byte) 25).totalWeek((byte) 2).day((byte) 6).startingPeriod((byte) 1).lastPeriod((byte) 4).classroom(classrooms.getFirst())
+                            .startingWeek((byte) 45).totalWeek((byte) 2).day((byte) 6).startingPeriod((byte) 1).lastPeriod((byte) 4).classroom(classrooms.getFirst())
                             .sectionClass(sectionClasses.get(4)).teacher(teachers.get(2)).teacherRequest(null).build(),
                         //--DS(NORM)
                         SubjectSchedule.builder()
-                            .startingWeek((byte) 16).totalWeek((byte) 11).day((byte) 5).startingPeriod((byte) 1).lastPeriod((byte) 4).classroom(classrooms.get(3))
+                            .startingWeek((byte) 36).totalWeek((byte) 11).day((byte) 5).startingPeriod((byte) 1).lastPeriod((byte) 4).classroom(classrooms.get(3))
                             .sectionClass(sectionClasses.get(5)).teacher(teachers.get(2)).teacherRequest(null).build(),
                         //--D21CN02
                         //--Python(NORM) HDH MMT DS
                         SubjectSchedule.builder()
-                            .startingWeek((byte) 2).totalWeek((byte) 2).day((byte) 2).startingPeriod((byte) 1).lastPeriod((byte) 4).classroom(classrooms.get(2))
+                            .startingWeek((byte) 22).totalWeek((byte) 2).day((byte) 2).startingPeriod((byte) 1).lastPeriod((byte) 4).classroom(classrooms.get(2))
                             .sectionClass(sectionClasses.get(6)).teacher(teachers.get(1)).teacherRequest(null).build(),
                         SubjectSchedule.builder()
-                            .startingWeek((byte) 5).totalWeek((byte) 9).day((byte) 2).startingPeriod((byte) 1).lastPeriod((byte) 4).classroom(classrooms.get(2))
+                            .startingWeek((byte) 25).totalWeek((byte) 9).day((byte) 2).startingPeriod((byte) 1).lastPeriod((byte) 4).classroom(classrooms.get(2))
                             .sectionClass(sectionClasses.get(6)).teacher(teachers.get(1)).teacherRequest(null).build(),
                         SubjectSchedule.builder()
-                            .startingWeek((byte) 2).totalWeek((byte) 2).day((byte) 2).startingPeriod((byte) 1).lastPeriod((byte) 4).classroom(classrooms.get(2))
+                            .startingWeek((byte) 22).totalWeek((byte) 2).day((byte) 2).startingPeriod((byte) 1).lastPeriod((byte) 4).classroom(classrooms.get(2))
                             .sectionClass(sectionClasses.get(7)).teacher(teachers.get(1)).teacherRequest(null).build(),
                         SubjectSchedule.builder()
-                            .startingWeek((byte) 5).totalWeek((byte) 9).day((byte) 2).startingPeriod((byte) 1).lastPeriod((byte) 4).classroom(classrooms.get(2))
+                            .startingWeek((byte) 25).totalWeek((byte) 9).day((byte) 2).startingPeriod((byte) 1).lastPeriod((byte) 4).classroom(classrooms.get(2))
                             .sectionClass(sectionClasses.get(7)).teacher(teachers.get(1)).teacherRequest(null).build(),
                         //--Python(PRC)
                         SubjectSchedule.builder()
-                            .startingWeek((byte) 6).totalWeek((byte) 4).day((byte) 2).startingPeriod((byte) 7).lastPeriod((byte) 10).classroom(classrooms.getFirst())
+                            .startingWeek((byte) 26).totalWeek((byte) 4).day((byte) 2).startingPeriod((byte) 7).lastPeriod((byte) 10).classroom(classrooms.getFirst())
                             .sectionClass(sectionClasses.get(6)).teacher(teachers.get(1)).teacherRequest(null).build(),
                         SubjectSchedule.builder()
-                            .startingWeek((byte) 11).totalWeek((byte) 4).day((byte) 2).startingPeriod((byte) 7).lastPeriod((byte) 10).classroom(classrooms.getFirst())
+                            .startingWeek((byte) 31).totalWeek((byte) 4).day((byte) 2).startingPeriod((byte) 7).lastPeriod((byte) 10).classroom(classrooms.getFirst())
                             .sectionClass(sectionClasses.get(7)).teacher(teachers.get(1)).teacherRequest(null).build(),
                         //--He Dieu Hanh(NORM)
                         SubjectSchedule.builder()
-                            .startingWeek((byte) 2).totalWeek((byte) 2).day((byte) 4).startingPeriod((byte) 1).lastPeriod((byte) 4).classroom(classrooms.get(2))
+                            .startingWeek((byte) 22).totalWeek((byte) 2).day((byte) 4).startingPeriod((byte) 1).lastPeriod((byte) 4).classroom(classrooms.get(2))
                             .sectionClass(sectionClasses.get(8)).teacher(teachers.getFirst()).teacherRequest(null).build(),
                         SubjectSchedule.builder()
-                            .startingWeek((byte) 5).totalWeek((byte) 9).day((byte) 4).startingPeriod((byte) 1).lastPeriod((byte) 4).classroom(classrooms.get(2))
+                            .startingWeek((byte) 25).totalWeek((byte) 9).day((byte) 4).startingPeriod((byte) 1).lastPeriod((byte) 4).classroom(classrooms.get(2))
                             .sectionClass(sectionClasses.get(8)).teacher(teachers.getFirst()).teacherRequest(null).build(),
                         SubjectSchedule.builder()
-                            .startingWeek((byte) 2).totalWeek((byte) 2).day((byte) 4).startingPeriod((byte) 1).lastPeriod((byte) 4).classroom(classrooms.get(2))
+                            .startingWeek((byte) 22).totalWeek((byte) 2).day((byte) 4).startingPeriod((byte) 1).lastPeriod((byte) 4).classroom(classrooms.get(2))
                             .sectionClass(sectionClasses.get(9)).teacher(teachers.getFirst()).teacherRequest(null).build(),
                         SubjectSchedule.builder()
-                            .startingWeek((byte) 5).totalWeek((byte) 9).day((byte) 4).startingPeriod((byte) 1).lastPeriod((byte) 4).classroom(classrooms.get(2))
+                            .startingWeek((byte) 25).totalWeek((byte) 9).day((byte) 4).startingPeriod((byte) 1).lastPeriod((byte) 4).classroom(classrooms.get(2))
                             .sectionClass(sectionClasses.get(9)).teacher(teachers.getFirst()).teacherRequest(null).build(),
                         //--He Dieu Hanh(PRC)
                         SubjectSchedule.builder()
-                            .startingWeek((byte) 18).totalWeek((byte) 4).day((byte) 4).startingPeriod((byte) 7).lastPeriod((byte) 10).classroom(classrooms.getFirst())
+                            .startingWeek((byte) 38).totalWeek((byte) 4).day((byte) 4).startingPeriod((byte) 7).lastPeriod((byte) 10).classroom(classrooms.getFirst())
                             .sectionClass(sectionClasses.get(8)).teacher(teachers.getFirst()).teacherRequest(null).build(),
                         SubjectSchedule.builder()
-                            .startingWeek((byte) 23).totalWeek((byte) 4).day((byte) 4).startingPeriod((byte) 7).lastPeriod((byte) 10).classroom(classrooms.getFirst())
+                            .startingWeek((byte) 43).totalWeek((byte) 4).day((byte) 4).startingPeriod((byte) 7).lastPeriod((byte) 10).classroom(classrooms.getFirst())
                             .sectionClass(sectionClasses.get(9)).teacher(teachers.getFirst()).teacherRequest(null).build(),
                         //--D21DT01
                         //--Mang May Tinh(NORM)
                         SubjectSchedule.builder()
-                            .startingWeek((byte) 16).totalWeek((byte) 11).day((byte) 5).startingPeriod((byte) 7).lastPeriod((byte) 10).classroom(classrooms.get(3))
+                            .startingWeek((byte) 36).totalWeek((byte) 11).day((byte) 5).startingPeriod((byte) 7).lastPeriod((byte) 10).classroom(classrooms.get(3))
                             .sectionClass(sectionClasses.get(10)).teacher(teachers.get(2)).teacherRequest(null).build(),
                         //--Mang May Tinh(PRC)
                         SubjectSchedule.builder()
-                            .startingWeek((byte) 18).totalWeek((byte) 8).day((byte) 6).startingPeriod((byte) 1).lastPeriod((byte) 4).classroom(classrooms.get(1))
+                            .startingWeek((byte) 38).totalWeek((byte) 8).day((byte) 6).startingPeriod((byte) 1).lastPeriod((byte) 4).classroom(classrooms.get(1))
                             .sectionClass(sectionClasses.get(10)).teacher(teachers.get(2)).teacherRequest(null).build(),
                         //--Mang May Tinh(PRC)
                         SubjectSchedule.builder()
-                            .startingWeek((byte) 25).totalWeek((byte) 11).day((byte) 6).startingPeriod((byte) 1).lastPeriod((byte) 4).classroom(classrooms.get(1))
+                            .startingWeek((byte) 45).totalWeek((byte) 11).day((byte) 6).startingPeriod((byte) 1).lastPeriod((byte) 4).classroom(classrooms.get(1))
                             .sectionClass(sectionClasses.get(11)).teacher(teachers.get(2)).teacherRequest(null).build()
 
                     ));

@@ -107,7 +107,6 @@ let updatedPracticeSchedule = {};
         //--Color each cell that already has subject-schedule.
         allUnavailableScheduleInThisSemester.forEach((schedule, index) => {
             const selectedWeek = Number.parseInt(selectedWeekOptionTag.getAttribute("week"));
-
             //--This subject is having a schedule in this selected-week.
             if ((schedule.startingWeek <= selectedWeek) && (selectedWeek <= (schedule.startingWeek + schedule.totalWeek - 1))) {
                 //--Add the subject name into schedule-item. 
