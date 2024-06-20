@@ -23,7 +23,7 @@
   - SubjectSchedule
   - SubjectRegistration
 
-## How Do Our Pages Work:
+## Several ActionMethod redirecting threads:
 *Original Account*
 - Username: manager0@ptithcm.edu.vn
 - Password: 111222333
