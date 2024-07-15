@@ -162,7 +162,7 @@ public class AuthenticationService {
                 <p style="font-size: 18px">Không chia sẻ thông tin tài khoản phía dưới cho ai khác.
                     Vui lòng bảo mật tốt mật khẩu mới của bạn!</p>
                 <h2>Tài khoản: <b>%s</b></h2>
-                <h2>OTP: <b>%s</b></h2>
+                <h2>Mật khẩu: <b>%s</b></h2>
             </div>
         """, instituteEmail, otpCode);
         emailService.sendSimpleEmail(

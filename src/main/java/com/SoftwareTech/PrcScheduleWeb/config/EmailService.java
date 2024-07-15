@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class EmailService {
     @Autowired
-    private final JavaMailSender javaMailSender;
+    private final JavaMailSender javaMailSender; //--Injection from configured bean in application.properties
     @Autowired
     private final Logger logger;
     @Value("${spring.mail.username}")
