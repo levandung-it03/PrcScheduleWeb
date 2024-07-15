@@ -1,27 +1,8 @@
+## Demo Video
+https://youtu.be/idsMvGBJH7M
+
 ## Commit Syntax Requirement
 **git commit -m "[All Upper-case Letters In Message] by [yournamelikethis_ex_levandung]"**
-
-## TODO Notes
-
-**1. @Transaction with Services**
-
-**2. Teacher List**
-
-**3. All about Practice Schedule (Add, Show, Update, Delete)**
-
-**4. Converting docs ActionMethod**
-
-**5. Adding Whitelist Form (Manager, Teacher)**
-
-**6. Adding mock data form**
-  - Student
-  - Department
-  - Grade
-  - Semester
-  - Subject
-  - SubjectDetail
-  - SubjectSchedule
-  - SubjectRegistration
 
 ## Several ActionMethod redirecting threads:
 *Original Account*
@@ -253,3 +234,4 @@
   Else: All condition is valid
   GET [Redirect] [MANAGER] /manager/category/computer-room/computer-room-list?page=<page>&succeedMessage=succeed_delete_01
   ```
+...more...
